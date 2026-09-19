@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   NGO Marudyaan — design tokens
+   "Marudyaan / মরুদ্যান" means OASIS. The palette follows that idea:
+   deep oasis green + warm sand + a saffron accent.
+   Change these hex values to re-skin the whole site.
+------------------------------------------------------------------ */
+@theme {
+  --color-oasis-50:  #eef7f1;
+  --color-oasis-100: #d5ebdd;
+  --color-oasis-200: #aad7bb;
+  --color-oasis-300: #75bd93;
+  --color-oasis-400: #47a06f;
+  --color-oasis-500: #2c8455;
+  --color-oasis-600: #1f6a43;
+  --color-oasis-700: #185436;
+  --color-oasis-800: #12402a;
+  --color-oasis-900: #0c2c1d;
+
+  --color-sand-50:  #fdfaf3;
+  --color-sand-100: #f8f1e2;
+  --color-sand-200: #efe1c6;
+  --color-sand-300: #e3cda2;
+
+  --color-saffron-400: #fbbf4a;
+  --color-saffron-500: #f59e0b;
+  --color-saffron-600: #d97e06;
+
+  --font-display: "Baloo 2", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-sand-50);
+  color: var(--color-oasis-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Language-aware typography: Bengali needs a little more line height */
+html[lang="bn"] body {
+  line-height: 1.8;
+}
+
+/* Reusable bits ---------------------------------------------------- */
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+/* Entrance animation used by <Reveal> */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+}
+.reveal.is-visible {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+.animate-float-slow { animation: float-slow 7s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; animation: none !important; }
+  .animate-float-slow { animation: none; }
+}
+
+/* Thin, on-brand scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-sand-100); }
+::-webkit-scrollbar-thumb { background: var(--color-oasis-300); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-oasis-500); }

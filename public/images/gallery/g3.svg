@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Evening learning circle">
+  <defs>
+    <linearGradient id="skygrur87" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#185436"/><stop offset="1" stop-color="#47a06f"/>
+    </linearGradient>
+    <linearGradient id="d1grur87" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8f1e2"/><stop offset="1" stop-color="#dcc296"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#skygrur87)"/>
+  <circle cx="608" cy="208" r="104" fill="#ffd27a" opacity="0.9"/>
+  <circle cx="608" cy="208" r="176" fill="#ffd27a" opacity="0.18"/>
+  <path d="M0 544 Q 176 440.00000000000006 368 536 T 800 496 L 800 800 L0 800 Z" fill="url(#d1grur87)" opacity="0.95"/>
+  <path d="M0 656 Q 240 568 480 640 T 800 616 L 800 800 L0 800 Z" fill="#dcc296" opacity="0.75"/>
+  <g stroke="#dcc296" stroke-width="4.8" stroke-linecap="round" fill="none" opacity="0.55">
+    <path d="M128 624 V 416"/>
+    <path d="M128 440.00000000000006 q 56.00000000000001 -72 104 -32"/>
+    <path d="M128 440.00000000000006 q -56.00000000000001 -72 -104 -32"/>
+    <path d="M128 463.99999999999994 q 40 16 80 64"/>
+    <path d="M128 463.99999999999994 q -40 16 -80 64"/>
+  </g>
+  <g font-family="Inter, system-ui, sans-serif" text-anchor="middle">
+    <text x="400" y="744" font-size="18" font-weight="600" fill="#ffffff" opacity="0.8">Evening learning circle</text>
+    <text x="400" y="776" font-size="13" fill="#ffffff" opacity="0.5">replace: public/images/gallery/g3.jpg</text>
+  </g>
+</svg>

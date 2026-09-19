@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="750" viewBox="0 0 1000 750" role="img" aria-label="Education &amp; Learning">
+  <defs>
+    <linearGradient id="sky6b2oal" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#0c2c1d"/><stop offset="1" stop-color="#1f6a43"/>
+    </linearGradient>
+    <linearGradient id="d16b2oal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efe1c6"/><stop offset="1" stop-color="#d4b483"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="750" fill="url(#sky6b2oal)"/>
+  <circle cx="760" cy="195" r="97.5" fill="#f59e0b" opacity="0.9"/>
+  <circle cx="760" cy="195" r="165" fill="#f59e0b" opacity="0.18"/>
+  <path d="M0 510.00000000000006 Q 220 412.50000000000006 460 502.50000000000006 T 1000 465 L 1000 750 L0 750 Z" fill="url(#d16b2oal)" opacity="0.95"/>
+  <path d="M0 615 Q 300 532.5 600 600 T 1000 577.5 L 1000 750 L0 750 Z" fill="#d4b483" opacity="0.75"/>
+  <g stroke="#d4b483" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.55">
+    <path d="M160 585 V 390"/>
+    <path d="M160 412.50000000000006 q 70 -67.5 130 -30"/>
+    <path d="M160 412.50000000000006 q -70 -67.5 -130 -30"/>
+    <path d="M160 434.99999999999994 q 50 15 100 60"/>
+    <path d="M160 434.99999999999994 q -50 15 -100 60"/>
+  </g>
+  <g font-family="Inter, system-ui, sans-serif" text-anchor="middle">
+    <text x="500" y="697.5" font-size="18" font-weight="600" fill="#ffffff" opacity="0.8">Education &amp; Learning</text>
+    <text x="500" y="727.5" font-size="13" fill="#ffffff" opacity="0.5">replace: public/images/work-education.jpg</text>
+  </g>
+</svg>

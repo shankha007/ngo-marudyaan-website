@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="800" viewBox="0 0 1000 800" role="img" aria-label="REPLACE ME — a photo of your team at work">
+  <defs>
+    <linearGradient id="sky0yobk7" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#185436"/><stop offset="1" stop-color="#47a06f"/>
+    </linearGradient>
+    <linearGradient id="d10yobk7" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8f1e2"/><stop offset="1" stop-color="#dcc296"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="800" fill="url(#sky0yobk7)"/>
+  <circle cx="760" cy="208" r="104" fill="#ffd27a" opacity="0.9"/>
+  <circle cx="760" cy="208" r="176" fill="#ffd27a" opacity="0.18"/>
+  <path d="M0 544 Q 220 440.00000000000006 460 536 T 1000 496 L 1000 800 L0 800 Z" fill="url(#d10yobk7)" opacity="0.95"/>
+  <path d="M0 656 Q 300 568 600 640 T 1000 616 L 1000 800 L0 800 Z" fill="#dcc296" opacity="0.75"/>
+  <g stroke="#dcc296" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.55">
+    <path d="M160 624 V 416"/>
+    <path d="M160 440.00000000000006 q 70 -72 130 -32"/>
+    <path d="M160 440.00000000000006 q -70 -72 -130 -32"/>
+    <path d="M160 463.99999999999994 q 50 16 100 64"/>
+    <path d="M160 463.99999999999994 q -50 16 -100 64"/>
+  </g>
+  <g font-family="Inter, system-ui, sans-serif" text-anchor="middle">
+    <text x="500" y="744" font-size="18" font-weight="600" fill="#ffffff" opacity="0.8">REPLACE ME — a photo of your team at work</text>
+    <text x="500" y="776" font-size="13" fill="#ffffff" opacity="0.5">public/images/about-main.jpg</text>
+  </g>
+</svg>
