@@ -1,5 +1,11 @@
 # NGO Marudyaan — মরুদ্যান
 
+**Live site: https://ngo-marudyaan.netlify.app**
+
+Every push to `main` rebuilds and republishes the live site automatically
+(Netlify runs `npm run build` and publishes `dist/`). You do not need to
+deploy by hand.
+
 Front-end-only website for NGO Marudyaan, Kolkata. Built with **React + Vite + Tailwind CSS v4**,
 with an English ⇄ Bengali language toggle. There is no back end and no database — everything
 is static, so it can be hosted free on Netlify, Vercel, GitHub Pages or any normal web host.
