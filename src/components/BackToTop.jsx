@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLang } from "../i18n/LanguageContext";
 import Icon from "./Icon";
 
 export default function BackToTop() {
+  const { t } = useLang();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -15,7 +17,10 @@ export default function BackToTop() {
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Back to top"
+      aria-label={t("misc.backToTop")}
+      // while faded out it must not be a keyboard stop or a screen-reader item
+      tabIndex={show ? 0 : -1}
+      aria-hidden={!show}
       /* bottom-LEFT: Netlify injects its "Powered by Netlify" badge in the
          bottom-right corner above everything, which would swallow clicks */
       className={`fixed bottom-5 left-5 z-40 rounded-full bg-oasis-700 p-3 text-white shadow-lg transition-all hover:bg-oasis-600 ${

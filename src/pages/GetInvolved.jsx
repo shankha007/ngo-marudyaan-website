@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
@@ -7,9 +7,10 @@ import { faqs, volunteerRoles } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
+import { isValidEmail } from "../utils/validation";
 
 const field =
-  "w-full rounded-xl border border-oasis-200 bg-white px-4 py-3 text-oasis-900 placeholder:text-oasis-800/35 transition focus:border-oasis-500 focus:outline-none focus:ring-2 focus:ring-oasis-500/20";
+  "w-full rounded-xl border border-oasis-200 bg-white px-4 py-3 text-oasis-900 placeholder:text-oasis-800/35 transition focus:border-oasis-500 focus:outline-none focus:ring-2 focus:ring-oasis-500/20 aria-invalid:border-red-500 aria-invalid:ring-2 aria-invalid:ring-red-500/15";
 
 function Faq({ item }) {
   const { tr } = useLang();
@@ -60,10 +61,31 @@ export default function GetInvolved() {
     "Volunteer, donate goods, lend a skill or partner with NGO Marudyaan in Kolkata.",
   );
 
-  const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+  // message KEY (not text) so it re-translates on a language switch
+  const [errorKey, setErrorKey] = useState("");
+  const [invalid, setInvalid] = useState({});
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+
+  const set = (key) => (e) => {
+    setForm((f) => ({ ...f, [key]: e.target.value }));
+    if (invalid[key]) setInvalid((v) => ({ ...v, [key]: false }));
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const bad = {
+      name: !form.name.trim(),
+      email: form.email.trim() !== "" && !isValidEmail(form.email),
+    };
+    if (bad.name || bad.email) {
+      setInvalid(bad);
+      setErrorKey(bad.name ? "involved.form.required" : "form.email.invalid");
+      (bad.name ? nameRef : emailRef).current?.focus();
+      return;
+    }
+    setInvalid({});
+    setErrorKey("");
     const role = volunteerRoles.find((r) => r.id === form.interest);
     const interestLabel = role ? role.title.en : form.interest;
     const body = `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested in: ${interestLabel}\n\n${form.message}`;
@@ -128,6 +150,7 @@ export default function GetInvolved() {
           <Reveal delay={100}>
             <form
               onSubmit={onSubmit}
+              noValidate
               className="rounded-3xl border border-oasis-100 bg-white p-8 shadow-sm"
             >
               <div className="grid gap-4 sm:grid-cols-2">
@@ -135,7 +158,16 @@ export default function GetInvolved() {
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                     {t("involved.form.name")}
                   </span>
-                  <input type="text" required value={form.name} onChange={set("name")} className={field} />
+                  <input
+                    ref={nameRef}
+                    type="text"
+                    required
+                    aria-invalid={invalid.name || undefined}
+                    aria-describedby={invalid.name ? "involved-error" : undefined}
+                    value={form.name}
+                    onChange={set("name")}
+                    className={field}
+                  />
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
@@ -149,7 +181,15 @@ export default function GetInvolved() {
                 <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                   {t("involved.form.email")}
                 </span>
-                <input type="email" value={form.email} onChange={set("email")} className={field} />
+                <input
+                  ref={emailRef}
+                  type="email"
+                  aria-invalid={invalid.email || undefined}
+                  aria-describedby={invalid.email ? "involved-error" : undefined}
+                  value={form.email}
+                  onChange={set("email")}
+                  className={field}
+                />
               </label>
 
               <label className="mt-4 block">
@@ -177,9 +217,13 @@ export default function GetInvolved() {
                 />
               </label>
 
+              <p id="involved-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-red-600">
+                {errorKey ? t(errorKey) : ""}
+              </p>
+
               <button
                 type="submit"
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-oasis-700 px-7 py-3.5 font-semibold text-white transition hover:bg-oasis-600"
+                className="mt-3 inline-flex items-center gap-2 rounded-full bg-oasis-700 px-7 py-3.5 font-semibold text-white transition hover:bg-oasis-600"
               >
                 <Icon name="mail" className="h-4 w-4" />
                 {t("involved.form.submit")}

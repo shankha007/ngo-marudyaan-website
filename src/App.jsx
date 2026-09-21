@@ -18,6 +18,8 @@ export default function App() {
       <ScrollToTop />
       <Navbar />
       <main id="main">
+        {/* Adding a page? Also list its path in public/_redirects, which tells
+            Netlify which URLs are real pages (200) and which are not (404). */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

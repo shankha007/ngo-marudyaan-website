@@ -176,6 +176,10 @@ export const strings = {
     "contact.form.message": "Message",
     "contact.form.submit": "Open email & send",
     "contact.form.required": "Please fill in your name and a message.",
+    "form.email.invalid": "Please enter a valid email address, or leave it empty.",
+    "involved.form.required": "Please fill in your name.",
+    "misc.backToTop": "Back to top",
+    "donate.qr.alt": "UPI QR code for NGO Marudyaan",
     "contact.map.title": "Where we work",
     "contact.social.title": "Follow our work",
 
@@ -365,6 +369,10 @@ export const strings = {
     "contact.form.message": "বার্তা",
     "contact.form.submit": "ইমেল খুলে পাঠান",
     "contact.form.required": "অনুগ্রহ করে নাম ও বার্তা লিখুন।",
+    "form.email.invalid": "অনুগ্রহ করে সঠিক ইমেল ঠিকানা লিখুন, অথবা ঘরটি ফাঁকা রাখুন।",
+    "involved.form.required": "অনুগ্রহ করে আপনার নাম লিখুন।",
+    "misc.backToTop": "উপরে ফিরে যান",
+    "donate.qr.alt": "এনজিও মরুদ্যানের ইউপিআই কিউআর কোড",
     "contact.map.title": "আমরা যেখানে কাজ করি",
     "contact.social.title": "আমাদের কাজ দেখুন",
 

@@ -53,7 +53,7 @@ export default function Donate() {
                 ) : (
                   <img
                     src={donation.qrImage}
-                    alt="UPI QR code for NGO Marudyaan"
+                    alt={t("donate.qr.alt")}
                     onError={() => setQrFailed(true)}
                     className="h-64 w-64 rounded-xl bg-white object-contain"
                   />
@@ -61,7 +61,7 @@ export default function Donate() {
               </div>
               <p className="mt-4 max-w-xs text-sm text-oasis-800/65">{t("donate.qr.note")}</p>
               <div className="mt-6 w-full rounded-2xl bg-oasis-50 px-5 py-1">
-                <CopyField label={t("donate.upi.label")} value={donation.upiId} mono />
+                <CopyField label={t("donate.upi.label")} value={donation.upiId} mono compact />
               </div>
               <p className="mt-4 text-xs text-oasis-800/50">{donation.upiName}</p>
             </div>
@@ -82,10 +82,11 @@ export default function Donate() {
                   label={t("donate.bank.accountNumber")}
                   value={donation.bank.accountNumber}
                   mono
+                  compact
                 />
                 <CopyField label={t("donate.bank.bankName")} value={donation.bank.bankName} />
                 <CopyField label={t("donate.bank.branch")} value={donation.bank.branch} />
-                <CopyField label={t("donate.bank.ifsc")} value={donation.bank.ifsc} mono />
+                <CopyField label={t("donate.bank.ifsc")} value={donation.bank.ifsc} mono compact />
                 <CopyField
                   label={t("donate.bank.accountType")}
                   value={donation.bank.accountType}

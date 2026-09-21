@@ -1,1 +1,17 @@
-/*  /index.html  200
+# Netlify routing for this single-page app.
+#
+# Real pages are served the app with status 200. Anything else is served
+# the same app (which shows the "Page not found" screen) but with status
+# 404, so search engines do not index mistyped URLs as real pages.
+#
+# IMPORTANT: when you add a new page to src/App.jsx, add its path here too,
+# or it will load fine but report itself to search engines as "not found".
+
+/about          /index.html   200
+/our-work       /index.html   200
+/gallery        /index.html   200
+/get-involved   /index.html   200
+/donate         /index.html   200
+/contact        /index.html   200
+
+/*              /index.html   404

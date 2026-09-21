@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useLang } from "../i18n/LanguageContext";
 import Icon from "./Icon";
 
-/* A label + value row with a copy button — used for UPI and bank details. */
-export default function CopyField({ label, value, mono = false }) {
+/* A label + value row with a copy button — used for UPI and bank details.
+   `compact`: copy without spaces. Account numbers read best grouped
+   ("1234 5678 9012") but many banking apps reject pasted spaces. */
+export default function CopyField({ label, value, mono = false, compact = false }) {
   const { t } = useLang();
   const [copied, setCopied] = useState(false);
 
@@ -15,7 +17,8 @@ export default function CopyField({ label, value, mono = false }) {
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(String(value));
+      const text = compact ? String(value).replace(/\s+/g, "") : String(value);
+      await navigator.clipboard.writeText(text);
       setCopied(true);
     } catch {
       /* clipboard blocked — the value is visible on screen anyway */
