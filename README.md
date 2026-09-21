@@ -125,6 +125,50 @@ service like Formspree or Google Forms can be dropped in without changing anythi
 
 ---
 
+## Testing
+
+An automated end-to-end test suite drives a real browser through the whole site: every page
+at four screen sizes in both languages, the forms, the gallery, the donate page, keyboard and
+screen-reader behaviour, and more. Run it after making changes, before you push.
+
+**You need:** Google Chrome or Microsoft Edge installed (the tests use your existing browser —
+nothing extra to download beyond `npm install`).
+
+```bash
+npm test             # builds the site, serves it locally, runs everything (~6 minutes)
+npm run test:quick   # fewer screen sizes, English only (~3 minutes)
+npm run test:live    # runs against the live site on Netlify
+```
+
+`npm run test:live` also checks things that only exist on Netlify: that unknown URLs return
+"404 not found", and that Netlify's "Powered by Netlify" badge doesn't cover any of our buttons.
+
+**Reading the result.** The run ends with a summary like `53 passed, 0 failed, 6 warnings`.
+
+- **✗ failed** — something is broken. Screenshots of the failing pages are saved in
+  `tests/e2e/output/`.
+- **⚠ warnings** — placeholder content still on the site (QR code, bank details, team names,
+  placeholder photos). They never fail the run; they disappear as you add your real content.
+
+The tests read their expected values from `src/data/` and `src/i18n/`, so changing your text,
+photos or bank details does **not** break them.
+
+**Useful options** (note the `--` before them):
+
+```bash
+npm test -- --only=features,a11y      # run only some suites
+npm test -- --no-build                # skip the build step (reuse the last dist/)
+```
+
+Suites: `smoke` (page sweep), `navigation`, `features`, `a11y` (accessibility),
+`netlify-badge`. Set `HEADED=1` to watch the browser, or `CHROME_PATH=…` to pick a browser.
+
+**Adding a new page?** Add its path to `public/_redirects` as well as `src/App.jsx` — the
+`navigation` suite fails if the two lists don't match, because a page missing from
+`_redirects` would load fine but tell search engines it doesn't exist.
+
+---
+
 ## Publishing the site
 
 **Netlify or Vercel (easiest):** push this folder to GitHub, connect the repository, and use
