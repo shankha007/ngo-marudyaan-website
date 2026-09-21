@@ -32,7 +32,9 @@ export default function ScrollToTop() {
       );
       return () => cancelAnimationFrame(frame);
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    // "instant", not "auto": index.css sets scroll-behavior: smooth, and "auto"
+    // would inherit it — a new page would appear mid-way down, then glide up
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname, hash]);
 
   return null;
