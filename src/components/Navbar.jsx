@@ -204,7 +204,9 @@ export default function Navbar() {
               </NavLink>
             ))}
           </div>
-          <div className="border-t border-oasis-100 p-4">
+          {/* pb-24 lifts these buttons clear of the "Powered by Netlify" badge,
+              which Netlify pins to the bottom-right corner above everything */}
+          <div className="border-t border-oasis-100 p-4 pb-24">
             <Link
               to="/donate"
               className="block rounded-full bg-saffron-500 px-5 py-3 text-center font-semibold text-oasis-900"

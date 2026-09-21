@@ -81,7 +81,7 @@ export default function Home() {
             <ul className="mt-8 grid gap-4 sm:grid-cols-2">
               {values.map((v) => (
                 <li key={v.id} className="flex gap-3">
-                  <span className="mt-0.5 shrink-0 rounded-full bg-oasis-50 p-1.5 text-oasis-600">
+                  <span className="mt-0.5 shrink-0 self-start rounded-full bg-oasis-50 p-1.5 text-oasis-600">
                     <Icon name="check" className="h-4 w-4" />
                   </span>
                   <div>

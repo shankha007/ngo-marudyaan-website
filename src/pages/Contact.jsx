@@ -88,7 +88,7 @@ export default function Contact() {
                       {...(d.external ? { target: "_blank", rel: "noreferrer" } : {})}
                       className="flex gap-4 rounded-2xl border border-oasis-100 bg-white p-4 transition hover:border-oasis-300 hover:shadow-sm"
                     >
-                      <span className="shrink-0 rounded-xl bg-oasis-50 p-2.5 text-oasis-600">
+                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2.5 text-oasis-600">
                         <Icon name={d.icon} className="h-5 w-5" />
                       </span>
                       <span className="min-w-0">
@@ -102,7 +102,7 @@ export default function Contact() {
                     </a>
                   ) : (
                     <div className="flex gap-4 rounded-2xl border border-oasis-100 bg-white p-4">
-                      <span className="shrink-0 rounded-xl bg-oasis-50 p-2.5 text-oasis-600">
+                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2.5 text-oasis-600">
                         <Icon name={d.icon} className="h-5 w-5" />
                       </span>
                       <span className="min-w-0">

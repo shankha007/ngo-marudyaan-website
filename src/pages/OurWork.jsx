@@ -78,7 +78,7 @@ export default function OurWork() {
                 <ul className="mt-6 space-y-3">
                   {tr(p.details).map((d) => (
                     <li key={d} className="flex gap-3">
-                      <span className="mt-1 shrink-0 rounded-full bg-saffron-500/15 p-1 text-saffron-600">
+                      <span className="mt-1 shrink-0 self-start rounded-full bg-saffron-500/15 p-1 text-saffron-600">
                         <Icon name="check" className="h-3.5 w-3.5" />
                       </span>
                       <span className="leading-relaxed text-oasis-800/80">{d}</span>

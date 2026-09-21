@@ -111,25 +111,12 @@ export default function HeroBanner() {
         </div>
       </div>
 
-      {/* controls */}
+      {/* controls — kept on the LEFT: Netlify's injected badge occupies the
+          bottom-right corner of the screen and would cover arrows placed there */}
       {count > 1 && (
         <div className="container-page relative pb-8">
           <div className="flex items-center gap-4">
             <div className="flex gap-2">
-              {slides.map((s, i) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setIndex(i)}
-                  aria-label={`Slide ${i + 1}`}
-                  aria-current={i === index}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === index ? "w-10 bg-saffron-500" : "w-5 bg-white/40 hover:bg-white/70"
-                  }`}
-                />
-              ))}
-            </div>
-            <div className="ml-auto flex gap-2">
               <button
                 type="button"
                 onClick={() => go(index - 1)}
@@ -146,6 +133,20 @@ export default function HeroBanner() {
               >
                 <Icon name="chevronRight" className="h-4 w-4" />
               </button>
+            </div>
+            <div className="flex gap-2">
+              {slides.map((s, i) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-label={`Slide ${i + 1}`}
+                  aria-current={i === index}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === index ? "w-10 bg-saffron-500" : "w-5 bg-white/40 hover:bg-white/70"
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </div>
