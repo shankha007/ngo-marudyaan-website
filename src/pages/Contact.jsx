@@ -174,6 +174,7 @@ export default function Contact() {
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                     {t("contact.form.name")}
+                    <span aria-hidden="true" className="text-red-600"> *</span>
                   </span>
                   <input
                     type="text"
@@ -212,6 +213,7 @@ export default function Contact() {
               <label className="mt-4 block">
                 <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                   {t("contact.form.message")}
+                  <span aria-hidden="true" className="text-red-600"> *</span>
                 </span>
                 <textarea
                   ref={messageRef}

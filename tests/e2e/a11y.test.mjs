@@ -197,6 +197,29 @@ export default async function a11y({ browser, base, quick, report }) {
     report.check(distorted.length === 0, "icon badges stay round/square (none stretched by flexbox)", distorted.join("; "));
   }
 
+  /* ================= required fields: visible * matches the real rule ================= */
+  {
+    const page = await openPage(browser, base);
+    const mismatches = [];
+    const marked = [];
+    for (const route of ["/contact", "/get-involved"]) {
+      await page.goto(base + route, { waitUntil: "networkidle" });
+      const fields = await page.evaluate(() =>
+        [...document.querySelectorAll("main form label")].map((label) => {
+          const control = label.querySelector("input, textarea, select");
+          const star = [...label.querySelectorAll('span[aria-hidden="true"]')].some((s) => s.textContent.trim() === "*");
+          return { name: label.textContent.replace("*", "").trim(), star, required: !!control?.required };
+        }),
+      );
+      for (const f of fields) {
+        if (f.star !== f.required) mismatches.push(`${route} "${f.name}": shows * ${f.star}, required ${f.required}`);
+      }
+      marked.push(`${route}: ${fields.filter((f) => f.star).map((f) => f.name).join(" + ")}`);
+    }
+    report.check(mismatches.length === 0, `required form fields show a * and no other field does (${marked.join("; ")})`, mismatches.join("; "));
+    await page.context().close();
+  }
+
   /* ================= Bengali mode: no English-only labels ================= */
   {
     const brand = new Set(["NGO Marudyaan", "English", "EN", "Facebook", "Instagram", "YouTube"]);
