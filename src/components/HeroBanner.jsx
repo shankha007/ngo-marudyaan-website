@@ -1,37 +1,59 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { bannerSettings, bannerSlides } from "../data/banner";
 import { useLang } from "../i18n/LanguageContext";
 import Icon from "./Icon";
 
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  typeof window.matchMedia === "function" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 /* The home page banner. Content comes from src/data/banner.js —
-   editing that file is all you need to change what appears here. */
+   editing that file is all you need to change what appears here.
+
+   Accessibility (WCAG 2.2.2 "Pause, Stop, Hide"): the slideshow
+   - has a visible Pause/Play button,
+   - starts paused for people whose device asks for reduced motion,
+   - pauses while the mouse is over it or keyboard focus is inside it. */
 export default function HeroBanner() {
-  const { tr } = useLang();
+  const { t, tr, lang } = useLang();
   const slides = useMemo(() => bannerSlides.filter((s) => s.active !== false), []);
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [userPaused, setUserPaused] = useState(prefersReducedMotion);
+  const [hovered, setHovered] = useState(false);
+  const [focusWithin, setFocusWithin] = useState(false);
+  const toggleRef = useRef(null);
 
   const count = slides.length;
   const go = useCallback((n) => setIndex(() => (n + count) % count), [count]);
+  const rotating =
+    bannerSettings.autoPlay && count > 1 && !userPaused && !hovered && !focusWithin;
 
   useEffect(() => {
-    if (!bannerSettings.autoPlay || count < 2 || paused) return;
+    if (!rotating) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % count), bannerSettings.intervalMs);
     return () => clearInterval(id);
-  }, [count, paused]);
+  }, [rotating, count]);
 
   if (count === 0) return null;
   const slide = slides[index];
   const centred = slide.align === "center";
+  const num = (n) => n.toLocaleString(lang === "bn" ? "bn-BD" : "en-IN");
 
   return (
     <section
       className="relative isolate overflow-hidden bg-oasis-900"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      /* focus on the Pause/Play button itself does not count — otherwise
+         pressing "Play" would look broken, since focus is still on it */
+      onFocus={(e) => setFocusWithin(e.target !== toggleRef.current)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setFocusWithin(false);
+      }}
       aria-roledescription="carousel"
-      aria-label="Current campaigns"
+      aria-label={t("carousel.label")}
     >
       {/* Slides stacked, cross-fading */}
       {slides.map((s, i) => (
@@ -61,7 +83,10 @@ export default function HeroBanner() {
         className="absolute inset-0 bg-gradient-to-t from-oasis-900/70 to-transparent"
       />
 
+      {/* announce slide changes the user causes, but stay quiet while it
+          auto-rotates (constant announcements would be unbearable) */}
       <div
+        aria-live={rotating ? "off" : "polite"}
         className={`container-page relative flex min-h-[78vh] flex-col justify-center py-20 sm:min-h-[80vh] ${
           centred ? "items-center text-center" : "items-start"
         }`}
@@ -118,9 +143,23 @@ export default function HeroBanner() {
           <div className="flex items-center gap-4">
             <div className="flex gap-2">
               <button
+                ref={toggleRef}
+                type="button"
+                onClick={() => {
+                  // an explicit "Play" should start rotating right away,
+                  // even though the mouse is over the banner
+                  if (userPaused) setHovered(false);
+                  setUserPaused((p) => !p);
+                }}
+                aria-label={userPaused ? t("carousel.play") : t("carousel.pause")}
+                className="rounded-full border border-white/30 p-2 text-white transition hover:bg-white/10"
+              >
+                <Icon name={userPaused ? "play" : "pause"} className="h-4 w-4" />
+              </button>
+              <button
                 type="button"
                 onClick={() => go(index - 1)}
-                aria-label="Previous slide"
+                aria-label={t("carousel.prev")}
                 className="rounded-full border border-white/30 p-2 text-white transition hover:bg-white/10"
               >
                 <Icon name="chevronLeft" className="h-4 w-4" />
@@ -128,24 +167,32 @@ export default function HeroBanner() {
               <button
                 type="button"
                 onClick={() => go(index + 1)}
-                aria-label="Next slide"
+                aria-label={t("carousel.next")}
                 className="rounded-full border border-white/30 p-2 text-white transition hover:bg-white/10"
               >
                 <Icon name="chevronRight" className="h-4 w-4" />
               </button>
             </div>
-            <div className="flex gap-2">
+            {/* each dot is a 24px-tall button (comfortable tap target);
+                the thin bar inside is only the visual */}
+            <div className="flex gap-1">
               {slides.map((s, i) => (
                 <button
                   key={s.id}
                   type="button"
                   onClick={() => setIndex(i)}
-                  aria-label={`Slide ${i + 1}`}
+                  aria-label={`${t("carousel.goto")} ${num(i + 1)}`}
                   aria-current={i === index}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === index ? "w-10 bg-saffron-500" : "w-5 bg-white/40 hover:bg-white/70"
-                  }`}
-                />
+                  className="group flex h-6 min-w-6 items-center justify-center px-0.5"
+                >
+                  <span
+                    className={`block h-1.5 rounded-full transition-all ${
+                      i === index
+                        ? "w-10 bg-saffron-500"
+                        : "w-5 bg-white/40 group-hover:bg-white/70"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>

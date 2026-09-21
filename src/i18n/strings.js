@@ -28,6 +28,14 @@ export const strings = {
     "lang.en": "English",
     "lang.bn": "বাংলা",
 
+    /* banner carousel (screen-reader labels) */
+    "carousel.label": "Current campaigns",
+    "carousel.prev": "Previous slide",
+    "carousel.next": "Next slide",
+    "carousel.goto": "Slide",
+    "carousel.pause": "Pause slideshow",
+    "carousel.play": "Play slideshow",
+
     /* home */
     "home.stats.title": "What we have managed so far",
     "home.stats.note": "Numbers updated at the end of every quarter.",
@@ -208,6 +216,14 @@ export const strings = {
     "lang.label": "ভাষা",
     "lang.en": "English",
     "lang.bn": "বাংলা",
+
+    /* banner carousel (screen-reader labels) */
+    "carousel.label": "চলতি উদ্যোগ",
+    "carousel.prev": "আগের স্লাইড",
+    "carousel.next": "পরের স্লাইড",
+    "carousel.goto": "স্লাইড",
+    "carousel.pause": "স্লাইডশো থামান",
+    "carousel.play": "স্লাইডশো চালান",
 
     /* home */
     "home.stats.title": "এ পর্যন্ত আমরা যা পেরেছি",

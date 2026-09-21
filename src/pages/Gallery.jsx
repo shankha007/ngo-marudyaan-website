@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import { galleryItems } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
+import useFocusTrap from "../hooks/useFocusTrap";
 import usePageMeta from "../hooks/usePageMeta";
 
 const categories = ["all", "food", "education", "health", "winter", "festival", "women"];
@@ -44,6 +45,19 @@ export default function Gallery() {
       document.body.style.overflow = "";
     };
   }, [openIndex, close, step]);
+
+  /* Keyboard focus: jump into the lightbox when it opens, keep Tab inside
+     it, and on close return to the thumbnail of the photo last viewed. */
+  const dialogRef = useRef(null);
+  const closeBtnRef = useRef(null);
+  const lastIndexRef = useRef(null);
+  useEffect(() => {
+    if (openIndex !== null) lastIndexRef.current = openIndex;
+  }, [openIndex]);
+  useFocusTrap(openIndex !== null, dialogRef, {
+    initialFocusRef: closeBtnRef,
+    returnFocus: () => document.querySelector(`[data-thumb="${lastIndexRef.current}"]`),
+  });
 
   const active = openIndex === null ? null : items[openIndex];
 
@@ -85,6 +99,7 @@ export default function Gallery() {
                   <button
                     type="button"
                     onClick={() => setOpenIndex(i)}
+                    data-thumb={i}
                     className="group relative block w-full overflow-hidden rounded-2xl bg-oasis-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-oasis-700 focus-visible:ring-offset-2"
                   >
                     <img
@@ -93,7 +108,7 @@ export default function Gallery() {
                       loading="lazy"
                       className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <span className="absolute inset-0 flex items-end bg-gradient-to-t from-oasis-900/85 via-oasis-900/10 to-transparent p-3 text-left text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="absolute inset-0 flex items-end bg-gradient-to-t from-oasis-900/85 via-oasis-900/10 to-transparent p-3 text-left text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                       {tr(photo.caption)}
                     </span>
                   </button>
@@ -107,6 +122,7 @@ export default function Gallery() {
       {/* lightbox */}
       {active && (
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label={tr(active.caption)}
@@ -114,6 +130,7 @@ export default function Gallery() {
           onClick={close}
         >
           <button
+            ref={closeBtnRef}
             type="button"
             onClick={close}
             aria-label={t("gallery.close")}

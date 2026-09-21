@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useLang } from "../i18n/LanguageContext";
 import { announcement } from "../data/banner";
 import { site } from "../data/site";
+import useFocusTrap from "../hooks/useFocusTrap";
 import Icon from "./Icon";
 import Logo from "./Logo";
 
@@ -52,6 +53,11 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const drawerRef = useRef(null);
+
+  /* move focus into the open menu, keep Tab inside it, and hand focus back
+     to the menu button when it closes */
+  useFocusTrap(open, drawerRef);
 
   useEffect(() => setOpen(false), [location.pathname]);
 
@@ -173,6 +179,10 @@ export default function Navbar() {
           }`}
         />
         <div
+          ref={drawerRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("nav.menu")}
           className={`absolute top-0 right-0 flex h-full w-[82%] max-w-sm flex-col bg-sand-50 shadow-2xl transition-transform duration-300 ${
             open ? "translate-x-0" : "translate-x-full"
           }`}

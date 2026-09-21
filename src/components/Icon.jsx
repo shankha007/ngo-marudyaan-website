@@ -96,6 +96,8 @@ const paths = {
   chevronLeft: <path d="m14 6-6 6 6 6" />,
   chevronRight: <path d="m10 6 6 6-6 6" />,
   chevronDown: <path d="m6 9 6 6 6-6" />,
+  pause: <path d="M9 6v12M15 6v12" />,
+  play: <path d="M8 5.5v13l10.5-6.5Z" />,
   quote: (
     <path d="M9 7c-2.8 0-4.5 2-4.5 4.5S6 16 8 16c-.3 1.4-1.4 2.4-3 3 4 0 7-3.4 7-8.2C12 8.3 10.8 7 9 7Zm9 0c-2.8 0-4.5 2-4.5 4.5S15 16 17 16c-.3 1.4-1.4 2.4-3 3 4 0 7-3.4 7-8.2C21 8.3 19.8 7 18 7Z" />
   ),
