@@ -140,7 +140,9 @@ export default function HeroBanner() {
           bottom-right corner of the screen and would cover arrows placed there */}
       {count > 1 && (
         <div className="container-page relative pb-8">
-          <div className="flex items-center gap-4">
+          {/* on narrow phones the dots stack ABOVE the buttons: in one row the
+              dots would reach into the badge's corner at the bottom right */}
+          <div className="flex flex-col-reverse items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
             <div className="flex gap-2">
               <button
                 ref={toggleRef}
