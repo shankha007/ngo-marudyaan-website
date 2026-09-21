@@ -130,15 +130,36 @@ export default async function features({ browser, base, report }) {
 
     await page.goto(base + "/get-involved", { waitUntil: "networkidle" });
     const f2 = page.locator("main form");
-    mail = await captureMailto(page, () => f2.locator("button[type=submit]").click());
-    const e2 = await page.locator("#involved-error").innerText();
-    report.check(!mail && e2 === t["involved.form.required"], `Get Involved (${L}): empty name shows our own message`, e2);
+    const send = () => captureMailto(page, () => f2.locator("button[type=submit]").click());
+    const e2 = () => page.locator("#involved-error").innerText();
+    const focused = () => page.evaluate(() => document.activeElement.type);
+    const marked = () => page.evaluate(() => [...document.querySelectorAll("main form [aria-invalid=true]")].map((e) => e.type));
+
+    mail = await send();
+    report.check(
+      !mail && (await e2()) === t["involved.form.required"] && (await focused()) === "text" && (await marked()).join() === "text,tel",
+      `Get Involved (${L}): empty form asks for name AND phone, marks both, focuses Name`,
+      `"${await e2()}" marked=${await marked()}`,
+    );
+
     await f2.locator("input[type=text]").fill("Volunteer");
+    mail = await send();
+    report.check(!mail && (await e2()) === t["involved.form.required"] && (await focused()) === "tel", `Get Involved (${L}): a name without a phone number is not sent; focus moves to Phone`, `"${await e2()}" focus=${await focused()}`);
+
+    await f2.locator("input[type=tel]").fill("12345");
+    mail = await send();
+    report.check(!mail && (await e2()) === t["form.phone.invalid"] && (await focused()) === "tel", `Get Involved (${L}): a too-short phone number ("12345") is caught`, `"${await e2()}"`);
+
+    await f2.locator("input[type=tel]").fill("+91 98765 43210");
     await f2.locator("select").selectOption({ index: 1 });
-    mail = await captureMailto(page, () => f2.locator("button[type=submit]").click());
+    mail = await send();
     const body = mail ? new URL(mail).searchParams.get("body") : "";
     const role = volunteerRoles[1].title.en;
-    report.check(body.includes("Name: Volunteer") && body.includes(`Interested in: ${role}`), `Get Involved (${L}): opens an email with the chosen role, in English for the NGO`, body.slice(0, 90));
+    report.check(
+      body.includes("Name: Volunteer") && body.includes("Phone: +91 98765 43210") && body.includes(`Interested in: ${role}`) && (await e2()) === "",
+      `Get Involved (${L}): with name + phone it opens an email including the phone and chosen role`,
+      body.slice(0, 110) || "no email opened",
+    );
 
     if (lang === "en") {
       const faq = page.locator("main button[aria-expanded]").first();

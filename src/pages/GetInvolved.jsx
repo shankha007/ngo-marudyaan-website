@@ -7,7 +7,7 @@ import { faqs, volunteerRoles } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
-import { isValidEmail } from "../utils/validation";
+import { isValidEmail, isValidPhone } from "../utils/validation";
 
 const field =
   "w-full rounded-xl border border-oasis-200 bg-white px-4 py-3 text-oasis-900 placeholder:text-oasis-800/35 transition focus:border-oasis-500 focus:outline-none focus:ring-2 focus:ring-oasis-500/20 aria-invalid:border-red-500 aria-invalid:ring-2 aria-invalid:ring-red-500/15";
@@ -65,6 +65,7 @@ export default function GetInvolved() {
   const [errorKey, setErrorKey] = useState("");
   const [invalid, setInvalid] = useState({});
   const nameRef = useRef(null);
+  const phoneRef = useRef(null);
   const emailRef = useRef(null);
 
   const set = (key) => (e) => {
@@ -74,14 +75,23 @@ export default function GetInvolved() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    // name and phone are required: WhatsApp/phone is how the NGO follows up
+    const missing = { name: !form.name.trim(), phone: !form.phone.trim() };
     const bad = {
-      name: !form.name.trim(),
+      ...missing,
+      phone: missing.phone || !isValidPhone(form.phone),
       email: form.email.trim() !== "" && !isValidEmail(form.email),
     };
-    if (bad.name || bad.email) {
+    if (bad.name || bad.phone || bad.email) {
       setInvalid(bad);
-      setErrorKey(bad.name ? "involved.form.required" : "form.email.invalid");
-      (bad.name ? nameRef : emailRef).current?.focus();
+      setErrorKey(
+        missing.name || missing.phone
+          ? "involved.form.required"
+          : bad.phone
+            ? "form.phone.invalid"
+            : "form.email.invalid",
+      );
+      (bad.name ? nameRef : bad.phone ? phoneRef : emailRef).current?.focus();
       return;
     }
     setInvalid({});
@@ -157,6 +167,7 @@ export default function GetInvolved() {
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                     {t("involved.form.name")}
+                    <span aria-hidden="true" className="text-red-600"> *</span>
                   </span>
                   <input
                     ref={nameRef}
@@ -172,8 +183,20 @@ export default function GetInvolved() {
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                     {t("involved.form.phone")}
+                    <span aria-hidden="true" className="text-red-600"> *</span>
                   </span>
-                  <input type="tel" value={form.phone} onChange={set("phone")} className={field} />
+                  <input
+                    ref={phoneRef}
+                    type="tel"
+                    required
+                    autoComplete="tel"
+                    inputMode="tel"
+                    aria-invalid={invalid.phone || undefined}
+                    aria-describedby={invalid.phone ? "involved-error" : undefined}
+                    value={form.phone}
+                    onChange={set("phone")}
+                    className={field}
+                  />
                 </label>
               </div>
 
