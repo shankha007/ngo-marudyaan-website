@@ -2,7 +2,7 @@
    WhatsApp link), both forms (validation + the email they open), FAQ,
    impact counters — plus warnings for placeholder content still on the site. */
 import { bannerSlides } from "../../src/data/banner.js";
-import { faqs, galleryItems, programs, team, volunteerRoles } from "../../src/data/content.js";
+import { faqs, galleryItems, helpPrograms, programs, team, volunteerRoles } from "../../src/data/content.js";
 import { site, stats } from "../../src/data/site.js";
 import { strings } from "../../src/i18n/strings.js";
 import { captureMailto, fileExists, openPage, scrollLikeAUser } from "./lib.mjs";
@@ -166,6 +166,64 @@ export default async function features({ browser, base, report }) {
       await faq.click();
       report.check((await faq.getAttribute("aria-expanded")) === "true" && (await faq.innerText()).includes(faqs[0].q.en), "FAQ answers open on click");
     }
+    /* ---- Request Help ---- */
+    await page.goto(base + "/request-help", { waitUntil: "networkidle" });
+    const f3 = page.locator("main form");
+    const ask = () => captureMailto(page, () => f3.locator("button[type=submit]").click());
+    const e3 = () => page.locator("#help-error").innerText();
+    const focusedName = () => page.evaluate(() => document.activeElement.name);
+    const markedNames = () => page.evaluate(() => [...new Set([...document.querySelectorAll("main form [aria-invalid=true]")].map((e) => e.name))].join());
+
+    mail = await ask();
+    report.check(
+      !mail && (await e3()) === t["help.err.program"] && (await focusedName()) === "program" && (await markedNames()) === "program,name,phone,address,total",
+      `Request Help (${L}): empty form asks for the drive first and marks every required field`,
+      `"${await e3()}" marked=${await markedNames()} focus=${await focusedName()}`,
+    );
+
+    const puja = helpPrograms[0];
+    await f3.locator(`label:has(input[value=${puja.id}])`).click();
+    await f3.locator("input[name=name]").fill("Help Seeker");
+    await f3.locator("input[name=phone]").fill("98765 43210");
+    await f3.locator("textarea[name=address]").fill("12 Lake Road, Dum Dum, Kolkata 700056");
+    await f3.locator("input[name=total]").fill("4");
+    await f3.locator("input[name=children]").fill("3");
+    await f3.locator("input[name=children] >> xpath=../following-sibling::label//input").fill("2");
+    mail = await ask();
+    report.check(!mail && (await e3()) === t["help.err.breakdown"] && (await focusedName()) === "children", `Request Help (${L}): children + elderly more than the total is caught`, `"${await e3()}"`);
+
+    await f3.locator("input[name=children] >> xpath=../following-sibling::label//input").fill("1");
+    mail = await ask();
+    report.check(!mail && (await e3()) === t["help.err.needs"] && (await focusedName()) === "needs", `Request Help (${L}): no kind of help chosen is caught`, `"${await e3()}"`);
+
+    await f3.locator("input[name=needs]").nth(0).check();
+    await f3.locator("input[name=needs]").nth(2).check();
+    await f3.locator("textarea[name=details]").fill("Kids aged 4, 7 & 9 — sizes 24/28/30");
+    mail = await ask();
+    const hu = mail ? new URL(mail) : null;
+    const hb = hu?.searchParams.get("body") || "";
+    report.check(
+      !!hu && hu.pathname === site.contact.email &&
+        hu.searchParams.get("subject") === `Help request: ${puja.title.en} — Help Seeker (4 people)` &&
+        ["Phone / WhatsApp: 98765 43210", "Address: 12 Lake Road, Dum Dum, Kolkata 700056", "Number of people who need help: 4", "Children (under 14): 3", "Elderly (60+): 1",
+          `- ${puja.needs[0].label.en}`, `- ${puja.needs[2].label.en}`, "Kids aged 4, 7 & 9 — sizes 24/28/30"].every((s) => hb.includes(s)) &&
+        !hb.includes(puja.needs[1].label.en) && (await e3()) === "",
+      `Request Help (${L}): a complete request opens an email to ${site.contact.email} with every detail, in English`,
+      mail || "no email opened",
+    );
+    const wa = await page.locator("main [role=status] a[href*='wa.me']").getAttribute("href").catch(() => null);
+    report.check(!!wa && decodeURIComponent(new URL(wa).searchParams.get("text") || "") === hb, `Request Help (${L}): after sending, a WhatsApp fallback carries the same details`, wa || "no WhatsApp link");
+
+    await f3.locator(`label:has(input[value=other])`).click();
+    const cleared = await f3.locator("input[name=needs]").count();
+    await f3.locator("textarea[name=details]").fill("");
+    mail = await ask();
+    report.check(
+      cleared === 0 && !mail && (await e3()) === t["help.err.needs"] && (await focusedName()) === "details",
+      `Request Help (${L}): "Something else" needs a written description`,
+      `checkboxes=${cleared} "${await e3()}" focus=${await focusedName()}`,
+    );
+
     report.check(page.errors.page.length === 0, `no JavaScript errors on the forms (${L})`, page.errors.page.join("; "));
     await page.context().close();
   }

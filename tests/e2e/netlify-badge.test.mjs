@@ -57,7 +57,7 @@ export default async function netlifyBadge({ browser, base, live, report }) {
       await page.waitForTimeout(700);
       hits.push(...(await covered(page, false)).map((c) => `scrolled: ${c}`));
     }
-    if (width < 1024) {
+    if (width < 1280) {
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.locator("header button[aria-expanded]").click();
       await page.waitForTimeout(500);

@@ -9,6 +9,7 @@ const quickLinks = [
   { to: "/our-work", key: "nav.work" },
   { to: "/gallery", key: "nav.gallery" },
   { to: "/get-involved", key: "nav.involved" },
+  { to: "/request-help", key: "nav.help" },
   { to: "/donate", key: "nav.donate" },
   { to: "/contact", key: "nav.contact" },
 ];

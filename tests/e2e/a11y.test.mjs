@@ -202,7 +202,7 @@ export default async function a11y({ browser, base, quick, report }) {
     const page = await openPage(browser, base);
     const mismatches = [];
     const marked = [];
-    for (const route of ["/contact", "/get-involved"]) {
+    for (const route of ["/contact", "/get-involved", "/request-help"]) {
       await page.goto(base + route, { waitUntil: "networkidle" });
       const fields = await page.evaluate(() =>
         [...document.querySelectorAll("main form label")].map((label) => {

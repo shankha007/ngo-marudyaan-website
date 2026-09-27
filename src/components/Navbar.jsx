@@ -13,6 +13,7 @@ const links = [
   { to: "/our-work", key: "nav.work" },
   { to: "/gallery", key: "nav.gallery" },
   { to: "/get-involved", key: "nav.involved" },
+  { to: "/request-help", key: "nav.help" },
   { to: "/contact", key: "nav.contact" },
 ];
 
@@ -125,7 +126,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden items-center gap-1 xl:flex">
             {links.map((l) => (
               <NavLink key={l.to} to={l.to} end={l.end} className={navLinkClass}>
                 {({ isActive }) => (
@@ -140,7 +141,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-3 xl:flex">
             <LanguageToggle />
             <Link
               to="/donate"
@@ -150,7 +151,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="flex shrink-0 items-center gap-1.5 lg:hidden">
+          <div className="flex shrink-0 items-center gap-1.5 xl:hidden">
             <LanguageToggle compact />
             <button
               type="button"
@@ -169,7 +170,7 @@ export default function Navbar() {
       {/* `inert` while closed: the off-screen links then stay out of the tab
           order and the accessibility tree, without blocking the slide animation. */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden ${open ? "" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-50 xl:hidden ${open ? "" : "pointer-events-none"}`}
         inert={!open}
       >
         <div

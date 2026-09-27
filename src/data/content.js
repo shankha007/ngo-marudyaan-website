@@ -315,6 +315,53 @@ export const volunteerRoles = [
   },
 ];
 
+/* --- REQUEST HELP ------------------------------------------------- */
+/* The drives people can ask for help from on the Request Help page, and
+   the kinds of help each one offers. Need ids must be unique across all
+   drives. The email the form sends always uses the English labels. */
+export const helpPrograms = [
+  {
+    id: "puja",
+    icon: "gift",
+    title: { en: "Durga Puja drive", bn: "দুর্গাপুজোর কর্মসূচি" },
+    text: {
+      en: "New clothes and a festive meal so no child sits out the Pujas.",
+      bn: "নতুন জামা আর উৎসবের খাবার — যাতে কোনও শিশু পুজোয় বাদ না পড়ে।",
+    },
+    needs: [
+      { id: "puja-kids", label: { en: "New clothes for children", bn: "শিশুদের নতুন জামাকাপড়" } },
+      { id: "puja-adults", label: { en: "New clothes for adults", bn: "বড়দের নতুন জামাকাপড়" } },
+      { id: "puja-saree", label: { en: "Sarees", bn: "শাড়ি" } },
+      { id: "puja-meal", label: { en: "Festive meal / sweets", bn: "উৎসবের খাবার / মিষ্টি" } },
+    ],
+  },
+  {
+    id: "winter",
+    icon: "blanket",
+    title: { en: "Winter drive", bn: "শীতবস্ত্র কর্মসূচি" },
+    text: {
+      en: "Blankets and warm clothes through December and January.",
+      bn: "ডিসেম্বর ও জানুয়ারি জুড়ে কম্বল ও গরম জামাকাপড়।",
+    },
+    needs: [
+      { id: "winter-blanket", label: { en: "Blankets", bn: "কম্বল" } },
+      { id: "winter-adults", label: { en: "Warm clothes for adults", bn: "বড়দের গরম জামাকাপড়" } },
+      { id: "winter-kids", label: { en: "Warm clothes for children", bn: "শিশুদের গরম জামাকাপড়" } },
+      { id: "winter-woollens", label: { en: "Caps, socks & mufflers", bn: "টুপি, মোজা ও মাফলার" } },
+    ],
+  },
+  {
+    id: "other",
+    icon: "hands",
+    title: { en: "Something else", bn: "অন্য কোনও সাহায্য" },
+    text: {
+      en: "Food, schooling, medical or relief needs — tell us below.",
+      bn: "খাবার, পড়াশোনা, চিকিৎসা বা ত্রাণ — নিচে লিখে জানান।",
+    },
+    needs: [],
+  },
+];
+
 /* --- DONATION TIERS ------------------------------------------------ */
 export const donationTiers = [
   { id: "d1", amount: 500,   impact: { en: "Feeds 20 people for one evening", bn: "একটি সন্ধ্যায় ২০ জনের খাবার" } },

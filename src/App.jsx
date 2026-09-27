@@ -11,6 +11,7 @@ import GetInvolved from "./pages/GetInvolved";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import OurWork from "./pages/OurWork";
+import RequestHelp from "./pages/RequestHelp";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/our-work" element={<OurWork />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/get-involved" element={<GetInvolved />} />
+          <Route path="/request-help" element={<RequestHelp />} />
           <Route path="/donate" element={<Donate />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />

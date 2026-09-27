@@ -77,11 +77,12 @@ export default async function navigation({ browser, base, live, report }) {
     await page.context().close();
   }
 
-  /* ---- header fits at tight desktop widths ---- */
+  /* ---- header fits at tight desktop widths (the full link row starts at 1280px;
+          narrower screens use the menu button) ---- */
   {
     const bad = [];
     for (const lang of ["en", "bn"]) {
-      for (const w of [1024, 1100, 1180, 1280]) {
+      for (const w of [1280, 1366, 1440]) {
         const page = await openPage(browser, base, { lang, viewport: { width: w, height: 800 } });
         await page.goto(base + "/", { waitUntil: "networkidle" });
         const r = await page.evaluate(() => {
@@ -95,7 +96,7 @@ export default async function navigation({ browser, base, live, report }) {
         await page.context().close();
       }
     }
-    report.check(bad.length === 0, "header fits on one line from 1024px to 1280px, both languages", bad.join("; "));
+    report.check(bad.length === 0, "header fits on one line from 1280px up, both languages", bad.join("; "));
   }
 
   /* ---- HTTP status codes (the 404 rule lives in public/_redirects, so Netlify only) ---- */
