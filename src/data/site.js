@@ -46,21 +46,21 @@ export const site = {
      (any square PNG/JPG works — it is shown at ~280px)
   ------------------------------------------------------------------ */
   donation: {
-    qrImage: "/images/donate-qr.png",     // TODO: drop your QR here
-    upiId: "marudyaan@upi",               // TODO: your real UPI ID
-    upiName: "NGO Marudyaan",             // TODO: name shown in the UPI app
+    // The QR code, upiId and upiName must all be the same UPI account.
+    qrImage: "/images/donate-qr.png",
+    upiId: "ribhumaster@oksbi",
+    upiName: "Shankha Shubhra Das",       // account holder's name, as UPI apps show it
     /* On phones, show "Pay with a UPI app" buttons that open GPay / PhonePe
        with the UPI ID (and amount) already filled in.
-       TODO: set to true ONLY after upiId above is your real UPI ID —
-       otherwise the buttons would send money to the placeholder ID. */
-    upiButtons: false,
+       Only switch on when upiId above is a real UPI ID. */
+    upiButtons: true,
     bank: {
       accountName: "MARUDYAAN",
       accountNumber: "753202010003418",
       bankName: "Union Bank of India",
       branch: "Belgharia",
       ifsc: "UBIN0575321",
-      accountType: "Savings / Current",   // TODO
+      accountType: "Current",
     },
     taxNote: true, // set false to hide the 80G tax-exemption note
   },
