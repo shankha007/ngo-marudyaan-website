@@ -55,11 +55,11 @@ export const site = {
        otherwise the buttons would send money to the placeholder ID. */
     upiButtons: false,
     bank: {
-      accountName: "NGO Marudyaan",       // TODO
-      accountNumber: "0000 0000 0000",    // TODO
-      bankName: "State Bank of India",    // TODO
-      branch: "Kolkata",                  // TODO
-      ifsc: "SBIN0000000",                // TODO
+      accountName: "MARUDYAAN",
+      accountNumber: "753202010003418",
+      bankName: "Union Bank of India",
+      branch: "Belgharia",
+      ifsc: "UBIN0575321",
       accountType: "Savings / Current",   // TODO
     },
     taxNote: true, // set false to hide the 80G tax-exemption note
