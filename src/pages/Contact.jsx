@@ -7,7 +7,6 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
-import { sendsDirect } from "../utils/sendForm";
 import { isValidEmail } from "../utils/validation";
 
 const empty = { name: "", email: "", subject: "", message: "" };
@@ -18,7 +17,7 @@ const field =
 export default function Contact() {
   const { t } = useLang();
   const [form, setForm] = useState(empty);
-  const sender = useFormSender();
+  const sender = useFormSender("contact");
   // store the message KEY, not its text, so it re-translates if the
   // visitor switches language while the error is showing
   const [errorKey, setErrorKey] = useState("");
@@ -56,8 +55,15 @@ export default function Contact() {
     setErrorKey("");
     const subject = form.subject.trim() || `Website enquiry from ${form.name}`;
     const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
-    const sent = await sender.send({ subject, body, name: form.name, email: form.email.trim(), form: formEl });
-    if (sent && sendsDirect) setForm(empty);
+    const sent = await sender.send({
+      subject,
+      body,
+      name: form.name,
+      email: form.email.trim(),
+      note: form.message,
+      form: formEl,
+    });
+    if (sent && sender.direct) setForm(empty);
   };
 
   const details = [
@@ -173,7 +179,7 @@ export default function Contact() {
               <h2 className="font-display text-2xl font-bold text-oasis-900">
                 {t("contact.form.title")}
               </h2>
-              <p className="mt-2 text-sm text-oasis-800/65">{t(sendsDirect ? "contact.form.note.direct" : "contact.form.note")}</p>
+              <p className="mt-2 text-sm text-oasis-800/65">{t(sender.direct ? "contact.form.note.direct" : "contact.form.note")}</p>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <label className="block">
@@ -236,9 +242,10 @@ export default function Contact() {
                 {errorKey ? t(errorKey) : ""}
               </p>
 
-              <Honeypot />
+              <Honeypot direct={sender.direct} />
               <SubmitButton
                 status={sender.status}
+                direct={sender.direct}
                 label="contact.form.submit"
                 labelDirect="contact.form.submit.direct"
               />

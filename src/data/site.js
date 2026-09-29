@@ -68,13 +68,20 @@ export const site = {
   /* --- FORMS -------------------------------------------------------
      The Contact, Get Involved and Request Help forms can send straight
      to your inbox from the page, so visitors do not need an email app.
-     1. Go to https://web3forms.com, enter ngomarudyaan@gmail.com and
-        press "Create Access Key". The key arrives by email.
-     2. Paste it below. (It is safe to publish — it can only send to you.)
-     Leave it "" and the forms open the visitor's email app instead.
+     Each form has its own Web3Forms access key, so each one appears as
+     a separate form (with its own history) in the Web3Forms dashboard.
+     1. At https://web3forms.com, create one form per key below, using
+        ngomarudyaan@gmail.com. Each key arrives by email.
+     2. Paste each key next to its form. (Keys are safe to publish —
+        they can only send to you.)
+     A form whose key is "" opens the visitor's email app instead.
   ------------------------------------------------------------------ */
   forms: {
-    web3formsKey: "", // TODO: paste your Web3Forms access key
+    keys: {
+      contact: "94bb79b3-8ecb-4d3b-ac65-ca8e47311ca0",  // Contact page
+      involved: "0dd35f27-e972-4e87-92b3-ab2d52dae992", // Get Involved page
+      help: "2835ca99-7be5-473c-859f-b28dcd4cc073",     // Request Help page
+    },
   },
 };
 

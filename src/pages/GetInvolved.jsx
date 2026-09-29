@@ -9,7 +9,6 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
-import { sendsDirect } from "../utils/sendForm";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
 const field =
@@ -59,7 +58,7 @@ export default function GetInvolved() {
     message: "",
   };
   const [form, setForm] = useState(empty);
-  const sender = useFormSender();
+  const sender = useFormSender("involved");
 
   usePageMeta(
     `${t("involved.title")} — ${site.name}`,
@@ -111,9 +110,11 @@ export default function GetInvolved() {
       body,
       name: form.name,
       email: form.email.trim(),
+      fields: { Phone: form.phone.trim(), "Interested in": interestLabel },
+      note: form.message.trim() || "(no message)",
       form: formEl,
     });
-    if (sent && sendsDirect) setForm(empty);
+    if (sent && sender.direct) setForm(empty);
   };
 
   const whatsappHref = `https://wa.me/${site.contact.whatsappHref}?text=${encodeURIComponent(
@@ -150,7 +151,7 @@ export default function GetInvolved() {
       <section className="bg-sand-100 py-20">
         <div className="container-page grid gap-10 lg:grid-cols-2">
           <Reveal>
-            <SectionHeading align="left" title={t("involved.form.title")} sub={t(sendsDirect ? "involved.form.note.direct" : "involved.form.note")} />
+            <SectionHeading align="left" title={t("involved.form.title")} sub={t(sender.direct ? "involved.form.note.direct" : "involved.form.note")} />
             <a
               href={whatsappHref}
               target="_blank"
@@ -256,9 +257,10 @@ export default function GetInvolved() {
                 {errorKey ? t(errorKey) : ""}
               </p>
 
-              <Honeypot />
+              <Honeypot direct={sender.direct} />
               <SubmitButton
                 status={sender.status}
+                direct={sender.direct}
                 label="involved.form.submit"
                 labelDirect="involved.form.submit.direct"
               />

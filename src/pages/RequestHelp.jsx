@@ -8,7 +8,6 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
-import { sendsDirect } from "../utils/sendForm";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
 const field =
@@ -54,7 +53,7 @@ export default function RequestHelp() {
   // message KEY (not text) so it re-translates on a language switch
   const [errorKey, setErrorKey] = useState("");
   const [invalid, setInvalid] = useState({});
-  const sender = useFormSender();
+  const sender = useFormSender("help");
 
   usePageMeta(
     `${t("help.title")} — ${site.name}`,
@@ -110,11 +109,12 @@ export default function RequestHelp() {
     ].filter(([, failed]) => failed);
   };
 
+  /* The same details as plain text (email app / WhatsApp) and as separate
+     labelled fields (Web3Forms), always in English for the volunteers. */
   const buildEmail = () => {
     const forLabel = forOptions.find((o) => o.id === form.requestFor)?.en;
-    const needLabels = program.needs
-      .filter((n) => form.needs.includes(n.id))
-      .map((n) => `- ${n.label.en}`);
+    const needLabels = program.needs.filter((n) => form.needs.includes(n.id)).map((n) => n.label.en);
+    const details = form.details.trim();
     const lines = [
       `HELP REQUEST — ${program.title.en}`,
       "",
@@ -128,12 +128,23 @@ export default function RequestHelp() {
       `  Children (under 14): ${count(form.children)}`,
       `  Elderly (60+): ${count(form.elderly)}`,
     ];
-    if (needLabels.length) lines.push("", "Help needed:", ...needLabels);
-    if (form.details.trim()) lines.push("", "More details:", form.details.trim());
+    if (needLabels.length) lines.push("", "Help needed:", ...needLabels.map((l) => `- ${l}`));
+    if (details) lines.push("", "More details:", details);
     lines.push("", "— Sent from the Request Help form on the website");
     return {
       subject: `Help request: ${program.title.en} — ${form.name.trim()} (${count(form.total)} people)`,
       body: lines.join("\n"),
+      fields: {
+        Drive: program.title.en,
+        "Phone / WhatsApp": form.phone.trim(),
+        "Request is for": forLabel,
+        Address: form.address.trim(),
+        "Number of people who need help": String(count(form.total)),
+        "Children (under 14)": String(count(form.children)),
+        "Elderly (60+)": String(count(form.elderly)),
+        ...(needLabels.length ? { "Help needed": needLabels.join(", ") } : {}),
+      },
+      note: details || "(no extra details)",
     };
   };
 
@@ -150,20 +161,22 @@ export default function RequestHelp() {
     }
     setInvalid({});
     setErrorKey("");
-    const { subject, body } = buildEmail();
+    const { subject, body, fields, note } = buildEmail();
     const sent = await sender.send({
       subject,
       body,
       name: form.name.trim(),
       email: form.email.trim(),
+      fields,
+      note,
       form: formEl,
     });
-    if (sent && sendsDirect) setForm(emptyForm);
+    if (sent && sender.direct) setForm(emptyForm);
   };
 
   const describedBy = (key) => (invalid[key] ? "help-error" : undefined);
 
-  const steps = ["help.how.1", sendsDirect ? "help.how.2.direct" : "help.how.2", "help.how.3"];
+  const steps = ["help.how.1", sender.direct ? "help.how.2.direct" : "help.how.2", "help.how.3"];
 
   return (
     <>
@@ -186,7 +199,7 @@ export default function RequestHelp() {
             </ol>
 
             <div className="mt-8 rounded-2xl border border-oasis-100 bg-white p-5">
-              <p className="text-sm leading-relaxed text-oasis-800/75">{t(sendsDirect ? "help.how.note.direct" : "help.how.note")}</p>
+              <p className="text-sm leading-relaxed text-oasis-800/75">{t(sender.direct ? "help.how.note.direct" : "help.how.note")}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a
                   href={`tel:${site.contact.phoneHref}`}
@@ -460,9 +473,10 @@ export default function RequestHelp() {
                 {errorKey ? t(errorKey) : ""}
               </p>
 
-              <Honeypot />
+              <Honeypot direct={sender.direct} />
               <SubmitButton
                 status={sender.status}
+                direct={sender.direct}
                 label="help.form.submit"
                 labelDirect="help.form.submit.direct"
               />

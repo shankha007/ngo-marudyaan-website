@@ -3,9 +3,10 @@
    Used with hooks/useFormSender.js. */
 import Icon from "./Icon";
 import { useLang } from "../i18n/LanguageContext";
-import { mailtoHref, sendsDirect, whatsappHref } from "../utils/sendForm";
+import { mailtoHref, whatsappHref } from "../utils/sendForm";
 
-export function SubmitButton({ status, label, labelDirect }) {
+/* `direct`: this form sends straight to the inbox (useFormSender's `direct`) */
+export function SubmitButton({ status, direct, label, labelDirect }) {
   const { t } = useLang();
   const sending = status === "sending";
   return (
@@ -15,14 +16,14 @@ export function SubmitButton({ status, label, labelDirect }) {
       className="mt-3 inline-flex items-center gap-2 rounded-full bg-oasis-700 px-7 py-3.5 font-semibold text-white transition hover:bg-oasis-600 disabled:cursor-wait disabled:opacity-70"
     >
       <Icon name="mail" className="h-4 w-4" />
-      {sending ? t("form.sending") : t(sendsDirect ? labelDirect : label)}
+      {sending ? t("form.sending") : t(direct ? labelDirect : label)}
     </button>
   );
 }
 
 /* Invisible to people; bots that fill in every box tick it and are ignored. */
-export function Honeypot() {
-  if (!sendsDirect) return null;
+export function Honeypot({ direct }) {
+  if (!direct) return null;
   return (
     <input
       type="checkbox"
