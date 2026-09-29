@@ -74,7 +74,7 @@ export const site = {
      Leave it "" and the forms open the visitor's email app instead.
   ------------------------------------------------------------------ */
   forms: {
-    web3formsKey: "", // TODO: paste your Web3Forms access key
+    web3formsKey: "09fccc72-f55a-44ce-949a-802d6ae0459c",
   },
 };
 
