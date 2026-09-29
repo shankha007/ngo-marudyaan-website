@@ -56,7 +56,14 @@ export default function Contact() {
     setErrorKey("");
     const subject = form.subject.trim() || `Website enquiry from ${form.name}`;
     const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
-    const sent = await sender.send({ subject, body, name: form.name, email: form.email.trim(), form: formEl });
+    const sent = await sender.send({
+      subject,
+      body,
+      name: form.name,
+      email: form.email.trim(),
+      note: form.message,
+      form: formEl,
+    });
     if (sent && sendsDirect) setForm(empty);
   };
 

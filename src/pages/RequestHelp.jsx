@@ -110,11 +110,12 @@ export default function RequestHelp() {
     ].filter(([, failed]) => failed);
   };
 
+  /* The same details as plain text (email app / WhatsApp) and as separate
+     labelled fields (Web3Forms), always in English for the volunteers. */
   const buildEmail = () => {
     const forLabel = forOptions.find((o) => o.id === form.requestFor)?.en;
-    const needLabels = program.needs
-      .filter((n) => form.needs.includes(n.id))
-      .map((n) => `- ${n.label.en}`);
+    const needLabels = program.needs.filter((n) => form.needs.includes(n.id)).map((n) => n.label.en);
+    const details = form.details.trim();
     const lines = [
       `HELP REQUEST — ${program.title.en}`,
       "",
@@ -128,12 +129,23 @@ export default function RequestHelp() {
       `  Children (under 14): ${count(form.children)}`,
       `  Elderly (60+): ${count(form.elderly)}`,
     ];
-    if (needLabels.length) lines.push("", "Help needed:", ...needLabels);
-    if (form.details.trim()) lines.push("", "More details:", form.details.trim());
+    if (needLabels.length) lines.push("", "Help needed:", ...needLabels.map((l) => `- ${l}`));
+    if (details) lines.push("", "More details:", details);
     lines.push("", "— Sent from the Request Help form on the website");
     return {
       subject: `Help request: ${program.title.en} — ${form.name.trim()} (${count(form.total)} people)`,
       body: lines.join("\n"),
+      fields: {
+        Drive: program.title.en,
+        "Phone / WhatsApp": form.phone.trim(),
+        "Request is for": forLabel,
+        Address: form.address.trim(),
+        "Number of people who need help": String(count(form.total)),
+        "Children (under 14)": String(count(form.children)),
+        "Elderly (60+)": String(count(form.elderly)),
+        ...(needLabels.length ? { "Help needed": needLabels.join(", ") } : {}),
+      },
+      note: details || "(no extra details)",
     };
   };
 
@@ -150,12 +162,14 @@ export default function RequestHelp() {
     }
     setInvalid({});
     setErrorKey("");
-    const { subject, body } = buildEmail();
+    const { subject, body, fields, note } = buildEmail();
     const sent = await sender.send({
       subject,
       body,
       name: form.name.trim(),
       email: form.email.trim(),
+      fields,
+      note,
       form: formEl,
     });
     if (sent && sendsDirect) setForm(emptyForm);

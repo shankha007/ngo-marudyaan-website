@@ -13,7 +13,10 @@ export const mailtoHref = (subject, body) =>
 export const whatsappHref = (text) =>
   `https://wa.me/${site.contact.whatsappHref}?text=${encodeURIComponent(text)}`;
 
-export async function postForm({ subject, body, name, email }) {
+/* Web3Forms emails every field it receives as its own row, labelled with the
+   field's name — so each detail is sent separately ({ "Phone": "…", … }) and
+   `message` holds only what the visitor wrote in their own words. */
+export async function postForm({ subject, name, email, fields = {}, message }) {
   const res = await fetch(WEB3FORMS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -24,7 +27,8 @@ export async function postForm({ subject, body, name, email }) {
       name,
       // Web3Forms uses `email` as the reply-to address
       ...(email ? { email } : {}),
-      message: body,
+      ...fields,
+      message,
     }),
   });
   const data = await res.json().catch(() => ({}));

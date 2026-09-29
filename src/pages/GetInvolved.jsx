@@ -111,6 +111,8 @@ export default function GetInvolved() {
       body,
       name: form.name,
       email: form.email.trim(),
+      fields: { Phone: form.phone.trim(), "Interested in": interestLabel },
+      note: form.message.trim() || "(no message)",
       form: formEl,
     });
     if (sent && sendsDirect) setForm(empty);
