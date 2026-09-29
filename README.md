@@ -138,12 +138,14 @@ and correct anything that is not accurate about your work.
 
 The Contact, Get Involved and Request Help forms can work in two ways:
 
-- **Straight from the page (recommended).** Get a free access key from
-  [web3forms.com](https://web3forms.com) using `ngomarudyaan@gmail.com`, and paste it into
-  `forms.web3formsKey` in `src/data/site.js`. Visitors press Send and the message lands in
-  your inbox — no email app needed. If sending fails (for example, no signal), the form
-  offers to send the same details on WhatsApp or by email instead.
-- **Through the visitor's email app** (what happens while the key is empty). The form opens
+- **Straight from the page (recommended).** Each form has its own free access key from
+  [web3forms.com](https://web3forms.com), so each shows up as a separate form in the
+  Web3Forms dashboard. Create three forms there with `ngomarudyaan@gmail.com`, and paste each
+  key into `forms.keys` in `src/data/site.js` (`contact`, `involved`, `help`). Visitors press
+  Send and the message lands in your inbox, with every detail (phone, address, number of
+  people…) on its own line — no email app needed. If sending fails (for example, no
+  signal), the form offers to send the same details on WhatsApp or by email instead.
+- **Through the visitor's email app** (what a form does while its key is empty). The form opens
   their email app with everything filled in, and they press Send. Many phones have no email
   app set up, so the form also offers WhatsApp as a fallback.
 

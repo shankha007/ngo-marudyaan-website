@@ -8,7 +8,6 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
-import { sendsDirect } from "../utils/sendForm";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
 const field =
@@ -54,7 +53,7 @@ export default function RequestHelp() {
   // message KEY (not text) so it re-translates on a language switch
   const [errorKey, setErrorKey] = useState("");
   const [invalid, setInvalid] = useState({});
-  const sender = useFormSender();
+  const sender = useFormSender("help");
 
   usePageMeta(
     `${t("help.title")} — ${site.name}`,
@@ -172,12 +171,12 @@ export default function RequestHelp() {
       note,
       form: formEl,
     });
-    if (sent && sendsDirect) setForm(emptyForm);
+    if (sent && sender.direct) setForm(emptyForm);
   };
 
   const describedBy = (key) => (invalid[key] ? "help-error" : undefined);
 
-  const steps = ["help.how.1", sendsDirect ? "help.how.2.direct" : "help.how.2", "help.how.3"];
+  const steps = ["help.how.1", sender.direct ? "help.how.2.direct" : "help.how.2", "help.how.3"];
 
   return (
     <>
@@ -200,7 +199,7 @@ export default function RequestHelp() {
             </ol>
 
             <div className="mt-8 rounded-2xl border border-oasis-100 bg-white p-5">
-              <p className="text-sm leading-relaxed text-oasis-800/75">{t(sendsDirect ? "help.how.note.direct" : "help.how.note")}</p>
+              <p className="text-sm leading-relaxed text-oasis-800/75">{t(sender.direct ? "help.how.note.direct" : "help.how.note")}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a
                   href={`tel:${site.contact.phoneHref}`}
@@ -474,9 +473,10 @@ export default function RequestHelp() {
                 {errorKey ? t(errorKey) : ""}
               </p>
 
-              <Honeypot />
+              <Honeypot direct={sender.direct} />
               <SubmitButton
                 status={sender.status}
+                direct={sender.direct}
                 label="help.form.submit"
                 labelDirect="help.form.submit.direct"
               />

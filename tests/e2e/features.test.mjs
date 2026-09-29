@@ -11,7 +11,8 @@ export const title = "Features";
 
 export default async function features({ browser, base, report }) {
   const en = strings.en;
-  const direct = Boolean(site.forms.web3formsKey); // forms send via Web3Forms, not the email app
+  // which forms send via Web3Forms (they have a key) rather than the email app
+  const direct = Object.fromEntries(["contact", "involved", "help"].map((f) => [f, Boolean(site.forms.keys[f])]));
 
   /* ================= gallery ================= */
   {
@@ -149,21 +150,21 @@ export default async function features({ browser, base, report }) {
     await form.locator("input[type=email]").fill("donor@example.com");
     mail = await captureSubmission(page, () => submit.click());
     report.check(
-      !!mail && (direct ? mail.via === "web3forms" : mail.to === site.contact.email) &&
+      !!mail && (direct.contact ? mail.via === "web3forms" : mail.to === site.contact.email) &&
         mail.body.includes("Hello & welcome — 100% test\nsecond line") && (await err()) === "",
-      direct
+      direct.contact
         ? `Contact (${L}): a valid form is sent to Web3Forms with the message intact`
         : `Contact (${L}): a valid form opens an email to ${site.contact.email} with the message intact`,
       JSON.stringify(mail) || "nothing sent",
     );
-    if (direct) {
+    if (direct.contact) {
       const after = await page.evaluate(() => ({
         thanks: document.querySelector("main [role=status]").innerText,
         name: document.querySelector("main form input[type=text]").value,
       }));
       report.check(
-        mail?.payload.email === "donor@example.com" && after.thanks.includes(t["form.sent.title"]) && after.name === "",
-        `Contact (${L}): after sending, it says thank you and clears the form (reply-to is the visitor's email)`,
+        mail?.payload.email === "donor@example.com" && mail.payload.access_key === site.forms.keys.contact && after.thanks.includes(t["form.sent.title"]) && after.name === "",
+        `Contact (${L}): after sending, it says thank you and clears the form (own access key; reply-to is the visitor's email)`,
         JSON.stringify(after),
       );
     }
@@ -197,14 +198,14 @@ export default async function features({ browser, base, report }) {
     const role = volunteerRoles[1].title.en;
     const p2 = mail?.payload;
     report.check(
-      (direct
-        ? p2?.name === "Volunteer" && p2?.Phone === "+91 98765 43210" && p2?.["Interested in"] === role
+      (direct.involved
+        ? p2?.access_key === site.forms.keys.involved && p2?.name === "Volunteer" && p2?.Phone === "+91 98765 43210" && p2?.["Interested in"] === role
         : body.includes("Name: Volunteer") && body.includes("Phone: +91 98765 43210") && body.includes(`Interested in: ${role}`)) &&
         (await e2()) === "",
-      direct
+      direct.involved
         ? `Get Involved (${L}): with name + phone it sends Phone and "Interested in" as separate fields`
         : `Get Involved (${L}): with name + phone it opens an email including the phone and chosen role`,
-      (direct ? JSON.stringify(p2) : body.slice(0, 110)) || "nothing sent",
+      (direct.involved ? JSON.stringify(p2) : body.slice(0, 110)) || "nothing sent",
     );
 
     if (lang === "en") {
@@ -246,39 +247,39 @@ export default async function features({ browser, base, report }) {
     await f3.locator("input[name=needs]").nth(2).check();
     await f3.locator("textarea[name=details]").fill("Kids aged 4, 7 & 9 — sizes 24/28/30");
     // with Web3Forms, answer this one with an error so the form stays filled and the fallbacks show
-    mail = await captureSubmission(page, () => f3.locator("button[type=submit]").click(), { fail: direct });
+    mail = await captureSubmission(page, () => f3.locator("button[type=submit]").click(), { fail: direct.help });
     // the whole request as plain text: the email body, or (with Web3Forms) what the WhatsApp fallback carries
     const wa = await page.locator("main [role=status] a[href*='wa.me']").getAttribute("href").catch(() => null);
     const waText = wa ? decodeURIComponent(new URL(wa).searchParams.get("text") || "") : "";
-    const hb = direct ? waText : mail?.body || "";
+    const hb = direct.help ? waText : mail?.body || "";
     const textOk =
       ["Phone / WhatsApp: 98765 43210", "Address: 12 Lake Road, Dum Dum, Kolkata 700056", "Number of people who need help: 4", "Children (under 14): 3", "Elderly (60+): 1",
         `- ${puja.needs[0].label.en}`, `- ${puja.needs[2].label.en}`, "Kids aged 4, 7 & 9 — sizes 24/28/30"].every((s) => hb.includes(s)) &&
       !hb.includes(puja.needs[1].label.en);
     const p3 = mail?.payload;
     const fieldsOk =
-      !direct ||
-      (p3?.name === "Help Seeker" && p3?.Drive === puja.title.en && p3?.["Phone / WhatsApp"] === "98765 43210" &&
+      !direct.help ||
+      (p3?.access_key === site.forms.keys.help && p3?.name === "Help Seeker" && p3?.Drive === puja.title.en && p3?.["Phone / WhatsApp"] === "98765 43210" &&
         p3?.Address === "12 Lake Road, Dum Dum, Kolkata 700056" && p3?.["Number of people who need help"] === "4" &&
         p3?.["Children (under 14)"] === "3" && p3?.["Elderly (60+)"] === "1" &&
         p3?.["Help needed"] === `${puja.needs[0].label.en}, ${puja.needs[2].label.en}` &&
         p3?.message === "Kids aged 4, 7 & 9 — sizes 24/28/30");
     report.check(
-      !!mail && (direct ? mail.via === "web3forms" : mail.to === site.contact.email) &&
-        mail.subject === `Help request: ${puja.title.en} — Help Seeker (4 people)` && fieldsOk && (direct || textOk) && (await e3()) === "",
-      direct
+      !!mail && (direct.help ? mail.via === "web3forms" : mail.to === site.contact.email) &&
+        mail.subject === `Help request: ${puja.title.en} — Help Seeker (4 people)` && fieldsOk && (direct.help || textOk) && (await e3()) === "",
+      direct.help
         ? `Request Help (${L}): a complete request is sent to Web3Forms with every detail as its own field, in English`
         : `Request Help (${L}): a complete request opens an email to ${site.contact.email} with every detail, in English`,
       JSON.stringify(mail) || "nothing sent",
     );
     report.check(
-      !!wa && (direct ? textOk : waText === hb),
-      direct
+      !!wa && (direct.help ? textOk : waText === hb),
+      direct.help
         ? `Request Help (${L}): if sending fails, a WhatsApp fallback carries the same details`
         : `Request Help (${L}): after sending, a WhatsApp fallback carries the same details`,
       wa || "no WhatsApp link",
     );
-    if (direct) {
+    if (direct.help) {
       const mailto = await page.locator("main [role=status] a[href^='mailto:']").getAttribute("href").catch(() => null);
       report.check(
         !!mailto && new URL(mailto).searchParams.get("body") === waText,
@@ -318,7 +319,8 @@ export default async function features({ browser, base, report }) {
   if (/^0[0\s]*$/.test(site.donation.bank.accountNumber) || /0000000$/.test(site.donation.bank.ifsc)) todo.push("bank account number / IFSC (src/data/site.js)");
   if (site.donation.upiId === "marudyaan@upi") todo.push("UPI ID (src/data/site.js)");
   if (!site.donation.upiButtons) todo.push("one-tap UPI buttons are off — set upiButtons: true once the UPI ID is real (src/data/site.js)");
-  if (!direct) todo.push("forms open the visitor's email app — add a Web3Forms key to send them directly (src/data/site.js)");
+  const noKey = Object.keys(direct).filter((f) => !direct[f]);
+  if (noKey.length) todo.push(`Web3Forms key missing for: ${noKey.join(", ")} — those forms open the visitor's email app (src/data/site.js)`);
   if (Object.values(site.registration).some((v) => /^X+$/.test(v))) todo.push("registration / PAN / 80G numbers (src/data/site.js)");
   if (team.some((m) => m.name.en === "Full Name")) todo.push("team names (src/data/content.js)");
   // the generated placeholder art is all .svg; real photos will be .jpg/.png/.webp
