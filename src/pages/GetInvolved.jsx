@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
@@ -6,7 +7,9 @@ import SectionHeading from "../components/SectionHeading";
 import { faqs, volunteerRoles } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
+import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
+import { sendsDirect } from "../utils/sendForm";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
 const field =
@@ -48,13 +51,15 @@ export default function GetInvolved() {
   const { t, tr } = useLang();
   /* `interest` holds the role id, not its label, so switching language
      does not leave the <select> pointing at a value that no longer exists. */
-  const [form, setForm] = useState({
+  const empty = {
     name: "",
     phone: "",
     email: "",
     interest: volunteerRoles[0].id,
     message: "",
-  });
+  };
+  const [form, setForm] = useState(empty);
+  const sender = useFormSender();
 
   usePageMeta(
     `${t("involved.title")} — ${site.name}`,
@@ -70,11 +75,13 @@ export default function GetInvolved() {
 
   const set = (key) => (e) => {
     setForm((f) => ({ ...f, [key]: e.target.value }));
+    sender.reset();
     if (invalid[key]) setInvalid((v) => ({ ...v, [key]: false }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const formEl = e.currentTarget;
     // name and phone are required: WhatsApp/phone is how the NGO follows up
     const missing = { name: !form.name.trim(), phone: !form.phone.trim() };
     const bad = {
@@ -99,9 +106,14 @@ export default function GetInvolved() {
     const role = volunteerRoles.find((r) => r.id === form.interest);
     const interestLabel = role ? role.title.en : form.interest;
     const body = `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested in: ${interestLabel}\n\n${form.message}`;
-    window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(
-      "Volunteer / partnership enquiry",
-    )}&body=${encodeURIComponent(body)}`;
+    const sent = await sender.send({
+      subject: `Volunteer / partnership enquiry — ${form.name.trim()}`,
+      body,
+      name: form.name,
+      email: form.email.trim(),
+      form: formEl,
+    });
+    if (sent && sendsDirect) setForm(empty);
   };
 
   const whatsappHref = `https://wa.me/${site.contact.whatsappHref}?text=${encodeURIComponent(
@@ -138,7 +150,7 @@ export default function GetInvolved() {
       <section className="bg-sand-100 py-20">
         <div className="container-page grid gap-10 lg:grid-cols-2">
           <Reveal>
-            <SectionHeading align="left" title={t("involved.form.title")} sub={t("involved.form.note")} />
+            <SectionHeading align="left" title={t("involved.form.title")} sub={t(sendsDirect ? "involved.form.note.direct" : "involved.form.note")} />
             <a
               href={whatsappHref}
               target="_blank"
@@ -244,13 +256,13 @@ export default function GetInvolved() {
                 {errorKey ? t(errorKey) : ""}
               </p>
 
-              <button
-                type="submit"
-                className="mt-3 inline-flex items-center gap-2 rounded-full bg-oasis-700 px-7 py-3.5 font-semibold text-white transition hover:bg-oasis-600"
-              >
-                <Icon name="mail" className="h-4 w-4" />
-                {t("involved.form.submit")}
-              </button>
+              <Honeypot />
+              <SubmitButton
+                status={sender.status}
+                label="involved.form.submit"
+                labelDirect="involved.form.submit.direct"
+              />
+              <SendResult status={sender.status} message={sender.message} sentKey="involved.sent" />
             </form>
           </Reveal>
         </div>

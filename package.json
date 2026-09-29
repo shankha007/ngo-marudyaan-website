@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "node tests/e2e/run.mjs",
     "test:quick": "node tests/e2e/run.mjs --quick",
-    "test:live": "node tests/e2e/run.mjs --live"
+    "test:live": "node tests/e2e/run.mjs --live",
+    "og-image": "node scripts/og-image.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

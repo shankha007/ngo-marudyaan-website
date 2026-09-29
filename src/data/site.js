@@ -46,18 +46,35 @@ export const site = {
      (any square PNG/JPG works — it is shown at ~280px)
   ------------------------------------------------------------------ */
   donation: {
-    qrImage: "/images/donate-qr.png",     // TODO: drop your QR here
-    upiId: "marudyaan@upi",               // TODO: your real UPI ID
-    upiName: "NGO Marudyaan",             // TODO: name shown in the UPI app
+    // The QR code, upiId and upiName must all be the same UPI account.
+    qrImage: "/images/donate-qr.png",
+    upiId: "ribhumaster@oksbi",
+    upiName: "Shankha Shubhra Das",       // account holder's name, as UPI apps show it
+    /* On phones, show "Pay with a UPI app" buttons that open GPay / PhonePe
+       with the UPI ID (and amount) already filled in.
+       Only switch on when upiId above is a real UPI ID. */
+    upiButtons: true,
     bank: {
-      accountName: "NGO Marudyaan",       // TODO
-      accountNumber: "0000 0000 0000",    // TODO
-      bankName: "State Bank of India",    // TODO
-      branch: "Kolkata",                  // TODO
-      ifsc: "SBIN0000000",                // TODO
-      accountType: "Savings / Current",   // TODO
+      accountName: "MARUDYAAN",
+      accountNumber: "753202010003418",
+      bankName: "Union Bank of India",
+      branch: "Belgharia",
+      ifsc: "UBIN0575321",
+      accountType: "Current",
     },
     taxNote: true, // set false to hide the 80G tax-exemption note
+  },
+
+  /* --- FORMS -------------------------------------------------------
+     The Contact, Get Involved and Request Help forms can send straight
+     to your inbox from the page, so visitors do not need an email app.
+     1. Go to https://web3forms.com, enter ngomarudyaan@gmail.com and
+        press "Create Access Key". The key arrives by email.
+     2. Paste it below. (It is safe to publish — it can only send to you.)
+     Leave it "" and the forms open the visitor's email app instead.
+  ------------------------------------------------------------------ */
+  forms: {
+    web3formsKey: "", // TODO: paste your Web3Forms access key
   },
 };
 
