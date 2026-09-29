@@ -27,6 +27,12 @@ export function realRoutes() {
   return ["/", ...paths];
 }
 
+/* Page paths listed in public/sitemap.xml. */
+export function sitemapRoutes() {
+  const text = readFileSync(join(ROOT, "public", "sitemap.xml"), "utf8");
+  return [...text.matchAll(/<loc>https?:\/\/[^/<]+(\/[^<]*)<\/loc>/g)].map((m) => m[1]);
+}
+
 /* Paths declared in <Route path="..."> in src/App.jsx (excluding the "*" catch-all). */
 export function appRoutes() {
   const text = readFileSync(join(ROOT, "src", "App.jsx"), "utf8");
@@ -102,18 +108,38 @@ export async function scrollLikeAUser(page) {
   await page.waitForTimeout(1200);
 }
 
-/* The forms open the visitor's email app via a mailto: link. Capture it. */
-export async function captureMailto(page, action) {
+/* Same address as WEB3FORMS_URL in src/utils/sendForm.js. */
+export const WEB3FORMS_URL = "https://api.web3forms.com/submit";
+
+/* The forms either open the visitor's email app (a mailto: link) or, with a
+   Web3Forms key in site.js, post to Web3Forms. Capture whichever happens.
+   The Web3Forms call is answered here — success, or an error with fail: true —
+   so tests never send real email.
+   Returns { via: "email" | "web3forms", to, subject, body } or null. */
+export async function captureSubmission(page, action, { fail = false } = {}) {
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("Page.enable");
-  let url = null;
+  let sent = null;
   cdp.on("Page.frameRequestedNavigation", (e) => {
-    if (e.url.startsWith("mailto:")) url = e.url;
+    if (!e.url.startsWith("mailto:")) return;
+    const u = new URL(e.url);
+    sent = { via: "email", to: u.pathname, subject: u.searchParams.get("subject"), body: u.searchParams.get("body") };
   });
+  const answer = async (route) => {
+    const p = route.request().postDataJSON();
+    sent = { via: "web3forms", to: "web3forms", subject: p.subject, body: p.message, payload: p };
+    await route.fulfill(
+      fail
+        ? { status: 500, json: { success: false, message: "test failure" } }
+        : { status: 200, json: { success: true, message: "Email sent successfully!" } },
+    );
+  };
+  await page.route(WEB3FORMS_URL, answer);
   await action();
   await page.waitForTimeout(500);
+  await page.unroute(WEB3FORMS_URL, answer);
   await cdp.detach().catch(() => {});
-  return url;
+  return sent;
 }
 
 export async function screenshotOnFailure(page, name) {

@@ -2,7 +2,7 @@
    header layout, and (on Netlify) HTTP status codes.                    */
 import { programs } from "../../src/data/content.js";
 import { strings } from "../../src/i18n/strings.js";
-import { appRoutes, openPage, realRoutes } from "./lib.mjs";
+import { appRoutes, openPage, realRoutes, sitemapRoutes } from "./lib.mjs";
 
 export const title = "Navigation & routing";
 
@@ -16,6 +16,16 @@ export default async function navigation({ browser, base, live, report }) {
     missing.length === 0 && extra.length === 0,
     `public/_redirects lists exactly the ${inApp.length} pages in src/App.jsx`,
     `${missing.length ? `add to _redirects: ${missing.join(", ")} (they would return 404 on Netlify). ` : ""}${extra.length ? `in _redirects but not in App.jsx: ${extra.join(", ")}` : ""}`,
+  );
+
+  /* ---- public/sitemap.xml lists the same pages, so search engines find them all ---- */
+  const inSitemap = sitemapRoutes();
+  const notMapped = inApp.filter((p) => !inSitemap.includes(p));
+  const notPages = inSitemap.filter((p) => !inApp.includes(p));
+  report.check(
+    notMapped.length === 0 && notPages.length === 0,
+    `public/sitemap.xml lists exactly the ${inApp.length} pages in src/App.jsx`,
+    `${notMapped.length ? `add to sitemap.xml: ${notMapped.join(", ")}. ` : ""}${notPages.length ? `in sitemap.xml but not a page: ${notPages.join(", ")}` : ""}`,
   );
 
   /* ---- header links go to the right page, starting at the top ---- */
@@ -109,6 +119,9 @@ export default async function navigation({ browser, base, live, report }) {
     "/about/": 200,
     "/gallery?utm_source=facebook": 200,
     "/favicon.svg": 200,
+    "/robots.txt": 200,
+    "/sitemap.xml": 200,
+    "/images/og-image.jpg": 200,
     "/no-such-page": 404,
     "/about/team": 404,
     "/images/no-such-image.png": 404,

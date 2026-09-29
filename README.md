@@ -81,6 +81,13 @@ details**, and the impact numbers shown on the home page.
 (any square PNG or JPG). Until you do, the page shows a clearly marked empty box —
 nothing breaks.
 
+**One-tap UPI buttons:** once `upiId` is your real UPI ID, set `upiButtons: true`.
+Phone visitors then get a "Pay with a UPI app" button, plus a button for each
+suggested amount, which open GPay / PhonePe with everything filled in. Keep it
+`false` until the UPI ID is real, or the buttons would pay the placeholder ID.
+Try a small payment from your own phone after switching it on — some UPI apps
+limit link payments to personal (non-merchant) UPI IDs.
+
 ### 3. `src/data/content.js` — programmes, gallery, team, story, FAQs
 
 Every entry has an `en` and a `bn` version. Replace the draft copy with your real text.
@@ -129,10 +136,16 @@ and correct anything that is not accurate about your work.
 
 ## How the forms work
 
-The site has no server, so the Contact and Get Involved forms open the visitor's own email
-app with all the fields already filled in — they just press Send. Mail arrives at
-`ngomarudyaan@gmail.com`. If you later want forms that submit directly on the page, a free
-service like Formspree or Google Forms can be dropped in without changing anything else.
+The Contact, Get Involved and Request Help forms can work in two ways:
+
+- **Straight from the page (recommended).** Get a free access key from
+  [web3forms.com](https://web3forms.com) using `ngomarudyaan@gmail.com`, and paste it into
+  `forms.web3formsKey` in `src/data/site.js`. Visitors press Send and the message lands in
+  your inbox — no email app needed. If sending fails (for example, no signal), the form
+  offers to send the same details on WhatsApp or by email instead.
+- **Through the visitor's email app** (what happens while the key is empty). The form opens
+  their email app with everything filled in, and they press Send. Many phones have no email
+  app set up, so the form also offers WhatsApp as a fallback.
 
 ---
 
@@ -174,9 +187,14 @@ npm test -- --no-build                # skip the build step (reuse the last dist
 Suites: `smoke` (page sweep), `navigation`, `features`, `a11y` (accessibility),
 `netlify-badge`. Set `HEADED=1` to watch the browser, or `CHROME_PATH=…` to pick a browser.
 
-**Adding a new page?** Add its path to `public/_redirects` as well as `src/App.jsx` — the
-`navigation` suite fails if the two lists don't match, because a page missing from
-`_redirects` would load fine but tell search engines it doesn't exist.
+**Adding a new page?** Add its path to `public/_redirects` and `public/sitemap.xml` as well
+as `src/App.jsx` — the `navigation` suite fails if the lists don't match, because a page
+missing from `_redirects` would load fine but tell search engines it doesn't exist, and one
+missing from the sitemap is harder for Google to find.
+
+**Link previews.** When someone shares the site on WhatsApp or Facebook, the preview shows
+`public/images/og-image.jpg`. If you change the NGO's name or tagline, remake it with
+`npm run og-image`.
 
 ---
 

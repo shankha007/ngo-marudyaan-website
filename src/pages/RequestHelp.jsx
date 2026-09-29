@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import { helpPrograms } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
+import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
+import { sendsDirect } from "../utils/sendForm";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
 const field =
@@ -30,27 +33,28 @@ const forOptions = [
   { id: "other", key: "help.form.for.other", en: "Someone else I know" },
 ];
 
+/* ids, not labels, so a language switch keeps the choices intact */
+const emptyForm = {
+  program: "",
+  name: "",
+  phone: "",
+  email: "",
+  requestFor: forOptions[0].id,
+  address: "",
+  total: "",
+  children: "",
+  elderly: "",
+  needs: [],
+  details: "",
+};
+
 export default function RequestHelp() {
   const { t, tr } = useLang();
-  /* ids, not labels, so a language switch keeps the choices intact */
-  const [form, setForm] = useState({
-    program: "",
-    name: "",
-    phone: "",
-    email: "",
-    requestFor: forOptions[0].id,
-    address: "",
-    total: "",
-    children: "",
-    elderly: "",
-    needs: [],
-    details: "",
-  });
+  const [form, setForm] = useState(emptyForm);
   // message KEY (not text) so it re-translates on a language switch
   const [errorKey, setErrorKey] = useState("");
   const [invalid, setInvalid] = useState({});
-  // the email we last handed to the mail app, reused for the WhatsApp fallback
-  const [sentBody, setSentBody] = useState("");
+  const sender = useFormSender();
 
   usePageMeta(
     `${t("help.title")} — ${site.name}`,
@@ -60,7 +64,7 @@ export default function RequestHelp() {
   const program = helpPrograms.find((p) => p.id === form.program);
 
   const clear = (...keys) => {
-    setSentBody(""); // the details changed, so the WhatsApp copy would be stale
+    sender.reset(); // the details changed, so the WhatsApp copy would be stale
     if (keys.some((k) => invalid[k])) {
       setInvalid((v) => ({ ...v, ...Object.fromEntries(keys.map((k) => [k, false])) }));
     }
@@ -133,30 +137,33 @@ export default function RequestHelp() {
     };
   };
 
-  /* No back end on a front-end-only site: we hand the request to the
-     visitor's own email app with everything already filled in. */
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const formEl = e.currentTarget;
     const problems = validate();
     if (problems.length) {
       setInvalid(Object.fromEntries(problems.map(([key]) => [key, true])));
       setErrorKey(problems[0][2]);
-      setSentBody("");
-      e.currentTarget.querySelector(`[name="${problems[0][0]}"]`)?.focus();
+      sender.reset();
+      formEl.querySelector(`[name="${problems[0][0]}"]`)?.focus();
       return;
     }
     setInvalid({});
     setErrorKey("");
     const { subject, body } = buildEmail();
-    setSentBody(body);
-    window.location.assign(
-      `mailto:${site.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
-    );
+    const sent = await sender.send({
+      subject,
+      body,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      form: formEl,
+    });
+    if (sent && sendsDirect) setForm(emptyForm);
   };
 
   const describedBy = (key) => (invalid[key] ? "help-error" : undefined);
 
-  const steps = ["help.how.1", "help.how.2", "help.how.3"];
+  const steps = ["help.how.1", sendsDirect ? "help.how.2.direct" : "help.how.2", "help.how.3"];
 
   return (
     <>
@@ -179,7 +186,7 @@ export default function RequestHelp() {
             </ol>
 
             <div className="mt-8 rounded-2xl border border-oasis-100 bg-white p-5">
-              <p className="text-sm leading-relaxed text-oasis-800/75">{t("help.how.note")}</p>
+              <p className="text-sm leading-relaxed text-oasis-800/75">{t(sendsDirect ? "help.how.note.direct" : "help.how.note")}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a
                   href={`tel:${site.contact.phoneHref}`}
@@ -453,32 +460,13 @@ export default function RequestHelp() {
                 {errorKey ? t(errorKey) : ""}
               </p>
 
-              <button
-                type="submit"
-                className="mt-3 inline-flex items-center gap-2 rounded-full bg-oasis-700 px-7 py-3.5 font-semibold text-white transition hover:bg-oasis-600"
-              >
-                <Icon name="mail" className="h-4 w-4" />
-                {t("help.form.submit")}
-              </button>
-
-              {/* not everyone has an email app set up on their phone */}
-              <div role="status">
-                {sentBody && (
-                  <div className="mt-6 rounded-2xl border border-oasis-200 bg-oasis-50 p-5">
-                    <p className="font-semibold text-oasis-900">{t("help.sent.title")}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-oasis-800/75">{t("help.sent.body")}</p>
-                    <a
-                      href={`https://wa.me/${site.contact.whatsappHref}?text=${encodeURIComponent(sentBody)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 rounded-full border border-oasis-300 bg-white px-5 py-2.5 text-sm font-semibold text-oasis-700 transition hover:border-oasis-500"
-                    >
-                      <Icon name="whatsapp" className="h-4 w-4" />
-                      {t("help.sent.whatsapp")}
-                    </a>
-                  </div>
-                )}
-              </div>
+              <Honeypot />
+              <SubmitButton
+                status={sender.status}
+                label="help.form.submit"
+                labelDirect="help.form.submit.direct"
+              />
+              <SendResult status={sender.status} message={sender.message} sentKey="help.sent.direct" />
             </form>
           </Reveal>
         </div>

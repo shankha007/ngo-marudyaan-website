@@ -49,6 +49,11 @@ export const site = {
     qrImage: "/images/donate-qr.png",     // TODO: drop your QR here
     upiId: "marudyaan@upi",               // TODO: your real UPI ID
     upiName: "NGO Marudyaan",             // TODO: name shown in the UPI app
+    /* On phones, show "Pay with a UPI app" buttons that open GPay / PhonePe
+       with the UPI ID (and amount) already filled in.
+       TODO: set to true ONLY after upiId above is your real UPI ID —
+       otherwise the buttons would send money to the placeholder ID. */
+    upiButtons: false,
     bank: {
       accountName: "NGO Marudyaan",       // TODO
       accountNumber: "0000 0000 0000",    // TODO
@@ -58,6 +63,18 @@ export const site = {
       accountType: "Savings / Current",   // TODO
     },
     taxNote: true, // set false to hide the 80G tax-exemption note
+  },
+
+  /* --- FORMS -------------------------------------------------------
+     The Contact, Get Involved and Request Help forms can send straight
+     to your inbox from the page, so visitors do not need an email app.
+     1. Go to https://web3forms.com, enter ngomarudyaan@gmail.com and
+        press "Create Access Key". The key arrives by email.
+     2. Paste it below. (It is safe to publish — it can only send to you.)
+     Leave it "" and the forms open the visitor's email app instead.
+  ------------------------------------------------------------------ */
+  forms: {
+    web3formsKey: "", // TODO: paste your Web3Forms access key
   },
 };
 

@@ -19,6 +19,14 @@ export default function Donate() {
     "Donate to NGO Marudyaan by UPI QR code or bank transfer. Every contribution is acknowledged with photos and an expense report.",
   );
 
+  /* upi:// links open the visitor's UPI app (GPay, PhonePe, Paytm…) with the
+     payee filled in. Only phones can follow them, so the buttons are shown on
+     touch screens only (pointer-coarse), and only once upiButtons is switched on. */
+  const upiHref = (amount) =>
+    `upi://pay?pa=${donation.upiId}&pn=${encodeURIComponent(donation.upiName)}&cu=INR` +
+    `&tn=${encodeURIComponent(`Donation to ${site.name}`)}` +
+    (amount ? `&am=${amount.toFixed(2)}` : "");
+
   const whatsappHref = `https://wa.me/${contact.whatsappHref}?text=${encodeURIComponent(
     "Hello NGO Marudyaan, I have made a donation. Here are my details:\nName:\nPhone:\nAmount:\nPAN (for 80G receipt):",
   )}`;
@@ -60,6 +68,18 @@ export default function Donate() {
                 )}
               </div>
               <p className="mt-4 max-w-xs text-sm text-oasis-800/65">{t("donate.qr.note")}</p>
+              {donation.upiButtons && (
+                <div className="hidden w-full flex-col items-center pointer-coarse:flex">
+                  <a
+                    href={upiHref()}
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-oasis-700 px-6 py-3.5 font-semibold text-white transition hover:bg-oasis-600"
+                  >
+                    <Icon name="heart" className="h-5 w-5" />
+                    {t("donate.upi.pay")}
+                  </a>
+                  <p className="mt-2 text-xs text-oasis-800/55">{t("donate.upi.payNote")}</p>
+                </div>
+              )}
               <div className="mt-6 w-full rounded-2xl bg-oasis-50 px-5 py-1">
                 <CopyField label={t("donate.upi.label")} value={donation.upiId} mono compact />
               </div>
@@ -109,13 +129,23 @@ export default function Donate() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {donationTiers.map((tier, i) => (
               <Reveal key={tier.id} delay={i * 80}>
-                <div className="h-full rounded-2xl border border-oasis-100 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                <div className="flex h-full flex-col items-center rounded-2xl border border-oasis-100 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
                   <div className="font-display text-3xl font-bold text-oasis-700">
                     ₹{tier.amount.toLocaleString("en-IN")}
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-oasis-800/75">
                     {tr(tier.impact)}
                   </p>
+                  {donation.upiButtons && (
+                    <div className="mt-auto hidden pt-5 pointer-coarse:block">
+                      <a
+                        href={upiHref(tier.amount)}
+                        className="inline-flex items-center gap-2 rounded-full border border-oasis-300 px-5 py-2.5 text-sm font-semibold text-oasis-700 transition hover:border-oasis-500 hover:bg-oasis-50"
+                      >
+                        {t("donate.upi.give")} ₹{tier.amount.toLocaleString("en-IN")}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </Reveal>
             ))}

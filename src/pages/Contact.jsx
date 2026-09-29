@@ -1,18 +1,24 @@
 import { useRef, useState } from "react";
+import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
+import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
+import { sendsDirect } from "../utils/sendForm";
 import { isValidEmail } from "../utils/validation";
+
+const empty = { name: "", email: "", subject: "", message: "" };
 
 const field =
   "w-full rounded-xl border border-oasis-200 bg-white px-4 py-3 text-oasis-900 placeholder:text-oasis-800/35 transition focus:border-oasis-500 focus:outline-none focus:ring-2 focus:ring-oasis-500/20 aria-invalid:border-red-500 aria-invalid:ring-2 aria-invalid:ring-red-500/15";
 
 export default function Contact() {
   const { t } = useLang();
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState(empty);
+  const sender = useFormSender();
   // store the message KEY, not its text, so it re-translates if the
   // visitor switches language while the error is showing
   const [errorKey, setErrorKey] = useState("");
@@ -28,13 +34,13 @@ export default function Contact() {
 
   const set = (key) => (e) => {
     setForm((f) => ({ ...f, [key]: e.target.value }));
+    sender.reset();
     if (invalid[key]) setInvalid((v) => ({ ...v, [key]: false }));
   };
 
-  /* No back end on a front-end-only site: we hand the message to the
-     visitor's own email app with everything already filled in. */
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const formEl = e.currentTarget;
     const bad = {
       name: !form.name.trim(),
       email: form.email.trim() !== "" && !isValidEmail(form.email),
@@ -50,9 +56,8 @@ export default function Contact() {
     setErrorKey("");
     const subject = form.subject.trim() || `Website enquiry from ${form.name}`;
     const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
-    window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
+    const sent = await sender.send({ subject, body, name: form.name, email: form.email.trim(), form: formEl });
+    if (sent && sendsDirect) setForm(empty);
   };
 
   const details = [
@@ -168,7 +173,7 @@ export default function Contact() {
               <h2 className="font-display text-2xl font-bold text-oasis-900">
                 {t("contact.form.title")}
               </h2>
-              <p className="mt-2 text-sm text-oasis-800/65">{t("contact.form.note")}</p>
+              <p className="mt-2 text-sm text-oasis-800/65">{t(sendsDirect ? "contact.form.note.direct" : "contact.form.note")}</p>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <label className="block">
@@ -231,13 +236,13 @@ export default function Contact() {
                 {errorKey ? t(errorKey) : ""}
               </p>
 
-              <button
-                type="submit"
-                className="mt-3 inline-flex items-center gap-2 rounded-full bg-oasis-700 px-7 py-3.5 font-semibold text-white transition hover:bg-oasis-600"
-              >
-                <Icon name="mail" className="h-4 w-4" />
-                {t("contact.form.submit")}
-              </button>
+              <Honeypot />
+              <SubmitButton
+                status={sender.status}
+                label="contact.form.submit"
+                labelDirect="contact.form.submit.direct"
+              />
+              <SendResult status={sender.status} message={sender.message} sentKey="contact.sent" />
             </form>
           </Reveal>
         </div>

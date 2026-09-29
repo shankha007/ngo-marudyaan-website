@@ -2,15 +2,16 @@
    WhatsApp link), both forms (validation + the email they open), FAQ,
    impact counters — plus warnings for placeholder content still on the site. */
 import { bannerSlides } from "../../src/data/banner.js";
-import { faqs, galleryItems, helpPrograms, programs, team, volunteerRoles } from "../../src/data/content.js";
+import { donationTiers, faqs, galleryItems, helpPrograms, programs, team, volunteerRoles } from "../../src/data/content.js";
 import { site, stats } from "../../src/data/site.js";
 import { strings } from "../../src/i18n/strings.js";
-import { captureMailto, fileExists, openPage, scrollLikeAUser } from "./lib.mjs";
+import { captureSubmission, fileExists, openPage, scrollLikeAUser } from "./lib.mjs";
 
 export const title = "Features";
 
 export default async function features({ browser, base, report }) {
   const en = strings.en;
+  const direct = Boolean(site.forms.web3formsKey); // forms send via Web3Forms, not the email app
 
   /* ================= gallery ================= */
   {
@@ -91,6 +92,32 @@ export default async function features({ browser, base, report }) {
     });
     if (qrOnDisk) report.check(qr.loaded, "donation QR code image loads");
     else report.check(qr.placeholder, "without a QR image, the Donate page shows the “not added yet” box instead of a broken image");
+
+    /* one-tap UPI links (upi://pay?...) — phones only, and only once switched on */
+    const upi = () =>
+      page.evaluate(() =>
+        [...document.querySelectorAll('main a[href^="upi:"]')].map((a) => ({ href: a.href, visible: a.offsetParent !== null })),
+      );
+    const links = await upi();
+    if (!site.donation.upiButtons) {
+      report.check(links.length === 0, "UPI pay buttons stay hidden while upiButtons is off (no payments to a placeholder ID)", JSON.stringify(links));
+    } else {
+      const params = links.map((l) => Object.fromEntries(new URLSearchParams(l.href.split("?")[1])));
+      const amounts = params.map((p) => p.am).filter(Boolean);
+      report.check(
+        links.length === donationTiers.length + 1 &&
+          params.every((p) => p.pa === site.donation.upiId && p.pn === site.donation.upiName && p.cu === "INR") &&
+          donationTiers.every((d) => amounts.includes(d.amount.toFixed(2))),
+        `UPI pay buttons pay ${site.donation.upiId}, one per amount (${donationTiers.map((d) => d.amount).join(", ")}) plus any amount`,
+        JSON.stringify(params),
+      );
+      report.check(links.every((l) => !l.visible), "UPI pay buttons are hidden on a desktop (no UPI app to open)", JSON.stringify(links));
+      const phone = await openPage(browser, base, { viewport: "mobile" });
+      await phone.goto(base + "/donate", { waitUntil: "networkidle" });
+      const onPhone = await phone.evaluate(() => [...document.querySelectorAll('main a[href^="upi:"]')].filter((a) => a.offsetParent !== null).length);
+      report.check(onPhone === links.length, "UPI pay buttons show on a phone", `${onPhone} of ${links.length} visible`);
+      await phone.context().close();
+    }
     await page.context().close();
   }
 
@@ -105,7 +132,7 @@ export default async function features({ browser, base, report }) {
     const submit = form.locator("button[type=submit]");
     const err = () => page.locator("#contact-error").innerText();
 
-    let mail = await captureMailto(page, () => submit.click());
+    let mail = await captureSubmission(page, () => submit.click());
     let state = await page.evaluate(() => ({
       focusOnName: document.activeElement === document.querySelector("main form input[type=text]"),
       invalid: document.querySelectorAll("main form [aria-invalid=true]").length,
@@ -115,22 +142,35 @@ export default async function features({ browser, base, report }) {
     await form.locator("input[type=text]").first().fill("Test Donor");
     await form.locator("textarea").fill("Hello & welcome — 100% test\nsecond line");
     await form.locator("input[type=email]").fill("donor@gmail");
-    mail = await captureMailto(page, () => submit.click());
+    mail = await captureSubmission(page, () => submit.click());
     const focusOnEmail = await page.evaluate(() => document.activeElement.type === "email");
     report.check(!mail && (await err()) === t["form.email.invalid"] && focusOnEmail, `Contact (${L}): a mistyped email ("donor@gmail") is caught`, await err());
 
     await form.locator("input[type=email]").fill("donor@example.com");
-    mail = await captureMailto(page, () => submit.click());
-    const u = mail ? new URL(mail) : null;
+    mail = await captureSubmission(page, () => submit.click());
     report.check(
-      !!u && u.pathname === site.contact.email && u.searchParams.get("body").includes("Hello & welcome — 100% test\nsecond line") && (await err()) === "",
-      `Contact (${L}): a valid form opens an email to ${site.contact.email} with the message intact`,
-      mail || "no email opened",
+      !!mail && (direct ? mail.via === "web3forms" : mail.to === site.contact.email) &&
+        mail.body.includes("Hello & welcome — 100% test\nsecond line") && (await err()) === "",
+      direct
+        ? `Contact (${L}): a valid form is sent to Web3Forms with the message intact`
+        : `Contact (${L}): a valid form opens an email to ${site.contact.email} with the message intact`,
+      JSON.stringify(mail) || "nothing sent",
     );
+    if (direct) {
+      const after = await page.evaluate(() => ({
+        thanks: document.querySelector("main [role=status]").innerText,
+        name: document.querySelector("main form input[type=text]").value,
+      }));
+      report.check(
+        mail?.payload.email === "donor@example.com" && after.thanks.includes(t["form.sent.title"]) && after.name === "",
+        `Contact (${L}): after sending, it says thank you and clears the form (reply-to is the visitor's email)`,
+        JSON.stringify(after),
+      );
+    }
 
     await page.goto(base + "/get-involved", { waitUntil: "networkidle" });
     const f2 = page.locator("main form");
-    const send = () => captureMailto(page, () => f2.locator("button[type=submit]").click());
+    const send = () => captureSubmission(page, () => f2.locator("button[type=submit]").click());
     const e2 = () => page.locator("#involved-error").innerText();
     const focused = () => page.evaluate(() => document.activeElement.type);
     const marked = () => page.evaluate(() => [...document.querySelectorAll("main form [aria-invalid=true]")].map((e) => e.type));
@@ -153,11 +193,11 @@ export default async function features({ browser, base, report }) {
     await f2.locator("input[type=tel]").fill("+91 98765 43210");
     await f2.locator("select").selectOption({ index: 1 });
     mail = await send();
-    const body = mail ? new URL(mail).searchParams.get("body") : "";
+    const body = mail?.body || "";
     const role = volunteerRoles[1].title.en;
     report.check(
       body.includes("Name: Volunteer") && body.includes("Phone: +91 98765 43210") && body.includes(`Interested in: ${role}`) && (await e2()) === "",
-      `Get Involved (${L}): with name + phone it opens an email including the phone and chosen role`,
+      `Get Involved (${L}): with name + phone it ${direct ? "sends" : "opens an email"} including the phone and chosen role`,
       body.slice(0, 110) || "no email opened",
     );
 
@@ -169,7 +209,7 @@ export default async function features({ browser, base, report }) {
     /* ---- Request Help ---- */
     await page.goto(base + "/request-help", { waitUntil: "networkidle" });
     const f3 = page.locator("main form");
-    const ask = () => captureMailto(page, () => f3.locator("button[type=submit]").click());
+    const ask = () => captureSubmission(page, () => f3.locator("button[type=submit]").click());
     const e3 = () => page.locator("#help-error").innerText();
     const focusedName = () => page.evaluate(() => document.activeElement.name);
     const markedNames = () => page.evaluate(() => [...new Set([...document.querySelectorAll("main form [aria-invalid=true]")].map((e) => e.name))].join());
@@ -199,20 +239,36 @@ export default async function features({ browser, base, report }) {
     await f3.locator("input[name=needs]").nth(0).check();
     await f3.locator("input[name=needs]").nth(2).check();
     await f3.locator("textarea[name=details]").fill("Kids aged 4, 7 & 9 — sizes 24/28/30");
-    mail = await ask();
-    const hu = mail ? new URL(mail) : null;
-    const hb = hu?.searchParams.get("body") || "";
+    // with Web3Forms, answer this one with an error so the form stays filled and the fallbacks show
+    mail = await captureSubmission(page, () => f3.locator("button[type=submit]").click(), { fail: direct });
+    const hb = mail?.body || "";
     report.check(
-      !!hu && hu.pathname === site.contact.email &&
-        hu.searchParams.get("subject") === `Help request: ${puja.title.en} — Help Seeker (4 people)` &&
+      !!mail && (direct ? mail.via === "web3forms" : mail.to === site.contact.email) &&
+        mail.subject === `Help request: ${puja.title.en} — Help Seeker (4 people)` &&
         ["Phone / WhatsApp: 98765 43210", "Address: 12 Lake Road, Dum Dum, Kolkata 700056", "Number of people who need help: 4", "Children (under 14): 3", "Elderly (60+): 1",
           `- ${puja.needs[0].label.en}`, `- ${puja.needs[2].label.en}`, "Kids aged 4, 7 & 9 — sizes 24/28/30"].every((s) => hb.includes(s)) &&
         !hb.includes(puja.needs[1].label.en) && (await e3()) === "",
-      `Request Help (${L}): a complete request opens an email to ${site.contact.email} with every detail, in English`,
-      mail || "no email opened",
+      direct
+        ? `Request Help (${L}): a complete request is sent to Web3Forms with every detail, in English`
+        : `Request Help (${L}): a complete request opens an email to ${site.contact.email} with every detail, in English`,
+      JSON.stringify(mail) || "nothing sent",
     );
     const wa = await page.locator("main [role=status] a[href*='wa.me']").getAttribute("href").catch(() => null);
-    report.check(!!wa && decodeURIComponent(new URL(wa).searchParams.get("text") || "") === hb, `Request Help (${L}): after sending, a WhatsApp fallback carries the same details`, wa || "no WhatsApp link");
+    report.check(
+      !!wa && decodeURIComponent(new URL(wa).searchParams.get("text") || "") === hb,
+      direct
+        ? `Request Help (${L}): if sending fails, a WhatsApp fallback carries the same details`
+        : `Request Help (${L}): after sending, a WhatsApp fallback carries the same details`,
+      wa || "no WhatsApp link",
+    );
+    if (direct) {
+      const mailto = await page.locator("main [role=status] a[href^='mailto:']").getAttribute("href").catch(() => null);
+      report.check(
+        !!mailto && new URL(mailto).searchParams.get("body") === hb,
+        `Request Help (${L}): if sending fails, an email fallback carries the same details`,
+        mailto || "no email link",
+      );
+    }
 
     await f3.locator(`label:has(input[value=other])`).click();
     const cleared = await f3.locator("input[name=needs]").count();
@@ -244,6 +300,8 @@ export default async function features({ browser, base, report }) {
   if (!fileExists("public", "images", "donate-qr.png")) todo.push("QR code image — save it as public/images/donate-qr.png");
   if (/^0[0\s]*$/.test(site.donation.bank.accountNumber) || /0000000$/.test(site.donation.bank.ifsc)) todo.push("bank account number / IFSC (src/data/site.js)");
   if (site.donation.upiId === "marudyaan@upi") todo.push("UPI ID (src/data/site.js)");
+  if (!site.donation.upiButtons) todo.push("one-tap UPI buttons are off — set upiButtons: true once the UPI ID is real (src/data/site.js)");
+  if (!direct) todo.push("forms open the visitor's email app — add a Web3Forms key to send them directly (src/data/site.js)");
   if (Object.values(site.registration).some((v) => /^X+$/.test(v))) todo.push("registration / PAN / 80G numbers (src/data/site.js)");
   if (team.some((m) => m.name.en === "Full Name")) todo.push("team names (src/data/content.js)");
   // the generated placeholder art is all .svg; real photos will be .jpg/.png/.webp
