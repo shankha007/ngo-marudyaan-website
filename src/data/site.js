@@ -78,9 +78,9 @@ export const site = {
   ------------------------------------------------------------------ */
   forms: {
     keys: {
-      contact: "09fccc72-f55a-44ce-949a-802d6ae0459c", // Contact page
-      involved: "", // TODO: Get Involved page
-      help: "",     // TODO: Request Help page
+      contact: "94bb79b3-8ecb-4d3b-ac65-ca8e47311ca0",  // Contact page
+      involved: "0dd35f27-e972-4e87-92b3-ab2d52dae992", // Get Involved page
+      help: "2835ca99-7be5-473c-859f-b28dcd4cc073",     // Request Help page
     },
   },
 };
