@@ -2,9 +2,20 @@
 
 **Live site: https://ngo-marudyaan.netlify.app**
 
-Every push to `main` rebuilds and republishes the live site automatically
+Every change merged into `main` rebuilds and republishes the live site automatically
 (Netlify runs `npm run build` and publishes `dist/`). You do not need to
 deploy by hand.
+
+### How changes reach the live site
+
+`main` is protected: you cannot push to it directly. All work goes through `uat` first.
+
+1. Push your changes to the `uat` branch (`git switch uat`, commit, `git push`).
+2. Check them, then open a pull request from `uat` into `main`:
+   `gh pr create --base main --head uat`
+3. Merge the pull request once the `source-branch-is-uat` check passes. That publishes the site.
+
+Pull requests into `main` from any branch other than `uat` are blocked.
 
 Front-end-only website for NGO Marudyaan, Kolkata. Built with **React + Vite + Tailwind CSS v4**,
 with an English ⇄ Bengali language toggle. There is no back end and no database — everything
