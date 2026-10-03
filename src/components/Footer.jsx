@@ -27,7 +27,7 @@ export default function Footer() {
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
-            <Logo className="h-11 w-11" />
+            <Logo className="h-14 w-14 shrink-0" />
             <span className="leading-tight">
               <span className="block font-display text-lg font-bold text-white">{site.name}</span>
               <span className="block text-xs text-oasis-200">{site.nameBn}</span>
