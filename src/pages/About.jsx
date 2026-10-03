@@ -30,6 +30,7 @@ export default function About() {
   const legalRows = [
     { label: t("about.legal.regNo"), value: site.registration.regNo },
     { label: t("about.legal.act"), value: site.registration.regAct },
+    { label: t("about.legal.regDate"), value: site.registration.regDate },
     { label: t("about.legal.pan"), value: site.registration.pan },
     { label: t("about.legal.80g"), value: site.registration.eightyG },
     { label: t("about.legal.founded"), value: site.registration.founded },
