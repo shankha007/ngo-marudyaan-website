@@ -36,7 +36,7 @@ export const site = {
 
   social: {
     facebook: "https://www.facebook.com/NgoMarudyaanOfficial",
-    instagram: "",  // TODO: add if you have one
+    instagram: "https://www.instagram.com/ngo_marudyaan",
     youtube: "",    // TODO
     twitter: "",    // TODO
   },
