@@ -28,12 +28,12 @@ export default function Donate() {
     (amount ? `&am=${amount.toFixed(2)}` : "");
 
   const whatsappHref = `https://wa.me/${contact.whatsappHref}?text=${encodeURIComponent(
-    "Hello NGO Marudyaan, I have made a donation. Here are my details:\nName:\nPhone:\nAmount:\nPAN (for 80G receipt):",
+    "Hello NGO Marudyaan, I have made a donation. Here are my details:\nName:\nPhone:\nAmount:",
   )}`;
   const mailHref = `mailto:${contact.email}?subject=${encodeURIComponent(
     "Donation details",
   )}&body=${encodeURIComponent(
-    "Name:\nPhone:\nAmount:\nDate of transfer:\nPAN (for 80G receipt):\n\n(Please attach the payment screenshot.)",
+    "Name:\nPhone:\nAmount:\nDate of transfer:\n\n(Please attach the payment screenshot.)",
   )}`;
 
   return (

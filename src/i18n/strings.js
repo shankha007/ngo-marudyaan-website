@@ -61,7 +61,7 @@ export const strings = {
 
     /* about */
     "about.title": "About Us",
-    "about.sub": "A volunteer-run NGO working in and around Kolkata since 2019.",
+    "about.sub": "A volunteer-run NGO working in and around Kolkata since 2017.",
     "about.mission.title": "Our Mission",
     "about.mission.body":
       "To make sure that no one within our reach goes without a meal, a school bag or basic medical care — and to do it in a way that protects the dignity of every person we serve.",
@@ -75,6 +75,7 @@ export const strings = {
     "about.legal.title": "Registration & transparency",
     "about.legal.regNo": "Registration No.",
     "about.legal.act": "Registered under",
+    "about.legal.regDate": "Registration date",
     "about.legal.pan": "PAN",
     "about.legal.80g": "80G Certificate",
     "about.legal.founded": "Working since",
@@ -191,7 +192,7 @@ export const strings = {
     "donate.impact.note": "Indicative costs — the exact use is published after each drive.",
     "donate.after.title": "After you donate",
     "donate.after.body":
-      "Please send us the payment screenshot on WhatsApp or by email with your name, phone number and PAN (if you want an 80G receipt). We will confirm and send you the photos from the drive your money goes to.",
+      "Please send us the payment screenshot on WhatsApp or by email with your name and phone number. We will confirm and send you the photos from the drive your money goes to.",
     "donate.after.whatsapp": "Send screenshot on WhatsApp",
     "donate.after.email": "Email us the details",
     "donate.goods.title": "Prefer to donate goods?",
@@ -312,7 +313,7 @@ export const strings = {
 
     /* about */
     "about.title": "আমাদের কথা",
-    "about.sub": "২০১৯ সাল থেকে কলকাতা ও আশেপাশে কাজ করা একটি স্বেচ্ছাসেবী সংগঠন।",
+    "about.sub": "২০১৭ সাল থেকে কলকাতা ও আশেপাশে কাজ করা একটি স্বেচ্ছাসেবী সংগঠন।",
     "about.mission.title": "আমাদের লক্ষ্য",
     "about.mission.body":
       "আমাদের নাগালের মধ্যে যেন কেউ খাবার, স্কুলব্যাগ বা প্রাথমিক চিকিৎসা ছাড়া না থাকে — এবং সেটা এমনভাবে করা, যাতে প্রত্যেক মানুষের সম্মান অক্ষুণ্ণ থাকে।",
@@ -326,6 +327,7 @@ export const strings = {
     "about.legal.title": "নথিভুক্তি ও স্বচ্ছতা",
     "about.legal.regNo": "রেজিস্ট্রেশন নম্বর",
     "about.legal.act": "নথিভুক্ত",
+    "about.legal.regDate": "রেজিস্ট্রেশনের তারিখ",
     "about.legal.pan": "প্যান",
     "about.legal.80g": "৮০জি শংসাপত্র",
     "about.legal.founded": "কাজ শুরু",
@@ -442,7 +444,7 @@ export const strings = {
     "donate.impact.note": "আনুমানিক খরচ — প্রকৃত ব্যবহার প্রতিটি কর্মসূচির পরে প্রকাশ করা হয়।",
     "donate.after.title": "দান করার পরে",
     "donate.after.body":
-      "অনুগ্রহ করে পেমেন্টের স্ক্রিনশট আপনার নাম, ফোন নম্বর ও (৮০জি রসিদ চাইলে) প্যান-সহ হোয়াটসঅ্যাপ বা ইমেলে পাঠান। আমরা নিশ্চিত করে জানাব এবং যে কর্মসূচিতে টাকা যাচ্ছে তার ছবি পাঠিয়ে দেব।",
+      "অনুগ্রহ করে পেমেন্টের স্ক্রিনশট আপনার নাম ও ফোন নম্বর-সহ হোয়াটসঅ্যাপ বা ইমেলে পাঠান। আমরা নিশ্চিত করে জানাব এবং যে কর্মসূচিতে টাকা যাচ্ছে তার ছবি পাঠিয়ে দেব।",
     "donate.after.whatsapp": "হোয়াটসঅ্যাপে স্ক্রিনশট পাঠান",
     "donate.after.email": "ইমেলে বিস্তারিত পাঠান",
     "donate.goods.title": "সামগ্রী দিতে চান?",

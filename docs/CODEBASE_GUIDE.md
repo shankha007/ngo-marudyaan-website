@@ -174,7 +174,7 @@ Global settings. Exports:
 | Key | Contents | Used by |
 | --- | --- | --- |
 | `name`, `nameBn`, `tagline`, `taglineBn` | NGO name and tagline in both languages | Navbar, Footer, page titles, OG image |
-| `registration` | `regNo`, `regAct`, `pan`, `eightyG`, `founded` | About (legal table), Home (founded badge), Donate (80G note) |
+| `registration` | `regNo`, `regAct`, `regDate`, `pan`, `eightyG` (empty hides it), `founded` | About (legal table), Home (founded badge), Donate (80G note) |
 | `contact` | `email`, `phone` / `phoneHref`, `whatsapp` / `whatsappHref`, `addressLines[]`, `serviceArea`, `hours`, `mapEmbed` | Contact, Footer, Navbar drawer, Donate, Request Help, form fallbacks |
 | `social` | `facebook`, `instagram`, `youtube`, `twitter` URLs. Empty strings are hidden. | Footer, Contact |
 | `donation` | `qrImage`, `upiId`, `upiName`, `upiButtons` (bool), `bank{…}`, `taxNote` (bool) | Donate |

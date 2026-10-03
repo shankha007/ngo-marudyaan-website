@@ -11,13 +11,13 @@ export const site = {
   tagline: "An oasis of hope",
   taglineBn: "আশার এক মরুদ্যান",
 
-  // TODO: confirm your official registration details
   registration: {
-    regNo: "XXXXXXXXXX",            // TODO: Society / Trust registration number
-    regAct: "West Bengal Societies Registration Act, 1961", // TODO
-    pan: "XXXXXXXXXX",              // TODO: PAN of the organisation
-    eightyG: "XXXXXXXXXX",          // TODO: 80G certificate number (leave "" if not applicable)
-    founded: "2019",                // TODO: year the NGO started working
+    regNo: "S0000579 of 2018-2019",
+    regAct: "West Bengal Societies Registration Act, 1961",
+    regDate: "10 Aug 2018",
+    pan: "AAIAM2209E",
+    eightyG: "",                    // 80G is pending; add the certificate number once it is granted
+    founded: "24 Aug 2017",         // the day the NGO started working
   },
 
   contact: {
@@ -62,7 +62,7 @@ export const site = {
       ifsc: "UBIN0575321",
       accountType: "Current",
     },
-    taxNote: true, // set false to hide the 80G tax-exemption note
+    taxNote: false, // set true to show the 80G number on the Donate page (needs registration.eightyG)
   },
 
   /* --- FORMS -------------------------------------------------------
