@@ -227,11 +227,11 @@ export const values = [
    photo: "/images/team/name.jpg" */
 export const team = [
   { id: "t1", photo: "/images/team/swaraj-das.jpg", name: { en: "Swaraj Das", bn: "স্বরাজ দাস" }, role: { en: "President", bn: "সভাপতি" } },
-  { id: "t2", photo: "", name: { en: "Joy Roy", bn: "জয় রায়" }, role: { en: "Vice President", bn: "সহ-সভাপতি" } },
-  { id: "t3", photo: "", name: { en: "Rahul Saha", bn: "রাহুল সাহা" }, role: { en: "Secretary", bn: "সম্পাদক" } },
-  { id: "t4", photo: "", name: { en: "Shankha Subhra Das", bn: "শঙ্খশুভ্র দাস" }, role: { en: "Spokesperson", bn: "মুখপাত্র" } },
-  { id: "t5", photo: "", name: { en: "Anik Misra", bn: "অনীক মিশ্র" }, role: { en: "Treasurer", bn: "কোষাধ্যক্ষ" } },
-  { id: "t6", photo: "", name: { en: "Suvam Mitra", bn: "শুভম মিত্র" }, role: { en: "Assistant Treasurer", bn: "সহকারী কোষাধ্যক্ষ" } },
+  { id: "t2", photo: "/images/team/joy-roy.jpg", name: { en: "Joy Roy", bn: "জয় রায়" }, role: { en: "Vice President", bn: "সহ-সভাপতি" } },
+  { id: "t3", photo: "/images/team/rahul-saha.jpg", name: { en: "Rahul Saha", bn: "রাহুল সাহা" }, role: { en: "Secretary", bn: "সম্পাদক" } },
+  { id: "t4", photo: "/images/team/shankha-shubhra-das.jpg", name: { en: "Shankha Subhra Das", bn: "শঙ্খশুভ্র দাস" }, role: { en: "Spokesperson", bn: "মুখপাত্র" } },
+  { id: "t5", photo: "/images/team/anik-misra.jpg", name: { en: "Anik Misra", bn: "অনীক মিশ্র" }, role: { en: "Treasurer", bn: "কোষাধ্যক্ষ" } },
+  { id: "t6", photo: "/images/team/suvam-mitra.jpg", name: { en: "Suvam Mitra", bn: "শুভম মিত্র" }, role: { en: "Assistant Treasurer", bn: "সহকারী কোষাধ্যক্ষ" } },
   { id: "t7", photo: "/images/team/subhabrata-sengupta.jpg", name: { en: "Subhabrata Sengupta", bn: "শুভব্রত সেনগুপ্ত" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
 ];
 
