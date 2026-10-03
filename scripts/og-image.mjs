@@ -4,11 +4,13 @@
 
    Run:  npm run og-image
    Needs Chrome or Edge installed, like the tests. */
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { site } from "../src/data/site.js";
 import { launchBrowser, ROOT } from "../tests/e2e/lib.mjs";
 
 const OUT = join(ROOT, "public", "images", "og-image.jpg");
+const logo = readFileSync(join(ROOT, "public", "images", "logo.png")).toString("base64");
 
 const html = `<!doctype html>
 <html><head><meta charset="utf-8">
@@ -20,7 +22,7 @@ const html = `<!doctype html>
          font-family: Inter, sans-serif; color: #f8f1e2; }
   svg.scene { position: absolute; inset: 0; }
   .text { position: absolute; left: 80px; top: 64px; width: 760px; }
-  .logo { width: 96px; height: 96px; }
+  .logo { width: 132px; height: 132px; border-radius: 50%; background: #fff; display: block; }
   h1 { font-family: "Baloo 2", sans-serif; font-size: 84px; line-height: 1; color: #fff; margin-top: 30px; }
   .bn { font-family: "Noto Sans Bengali", sans-serif; font-size: 40px; color: #fbbf4a; margin-top: 10px; }
   .tag { font-size: 30px; font-weight: 600; margin-top: 22px; color: #fff; }
@@ -40,14 +42,7 @@ const html = `<!doctype html>
     </g>
   </svg>
   <div class="text">
-    <svg class="logo" viewBox="0 0 64 64">
-      <circle cx="32" cy="32" r="32" fill="#185436"/>
-      <circle cx="32" cy="32" r="31" fill="none" stroke="#75bd93" stroke-width="1.5" opacity="0.6"/>
-      <path d="M32 47V30" stroke="#fbbf4a" stroke-width="3.2" stroke-linecap="round"/>
-      <path d="M32 32c0-7 5.6-12.6 12.6-12.6C44.6 26.4 39 32 32 32Z" fill="#75bd93"/>
-      <path d="M32 36c0-6-4.8-10.8-10.8-10.8C21.2 31.2 26 36 32 36Z" fill="#47a06f"/>
-      <path d="M14 50c4-3 7-3 11 0s7 3 11 0 7-3 11 0" stroke="#f8f1e2" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-    </svg>
+    <img class="logo" src="data:image/png;base64,${logo}" alt="">
     <h1>${site.name}</h1>
     <div class="bn">${site.nameBn} · ${site.taglineBn}</div>
     <div class="tag">${site.tagline} — Kolkata</div>
