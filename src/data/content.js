@@ -145,7 +145,7 @@ export const programs = [
 /* --- OUR STORY / MILESTONES -------------------------------------- */
 export const milestones = [
   {
-    year: "2019",
+    year: "2017",
     title: { en: "A handful of friends, one Sunday", bn: "কয়েকজন বন্ধু, একটি রবিবার" },
     text: {
       en: "A small group of friends in Kolkata started cooking and distributing meals to people sleeping on the footpath. There was no name, no registration — only a Sunday routine.",
@@ -161,11 +161,11 @@ export const milestones = [
     },
   },
   {
-    year: "2022",
+    year: "2018",
     title: { en: "Marudyaan takes its name", bn: "মরুদ্যান নাম পায়" },
     text: {
-      en: "The team formally became NGO Marudyaan — 'an oasis' — and added education and health camps to the regular food drives.",
-      bn: "দলটি আনুষ্ঠানিকভাবে ‘এনজিও মরুদ্যান’ নাম নেয় এবং নিয়মিত খাদ্য বিতরণের সঙ্গে শিক্ষা ও স্বাস্থ্য শিবির যুক্ত হয়।",
+      en: "The team was registered as NGO Marudyaan — 'an oasis' — a society under the West Bengal Societies Registration Act, and added education and health camps to the regular food drives.",
+      bn: "দলটি ‘এনজিও মরুদ্যান’ নামে পশ্চিমবঙ্গ সোসাইটি রেজিস্ট্রেশন আইনে নথিভুক্ত হয় এবং নিয়মিত খাদ্য বিতরণের সঙ্গে শিক্ষা ও স্বাস্থ্য শিবির যুক্ত হয়।",
     },
   },
   {
@@ -223,13 +223,16 @@ export const values = [
 ];
 
 /* --- TEAM --------------------------------------------------------- */
-/* TODO: replace names, roles and photos with your real team.
-   Put photos in public/images/team/ and set photo: "/images/team/name.jpg" */
+/* Governing body. To add a photo, put it in public/images/team/ and set
+   photo: "/images/team/name.jpg" */
 export const team = [
-  { id: "t1", photo: "", name: { en: "Full Name", bn: "পুরো নাম" }, role: { en: "Founder & President", bn: "প্রতিষ্ঠাতা ও সভাপতি" } },
-  { id: "t2", photo: "", name: { en: "Full Name", bn: "পুরো নাম" }, role: { en: "Secretary", bn: "সম্পাদক" } },
-  { id: "t3", photo: "", name: { en: "Full Name", bn: "পুরো নাম" }, role: { en: "Treasurer", bn: "কোষাধ্যক্ষ" } },
-  { id: "t4", photo: "", name: { en: "Full Name", bn: "পুরো নাম" }, role: { en: "Volunteer Coordinator", bn: "স্বেচ্ছাসেবক সমন্বয়ক" } },
+  { id: "t1", photo: "/images/team/swaraj-das.jpg", name: { en: "Swaraj Das", bn: "স্বরাজ দাস" }, role: { en: "President", bn: "সভাপতি" } },
+  { id: "t2", photo: "/images/team/joy-roy.jpg", name: { en: "Joy Roy", bn: "জয় রায়" }, role: { en: "Vice President", bn: "সহ-সভাপতি" } },
+  { id: "t3", photo: "/images/team/rahul-saha.jpg", name: { en: "Rahul Saha", bn: "রাহুল সাহা" }, role: { en: "Secretary", bn: "সম্পাদক" } },
+  { id: "t4", photo: "/images/team/shankha-shubhra-das.jpg", name: { en: "Shankha Shubhra Das", bn: "শঙ্খশুভ্র দাস" }, role: { en: "Spokesperson", bn: "মুখপাত্র" } },
+  { id: "t5", photo: "/images/team/anik-misra.jpg", name: { en: "Anik Misra", bn: "অনীক মিশ্র" }, role: { en: "Treasurer", bn: "কোষাধ্যক্ষ" } },
+  { id: "t6", photo: "/images/team/suvam-mitra.jpg", name: { en: "Suvam Mitra", bn: "শুভম মিত্র" }, role: { en: "Assistant Treasurer", bn: "সহকারী কোষাধ্যক্ষ" } },
+  { id: "t7", photo: "/images/team/subhabrata-sengupta.jpg", name: { en: "Subhabrata Sengupta", bn: "শুভব্রত সেনগুপ্ত" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
 ];
 
 /* --- GALLERY ------------------------------------------------------
@@ -376,8 +379,8 @@ export const faqs = [
     id: "f1",
     q: { en: "Is my donation tax-exempt?", bn: "আমার অনুদান কি করমুক্ত?" },
     a: {
-      en: "Donations are eligible for exemption under Section 80G once our certificate details are confirmed. Email us with your PAN and we will send a receipt.",
-      bn: "আমাদের শংসাপত্রের তথ্য নিশ্চিত হলে অনুদান ৮০জি ধারায় ছাড়ের যোগ্য। আপনার প্যান নম্বর-সহ ইমেল করলে রসিদ পাঠিয়ে দেওয়া হবে।",
+      en: "Not yet. Our 80G registration is still being processed, so donations are not tax-exempt for now. We will update this page once it is approved. Email us any time and we will send you a receipt for your donation.",
+      bn: "এখনও নয়। আমাদের ৮০জি নথিভুক্তি এখনও প্রক্রিয়াধীন, তাই আপাতত অনুদান করমুক্ত নয়। অনুমোদন পেলে এই পাতায় জানিয়ে দেব। যেকোনো সময় ইমেল করলে আপনার অনুদানের রসিদ পাঠিয়ে দেওয়া হবে।",
     },
   },
   {

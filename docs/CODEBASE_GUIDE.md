@@ -85,7 +85,7 @@ ngo-marudyaan/
 ├── public/                    copied as-is into dist/
 │   ├── _redirects             Netlify routing (real pages 200, others 404)
 │   ├── robots.txt, sitemap.xml
-│   ├── favicon.svg
+│   ├── favicon.png, apple-touch-icon.png
 │   └── images/                banner, programme, gallery, QR and OG images
 ├── scripts/
 │   └── og-image.mjs           renders public/images/og-image.jpg
@@ -174,7 +174,7 @@ Global settings. Exports:
 | Key | Contents | Used by |
 | --- | --- | --- |
 | `name`, `nameBn`, `tagline`, `taglineBn` | NGO name and tagline in both languages | Navbar, Footer, page titles, OG image |
-| `registration` | `regNo`, `regAct`, `pan`, `eightyG`, `founded` | About (legal table), Home (founded badge), Donate (80G note) |
+| `registration` | `regNo`, `regAct`, `regDate`, `pan`, `eightyG` (empty hides it), `founded` | About (legal table), Home (founded badge), Donate (80G note) |
 | `contact` | `email`, `phone` / `phoneHref`, `whatsapp` / `whatsappHref`, `addressLines[]`, `serviceArea`, `hours`, `mapEmbed` | Contact, Footer, Navbar drawer, Donate, Request Help, form fallbacks |
 | `social` | `facebook`, `instagram`, `youtube`, `twitter` URLs. Empty strings are hidden. | Footer, Contact |
 | `donation` | `qrImage`, `upiId`, `upiName`, `upiButtons` (bool), `bank{…}`, `taxNote` (bool) | Donate |
@@ -335,7 +335,7 @@ Sets `document.title` and the `<meta name="description">` tag when a page mounts
 | [CopyField](../src/components/CopyField.jsx) | `label`, `value`, `mono`, `compact` | A label and value row with a Copy button, used for UPI and bank details. `compact` strips spaces before copying, because banking apps reject pasted spaces. The button shows "Copied" for 1.8 s. Clipboard failures are ignored, since the value is visible on screen anyway. |
 | [FormSend](../src/components/FormSend.jsx) | (three named exports) | Shared form parts. See below. |
 | [Icon](../src/components/Icon.jsx) | `name`, `className`, `filled`, `...rest` | A built-in inline SVG icon set (no library). Returns `null` for unknown names. It renders stroked by default; `filled` switches to a solid fill. Always `aria-hidden`. Available names: `bowl book heart blanket gift hands phone mail pin clock globe whatsapp facebook instagram youtube arrowRight arrowUp check copy close menu chevronLeft chevronRight chevronDown pause play quote sprout shield users`. |
-| [Logo](../src/components/Logo.jsx) | `className` | A placeholder SVG logo (a sprout over water) coloured with the CSS theme variables. To use a real logo, replace it with an `<img>`, as the file comment explains. |
+| [Logo](../src/components/Logo.jsx) | `className` | The official logo (`public/images/logo.png`) in a white circle, so it reads on light and dark backgrounds. |
 | [ScrollToTop](../src/components/ScrollToTop.jsx) | none | Renders nothing. On every route or hash change it either smoothly scrolls to the element the `#hash` names, or jumps instantly to the top of the page. |
 | [BackToTop](../src/components/BackToTop.jsx) | none | A floating button that appears after scrolling 600 px and smooth-scrolls to the top. While hidden it is removed from the tab order and the accessibility tree. It sits at the **bottom-left** so Netlify's badge doesn't cover it. |
 | [ErrorBoundary](../src/components/ErrorBoundary.jsx) | `children` | A class component that catches render errors anywhere in the app, logs them to the console, and shows a bilingual "Something went wrong" message with a home link and the NGO's email address. |
@@ -548,8 +548,8 @@ Copied unchanged into `dist/`.
 | [_redirects](../public/_redirects) | **Netlify routing.** Each real page path is rewritten to `/index.html` with status **200**. Everything else (`/*`) gets `/index.html` with status **404**, so the React 404 page shows *and* search engines see a real 404. New pages must be added here. |
 | [sitemap.xml](../public/sitemap.xml) | Lists every real page for search engines. Must match `App.jsx`. |
 | [robots.txt](../public/robots.txt) | Allows everything and points to the sitemap. |
-| `favicon.svg` | Browser tab icon. |
-| `images/` | `banner-*.svg`, `work-*.svg`, `about-main.svg` and `gallery/g*.svg` are **generated placeholders**, to be replaced with real photos. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
+| `favicon.png`, `apple-touch-icon.png` | Browser tab icon and the icon phones use for a home-screen shortcut, both cut from the logo. |
+| `images/` | `banner-*.svg`, `work-*.svg`, `about-main.svg` and `gallery/g*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
 
 ---
 
