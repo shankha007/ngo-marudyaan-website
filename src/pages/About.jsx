@@ -123,9 +123,14 @@ export default function About() {
       <section className="bg-sand-100 py-20">
         <div className="container-page">
           <SectionHeading title={t("about.team.title")} sub={t("about.team.sub")} />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Flex rather than grid so a short last row sits in the middle. */}
+          <div className="mt-12 flex flex-wrap justify-center gap-6">
             {team.map((member, i) => (
-              <Reveal key={member.id} delay={i * 80}>
+              <Reveal
+                key={member.id}
+                delay={i * 80}
+                className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
+              >
                 <div className="h-full rounded-2xl border border-oasis-100 bg-white p-6 text-center shadow-sm">
                   <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-oasis-50 ring-4 ring-oasis-100">
                     {member.photo ? (
