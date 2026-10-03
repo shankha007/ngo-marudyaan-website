@@ -226,7 +226,7 @@ export const values = [
 /* Governing body. To add a photo, put it in public/images/team/ and set
    photo: "/images/team/name.jpg" */
 export const team = [
-  { id: "t1", photo: "", name: { en: "Swaraj Das", bn: "স্বরাজ দাস" }, role: { en: "President", bn: "সভাপতি" } },
+  { id: "t1", photo: "/images/team/swaraj-das.jpg", name: { en: "Swaraj Das", bn: "স্বরাজ দাস" }, role: { en: "President", bn: "সভাপতি" } },
   { id: "t2", photo: "", name: { en: "Joy Roy", bn: "জয় রায়" }, role: { en: "Vice President", bn: "সহ-সভাপতি" } },
   { id: "t3", photo: "", name: { en: "Rahul Saha", bn: "রাহুল সাহা" }, role: { en: "Secretary", bn: "সম্পাদক" } },
   { id: "t4", photo: "", name: { en: "Shankha Subhra Das", bn: "শঙ্খশুভ্র দাস" }, role: { en: "Spokesperson", bn: "মুখপাত্র" } },
