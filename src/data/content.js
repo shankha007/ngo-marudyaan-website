@@ -232,7 +232,7 @@ export const team = [
   { id: "t4", photo: "", name: { en: "Shankha Subhra Das", bn: "শঙ্খশুভ্র দাস" }, role: { en: "Spokesperson", bn: "মুখপাত্র" } },
   { id: "t5", photo: "", name: { en: "Anik Misra", bn: "অনীক মিশ্র" }, role: { en: "Treasurer", bn: "কোষাধ্যক্ষ" } },
   { id: "t6", photo: "", name: { en: "Suvam Mitra", bn: "শুভম মিত্র" }, role: { en: "Assistant Treasurer", bn: "সহকারী কোষাধ্যক্ষ" } },
-  { id: "t7", photo: "", name: { en: "Subhabrata Sengupta", bn: "শুভব্রত সেনগুপ্ত" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
+  { id: "t7", photo: "/images/team/subhabrata-sengupta.jpg", name: { en: "Subhabrata Sengupta", bn: "শুভব্রত সেনগুপ্ত" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
 ];
 
 /* --- GALLERY ------------------------------------------------------
