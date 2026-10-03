@@ -118,7 +118,7 @@ export default async function navigation({ browser, base, live, report }) {
   Object.assign(expect, {
     "/about/": 200,
     "/gallery?utm_source=facebook": 200,
-    "/favicon.svg": 200,
+    "/favicon.png": 200,
     "/robots.txt": 200,
     "/sitemap.xml": 200,
     "/images/og-image.jpg": 200,
