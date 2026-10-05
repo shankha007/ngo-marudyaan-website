@@ -17,7 +17,7 @@ const labelText = "mb-1.5 block text-sm font-medium text-oasis-900";
 const groupTitle = "font-display text-lg font-semibold text-oasis-900";
 
 function Required() {
-  return <span aria-hidden="true" className="text-red-600"> *</span>;
+  return <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>;
 }
 
 /* "" → 0, "3" → 3, anything that is not a whole number → NaN */
@@ -183,7 +183,7 @@ export default function RequestHelp() {
       <PageHeader title={t("help.title")} sub={t("help.sub")} />
 
       <section className="py-16 sm:py-20">
-        <div className="container-page grid gap-10 lg:grid-cols-5">
+        <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-5">
           {/* how it works */}
           <Reveal className="lg:col-span-2">
             <h2 className="font-display text-2xl font-bold text-oasis-900">{t("help.how.title")}</h2>
@@ -237,7 +237,7 @@ export default function RequestHelp() {
                   {t("help.form.program")}
                   <Required />
                 </legend>
-                <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
                   {helpPrograms.map((p) => {
                     const checked = form.program === p.id;
                     return (
@@ -278,7 +278,7 @@ export default function RequestHelp() {
               {/* your details */}
               <fieldset className="mt-8">
                 <legend className={groupTitle}>{t("help.form.you")}</legend>
-                <div className="mt-3 grid gap-4 sm:grid-cols-2">
+                <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <label className="block">
                     <span className={labelText}>
                       {t("help.form.name")}
@@ -361,7 +361,7 @@ export default function RequestHelp() {
               {/* who needs help */}
               <fieldset className="mt-8">
                 <legend className={groupTitle}>{t("help.form.people")}</legend>
-                <div className="mt-3 grid gap-4 sm:grid-cols-3">
+                <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <label className="block">
                     <span className={labelText}>
                       {t("help.form.total")}
@@ -417,7 +417,7 @@ export default function RequestHelp() {
                     {t("help.form.needs")}
                     <Required />
                   </legend>
-                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {program.needs.map((n) => (
                       <label
                         key={n.id}

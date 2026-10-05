@@ -129,7 +129,7 @@ export default function GetInvolved() {
       <section className="py-16 sm:py-20">
         <div className="container-page">
           <SectionHeading title={t("involved.roles.title")} />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {volunteerRoles.map((role, i) => (
               <Reveal key={role.id} delay={i * 70}>
                 <div className="h-full rounded-2xl border border-oasis-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
@@ -149,7 +149,7 @@ export default function GetInvolved() {
 
       {/* sign-up form */}
       <section className="bg-sand-100 py-20">
-        <div className="container-page grid gap-10 lg:grid-cols-2">
+        <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-2">
           <Reveal>
             <SectionHeading align="left" title={t("involved.form.title")} sub={t(sender.direct ? "involved.form.note.direct" : "involved.form.note")} />
             <a
@@ -174,13 +174,13 @@ export default function GetInvolved() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-3xl border border-oasis-100 bg-white p-8 shadow-sm"
+              className="rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8"
             >
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                     {t("involved.form.name")}
-                    <span aria-hidden="true" className="text-red-600"> *</span>
+                    <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
                   </span>
                   <input
                     ref={nameRef}
@@ -196,7 +196,7 @@ export default function GetInvolved() {
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                     {t("involved.form.phone")}
-                    <span aria-hidden="true" className="text-red-600"> *</span>
+                    <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
                   </span>
                   <input
                     ref={phoneRef}

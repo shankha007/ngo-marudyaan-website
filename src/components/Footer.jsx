@@ -24,7 +24,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-oasis-900 text-sand-200">
-      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container-page grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
             <Logo className="h-14 w-14 shrink-0" />
@@ -54,10 +54,10 @@ export default function Footer() {
 
         <div>
           <h3 className="font-display text-base font-semibold text-white">{t("footer.quick")}</h3>
-          <ul className="mt-4 space-y-2.5 text-sm">
+          <ul className="mt-3 space-y-0.5 text-sm">
             {quickLinks.map((l) => (
               <li key={l.to}>
-                <Link to={l.to} className="text-sand-200/75 transition hover:text-saffron-400">
+                <Link to={l.to} className="inline-block py-1.5 text-sand-200/75 transition hover:text-saffron-400">
                   {t(l.key)}
                 </Link>
               </li>
@@ -74,7 +74,7 @@ export default function Footer() {
             </li>
             <li className="flex gap-3">
               <Icon name="phone" className="mt-0.5 h-4 w-4 shrink-0 text-saffron-400" />
-              <a href={`tel:${site.contact.phoneHref}`} className="hover:text-saffron-400">
+              <a href={`tel:${site.contact.phoneHref}`} className="-my-1.5 py-1.5 hover:text-saffron-400">
                 {site.contact.phone}
               </a>
             </li>
@@ -84,14 +84,14 @@ export default function Footer() {
                 href={`https://wa.me/${site.contact.whatsappHref}`}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-saffron-400"
+                className="-my-1.5 py-1.5 hover:text-saffron-400"
               >
                 {site.contact.whatsapp}
               </a>
             </li>
             <li className="flex gap-3">
               <Icon name="mail" className="mt-0.5 h-4 w-4 shrink-0 text-saffron-400" />
-              <a href={`mailto:${site.contact.email}`} className="break-all hover:text-saffron-400">
+              <a href={`mailto:${site.contact.email}`} className="-my-1.5 py-1.5 break-all hover:text-saffron-400">
                 {site.contact.email}
               </a>
             </li>

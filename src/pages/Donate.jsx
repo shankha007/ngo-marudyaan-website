@@ -42,16 +42,16 @@ export default function Donate() {
 
       {/* QR + bank details */}
       <section className="py-16 sm:py-20">
-        <div className="container-page grid gap-8 lg:grid-cols-5">
+        <div className="container-page grid grid-cols-1 gap-8 lg:grid-cols-5">
           {/* QR card */}
           <Reveal className="lg:col-span-2">
-            <div className="flex h-full flex-col items-center rounded-3xl border border-oasis-100 bg-white p-8 text-center shadow-sm">
+            <div className="flex h-full flex-col items-center rounded-3xl border border-oasis-100 bg-white p-6 text-center shadow-sm sm:p-8">
               <h2 className="font-display text-2xl font-bold text-oasis-900">
                 {t("donate.qr.title")}
               </h2>
-              <div className="mt-6 rounded-2xl bg-sand-100 p-4 ring-1 ring-oasis-100">
+              <div className="mt-6 w-full max-w-72 rounded-2xl bg-sand-100 p-3 ring-1 ring-oasis-100 sm:p-4">
                 {qrFailed ? (
-                  <div className="flex h-64 w-64 flex-col items-center justify-center rounded-xl border-2 border-dashed border-oasis-300 px-6 text-sm text-oasis-800/60">
+                  <div className="flex aspect-square w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-oasis-300 px-6 text-sm text-oasis-800/60">
                     <Icon name="copy" className="mb-3 h-8 w-8 text-oasis-300" />
                     {t("donate.qr.missing")}
                     <code className="mt-2 text-[11px] break-all text-oasis-600">
@@ -63,7 +63,7 @@ export default function Donate() {
                     src={donation.qrImage}
                     alt={t("donate.qr.alt")}
                     onError={() => setQrFailed(true)}
-                    className="h-64 w-64 rounded-xl bg-white object-contain"
+                    className="aspect-square w-full rounded-xl bg-white object-contain"
                   />
                 )}
               </div>
@@ -89,7 +89,7 @@ export default function Donate() {
 
           {/* bank card */}
           <Reveal delay={100} className="lg:col-span-3">
-            <div className="flex h-full flex-col rounded-3xl border border-oasis-100 bg-white p-8 shadow-sm">
+            <div className="flex h-full flex-col rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8">
               <h2 className="font-display text-2xl font-bold text-oasis-900">
                 {t("donate.bank.title")}
               </h2>
@@ -126,7 +126,7 @@ export default function Donate() {
       <section className="bg-sand-100 py-20">
         <div className="container-page">
           <SectionHeading title={t("donate.impact.title")} sub={t("donate.impact.note")} />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {donationTiers.map((tier, i) => (
               <Reveal key={tier.id} delay={i * 80}>
                 <div className="flex h-full flex-col items-center rounded-2xl border border-oasis-100 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
@@ -155,9 +155,9 @@ export default function Donate() {
 
       {/* after you donate */}
       <section className="py-20">
-        <div className="container-page grid gap-8 lg:grid-cols-2">
+        <div className="container-page grid grid-cols-1 gap-8 lg:grid-cols-2">
           <Reveal>
-            <div className="h-full rounded-3xl bg-oasis-800 p-8 text-sand-100">
+            <div className="h-full rounded-3xl bg-oasis-800 p-6 text-sand-100 sm:p-8">
               <h2 className="font-display text-2xl font-bold text-white">
                 {t("donate.after.title")}
               </h2>
@@ -189,7 +189,7 @@ export default function Donate() {
           </Reveal>
 
           <Reveal delay={100}>
-            <div className="h-full rounded-3xl border border-oasis-100 bg-white p-8 shadow-sm">
+            <div className="h-full rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8">
               <span className="inline-flex rounded-2xl bg-oasis-50 p-3 text-oasis-600">
                 <Icon name="gift" className="h-7 w-7" />
               </span>

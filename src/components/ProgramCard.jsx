@@ -25,7 +25,7 @@ export default function ProgramCard({ program }) {
         </p>
         <Link
           to={`/our-work#${program.id}`}
-          className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-oasis-600 transition hover:text-oasis-800"
+          className="mt-2 -mb-2 inline-flex items-center gap-1.5 py-2 text-sm font-semibold text-oasis-600 transition hover:text-oasis-800"
         >
           {t("cta.readMore")}
           <Icon name="arrowRight" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
