@@ -44,7 +44,7 @@ export default function Home() {
 
       {/* --- who we are ----------------------------------------------- */}
       <section className="py-20 sm:py-24">
-        <div className="container-page grid items-center gap-12 lg:grid-cols-2">
+        <div className="container-page grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal className="relative">
             <div className="overflow-hidden rounded-3xl shadow-xl">
               <img
@@ -78,7 +78,7 @@ export default function Home() {
             <p className="mt-6 text-lg leading-relaxed text-oasis-800/80">
               {t("home.mission.body")}
             </p>
-            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+            <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {values.map((v) => (
                 <li key={v.id} className="flex gap-3">
                   <span className="mt-0.5 shrink-0 self-start rounded-full bg-oasis-50 p-1.5 text-oasis-600">
@@ -110,7 +110,7 @@ export default function Home() {
             title={t("home.work.title")}
             sub={t("home.work.sub")}
           />
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {programs.map((p, i) => (
               <Reveal key={p.id} delay={i * 70}>
                 <ProgramCard program={p} />
@@ -161,7 +161,7 @@ export default function Home() {
       <section className="bg-sand-100 py-20 sm:py-24">
         <div className="container-page">
           <SectionHeading kicker={t("home.voices.kicker")} title={t("home.voices.title")} />
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
             {testimonials.map((v, i) => (
               <Reveal key={v.id} delay={i * 90}>
                 <figure className="flex h-full flex-col rounded-2xl border border-oasis-100 bg-white p-7 shadow-sm">

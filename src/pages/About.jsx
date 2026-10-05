@@ -42,13 +42,13 @@ export default function About() {
 
       {/* mission + vision */}
       <section className="py-18 sm:py-22">
-        <div className="container-page grid gap-6 lg:grid-cols-2">
+        <div className="container-page grid grid-cols-1 gap-6 lg:grid-cols-2">
           {[
             { icon: "sprout", title: t("about.mission.title"), body: t("about.mission.body") },
             { icon: "globe", title: t("about.vision.title"), body: t("about.vision.body") },
           ].map((card, i) => (
             <Reveal key={card.title} delay={i * 100}>
-              <div className="h-full rounded-3xl border border-oasis-100 bg-white p-8 shadow-sm">
+              <div className="h-full rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8">
                 <span className="inline-flex rounded-2xl bg-oasis-50 p-3 text-oasis-600">
                   <Icon name={card.icon} className="h-7 w-7" />
                 </span>
@@ -66,7 +66,7 @@ export default function About() {
       <section className="bg-sand-100 py-20">
         <div className="container-page">
           <SectionHeading title={t("about.values.title")} />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <Reveal key={v.id} delay={i * 80}>
                 <div className="h-full rounded-2xl border border-oasis-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
@@ -125,15 +125,15 @@ export default function About() {
         <div className="container-page">
           <SectionHeading title={t("about.team.title")} sub={t("about.team.sub")} />
           {/* Flex rather than grid so a short last row sits in the middle. */}
-          <div className="mt-12 flex flex-wrap justify-center gap-6">
+          <div className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-6">
             {team.map((member, i) => (
               <Reveal
                 key={member.id}
                 delay={i * 80}
-                className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
+                className="w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
               >
-                <div className="h-full rounded-2xl border border-oasis-100 bg-white p-6 text-center shadow-sm">
-                  <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-oasis-50 ring-4 ring-oasis-100">
+                <div className="h-full rounded-2xl border border-oasis-100 bg-white p-4 text-center shadow-sm sm:p-6">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center overflow-hidden rounded-full sm:h-24 sm:w-24 bg-oasis-50 ring-4 ring-oasis-100">
                     {member.photo ? (
                       <img
                         src={member.photo}
@@ -145,7 +145,7 @@ export default function About() {
                       <Initials name={tr(member.name)} />
                     )}
                   </div>
-                  <h3 className="font-display mt-4 text-lg font-semibold text-oasis-900">
+                  <h3 className="font-display mt-3 text-base font-semibold text-balance text-oasis-900 sm:mt-4 sm:text-lg">
                     {tr(member.name)}
                   </h3>
                   <p className="mt-1 text-sm text-oasis-600">{tr(member.role)}</p>

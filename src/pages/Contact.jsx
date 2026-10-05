@@ -102,7 +102,7 @@ export default function Contact() {
       <PageHeader title={t("contact.title")} sub={t("contact.sub")} />
 
       <section className="py-16 sm:py-20">
-        <div className="container-page grid gap-10 lg:grid-cols-5">
+        <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-5">
           {/* details */}
           <Reveal className="lg:col-span-2">
             <h2 className="font-display text-2xl font-bold text-oasis-900">
@@ -115,23 +115,23 @@ export default function Contact() {
                     <a
                       href={d.href}
                       {...(d.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                      className="flex gap-4 rounded-2xl border border-oasis-100 bg-white p-4 transition hover:border-oasis-300 hover:shadow-sm"
+                      className="flex gap-3 rounded-2xl border border-oasis-100 bg-white p-3.5 transition sm:gap-4 sm:p-4 hover:border-oasis-300 hover:shadow-sm"
                     >
-                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2.5 text-oasis-600">
+                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2 text-oasis-600 sm:p-2.5">
                         <Icon name={d.icon} className="h-5 w-5" />
                       </span>
                       <span className="min-w-0">
                         <span className="block text-xs tracking-wide text-oasis-800/55 uppercase">
                           {d.label}
                         </span>
-                        <span className="block break-words font-medium text-oasis-900">
+                        <span className="block break-words text-[15px] font-medium text-oasis-900 sm:text-base">
                           {d.value}
                         </span>
                       </span>
                     </a>
                   ) : (
-                    <div className="flex gap-4 rounded-2xl border border-oasis-100 bg-white p-4">
-                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2.5 text-oasis-600">
+                    <div className="flex gap-3 rounded-2xl border border-oasis-100 bg-white p-3.5 sm:gap-4 sm:p-4">
+                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2 text-oasis-600 sm:p-2.5">
                         <Icon name={d.icon} className="h-5 w-5" />
                       </span>
                       <span className="min-w-0">
@@ -174,18 +174,18 @@ export default function Contact() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-3xl border border-oasis-100 bg-white p-8 shadow-sm"
+              className="rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8"
             >
               <h2 className="font-display text-2xl font-bold text-oasis-900">
                 {t("contact.form.title")}
               </h2>
               <p className="mt-2 text-sm text-oasis-800/65">{t(sender.direct ? "contact.form.note.direct" : "contact.form.note")}</p>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                     {t("contact.form.name")}
-                    <span aria-hidden="true" className="text-red-600"> *</span>
+                    <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
                   </span>
                   <input
                     type="text"
@@ -224,7 +224,7 @@ export default function Contact() {
               <label className="mt-4 block">
                 <span className="mb-1.5 block text-sm font-medium text-oasis-900">
                   {t("contact.form.message")}
-                  <span aria-hidden="true" className="text-red-600"> *</span>
+                  <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
                 </span>
                 <textarea
                   ref={messageRef}

@@ -26,7 +26,7 @@ export default function CopyField({ label, value, mono = false, compact = false 
   };
 
   return (
-    <div className="flex items-center justify-between gap-3 border-b border-oasis-100 py-3 last:border-b-0">
+    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-oasis-100 py-3 last:border-b-0">
       <div className="min-w-0">
         <div className="text-xs tracking-wide text-oasis-800/60 uppercase">{label}</div>
         <div

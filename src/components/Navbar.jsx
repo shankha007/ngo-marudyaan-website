@@ -35,7 +35,7 @@ function LanguageToggle({ compact = false, className = "" }) {
           aria-pressed={lang === code}
           aria-label={langLabels[code].full}
           className={`rounded-full text-xs font-semibold transition ${
-            compact ? "px-2.5 py-1" : "px-3 py-1"
+            compact ? "min-h-8 px-2 py-1.5 min-[360px]:px-2.5" : "px-3 py-1"
           } ${
             lang === code
               ? "bg-oasis-600 text-white shadow-sm"
@@ -115,11 +115,11 @@ export default function Navbar() {
             : "bg-sand-50"
         }`}
       >
-        <nav className="container-page flex h-18 items-center justify-between gap-4 py-3">
-          <Link to="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3" aria-label={site.name}>
-            <Logo className="h-10 w-10 shrink-0 sm:h-11 sm:w-11" />
+        <nav className="container-page flex h-18 items-center justify-between gap-2 py-3 sm:gap-4">
+          <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-3" aria-label={site.name}>
+            <Logo className="h-9 w-9 shrink-0 min-[360px]:h-10 min-[360px]:w-10 sm:h-11 sm:w-11" />
             <span className="min-w-0 leading-tight">
-              <span className="block truncate font-display text-base font-bold text-oasis-800 sm:text-lg">
+              <span className="block truncate font-display text-[15px] font-bold text-oasis-800 min-[360px]:text-base sm:text-lg">
                 {site.name}
               </span>
               <span className="block truncate text-xs text-oasis-600">{site.nameBn}</span>
@@ -151,7 +151,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="flex shrink-0 items-center gap-1.5 xl:hidden">
+          <div className="flex shrink-0 items-center gap-1 min-[360px]:gap-1.5 xl:hidden">
             <LanguageToggle compact />
             <button
               type="button"
@@ -184,8 +184,10 @@ export default function Navbar() {
           role="dialog"
           aria-modal="true"
           aria-label={t("nav.menu")}
-          className={`absolute top-0 right-0 flex h-full w-[82%] max-w-sm flex-col bg-sand-50 shadow-2xl transition-transform duration-300 ${
-            open ? "translate-x-0" : "translate-x-full"
+          className={`absolute top-0 right-0 flex h-full w-[82%] max-w-sm flex-col bg-sand-50 transition-transform duration-300 ${
+            /* shadow only while open: when closed, the drawer sits just past
+               the right edge and its shadow would show as a grey strip */
+            open ? "translate-x-0 shadow-2xl" : "translate-x-full"
           }`}
         >
           <div className="flex items-center justify-between border-b border-oasis-100 px-5 py-4">

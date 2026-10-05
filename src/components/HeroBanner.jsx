@@ -154,7 +154,7 @@ export default function HeroBanner() {
                   setUserPaused((p) => !p);
                 }}
                 aria-label={userPaused ? t("carousel.play") : t("carousel.pause")}
-                className="rounded-full border border-white/30 p-2 text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/30 p-2.5 text-white transition hover:bg-white/10"
               >
                 <Icon name={userPaused ? "play" : "pause"} className="h-4 w-4" />
               </button>
@@ -162,7 +162,7 @@ export default function HeroBanner() {
                 type="button"
                 onClick={() => go(index - 1)}
                 aria-label={t("carousel.prev")}
-                className="rounded-full border border-white/30 p-2 text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/30 p-2.5 text-white transition hover:bg-white/10"
               >
                 <Icon name="chevronLeft" className="h-4 w-4" />
               </button>
@@ -170,12 +170,12 @@ export default function HeroBanner() {
                 type="button"
                 onClick={() => go(index + 1)}
                 aria-label={t("carousel.next")}
-                className="rounded-full border border-white/30 p-2 text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/30 p-2.5 text-white transition hover:bg-white/10"
               >
                 <Icon name="chevronRight" className="h-4 w-4" />
               </button>
             </div>
-            {/* each dot is a 24px-tall button (comfortable tap target);
+            {/* each dot is a 32px-tall button (comfortable tap target);
                 the thin bar inside is only the visual */}
             <div className="flex gap-1">
               {slides.map((s, i) => (
@@ -185,7 +185,7 @@ export default function HeroBanner() {
                   onClick={() => setIndex(i)}
                   aria-label={`${t("carousel.goto")} ${num(i + 1)}`}
                   aria-current={i === index}
-                  className="group flex h-6 min-w-6 items-center justify-center px-0.5"
+                  className="group flex h-8 min-w-8 items-center justify-center px-1"
                 >
                   <span
                     className={`block h-1.5 rounded-full transition-all ${
