@@ -57,6 +57,17 @@ export async function launchBrowser() {
   );
 }
 
+/* Netlify injects its own scripts (the badge, /.netlify/scripts/hud) on the
+   live site. They are not part of our code, and a request that is cut off
+   when a test moves to the next page should not fail the run. */
+const isNetlifyOwn = (url) => {
+  try {
+    return new URL(url).pathname.startsWith("/.netlify/");
+  } catch {
+    return false;
+  }
+};
+
 /* A page with the site's language pre-selected (once, so reloads keep the
    visitor's own choice) and error collectors attached. */
 export async function openPage(browser, base, { lang = "en", viewport = "desktop", contextOptions = {} } = {}) {
@@ -81,9 +92,9 @@ export async function openPage(browser, base, { lang = "en", viewport = "desktop
   page.errors = { page: [], console: [], http: [] };
   page.on("pageerror", (e) => page.errors.page.push(String(e.message || e)));
   page.on("console", (m) => m.type() === "error" && page.errors.console.push(m.text()));
-  page.on("response", (r) => r.status() >= 400 && page.errors.http.push({ status: r.status(), url: r.url() }));
+  page.on("response", (r) => r.status() >= 400 && !isNetlifyOwn(r.url()) && page.errors.http.push({ status: r.status(), url: r.url() }));
   page.on("requestfailed", (r) => {
-    if (!r.url().startsWith("data:")) page.errors.http.push({ status: "failed", url: r.url() });
+    if (!r.url().startsWith("data:") && !isNetlifyOwn(r.url())) page.errors.http.push({ status: "failed", url: r.url() });
   });
   page.base = base;
   return page;
