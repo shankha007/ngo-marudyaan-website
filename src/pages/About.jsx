@@ -165,12 +165,14 @@ export default function About() {
               {legalRows.map((row, i) => (
                 <div
                   key={row.label}
-                  className={`flex flex-wrap items-center justify-between gap-2 px-6 py-4 ${
+                  className={`flex flex-col gap-1 px-5 py-3.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 sm:px-6 sm:py-4 ${
                     i % 2 ? "bg-sand-50" : "bg-white"
                   }`}
                 >
-                  <dt className="text-sm text-oasis-800/70">{row.label}</dt>
-                  <dd className="font-medium text-oasis-900">{row.value}</dd>
+                  {/* stacked on phones so every row looks the same, even when a long
+                      value (the Act's name) would not fit beside its label */}
+                  <dt className="shrink-0 text-sm text-oasis-800/70">{row.label}</dt>
+                  <dd className="font-medium text-oasis-900 sm:text-right">{row.value}</dd>
                 </div>
               ))}
             </dl>
