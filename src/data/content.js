@@ -153,19 +153,19 @@ export const milestones = [
     },
   },
   {
-    year: "2020",
-    title: { en: "The pandemic years", bn: "অতিমারির বছরগুলি" },
-    text: {
-      en: "During the lockdown the group delivered ration kits, masks and medicines to families who had lost all work. What began as a routine became a responsibility.",
-      bn: "লকডাউনে কাজ হারানো পরিবারের কাছে রেশন কিট, মাস্ক ও ওষুধ পৌঁছে দেওয়া হয়। অভ্যাস তখন দায়িত্বে বদলে যায়।",
-    },
-  },
-  {
     year: "2018",
     title: { en: "Marudyaan takes its name", bn: "মরুদ্যান নাম পায়" },
     text: {
       en: "The team was registered as NGO Marudyaan — 'an oasis' — a society under the West Bengal Societies Registration Act, and added education and health camps to the regular food drives.",
       bn: "দলটি ‘এনজিও মরুদ্যান’ নামে পশ্চিমবঙ্গ সোসাইটি রেজিস্ট্রেশন আইনে নথিভুক্ত হয় এবং নিয়মিত খাদ্য বিতরণের সঙ্গে শিক্ষা ও স্বাস্থ্য শিবির যুক্ত হয়।",
+    },
+  },
+  {
+    year: "2020",
+    title: { en: "The pandemic years", bn: "অতিমারির বছরগুলি" },
+    text: {
+      en: "During the lockdown the group delivered ration kits, masks and medicines to families who had lost all work. What began as a routine became a responsibility.",
+      bn: "লকডাউনে কাজ হারানো পরিবারের কাছে রেশন কিট, মাস্ক ও ওষুধ পৌঁছে দেওয়া হয়। অভ্যাস তখন দায়িত্বে বদলে যায়।",
     },
   },
   {
