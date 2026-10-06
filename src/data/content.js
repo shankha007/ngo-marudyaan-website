@@ -1,12 +1,17 @@
 /* ===================================================================
-   PAGE CONTENT  —  programmes, gallery, team, timeline, FAQs
+   PAGE CONTENT  —  programmes, team, timeline, FAQs
+   (Gallery photos and projects live in projects.js.)
    -------------------------------------------------------------------
    Every text field has an English (en) and a Bengali (bn) version.
    All copy below is a realistic DRAFT written from your Facebook page:
    please read it through and replace it with your real details.
 =================================================================== */
 
-/* --- WHAT WE DO -------------------------------------------------- */
+/* --- WHAT WE DO --------------------------------------------------
+   project: optional id of a project in projects.js. The programme then
+   shows that project's cover photo (instead of `image`) and links to
+   its album in the Gallery.
+------------------------------------------------------------------- */
 export const programs = [
   {
     id: "food",
@@ -34,6 +39,7 @@ export const programs = [
     id: "education",
     icon: "book",
     image: "/images/work-education.svg",
+    project: "2021-micro-library",
     title: { en: "Education & Learning", bn: "শিক্ষা ও পাঠ" },
     summary: {
       en: "Free coaching, study materials and school kits so that no child drops out for want of a pen, a book or a little guidance.",
@@ -78,6 +84,7 @@ export const programs = [
     id: "winter",
     icon: "blanket",
     image: "/images/work-winter.svg",
+    project: "2020-cyclone-relief",
     title: { en: "Winter & Relief", bn: "শীতবস্ত্র ও ত্রাণ" },
     summary: {
       en: "Blankets, warm clothes and emergency relief whenever the weather or a disaster leaves families exposed.",
@@ -100,6 +107,7 @@ export const programs = [
     id: "festival",
     icon: "gift",
     image: "/images/work-festival.svg",
+    project: "2022-sharodiya-sahosathi",
     title: { en: "Festivals for Everyone", bn: "সবার জন্য উৎসব" },
     summary: {
       en: "New clothes and a proper celebration at Durga Puja, Eid and Poila Boishakh for children who would otherwise watch from outside.",
@@ -164,8 +172,24 @@ export const milestones = [
     year: "2020",
     title: { en: "The pandemic years", bn: "অতিমারির বছরগুলি" },
     text: {
-      en: "During the lockdown the group delivered ration kits, masks and medicines to families who had lost all work. What began as a routine became a responsibility.",
-      bn: "লকডাউনে কাজ হারানো পরিবারের কাছে রেশন কিট, মাস্ক ও ওষুধ পৌঁছে দেওয়া হয়। অভ্যাস তখন দায়িত্বে বদলে যায়।",
+      en: "During the lockdown the group delivered ration kits, masks and medicines to families who had lost all work. When cyclones Amphan and Yaas flooded the Sundarbans, volunteers took relief by boat to cut-off island villages. What began as a routine became a responsibility.",
+      bn: "লকডাউনে কাজ হারানো পরিবারের কাছে রেশন কিট, মাস্ক ও ওষুধ পৌঁছে দেওয়া হয়। আমফান ও ইয়াস ঘূর্ণিঝড়ে সুন্দরবন প্লাবিত হলে স্বেচ্ছাসেবকরা নৌকায় জলবন্দি দ্বীপের গ্রামে ত্রাণ পৌঁছে দেন। অভ্যাস তখন দায়িত্বে বদলে যায়।",
+    },
+  },
+  {
+    year: "2021",
+    title: { en: "A library of our own", bn: "নিজেদের একটি গ্রন্থাগার" },
+    text: {
+      en: "Donated books became a Micro Library at a women and children's development centre in Santoshpur, so that children could borrow storybooks and school guides for free.",
+      bn: "দানের বই দিয়ে সন্তোষপুরের একটি নারী ও শিশু উন্নয়ন কেন্দ্রে গড়ে ওঠে মাইক্রো লাইব্রেরি, যেখান থেকে শিশুরা বিনামূল্যে গল্পের বই ও স্কুলের সহায়িকা নিতে পারে।",
+    },
+  },
+  {
+    year: "2022",
+    title: { en: "Sharodiya Sahosathi", bn: "শারদীয়া সহসাথী" },
+    text: {
+      en: "Before Durga Puja, our Sharodiya Sahosathi drive gave children new shoes, stationery and books, so that they too had something new for the festival.",
+      bn: "দুর্গাপুজোর আগে শারদীয়া সহসাথী উদ্যোগে শিশুদের হাতে নতুন জুতো, খাতা-পেন ও বই তুলে দেওয়া হয়, যাতে উৎসবে তাদের কাছেও কিছু নতুন থাকে।",
     },
   },
   {
@@ -233,26 +257,6 @@ export const team = [
   { id: "t5", photo: "/images/team/anik-misra.jpg", name: { en: "Anik Misra", bn: "অনীক মিশ্র" }, role: { en: "Treasurer", bn: "কোষাধ্যক্ষ" } },
   { id: "t6", photo: "/images/team/suvam-mitra.jpg", name: { en: "Suvam Mitra", bn: "শুভম মিত্র" }, role: { en: "Assistant Treasurer", bn: "সহকারী কোষাধ্যক্ষ" } },
   { id: "t7", photo: "/images/team/subhabrata-sengupta.jpg", name: { en: "Subhabrata Sengupta", bn: "শুভব্রত সেনগুপ্ত" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
-];
-
-/* --- GALLERY ------------------------------------------------------
-   TODO: add your own photos to public/images/gallery/ and list them
-   here. category must be one of: food, education, health, winter,
-   festival, women.
-------------------------------------------------------------------- */
-export const galleryItems = [
-  { id: "g1",  src: "/images/gallery/g1.svg",  category: "festival",  caption: { en: "Puja clothes distribution", bn: "পুজোর জামা বিতরণ" } },
-  { id: "g2",  src: "/images/gallery/g2.svg",  category: "food",      caption: { en: "Sunday street meal drive", bn: "রবিবারের খাবার বিতরণ" } },
-  { id: "g3",  src: "/images/gallery/g3.svg",  category: "education", caption: { en: "Evening learning circle", bn: "সান্ধ্য পাঠচক্র" } },
-  { id: "g4",  src: "/images/gallery/g4.svg",  category: "health",    caption: { en: "Free health check-up camp", bn: "বিনামূল্যে স্বাস্থ্য শিবির" } },
-  { id: "g5",  src: "/images/gallery/g5.svg",  category: "winter",    caption: { en: "Blanket distribution at night", bn: "রাতে কম্বল বিতরণ" } },
-  { id: "g6",  src: "/images/gallery/g6.svg",  category: "women",     caption: { en: "Tailoring training batch", bn: "সেলাই প্রশিক্ষণ ব্যাচ" } },
-  { id: "g7",  src: "/images/gallery/g7.svg",  category: "food",      caption: { en: "Ration kits ready to go", bn: "বিতরণের জন্য প্রস্তুত রেশন কিট" } },
-  { id: "g8",  src: "/images/gallery/g8.svg",  category: "education", caption: { en: "New school kits", bn: "নতুন স্কুল কিট" } },
-  { id: "g9",  src: "/images/gallery/g9.svg",  category: "health",    caption: { en: "Blood donation camp", bn: "রক্তদান শিবির" } },
-  { id: "g10", src: "/images/gallery/g10.svg", category: "festival",  caption: { en: "Community feast", bn: "সম্প্রদায়ের ভোজ" } },
-  { id: "g11", src: "/images/gallery/g11.svg", category: "winter",    caption: { en: "Flood relief kits", bn: "বন্যার ত্রাণ কিট" } },
-  { id: "g12", src: "/images/gallery/g12.svg", category: "women",     caption: { en: "Health awareness session", bn: "স্বাস্থ্য সচেতনতা শিবির" } },
 ];
 
 /* --- VOICES ------------------------------------------------------- */

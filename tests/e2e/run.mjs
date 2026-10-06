@@ -13,7 +13,7 @@ import { pathToFileURL } from "node:url";
 import { ROOT, createReporter, launchBrowser } from "./lib.mjs";
 
 const LIVE_URL = process.env.LIVE_URL || "https://ngo-marudyaan.netlify.app";
-const SUITES = ["smoke", "navigation", "features", "a11y", "netlify-badge"];
+const SUITES = ["smoke", "navigation", "features", "performance", "a11y", "netlify-badge"];
 
 const args = process.argv.slice(2);
 const flag = (name) => args.includes(`--${name}`);

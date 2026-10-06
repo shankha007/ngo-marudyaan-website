@@ -11,9 +11,13 @@
     "test": "node tests/e2e/run.mjs",
     "test:quick": "node tests/e2e/run.mjs --quick",
     "test:live": "node tests/e2e/run.mjs --live",
-    "og-image": "node scripts/og-image.mjs"
+    "og-image": "node scripts/og-image.mjs",
+    "add-photos": "node scripts/add-photos.mjs"
   },
   "dependencies": {
+    "@fontsource/baloo-2": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/noto-sans-bengali": "^5.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.4"
@@ -25,6 +29,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
     "playwright-core": "^1.63.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.0"
   }

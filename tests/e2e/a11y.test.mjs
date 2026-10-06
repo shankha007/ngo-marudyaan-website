@@ -2,9 +2,8 @@
    photo lightbox, skip link, Back-to-top, tap-target sizes, icon shapes,
    and no English-only labels left in Bengali mode.                        */
 import { bannerSettings, bannerSlides } from "../../src/data/banner.js";
-import { galleryItems } from "../../src/data/content.js";
 import { strings } from "../../src/i18n/strings.js";
-import { openPage, realRoutes } from "./lib.mjs";
+import { galleryPhotos, openPage, realRoutes } from "./lib.mjs";
 
 export const title = "Accessibility";
 
@@ -146,7 +145,7 @@ export default async function a11y({ browser, base, quick, report }) {
 
     report.check(opened.inDialog && opened.label === en["gallery.close"], "opening a photo moves focus to the lightbox's Close button", `focus on "${opened.label}"`);
     report.check(!escaped, "Tab stays inside the open lightbox", escaped ? `escaped to "${escaped}"` : "");
-    const lastViewed = String((1 + 2) % galleryItems.length); // opened #1, then → →
+    const lastViewed = String((1 + 2) % galleryPhotos.length); // opened #1, then → →
     report.check(!lightboxOpen && closedTo.thumb === lastViewed, "Escape closes it and returns focus to the last photo viewed", `open=${lightboxOpen}, focus on thumb ${closedTo.thumb}, expected ${lastViewed}`);
     await page.context().close();
   }

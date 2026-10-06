@@ -54,7 +54,7 @@ npm run preview # check the built site locally before uploading
 
 ---
 
-## The four files you will actually edit
+## The five files you will actually edit
 
 Everything you need to change day to day lives in **`src/data/`** and **`src/i18n/`**.
 You do not need to touch any other file.
@@ -88,21 +88,56 @@ suggested amount, which open GPay / PhonePe with everything filled in. Keep it
 Try a small payment from your own phone after switching it on — some UPI apps
 limit link payments to personal (non-merchant) UPI IDs.
 
-### 3. `src/data/content.js` — programmes, gallery, team, story, FAQs
+### 3. `src/data/projects.js` — the Gallery's project albums
+
+The Gallery shows one album per project (newest year first). Each project's photos live in
+their own folder, `public/images/projects/<project id>/`, and **every photo in that folder is
+shown automatically**, in file-name order.
+
+**Adding a new project** (two steps):
+
+1. Copy the photos in. This renames them `01.jpg`, `02.jpg`, … and skips exact duplicates:
+
+   ```bash
+   npm run add-photos -- "C:\Users\me\Downloads\Puja 2025" 2025-puja-drive
+   ```
+
+   (Or create the folder and drop the files in yourself.)
+
+2. Add a block to `projects` in `projects.js`, with the same `id` as the folder:
+
+   ```js
+   {
+     id: "2025-puja-drive",
+     year: 2025,
+     category: "festival",
+     cover: "03.jpg",                       // optional: photo for Home / Our Work
+     title: { en: "Puja Drive", bn: "পুজোর উদ্যোগ" },
+     summary: { en: "…", bn: "…" },
+     captions: {                            // optional, per photo
+       "01.jpg": { en: "…", bn: "…" },
+     },
+   },
+   ```
+
+`category` must be one of: `food`, `education`, `health`, `winter`, `festival`, `women`.
+The Gallery's filter buttons only show categories that have a project.
+
+**Adding photos to an existing project:** run `add-photos` with that project's id, or drop the
+files into its folder. Nothing else changes. Photos without a caption are captioned with the
+project's title. Set `active: false` to hide a project without deleting it.
+
+To show a project on a programme in Our Work, set `project: "<project id>"` on that programme
+in `content.js`: the programme then uses the project's cover photo and links to its album.
+
+`npm test` checks that every folder has an entry and every entry has a folder, and that covers
+and captions name real files.
+
+### 4. `src/data/content.js` — programmes, team, story, FAQs
 
 Every entry has an `en` and a `bn` version. Replace the draft copy with your real text.
 
-**Adding gallery photos:** drop the files into `public/images/gallery/`, then add a line to
-`galleryItems`:
-
-```js
-{ id: "g13", src: "/images/gallery/g13.jpg", category: "food",
-  caption: { en: "Ration drive, Howrah", bn: "রেশন বিতরণ, হাওড়া" } },
-```
-
-`category` must be one of: `food`, `education`, `health`, `winter`, `festival`, `women`.
-
-### 4. `src/i18n/strings.js` — menu labels, buttons and section headings
+### 5. `src/i18n/strings.js` — menu labels, buttons and section headings
 
 Add a key to **both** `en` and `bn`, then use it as `t("your.key")`.
 
@@ -110,11 +145,37 @@ Add a key to **both** `en` and `bn`, then use it as `t("your.key")`.
 
 ## Placeholder images
 
-Every image in `public/images/` right now is a generated placeholder that says what belongs
-there. Replace them with your own photos, keeping the same file names — or use new names and
-update the path in `src/data/`. JPG, PNG and WebP all work.
+The `.svg` images in `public/images/` (`banner-2.svg` and the `work-*.svg` programme pictures)
+are generated placeholders that say what belongs there. Replace them with your own photos,
+keeping the same file names — or use new names and update the path in `src/data/`. Any gallery
+photo can be reused directly, e.g. `image: "/images/projects/2021-micro-library/09.jpg"`.
+JPG, PNG and WebP all work.
 
-Recommended sizes: banner **1600×900**, programme images **1000×750**, gallery **square**.
+Recommended sizes: banner **1600×900**, programme images **1000×750**. Gallery photos can be
+any shape (thumbnails are cropped square; the full photo shows when opened).
+
+**You don't need to shrink photos yourself.** For every photo in `public/images/projects/`,
+the build makes small WebP copies (400, 800 and 1600 px wide) and a blurred preview. Each page
+downloads only the size it shows, so a phone gets a ~20 KB thumbnail instead of a 300 KB photo.
+The originals are never changed. To get the same for a banner or programme picture, use a photo
+from a project folder (as above).
+
+## Page speed
+
+- **Pictures** load lazily (only as you scroll near them), at the size they're shown, with a
+  blurred preview and their real width and height, so nothing jumps while they load. Add new
+  pictures with the `<Photo>` component (`src/components/Photo.jsx`), not a plain `<img>`, and
+  they get all of this.
+- **The home banner** is the one picture that loads first: it starts downloading before the
+  page's JavaScript.
+- **The lightbox** fetches the next and previous photos while you look at one.
+- **Fonts** (Baloo 2, Inter, Noto Sans Bengali) are served from this site rather than Google
+  Fonts, so the first paint doesn't wait for another server.
+- **Caching:** on Netlify (`public/_headers`) and Vercel (`vercel.json`), the photo copies and
+  the site's scripts are cached by browsers for a year. Their names change whenever their
+  content does, so visitors never see an old version.
+
+The `performance` test suite checks all of this.
 
 ---
 
@@ -186,8 +247,8 @@ npm test -- --only=features,a11y      # run only some suites
 npm test -- --no-build                # skip the build step (reuse the last dist/)
 ```
 
-Suites: `smoke` (page sweep), `navigation`, `features`, `a11y` (accessibility),
-`netlify-badge`. Set `HEADED=1` to watch the browser, or `CHROME_PATH=…` to pick a browser.
+Suites: `smoke` (page sweep), `navigation`, `features`, `performance` (image sizes, lazy
+loading, layout shift, fonts), `a11y` (accessibility), `netlify-badge`. Set `HEADED=1` to watch the browser, or `CHROME_PATH=…` to pick a browser.
 
 **Adding a new page?** Add its path to `public/_redirects` and `public/sitemap.xml` as well
 as `src/App.jsx` — the `navigation` suite fails if the lists don't match, because a page

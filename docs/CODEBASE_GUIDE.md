@@ -86,9 +86,12 @@ ngo-marudyaan/
 │   ├── _redirects             Netlify routing (real pages 200, others 404)
 │   ├── robots.txt, sitemap.xml
 │   ├── favicon.png, apple-touch-icon.png
-│   └── images/                banner, programme, gallery, QR and OG images
+│   └── images/                banner, programme, QR and OG images
+│       └── projects/<id>/     gallery photos, one folder per project
 ├── scripts/
-│   └── og-image.mjs           renders public/images/og-image.jpg
+│   ├── og-image.mjs           renders public/images/og-image.jpg
+│   ├── add-photos.mjs         copies a folder of photos into a gallery project
+│   └── project-photos.mjs     lists project photos; Vite plugin for the gallery
 ├── src/
 │   ├── main.jsx               entry point: mounts <App> with providers
 │   ├── App.jsx                layout + route table
@@ -114,7 +117,7 @@ The single HTML document Vite serves. It contains:
 
 - `<title>`, meta description, `theme-color` and the canonical URL.
 - **Open Graph / Twitter tags** for link previews on WhatsApp and Facebook. These point at `/images/og-image.jpg`.
-- Google Fonts: **Baloo 2** (display headings), **Inter** (body text) and **Noto Sans Bengali** (Bengali script).
+- On the built site, a small inline script that preloads the first banner photo, on the home page only (added by the `project-photos` Vite plugin; see [§16](#16-scripts-scripts)).
 - `<div id="root">`, where React mounts, and the script tag that loads `/src/main.jsx`.
 
 ### [src/main.jsx](../src/main.jsx)
@@ -208,11 +211,10 @@ All page copy. Exports:
 
 | Export | Shape | Rendered on |
 | --- | --- | --- |
-| `programs` | `{ id, icon, image, title, summary, details: {en:[…], bn:[…]} }`. Ids: `food`, `education`, `health`, `winter`, `festival`, `women`. | Home (cards), Our Work (sections, anchored by `id`) |
+| `programs` | `{ id, icon, image, project?, title, summary, details: {en:[…], bn:[…]} }`. With `project`, the programme shows that project's cover photo instead of `image` and links to its album. Ids: `food`, `education`, `health`, `winter`, `festival`, `women`. | Home (cards), Our Work (sections, anchored by `id`) |
 | `milestones` | `{ year, title, text }` | About (timeline) |
 | `values` | `{ id, title, text }` | Home (mission list), About (values grid) |
 | `team` | `{ id, photo, name, role }`. An empty `photo` shows the person's initials. | About |
-| `galleryItems` | `{ id, src, category, caption }`. `category` must be one of the six programme categories. | Gallery, Home (first 6) |
 | `testimonials` | `{ id, quote, author }` | Home |
 | `volunteerRoles` | `{ id, title, text }` | Get Involved (cards + "Interested in" select) |
 | `helpPrograms` | `{ id, icon, title, text, needs: [{ id, label }] }`. Ids: `puja`, `winter`, `other`. `other` has no needs. | Request Help |
@@ -220,6 +222,20 @@ All page copy. Exports:
 | `faqs` | `{ id, q, a }` | Get Involved |
 
 `icon` values must be names defined in [Icon.jsx](../src/components/Icon.jsx). Need ids in `helpPrograms` must be unique across all drives.
+
+### [src/data/projects.js](../src/data/projects.js)
+
+The Gallery's project albums. Photos are not listed here: they are whatever files are in `public/images/projects/<id>/`, in file-name order.
+
+| Export | What it is |
+| --- | --- |
+| `projects` | `{ id, year, category, cover?, title, summary?, captions?, active? }`. `id` is the folder name. `category` is a programme id. `cover` is a file name (defaults to the first photo). `captions` is `{ "03.jpg": { en, bn } }`; photos without one use `title`. `active: false` hides the project. |
+| `projectPhotoSrc(id, file)` | The public URL of a project photo. |
+| `buildGallery(list, photoMap)` | Joins `projects` with `{ [id]: [files] }`. It drops hidden projects and projects with no photos, adds `photos: [{ id, src, caption }]` and `coverSrc`, and sorts newest year first. Pure, so the tests use it too. |
+
+### [src/data/gallery.js](../src/data/gallery.js)
+
+The browser-side wiring: imports the photo list from `virtual:project-photos` (see [§16](#16-scripts-scripts)) and exports `galleryProjects` (the result of `buildGallery`), `galleryPhotos` (all photos, flattened), `findProject(id)`, and `programImage(program)`, which returns the programme's project cover or else its own `image`. Edit `projects.js`, not this file.
 
 ---
 
@@ -327,6 +343,7 @@ Sets `document.title` and the `<meta name="description">` tag when a page mounts
 | [Navbar](../src/components/Navbar.jsx) | none | Skip link, announcement strip (from `banner.js`), sticky header with logo, desktop nav links, language toggle, Donate button, and the mobile slide-in drawer. Details below. |
 | [Footer](../src/components/Footer.jsx) | none | Four columns: brand blurb and socials, quick links, contact details, and a Donate call-to-action. Then a copyright line with the current year. Social icons with no URL are filtered out. |
 | [HeroBanner](../src/components/HeroBanner.jsx) | none | The home-page carousel. Details below. |
+| [Photo](../src/components/Photo.jsx) | `src`, `alt`, `sizes`, `priority`, plus any `<img>` props | Use instead of `<img>` for pictures. Always lazy (`loading="lazy"`, `decoding="async"`) unless `priority` (eager, `fetchpriority="high"`; only for the first banner slide and the open lightbox photo). For a photo under `/images/projects/` it also sets `srcset` from the WebP copies, `sizes` (how wide it is on screen), the real `width`/`height` (no layout shift) and a blurred background preview until it loads. Anything else renders as a plain `<img>`. |
 | [PageHeader](../src/components/PageHeader.jsx) | `title`, `sub?` | The green banner at the top of every inner page. It contains the page's only `<h1>`, plus decorative blurred circles and a curved bottom edge. |
 | [SectionHeading](../src/components/SectionHeading.jsx) | `kicker?`, `title`, `sub?`, `align` (`"center"` or `"left"`), `light` (for dark backgrounds) | A section `<h2>` with an optional small uppercase kicker, a subtitle and a saffron underline bar. It is wrapped in `Reveal`. |
 | [Reveal](../src/components/Reveal.jsx) | `as` (tag, default `div`), `delay` (ms), `className`, `...rest` | Fades and lifts its children in the first time they scroll into view, using an `IntersectionObserver` with a 12% threshold. It adds the `is-visible` class, which triggers the `rise` keyframes in `index.css`. If `IntersectionObserver` is missing, the content shows immediately. |
@@ -394,7 +411,7 @@ Sections, top to bottom:
 2. **Impact numbers**: `stats` → `StatCounter`
 3. **Who we are**: an image with a floating "founded" badge, the mission text, the `values` list and a "Learn more" link to About
 4. **What we do**: `programs` → `ProgramCard` grid
-5. **Gallery preview**: the first 6 `galleryItems`; the first is shown twice the size
+5. **Gallery preview**: each project's cover photo (newest first), then their other photos, up to 6; the first is shown twice the size. Each links to its album at `/gallery#<project id>`
 6. **Voices**: `testimonials`
 7. **Closing CTA**: Donate and Volunteer buttons
 
@@ -406,20 +423,21 @@ Sections, top to bottom:
 ### [OurWork.jsx](../src/pages/OurWork.jsx): `OurWork()`
 
 - **Jump chips**: `<a href="#food">`-style links to each programme.
-- **One `<section id={program.id}>` per programme**, with alternating image side, the details list, and Donate and Volunteer buttons. `scroll-mt-24` keeps a section clear of the sticky header when it is scrolled to.
+- **One `<section id={program.id}>` per programme**, with alternating image side (`programImage()`), the details list, Donate and Volunteer buttons, and a "See the photos" link to `/gallery#<project id>` when the programme has a `project`. `scroll-mt-24` keeps a section clear of the sticky header when it is scrolled to.
 - **"How a drive happens"**: 5 numbered steps from the string keys `work.how.s1.t` / `work.how.s1.b` through `s5`.
 - Arriving at `/our-work#food` is handled centrally by `ScrollToTop`; the page has no anchor-scroll effect of its own.
 
 ### [Gallery.jsx](../src/pages/Gallery.jsx): `Gallery()`
 
-- **`categories`** (const): `all`, followed by the six programme categories.
-- State: `filter` (the active category) and `openIndex` (the index into the filtered `items`, or `null` when the lightbox is closed).
-- **`items`**: the `galleryItems` filtered by category (memoised).
+- **`categories`** (const): `all`, followed by the programme categories (in `programs` order) that have at least one project.
+- State: `filter` (the active category) and `openIndex` (the index into `items`, or `null` when the lightbox is closed).
+- **`shownProjects`**: `galleryProjects` filtered by category. Each is rendered as an album: `<section id={project.id}>` with year, category, photo count, title, summary and a photo grid, so `/gallery#2021-micro-library` scrolls to it.
+- **`items`**: every photo of `shownProjects`, flattened in page order, each carrying its `project`. `data-thumb` is the index into this list, so the lightbox steps across albums.
 - **`close()`**: closes the lightbox.
 - **`step(delta)`**: moves to the next or previous photo, wrapping around.
 - A keyboard effect, active while the lightbox is open: `Escape` closes it, `←` / `→` step through photos, and body scroll is locked.
 - **Focus management**: `useFocusTrap` with the Close button as initial focus. On close, focus returns to the thumbnail of the last photo viewed (found through `data-thumb` and `lastIndexRef`).
-- The lightbox is a `role="dialog"`. Clicking the backdrop closes it; clicks on the image and arrows stop propagation so they don't. It shows the caption and an "n of total" counter.
+- The lightbox is a `role="dialog"`. Clicking the backdrop closes it; clicks on the image and arrows stop propagation so they don't. It shows the caption, the project's title and year, and an "n of total" counter.
 
 ### [GetInvolved.jsx](../src/pages/GetInvolved.jsx)
 
@@ -549,13 +567,14 @@ Copied unchanged into `dist/`.
 | [sitemap.xml](../public/sitemap.xml) | Lists every real page for search engines. Must match `App.jsx`. |
 | [robots.txt](../public/robots.txt) | Allows everything and points to the sitemap. |
 | `favicon.png`, `apple-touch-icon.png` | Browser tab icon and the icon phones use for a home-screen shortcut, both cut from the logo. |
-| `images/` | `banner-*.svg`, `work-*.svg`, `about-main.svg` and `gallery/g*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
+| [_headers](../public/_headers) | **Netlify response headers.** `Cache-Control: immutable` for a year on `/assets/*` (Vite's hashed JS and CSS) and `/images/projects/:project/_w/*` (the hashed WebP copies). [vercel.json](../vercel.json) sets the same for Vercel. |
+| `images/` | `projects/<id>/` holds the gallery photos, one folder per project (see `projects.js`). `banner-2.svg` and `work-*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
 
 ---
 
 ## 14. Build, hosting and branch rules
 
-- **[vite.config.js](../vite.config.js)**: just the React and Tailwind plugins. For GitHub Pages hosting you would add `base: "/<repo>/"`.
+- **[vite.config.js](../vite.config.js)**: the React and Tailwind plugins, plus `projectPhotosPlugin()` (gallery photo list, WebP copies, banner preload). For GitHub Pages hosting you would add `base: "/<repo>/"`.
 - **[vercel.json](../vercel.json)**: rewrites every path to `/index.html`, for hosting on Vercel. Note that unlike `_redirects`, it doesn't produce real 404 statuses.
 - **[.oxlintrc.json](../.oxlintrc.json)**: enforces React's rules of hooks and warns when a file exports non-components alongside components (needed for fast refresh).
 - **[.claude/launch.json](../.claude/launch.json)**: tells the Claude desktop app how to start the dev server (`npm run dev`, port 5173).
@@ -606,13 +625,30 @@ Suites run in this order: `smoke`, `navigation`, `features`, `a11y`, `netlify-ba
 | --- | --- | --- |
 | **smoke** | [smoke.test.mjs](../tests/e2e/smoke.test.mjs) | Every real route plus one unknown route, at every viewport, in both languages. For each page: no JavaScript or console errors, no failed requests, no broken images, no horizontal overflow, no `.reveal` content stuck invisible, exactly one `<h1>`, and the correct `<html lang>`. |
 | **navigation** | [navigation.test.mjs](../tests/e2e/navigation.test.mjs) | `App.jsx`, `_redirects` and `sitemap.xml` list the same pages. Header links open the right page at the top. The Bengali choice survives a reload. Odd `#fragments` don't crash. `/our-work#id` and Home's "Read more" scroll to the section, clear of the header. The header fits on one line at 1280 px and up. **Live only:** HTTP status codes (real pages 200, unknown 404). |
-| **features** | [features.test.mjs](../tests/e2e/features.test.mjs) | Gallery filters and lightbox. Copy buttons copy the right values (without spaces where needed). WhatsApp link format. QR image or its placeholder. UPI buttons hidden on desktop and shown on phones. Validation, focus, sending and fallbacks on all three forms in both languages. The FAQ accordion. Impact counters reach their values. Ends with **warnings** for placeholder content still on the site (QR, bank details, registration numbers, team names, missing Web3Forms keys, `.svg` placeholder images). |
+| **features** | [features.test.mjs](../tests/e2e/features.test.mjs) | Gallery: `projects.js` matches the photo folders (no missing or unlisted folders, valid categories, covers and caption file names), filters show the right photos, lightbox keys, "See the photos" and shared album links land on the album. Copy buttons copy the right values (without spaces where needed). WhatsApp link format. QR image or its placeholder. UPI buttons hidden on desktop and shown on phones. Validation, focus, sending and fallbacks on all three forms in both languages. The FAQ accordion. Impact counters reach their values. Ends with **warnings** for placeholder content still on the site (QR, bank details, registration numbers, team names, missing Web3Forms keys, `.svg` placeholder images). |
+| **performance** | [performance.test.mjs](../tests/e2e/performance.test.mjs) | Every gallery photo has WebP copies, and the thumbnails are smaller than the originals. On phone and desktop, Home, Our Work and Gallery show WebP copies (never the full photo), lazy-loaded unless high-priority, with `width`/`height`, and not much larger than shown. Layout shift stays under 0.05. No Google Fonts requests. The banner photo is the first image requested on `/` and isn't preloaded elsewhere. The lightbox fetches the next and previous photos. **Live only:** the copies and scripts are sent with `immutable` caching. |
 | **a11y** | [a11y.test.mjs](../tests/e2e/a11y.test.mjs) | The banner's Pause/Play, focus-pause, hover-pause and reduced-motion behaviour, and its 24 px tap targets. The mobile menu and lightbox focus traps and focus return. The skip link. Back-to-top is never a hidden tab stop. Icon badges aren't stretched. Required-field `*` markers match the required fields. No English-only `aria-label` or `alt` text in Bengali mode. |
 | **netlify-badge** | [netlify-badge.test.mjs](../tests/e2e/netlify-badge.test.mjs) | **Live only.** At 9 screen sizes, checks that Netlify's injected "Powered by Netlify" badge (`#nl-badge-frame`) doesn't cover any of our buttons, both on load and after scrolling, including inside the open mobile menu. The helper `covered(page, menuOnly)` returns the labels of covered controls. |
 
 ---
 
 ## 16. Scripts: `scripts/`
+
+### [project-photos.mjs](../scripts/project-photos.mjs)
+
+- **`listProjectPhotos(root)`**: reads `public/images/projects/`, returning `{ [folder]: [photo files sorted by name] }`.
+- **`describeProjectPhotos(root)`**: for each photo, its `width`/`height` (EXIF rotation applied), a 16 px blurred WebP preview as a data URI, and its WebP copies at `VARIANT_WIDTHS` (400, 800, 1600; never wider than the original). Copies are named `/images/projects/<id>/_w/<name>-<width>-<hash>.webp`, where the hash is of the original file's content. Results and copies are cached in `node_modules/.cache/project-photos/`, keyed by that hash, so only new or changed photos are processed (uses [sharp](https://sharp.pixelplumbing.com)).
+- **`projectPhotosPlugin()`**: a Vite plugin registered in [vite.config.js](../vite.config.js).
+  - Serves `{ [id]: [{ file, width, height, blur, srcset }] }` as the module `virtual:project-photos`, which [src/data/gallery.js](../src/data/gallery.js) imports.
+  - **Build:** writes every WebP copy into `dist/`. **Dev:** makes each copy the first time it is requested.
+  - Injects into `index.html` an inline script that preloads the first active banner slide (with the same `srcset`/`sizes` as its `<img>`) when the page is `/`.
+  - In `npm run dev`, reloads the page when a photo or folder is added, changed or removed.
+
+The tests import the same function, so they always expect exactly what the site shows.
+
+### [add-photos.mjs](../scripts/add-photos.mjs)
+
+`npm run add-photos -- "<source folder>" <project id>` copies every JPG/PNG/WebP/AVIF from the source folder into `public/images/projects/<project id>/`, numbered after any photos already there (`01.jpg`, `02.jpg`, …; `.jpeg` becomes `.jpg`). Exact duplicates, of each other or of photos already in the project, are skipped by content hash. It reminds you to add the project to `projects.js` if it is not listed yet.
 
 ### [og-image.mjs](../scripts/og-image.mjs)
 
@@ -631,11 +667,13 @@ Generates `public/images/og-image.jpg`, the 1200×630 image shown when the site 
 | Turn direct form sending on or off | [src/data/site.js](../src/data/site.js) (`site.forms.keys`) |
 | Change impact numbers | [src/data/site.js](../src/data/site.js) (`stats`) |
 | Edit programmes, team, timeline, FAQs or testimonials | [src/data/content.js](../src/data/content.js) |
-| Add a gallery photo | `public/images/gallery/` + `galleryItems` in [content.js](../src/data/content.js) |
+| Add a gallery project | `npm run add-photos -- "<folder>" <id>`, then a block in `projects` in [projects.js](../src/data/projects.js) |
+| Add photos to a gallery project | drop them in `public/images/projects/<id>/` (or `npm run add-photos`) |
 | Add a Request Help drive or need | `helpPrograms` in [content.js](../src/data/content.js) |
 | Change a button label or heading | [src/i18n/strings.js](../src/i18n/strings.js) (both `en` and `bn`) |
 | Add a new icon | the `paths` object in [Icon.jsx](../src/components/Icon.jsx) |
-| Change brand colours or fonts | `@theme` in [src/index.css](../src/index.css) (and the font link in [index.html](../index.html)) |
+| Change brand colours or fonts | `@theme` in [src/index.css](../src/index.css); fonts are `@fontsource/*` packages imported in [src/main.jsx](../src/main.jsx) |
+| Show a picture on a page | the [Photo](../src/components/Photo.jsx) component, with a `sizes` that matches its on-screen width |
 | Add a new page | Create it in `src/pages/`, add a `<Route>` in [App.jsx](../src/App.jsx), add the path to [_redirects](../public/_redirects) and [sitemap.xml](../public/sitemap.xml), add it to `links` in [Navbar.jsx](../src/components/Navbar.jsx) and `quickLinks` in [Footer.jsx](../src/components/Footer.jsx), and add its strings |
 | Change the link-preview image | `npm run og-image` (text comes from `site.js`) |
 

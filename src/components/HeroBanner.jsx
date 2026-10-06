@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { bannerSettings, bannerSlides } from "../data/banner";
 import { useLang } from "../i18n/LanguageContext";
+import Photo from "./Photo";
 import Icon from "./Icon";
 
 const prefersReducedMotion = () =>
@@ -64,11 +65,11 @@ export default function HeroBanner() {
           }`}
           aria-hidden={i !== index}
         >
-          <img
+          <Photo
             src={s.image}
-            alt=""
+            sizes="100vw"
+            priority={i === 0}
             className="h-full w-full object-cover"
-            loading={i === 0 ? "eager" : "lazy"}
           />
         </div>
       ))}
