@@ -117,7 +117,7 @@ The single HTML document Vite serves. It contains:
 
 - `<title>`, meta description, `theme-color` and the canonical URL.
 - **Open Graph / Twitter tags** for link previews on WhatsApp and Facebook. These point at `/images/og-image.jpg`.
-- Google Fonts: **Baloo 2** (display headings), **Inter** (body text) and **Noto Sans Bengali** (Bengali script).
+- On the built site, a small inline script that preloads the first banner photo, on the home page only (added by the `project-photos` Vite plugin; see [§16](#16-scripts-scripts)).
 - `<div id="root">`, where React mounts, and the script tag that loads `/src/main.jsx`.
 
 ### [src/main.jsx](../src/main.jsx)
@@ -343,6 +343,7 @@ Sets `document.title` and the `<meta name="description">` tag when a page mounts
 | [Navbar](../src/components/Navbar.jsx) | none | Skip link, announcement strip (from `banner.js`), sticky header with logo, desktop nav links, language toggle, Donate button, and the mobile slide-in drawer. Details below. |
 | [Footer](../src/components/Footer.jsx) | none | Four columns: brand blurb and socials, quick links, contact details, and a Donate call-to-action. Then a copyright line with the current year. Social icons with no URL are filtered out. |
 | [HeroBanner](../src/components/HeroBanner.jsx) | none | The home-page carousel. Details below. |
+| [Photo](../src/components/Photo.jsx) | `src`, `alt`, `sizes`, `priority`, plus any `<img>` props | Use instead of `<img>` for pictures. Always lazy (`loading="lazy"`, `decoding="async"`) unless `priority` (eager, `fetchpriority="high"`; only for the first banner slide and the open lightbox photo). For a photo under `/images/projects/` it also sets `srcset` from the WebP copies, `sizes` (how wide it is on screen), the real `width`/`height` (no layout shift) and a blurred background preview until it loads. Anything else renders as a plain `<img>`. |
 | [PageHeader](../src/components/PageHeader.jsx) | `title`, `sub?` | The green banner at the top of every inner page. It contains the page's only `<h1>`, plus decorative blurred circles and a curved bottom edge. |
 | [SectionHeading](../src/components/SectionHeading.jsx) | `kicker?`, `title`, `sub?`, `align` (`"center"` or `"left"`), `light` (for dark backgrounds) | A section `<h2>` with an optional small uppercase kicker, a subtitle and a saffron underline bar. It is wrapped in `Reveal`. |
 | [Reveal](../src/components/Reveal.jsx) | `as` (tag, default `div`), `delay` (ms), `className`, `...rest` | Fades and lifts its children in the first time they scroll into view, using an `IntersectionObserver` with a 12% threshold. It adds the `is-visible` class, which triggers the `rise` keyframes in `index.css`. If `IntersectionObserver` is missing, the content shows immediately. |
@@ -566,13 +567,14 @@ Copied unchanged into `dist/`.
 | [sitemap.xml](../public/sitemap.xml) | Lists every real page for search engines. Must match `App.jsx`. |
 | [robots.txt](../public/robots.txt) | Allows everything and points to the sitemap. |
 | `favicon.png`, `apple-touch-icon.png` | Browser tab icon and the icon phones use for a home-screen shortcut, both cut from the logo. |
+| [_headers](../public/_headers) | **Netlify response headers.** `Cache-Control: immutable` for a year on `/assets/*` (Vite's hashed JS and CSS) and `/images/projects/:project/_w/*` (the hashed WebP copies). [vercel.json](../vercel.json) sets the same for Vercel. |
 | `images/` | `projects/<id>/` holds the gallery photos, one folder per project (see `projects.js`). `banner-2.svg` and `work-*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
 
 ---
 
 ## 14. Build, hosting and branch rules
 
-- **[vite.config.js](../vite.config.js)**: just the React and Tailwind plugins. For GitHub Pages hosting you would add `base: "/<repo>/"`.
+- **[vite.config.js](../vite.config.js)**: the React and Tailwind plugins, plus `projectPhotosPlugin()` (gallery photo list, WebP copies, banner preload). For GitHub Pages hosting you would add `base: "/<repo>/"`.
 - **[vercel.json](../vercel.json)**: rewrites every path to `/index.html`, for hosting on Vercel. Note that unlike `_redirects`, it doesn't produce real 404 statuses.
 - **[.oxlintrc.json](../.oxlintrc.json)**: enforces React's rules of hooks and warns when a file exports non-components alongside components (needed for fast refresh).
 - **[.claude/launch.json](../.claude/launch.json)**: tells the Claude desktop app how to start the dev server (`npm run dev`, port 5173).
@@ -623,7 +625,8 @@ Suites run in this order: `smoke`, `navigation`, `features`, `a11y`, `netlify-ba
 | --- | --- | --- |
 | **smoke** | [smoke.test.mjs](../tests/e2e/smoke.test.mjs) | Every real route plus one unknown route, at every viewport, in both languages. For each page: no JavaScript or console errors, no failed requests, no broken images, no horizontal overflow, no `.reveal` content stuck invisible, exactly one `<h1>`, and the correct `<html lang>`. |
 | **navigation** | [navigation.test.mjs](../tests/e2e/navigation.test.mjs) | `App.jsx`, `_redirects` and `sitemap.xml` list the same pages. Header links open the right page at the top. The Bengali choice survives a reload. Odd `#fragments` don't crash. `/our-work#id` and Home's "Read more" scroll to the section, clear of the header. The header fits on one line at 1280 px and up. **Live only:** HTTP status codes (real pages 200, unknown 404). |
-| **features** | [features.test.mjs](../tests/e2e/features.test.mjs) | Gallery: `projects.js` matches the photo folders (no missing or unlisted folders, valid categories, covers and caption file names), filters show the right photos, lightbox keys. Copy buttons copy the right values (without spaces where needed). WhatsApp link format. QR image or its placeholder. UPI buttons hidden on desktop and shown on phones. Validation, focus, sending and fallbacks on all three forms in both languages. The FAQ accordion. Impact counters reach their values. Ends with **warnings** for placeholder content still on the site (QR, bank details, registration numbers, team names, missing Web3Forms keys, `.svg` placeholder images). |
+| **features** | [features.test.mjs](../tests/e2e/features.test.mjs) | Gallery: `projects.js` matches the photo folders (no missing or unlisted folders, valid categories, covers and caption file names), filters show the right photos, lightbox keys, "See the photos" and shared album links land on the album. Copy buttons copy the right values (without spaces where needed). WhatsApp link format. QR image or its placeholder. UPI buttons hidden on desktop and shown on phones. Validation, focus, sending and fallbacks on all three forms in both languages. The FAQ accordion. Impact counters reach their values. Ends with **warnings** for placeholder content still on the site (QR, bank details, registration numbers, team names, missing Web3Forms keys, `.svg` placeholder images). |
+| **performance** | [performance.test.mjs](../tests/e2e/performance.test.mjs) | Every gallery photo has WebP copies, and the thumbnails are smaller than the originals. On phone and desktop, Home, Our Work and Gallery show WebP copies (never the full photo), lazy-loaded unless high-priority, with `width`/`height`, and not much larger than shown. Layout shift stays under 0.05. No Google Fonts requests. The banner photo is the first image requested on `/` and isn't preloaded elsewhere. The lightbox fetches the next and previous photos. **Live only:** the copies and scripts are sent with `immutable` caching. |
 | **a11y** | [a11y.test.mjs](../tests/e2e/a11y.test.mjs) | The banner's Pause/Play, focus-pause, hover-pause and reduced-motion behaviour, and its 24 px tap targets. The mobile menu and lightbox focus traps and focus return. The skip link. Back-to-top is never a hidden tab stop. Icon badges aren't stretched. Required-field `*` markers match the required fields. No English-only `aria-label` or `alt` text in Bengali mode. |
 | **netlify-badge** | [netlify-badge.test.mjs](../tests/e2e/netlify-badge.test.mjs) | **Live only.** At 9 screen sizes, checks that Netlify's injected "Powered by Netlify" badge (`#nl-badge-frame`) doesn't cover any of our buttons, both on load and after scrolling, including inside the open mobile menu. The helper `covered(page, menuOnly)` returns the labels of covered controls. |
 
@@ -634,7 +637,12 @@ Suites run in this order: `smoke`, `navigation`, `features`, `a11y`, `netlify-ba
 ### [project-photos.mjs](../scripts/project-photos.mjs)
 
 - **`listProjectPhotos(root)`**: reads `public/images/projects/`, returning `{ [folder]: [photo files sorted by name] }`.
-- **`projectPhotosPlugin()`**: a Vite plugin registered in [vite.config.js](../vite.config.js). It serves that list as the module `virtual:project-photos`, which [src/data/gallery.js](../src/data/gallery.js) imports. In `npm run dev` it reloads the page when a photo or folder is added or removed.
+- **`describeProjectPhotos(root)`**: for each photo, its `width`/`height` (EXIF rotation applied), a 16 px blurred WebP preview as a data URI, and its WebP copies at `VARIANT_WIDTHS` (400, 800, 1600; never wider than the original). Copies are named `/images/projects/<id>/_w/<name>-<width>-<hash>.webp`, where the hash is of the original file's content. Results and copies are cached in `node_modules/.cache/project-photos/`, keyed by that hash, so only new or changed photos are processed (uses [sharp](https://sharp.pixelplumbing.com)).
+- **`projectPhotosPlugin()`**: a Vite plugin registered in [vite.config.js](../vite.config.js).
+  - Serves `{ [id]: [{ file, width, height, blur, srcset }] }` as the module `virtual:project-photos`, which [src/data/gallery.js](../src/data/gallery.js) imports.
+  - **Build:** writes every WebP copy into `dist/`. **Dev:** makes each copy the first time it is requested.
+  - Injects into `index.html` an inline script that preloads the first active banner slide (with the same `srcset`/`sizes` as its `<img>`) when the page is `/`.
+  - In `npm run dev`, reloads the page when a photo or folder is added, changed or removed.
 
 The tests import the same function, so they always expect exactly what the site shows.
 
@@ -664,7 +672,8 @@ Generates `public/images/og-image.jpg`, the 1200×630 image shown when the site 
 | Add a Request Help drive or need | `helpPrograms` in [content.js](../src/data/content.js) |
 | Change a button label or heading | [src/i18n/strings.js](../src/i18n/strings.js) (both `en` and `bn`) |
 | Add a new icon | the `paths` object in [Icon.jsx](../src/components/Icon.jsx) |
-| Change brand colours or fonts | `@theme` in [src/index.css](../src/index.css) (and the font link in [index.html](../index.html)) |
+| Change brand colours or fonts | `@theme` in [src/index.css](../src/index.css); fonts are `@fontsource/*` packages imported in [src/main.jsx](../src/main.jsx) |
+| Show a picture on a page | the [Photo](../src/components/Photo.jsx) component, with a `sizes` that matches its on-screen width |
 | Add a new page | Create it in `src/pages/`, add a `<Route>` in [App.jsx](../src/App.jsx), add the path to [_redirects](../public/_redirects) and [sitemap.xml](../public/sitemap.xml), add it to `links` in [Navbar.jsx](../src/components/Navbar.jsx) and `quickLinks` in [Footer.jsx](../src/components/Footer.jsx), and add its strings |
 | Change the link-preview image | `npm run og-image` (text comes from `site.js`) |
 

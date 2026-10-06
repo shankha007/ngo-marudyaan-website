@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import HeroBanner from "../components/HeroBanner";
 import Icon from "../components/Icon";
+import Photo from "../components/Photo";
 import ProgramCard from "../components/ProgramCard";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
@@ -53,10 +54,9 @@ export default function Home() {
         <div className="container-page grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal className="relative">
             <div className="overflow-hidden rounded-3xl shadow-xl">
-              <img
+              <Photo
                 src="/images/projects/2022-sharodiya-sahosathi/01.jpg"
-                alt=""
-                loading="lazy"
+                sizes="(min-width: 1280px) 600px, (min-width: 1024px) 50vw, 100vw"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -141,10 +141,14 @@ export default function Home() {
                   to={`/gallery#${photo.project.id}`}
                   className="group relative block h-full overflow-hidden rounded-2xl bg-oasis-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-oasis-700 focus-visible:ring-offset-2"
                 >
-                  <img
+                  <Photo
                     src={photo.src}
                     alt={tr(photo.caption)}
-                    loading="lazy"
+                    sizes={
+                      i === 0
+                        ? "(min-width: 1280px) 820px, (min-width: 768px) 66vw, 50vw"
+                        : "(min-width: 1280px) 400px, (min-width: 768px) 33vw, 50vw"
+                    }
                     className="h-full min-h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-oasis-900/85 to-transparent p-3 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">

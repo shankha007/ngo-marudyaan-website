@@ -154,6 +154,29 @@ JPG, PNG and WebP all work.
 Recommended sizes: banner **1600×900**, programme images **1000×750**. Gallery photos can be
 any shape (thumbnails are cropped square; the full photo shows when opened).
 
+**You don't need to shrink photos yourself.** For every photo in `public/images/projects/`,
+the build makes small WebP copies (400, 800 and 1600 px wide) and a blurred preview. Each page
+downloads only the size it shows, so a phone gets a ~20 KB thumbnail instead of a 300 KB photo.
+The originals are never changed. To get the same for a banner or programme picture, use a photo
+from a project folder (as above).
+
+## Page speed
+
+- **Pictures** load lazily (only as you scroll near them), at the size they're shown, with a
+  blurred preview and their real width and height, so nothing jumps while they load. Add new
+  pictures with the `<Photo>` component (`src/components/Photo.jsx`), not a plain `<img>`, and
+  they get all of this.
+- **The home banner** is the one picture that loads first: it starts downloading before the
+  page's JavaScript.
+- **The lightbox** fetches the next and previous photos while you look at one.
+- **Fonts** (Baloo 2, Inter, Noto Sans Bengali) are served from this site rather than Google
+  Fonts, so the first paint doesn't wait for another server.
+- **Caching:** on Netlify (`public/_headers`) and Vercel (`vercel.json`), the photo copies and
+  the site's scripts are cached by browsers for a year. Their names change whenever their
+  content does, so visitors never see an old version.
+
+The `performance` test suite checks all of this.
+
 ---
 
 ## Things marked TODO
@@ -224,8 +247,8 @@ npm test -- --only=features,a11y      # run only some suites
 npm test -- --no-build                # skip the build step (reuse the last dist/)
 ```
 
-Suites: `smoke` (page sweep), `navigation`, `features`, `a11y` (accessibility),
-`netlify-badge`. Set `HEADED=1` to watch the browser, or `CHROME_PATH=…` to pick a browser.
+Suites: `smoke` (page sweep), `navigation`, `features`, `performance` (image sizes, lazy
+loading, layout shift, fonts), `a11y` (accessibility), `netlify-badge`. Set `HEADED=1` to watch the browser, or `CHROME_PATH=…` to pick a browser.
 
 **Adding a new page?** Add its path to `public/_redirects` and `public/sitemap.xml` as well
 as `src/App.jsx` — the `navigation` suite fails if the lists don't match, because a page

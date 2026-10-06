@@ -78,6 +78,31 @@ export default async function features({ browser, base, report }) {
     await page.context().close();
   }
 
+  /* ================= album links land on the album ================= */
+  {
+    const linked = programs.filter((p) => galleryProjects.some((g) => g.id === p.project));
+    const missed = [];
+    for (const viewport of ["mobile", "desktop"]) {
+      const page = await openPage(browser, base, { viewport });
+      for (const p of linked) {
+        // straight from a shared link, and by clicking "See the photos" on Our Work
+        await page.goto(`${base}/gallery#${p.project}`, { waitUntil: "load" });
+        await page.waitForTimeout(1500);
+        const direct = await page.evaluate((id) => document.getElementById(id).getBoundingClientRect().top, p.project);
+        await page.goto(base + "/our-work", { waitUntil: "networkidle" });
+        await page.locator(`a[href="/gallery#${p.project}"]`).click();
+        await page.waitForTimeout(1500);
+        const clicked = await page.evaluate((id) => document.getElementById(id).getBoundingClientRect().top, p.project);
+        for (const [how, top] of [["link", direct], ["click", clicked]]) {
+          // just below the sticky header, not above the screen or far down it
+          if (top < 0 || top > 250) missed.push(`${viewport} ${how} ${p.project}: album top at ${Math.round(top)}px`);
+        }
+      }
+      await page.context().close();
+    }
+    report.check(missed.length === 0, `"See the photos" and shared album links land on the album (${linked.length} albums)`, missed.join("; "));
+  }
+
   /* ================= donate ================= */
   {
     const page = await openPage(browser, base);
