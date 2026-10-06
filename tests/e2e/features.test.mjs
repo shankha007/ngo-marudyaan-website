@@ -2,10 +2,12 @@
    WhatsApp link), both forms (validation + the email they open), FAQ,
    impact counters — plus warnings for placeholder content still on the site. */
 import { bannerSlides } from "../../src/data/banner.js";
-import { donationTiers, faqs, galleryItems, helpPrograms, programs, team, volunteerRoles } from "../../src/data/content.js";
+import { donationTiers, faqs, helpPrograms, programs, team, volunteerRoles } from "../../src/data/content.js";
+import { projects } from "../../src/data/projects.js";
+import { listProjectPhotos } from "../../scripts/project-photos.mjs";
 import { site, stats } from "../../src/data/site.js";
 import { strings } from "../../src/i18n/strings.js";
-import { captureSubmission, fileExists, openPage, scrollLikeAUser } from "./lib.mjs";
+import { ROOT, captureSubmission, fileExists, galleryPhotos, galleryProjects, openPage, scrollLikeAUser } from "./lib.mjs";
 
 export const title = "Features";
 
@@ -14,21 +16,44 @@ export default async function features({ browser, base, report }) {
   // which forms send via Web3Forms (they have a key) rather than the email app
   const direct = Object.fromEntries(["contact", "involved", "help"].map((f) => [f, Boolean(site.forms.keys[f])]));
 
+  /* ================= gallery: projects.js vs the photo folders ================= */
+  {
+    const folders = listProjectPhotos(ROOT);
+    const categoryIds = programs.map((p) => p.id);
+    const issues = [];
+    const ids = projects.map((p) => p.id);
+    for (const id of ids.filter((id, i) => ids.indexOf(id) !== i)) issues.push(`project id "${id}" is listed twice`);
+    for (const p of projects) {
+      if (!folders[p.id]) issues.push(`"${p.id}" has no folder public/images/projects/${p.id}/`);
+      else if (!folders[p.id].length) issues.push(`"${p.id}" folder has no photos`);
+      if (!categoryIds.includes(p.category)) issues.push(`"${p.id}" category "${p.category}" is not one of ${categoryIds.join(", ")}`);
+      if (!Number.isInteger(p.year)) issues.push(`"${p.id}" year should be a number, e.g. 2024`);
+      if (!p.title?.en || !p.title?.bn) issues.push(`"${p.id}" needs an English and a Bengali title`);
+      if (p.cover && folders[p.id] && !folders[p.id].includes(p.cover)) issues.push(`"${p.id}" cover "${p.cover}" is not in its folder`);
+      for (const file of Object.keys(p.captions ?? {})) {
+        if (folders[p.id] && !folders[p.id].includes(file)) issues.push(`"${p.id}" has a caption for "${file}", which is not in its folder`);
+      }
+    }
+    for (const id of Object.keys(folders).filter((id) => !ids.includes(id))) issues.push(`folder public/images/projects/${id}/ is not listed in src/data/projects.js`);
+    for (const p of programs.filter((p) => p.project && !ids.includes(p.project))) issues.push(`programme "${p.id}" points at unknown project "${p.project}"`);
+    report.check(issues.length === 0, `gallery projects match their photo folders (${projects.length} projects, ${galleryPhotos.length} photos)`, issues.join("; "));
+  }
+
   /* ================= gallery ================= */
   {
     const page = await openPage(browser, base);
     await page.goto(base + "/gallery", { waitUntil: "networkidle" });
-    const categories = ["all", ...new Set(galleryItems.map((g) => g.category))];
+    const categories = ["all", ...programs.map((p) => p.id).filter((c) => galleryProjects.some((p) => p.category === c))];
     const wrong = [];
     for (const c of categories) {
       const label = c === "all" ? en["gallery.all"] : en[`cat.${c}`];
       await page.getByRole("button", { name: label, exact: true }).click();
       await page.waitForTimeout(250);
       const shown = await page.locator("main [data-thumb]").count();
-      const want = c === "all" ? galleryItems.length : galleryItems.filter((g) => g.category === c).length;
+      const want = c === "all" ? galleryPhotos.length : galleryPhotos.filter((g) => g.project.category === c).length;
       if (shown !== want) wrong.push(`${label}: ${shown} shown, ${want} expected`);
     }
-    report.check(wrong.length === 0, `gallery filters show the right photos (${categories.length} filters, ${galleryItems.length} photos)`, wrong.join("; "));
+    report.check(wrong.length === 0, `gallery filters show the right photos (${categories.length} filters, ${galleryPhotos.length} photos)`, wrong.join("; "));
 
     await page.getByRole("button", { name: en["gallery.all"], exact: true }).click();
     await page.locator("[data-thumb='0']").click();
@@ -46,7 +71,7 @@ export default async function features({ browser, base, report }) {
       scrollLocked: document.body.style.overflow === "hidden",
     }));
     report.check(
-      c1 === galleryItems[0].caption.en && c2 === galleryItems[1].caption.en && c3 === c1 && !after.open && !after.scrollLocked,
+      c1 === galleryPhotos[0].caption.en && c2 === galleryPhotos[1].caption.en && c3 === c1 && !after.open && !after.scrollLocked,
       "lightbox: arrow keys move between photos, Escape closes and unlocks scrolling",
       `${JSON.stringify([c1, c2, c3])} ${JSON.stringify(after)}`,
     );
@@ -326,10 +351,9 @@ export default async function features({ browser, base, report }) {
   // the generated placeholder art is all .svg; real photos will be .jpg/.png/.webp
   const svgs = [
     ...bannerSlides.filter((s) => s.active !== false).map((s) => s.image),
-    ...galleryItems.map((g) => g.src),
-    ...programs.map((p) => p.image),
+    ...programs.filter((p) => !galleryProjects.some((g) => g.id === p.project)).map((p) => p.image),
   ].filter((src) => src.endsWith(".svg"));
-  if (svgs.length) todo.push(`${svgs.length} placeholder images (banner, gallery, programmes) — replace with real photos`);
+  if (svgs.length) todo.push(`${svgs.length} placeholder images (banner, programmes) — replace with real photos`);
   for (const item of todo) report.warn(`placeholder still on the site: ${item}`);
   if (!todo.length) report.ok("no placeholder content detected");
 }

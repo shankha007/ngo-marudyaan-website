@@ -5,6 +5,8 @@ import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright-core";
+import { listProjectPhotos } from "../../scripts/project-photos.mjs";
+import { buildGallery, projects } from "../../src/data/projects.js";
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const OUTPUT_DIR = join(ROOT, "tests", "e2e", "output");
@@ -40,6 +42,11 @@ export function appRoutes() {
 }
 
 export const fileExists = (...parts) => existsSync(join(ROOT, ...parts));
+
+/* The gallery exactly as the site builds it: projects.js + the photo folders.
+   `photos` is every photo in page order, each with its project. */
+export const galleryProjects = buildGallery(projects, listProjectPhotos(ROOT));
+export const galleryPhotos = galleryProjects.flatMap((p) => p.photos.map((ph) => ({ ...ph, project: p })));
 
 /* ---------- browser ---------- */
 export async function launchBrowser() {

@@ -2,13 +2,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
-import { galleryItems } from "../data/content";
+import { programs } from "../data/content";
+import { galleryProjects } from "../data/gallery";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFocusTrap from "../hooks/useFocusTrap";
 import usePageMeta from "../hooks/usePageMeta";
 
-const categories = ["all", "food", "education", "health", "winter", "festival", "women"];
+/* Filter buttons: "All", then each programme category that has a project
+   in it (in the order the programmes are listed on the site). */
+const categories = ["all", ...programs.map((p) => p.id).filter((c) => galleryProjects.some((p) => p.category === c))];
 
 export default function Gallery() {
   const { t, tr } = useLang();
@@ -17,12 +20,18 @@ export default function Gallery() {
 
   usePageMeta(
     `${t("gallery.title")} — ${site.name}`,
-    "Photographs from NGO Marudyaan's food drives, health camps, school kit distributions and festival celebrations in Kolkata.",
+    "Photo albums from NGO Marudyaan's projects, year by year: cyclone relief in the Sundarbans, a micro library for children, Puja gifts and more.",
   );
 
-  const items = useMemo(
-    () => (filter === "all" ? galleryItems : galleryItems.filter((g) => g.category === filter)),
+  const shownProjects = useMemo(
+    () => (filter === "all" ? galleryProjects : galleryProjects.filter((p) => p.category === filter)),
     [filter],
+  );
+  /* every photo on screen, in order, each knowing its project — the
+     lightbox steps through this list, across albums */
+  const items = useMemo(
+    () => shownProjects.flatMap((project) => project.photos.map((photo) => ({ ...photo, project }))),
+    [shownProjects],
   );
 
   const close = useCallback(() => setOpenIndex(null), []);
@@ -89,32 +98,61 @@ export default function Gallery() {
             ))}
           </div>
 
-          {/* grid */}
+          {/* albums */}
           {items.length === 0 ? (
             <p className="mt-16 text-center text-oasis-800/60">{t("gallery.empty")}</p>
           ) : (
-            <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {items.map((photo, i) => (
-                <Reveal key={photo.id} delay={(i % 8) * 50}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(i)}
-                    data-thumb={i}
-                    className="group relative block w-full overflow-hidden rounded-2xl bg-oasis-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-oasis-700 focus-visible:ring-offset-2"
-                  >
-                    <img
-                      src={photo.src}
-                      alt={tr(photo.caption)}
-                      loading="lazy"
-                      className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <span className="absolute inset-0 flex items-end bg-gradient-to-t from-oasis-900/85 via-oasis-900/10 to-transparent p-3 text-left text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                      {tr(photo.caption)}
-                    </span>
-                  </button>
-                </Reveal>
-              ))}
-            </div>
+            shownProjects.map((project) => {
+              const first = items.findIndex((it) => it.project === project);
+              return (
+                <section key={project.id} id={project.id} aria-labelledby={`${project.id}-title`} className="mt-14 scroll-mt-24">
+                  <Reveal>
+                    <div className="flex flex-wrap items-center gap-2 text-sm">
+                      <span className="rounded-full bg-saffron-500/15 px-3 py-1 font-semibold text-saffron-700">
+                        {project.year}
+                      </span>
+                      <span className="rounded-full bg-oasis-50 px-3 py-1 font-medium text-oasis-700">
+                        {t(`cat.${project.category}`)}
+                      </span>
+                      <span className="text-oasis-800/60">
+                        {t("gallery.photos").replace("{n}", project.photos.length)}
+                      </span>
+                    </div>
+                    <h2 id={`${project.id}-title`} className="font-display mt-3 text-2xl font-bold text-oasis-900 sm:text-3xl">
+                      {tr(project.title)}
+                    </h2>
+                    {project.summary && (
+                      <p className="mt-2 max-w-3xl leading-relaxed text-oasis-800/75">{tr(project.summary)}</p>
+                    )}
+                  </Reveal>
+                  <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                    {project.photos.map((photo, j) => {
+                      const i = first + j;
+                      return (
+                        <Reveal key={photo.id} delay={(j % 8) * 50}>
+                          <button
+                            type="button"
+                            onClick={() => setOpenIndex(i)}
+                            data-thumb={i}
+                            className="group relative block w-full overflow-hidden rounded-2xl bg-oasis-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-oasis-700 focus-visible:ring-offset-2"
+                          >
+                            <img
+                              src={photo.src}
+                              alt={tr(photo.caption)}
+                              loading="lazy"
+                              className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <span className="absolute inset-0 flex items-end bg-gradient-to-t from-oasis-900/85 via-oasis-900/10 to-transparent p-3 text-left text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                              {tr(photo.caption)}
+                            </span>
+                          </button>
+                        </Reveal>
+                      );
+                    })}
+                  </div>
+                </section>
+              );
+            })
           )}
         </div>
       </section>
@@ -177,6 +215,9 @@ export default function Gallery() {
             />
             <figcaption className="mt-4 text-sand-200">
               <span className="font-medium">{tr(active.caption)}</span>
+              <span className="mt-1 block text-sm text-sand-200/80">
+                {tr(active.project.title)} · {active.project.year}
+              </span>
               <span className="mt-1 block text-xs text-sand-200/60">
                 {openIndex + 1} {t("gallery.counter")} {items.length}
               </span>
