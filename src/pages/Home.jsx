@@ -5,7 +5,8 @@ import ProgramCard from "../components/ProgramCard";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import StatCounter from "../components/StatCounter";
-import { galleryItems, programs, testimonials, values } from "../data/content";
+import { programs, testimonials, values } from "../data/content";
+import { galleryProjects } from "../data/gallery";
 import { site, stats } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
@@ -17,7 +18,12 @@ export default function Home() {
     "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health, winter relief and livelihood support.",
   );
 
-  const previewPhotos = galleryItems.slice(0, 6);
+  /* Gallery preview: each project's cover (newest first), then their
+     other photos in turn, up to 6. */
+  const previewPhotos = [
+    ...galleryProjects.map((p) => ({ ...p.photos.find((ph) => ph.src === p.coverSrc), project: p })),
+    ...galleryProjects.flatMap((p) => p.photos.filter((ph) => ph.src !== p.coverSrc).map((ph) => ({ ...ph, project: p }))),
+  ].slice(0, 6);
 
   return (
     <>
@@ -48,7 +54,7 @@ export default function Home() {
           <Reveal className="relative">
             <div className="overflow-hidden rounded-3xl shadow-xl">
               <img
-                src="/images/about-main.svg"
+                src="/images/projects/2022-sharodiya-sahosathi/01.jpg"
                 alt=""
                 loading="lazy"
                 className="h-full w-full object-cover"
@@ -131,17 +137,20 @@ export default function Home() {
                 delay={i * 60}
                 className={i === 0 ? "md:col-span-2 md:row-span-2" : ""}
               >
-                <figure className="group relative h-full overflow-hidden rounded-2xl bg-oasis-100">
+                <Link
+                  to={`/gallery#${photo.project.id}`}
+                  className="group relative block h-full overflow-hidden rounded-2xl bg-oasis-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-oasis-700 focus-visible:ring-offset-2"
+                >
                   <img
                     src={photo.src}
                     alt={tr(photo.caption)}
                     loading="lazy"
                     className="h-full min-h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-oasis-900/85 to-transparent p-3 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
-                    {tr(photo.caption)}
-                  </figcaption>
-                </figure>
+                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-oasis-900/85 to-transparent p-3 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                    {tr(photo.project.title)} · {photo.project.year}
+                  </span>
+                </Link>
               </Reveal>
             ))}
           </div>

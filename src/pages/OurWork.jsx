@@ -4,6 +4,7 @@ import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import { programs } from "../data/content";
+import { findProject, programImage } from "../data/gallery";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
@@ -60,7 +61,7 @@ export default function OurWork() {
               <Reveal>
                 <div className="overflow-hidden rounded-3xl shadow-lg">
                   <img
-                    src={p.image}
+                    src={programImage(p)}
                     alt=""
                     loading="lazy"
                     className="aspect-[4/3] w-full object-cover"
@@ -98,6 +99,15 @@ export default function OurWork() {
                   >
                     {t("cta.volunteer")}
                   </Link>
+                  {findProject(p.project) && (
+                    <Link
+                      to={`/gallery#${p.project}`}
+                      className="inline-flex items-center gap-1.5 px-2 py-3 text-sm font-semibold text-oasis-600 transition hover:text-oasis-800"
+                    >
+                      {t("gallery.viewProject")}
+                      <Icon name="arrowRight" className="h-4 w-4" />
+                    </Link>
+                  )}
                 </div>
               </Reveal>
             </div>

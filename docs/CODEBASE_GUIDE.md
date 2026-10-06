@@ -86,9 +86,12 @@ ngo-marudyaan/
 │   ├── _redirects             Netlify routing (real pages 200, others 404)
 │   ├── robots.txt, sitemap.xml
 │   ├── favicon.png, apple-touch-icon.png
-│   └── images/                banner, programme, gallery, QR and OG images
+│   └── images/                banner, programme, QR and OG images
+│       └── projects/<id>/     gallery photos, one folder per project
 ├── scripts/
-│   └── og-image.mjs           renders public/images/og-image.jpg
+│   ├── og-image.mjs           renders public/images/og-image.jpg
+│   ├── add-photos.mjs         copies a folder of photos into a gallery project
+│   └── project-photos.mjs     lists project photos; Vite plugin for the gallery
 ├── src/
 │   ├── main.jsx               entry point: mounts <App> with providers
 │   ├── App.jsx                layout + route table
@@ -208,11 +211,10 @@ All page copy. Exports:
 
 | Export | Shape | Rendered on |
 | --- | --- | --- |
-| `programs` | `{ id, icon, image, title, summary, details: {en:[…], bn:[…]} }`. Ids: `food`, `education`, `health`, `winter`, `festival`, `women`. | Home (cards), Our Work (sections, anchored by `id`) |
+| `programs` | `{ id, icon, image, project?, title, summary, details: {en:[…], bn:[…]} }`. With `project`, the programme shows that project's cover photo instead of `image` and links to its album. Ids: `food`, `education`, `health`, `winter`, `festival`, `women`. | Home (cards), Our Work (sections, anchored by `id`) |
 | `milestones` | `{ year, title, text }` | About (timeline) |
 | `values` | `{ id, title, text }` | Home (mission list), About (values grid) |
 | `team` | `{ id, photo, name, role }`. An empty `photo` shows the person's initials. | About |
-| `galleryItems` | `{ id, src, category, caption }`. `category` must be one of the six programme categories. | Gallery, Home (first 6) |
 | `testimonials` | `{ id, quote, author }` | Home |
 | `volunteerRoles` | `{ id, title, text }` | Get Involved (cards + "Interested in" select) |
 | `helpPrograms` | `{ id, icon, title, text, needs: [{ id, label }] }`. Ids: `puja`, `winter`, `other`. `other` has no needs. | Request Help |
@@ -220,6 +222,20 @@ All page copy. Exports:
 | `faqs` | `{ id, q, a }` | Get Involved |
 
 `icon` values must be names defined in [Icon.jsx](../src/components/Icon.jsx). Need ids in `helpPrograms` must be unique across all drives.
+
+### [src/data/projects.js](../src/data/projects.js)
+
+The Gallery's project albums. Photos are not listed here: they are whatever files are in `public/images/projects/<id>/`, in file-name order.
+
+| Export | What it is |
+| --- | --- |
+| `projects` | `{ id, year, category, cover?, title, summary?, captions?, active? }`. `id` is the folder name. `category` is a programme id. `cover` is a file name (defaults to the first photo). `captions` is `{ "03.jpg": { en, bn } }`; photos without one use `title`. `active: false` hides the project. |
+| `projectPhotoSrc(id, file)` | The public URL of a project photo. |
+| `buildGallery(list, photoMap)` | Joins `projects` with `{ [id]: [files] }`. It drops hidden projects and projects with no photos, adds `photos: [{ id, src, caption }]` and `coverSrc`, and sorts newest year first. Pure, so the tests use it too. |
+
+### [src/data/gallery.js](../src/data/gallery.js)
+
+The browser-side wiring: imports the photo list from `virtual:project-photos` (see [§16](#16-scripts-scripts)) and exports `galleryProjects` (the result of `buildGallery`), `galleryPhotos` (all photos, flattened), `findProject(id)`, and `programImage(program)`, which returns the programme's project cover or else its own `image`. Edit `projects.js`, not this file.
 
 ---
 
@@ -394,7 +410,7 @@ Sections, top to bottom:
 2. **Impact numbers**: `stats` → `StatCounter`
 3. **Who we are**: an image with a floating "founded" badge, the mission text, the `values` list and a "Learn more" link to About
 4. **What we do**: `programs` → `ProgramCard` grid
-5. **Gallery preview**: the first 6 `galleryItems`; the first is shown twice the size
+5. **Gallery preview**: each project's cover photo (newest first), then their other photos, up to 6; the first is shown twice the size. Each links to its album at `/gallery#<project id>`
 6. **Voices**: `testimonials`
 7. **Closing CTA**: Donate and Volunteer buttons
 
@@ -406,20 +422,21 @@ Sections, top to bottom:
 ### [OurWork.jsx](../src/pages/OurWork.jsx): `OurWork()`
 
 - **Jump chips**: `<a href="#food">`-style links to each programme.
-- **One `<section id={program.id}>` per programme**, with alternating image side, the details list, and Donate and Volunteer buttons. `scroll-mt-24` keeps a section clear of the sticky header when it is scrolled to.
+- **One `<section id={program.id}>` per programme**, with alternating image side (`programImage()`), the details list, Donate and Volunteer buttons, and a "See the photos" link to `/gallery#<project id>` when the programme has a `project`. `scroll-mt-24` keeps a section clear of the sticky header when it is scrolled to.
 - **"How a drive happens"**: 5 numbered steps from the string keys `work.how.s1.t` / `work.how.s1.b` through `s5`.
 - Arriving at `/our-work#food` is handled centrally by `ScrollToTop`; the page has no anchor-scroll effect of its own.
 
 ### [Gallery.jsx](../src/pages/Gallery.jsx): `Gallery()`
 
-- **`categories`** (const): `all`, followed by the six programme categories.
-- State: `filter` (the active category) and `openIndex` (the index into the filtered `items`, or `null` when the lightbox is closed).
-- **`items`**: the `galleryItems` filtered by category (memoised).
+- **`categories`** (const): `all`, followed by the programme categories (in `programs` order) that have at least one project.
+- State: `filter` (the active category) and `openIndex` (the index into `items`, or `null` when the lightbox is closed).
+- **`shownProjects`**: `galleryProjects` filtered by category. Each is rendered as an album: `<section id={project.id}>` with year, category, photo count, title, summary and a photo grid, so `/gallery#2021-micro-library` scrolls to it.
+- **`items`**: every photo of `shownProjects`, flattened in page order, each carrying its `project`. `data-thumb` is the index into this list, so the lightbox steps across albums.
 - **`close()`**: closes the lightbox.
 - **`step(delta)`**: moves to the next or previous photo, wrapping around.
 - A keyboard effect, active while the lightbox is open: `Escape` closes it, `←` / `→` step through photos, and body scroll is locked.
 - **Focus management**: `useFocusTrap` with the Close button as initial focus. On close, focus returns to the thumbnail of the last photo viewed (found through `data-thumb` and `lastIndexRef`).
-- The lightbox is a `role="dialog"`. Clicking the backdrop closes it; clicks on the image and arrows stop propagation so they don't. It shows the caption and an "n of total" counter.
+- The lightbox is a `role="dialog"`. Clicking the backdrop closes it; clicks on the image and arrows stop propagation so they don't. It shows the caption, the project's title and year, and an "n of total" counter.
 
 ### [GetInvolved.jsx](../src/pages/GetInvolved.jsx)
 
@@ -549,7 +566,7 @@ Copied unchanged into `dist/`.
 | [sitemap.xml](../public/sitemap.xml) | Lists every real page for search engines. Must match `App.jsx`. |
 | [robots.txt](../public/robots.txt) | Allows everything and points to the sitemap. |
 | `favicon.png`, `apple-touch-icon.png` | Browser tab icon and the icon phones use for a home-screen shortcut, both cut from the logo. |
-| `images/` | `banner-*.svg`, `work-*.svg`, `about-main.svg` and `gallery/g*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
+| `images/` | `projects/<id>/` holds the gallery photos, one folder per project (see `projects.js`). `banner-2.svg` and `work-*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
 
 ---
 
@@ -606,13 +623,24 @@ Suites run in this order: `smoke`, `navigation`, `features`, `a11y`, `netlify-ba
 | --- | --- | --- |
 | **smoke** | [smoke.test.mjs](../tests/e2e/smoke.test.mjs) | Every real route plus one unknown route, at every viewport, in both languages. For each page: no JavaScript or console errors, no failed requests, no broken images, no horizontal overflow, no `.reveal` content stuck invisible, exactly one `<h1>`, and the correct `<html lang>`. |
 | **navigation** | [navigation.test.mjs](../tests/e2e/navigation.test.mjs) | `App.jsx`, `_redirects` and `sitemap.xml` list the same pages. Header links open the right page at the top. The Bengali choice survives a reload. Odd `#fragments` don't crash. `/our-work#id` and Home's "Read more" scroll to the section, clear of the header. The header fits on one line at 1280 px and up. **Live only:** HTTP status codes (real pages 200, unknown 404). |
-| **features** | [features.test.mjs](../tests/e2e/features.test.mjs) | Gallery filters and lightbox. Copy buttons copy the right values (without spaces where needed). WhatsApp link format. QR image or its placeholder. UPI buttons hidden on desktop and shown on phones. Validation, focus, sending and fallbacks on all three forms in both languages. The FAQ accordion. Impact counters reach their values. Ends with **warnings** for placeholder content still on the site (QR, bank details, registration numbers, team names, missing Web3Forms keys, `.svg` placeholder images). |
+| **features** | [features.test.mjs](../tests/e2e/features.test.mjs) | Gallery: `projects.js` matches the photo folders (no missing or unlisted folders, valid categories, covers and caption file names), filters show the right photos, lightbox keys. Copy buttons copy the right values (without spaces where needed). WhatsApp link format. QR image or its placeholder. UPI buttons hidden on desktop and shown on phones. Validation, focus, sending and fallbacks on all three forms in both languages. The FAQ accordion. Impact counters reach their values. Ends with **warnings** for placeholder content still on the site (QR, bank details, registration numbers, team names, missing Web3Forms keys, `.svg` placeholder images). |
 | **a11y** | [a11y.test.mjs](../tests/e2e/a11y.test.mjs) | The banner's Pause/Play, focus-pause, hover-pause and reduced-motion behaviour, and its 24 px tap targets. The mobile menu and lightbox focus traps and focus return. The skip link. Back-to-top is never a hidden tab stop. Icon badges aren't stretched. Required-field `*` markers match the required fields. No English-only `aria-label` or `alt` text in Bengali mode. |
 | **netlify-badge** | [netlify-badge.test.mjs](../tests/e2e/netlify-badge.test.mjs) | **Live only.** At 9 screen sizes, checks that Netlify's injected "Powered by Netlify" badge (`#nl-badge-frame`) doesn't cover any of our buttons, both on load and after scrolling, including inside the open mobile menu. The helper `covered(page, menuOnly)` returns the labels of covered controls. |
 
 ---
 
 ## 16. Scripts: `scripts/`
+
+### [project-photos.mjs](../scripts/project-photos.mjs)
+
+- **`listProjectPhotos(root)`**: reads `public/images/projects/`, returning `{ [folder]: [photo files sorted by name] }`.
+- **`projectPhotosPlugin()`**: a Vite plugin registered in [vite.config.js](../vite.config.js). It serves that list as the module `virtual:project-photos`, which [src/data/gallery.js](../src/data/gallery.js) imports. In `npm run dev` it reloads the page when a photo or folder is added or removed.
+
+The tests import the same function, so they always expect exactly what the site shows.
+
+### [add-photos.mjs](../scripts/add-photos.mjs)
+
+`npm run add-photos -- "<source folder>" <project id>` copies every JPG/PNG/WebP/AVIF from the source folder into `public/images/projects/<project id>/`, numbered after any photos already there (`01.jpg`, `02.jpg`, …; `.jpeg` becomes `.jpg`). Exact duplicates, of each other or of photos already in the project, are skipped by content hash. It reminds you to add the project to `projects.js` if it is not listed yet.
 
 ### [og-image.mjs](../scripts/og-image.mjs)
 
@@ -631,7 +659,8 @@ Generates `public/images/og-image.jpg`, the 1200×630 image shown when the site 
 | Turn direct form sending on or off | [src/data/site.js](../src/data/site.js) (`site.forms.keys`) |
 | Change impact numbers | [src/data/site.js](../src/data/site.js) (`stats`) |
 | Edit programmes, team, timeline, FAQs or testimonials | [src/data/content.js](../src/data/content.js) |
-| Add a gallery photo | `public/images/gallery/` + `galleryItems` in [content.js](../src/data/content.js) |
+| Add a gallery project | `npm run add-photos -- "<folder>" <id>`, then a block in `projects` in [projects.js](../src/data/projects.js) |
+| Add photos to a gallery project | drop them in `public/images/projects/<id>/` (or `npm run add-photos`) |
 | Add a Request Help drive or need | `helpPrograms` in [content.js](../src/data/content.js) |
 | Change a button label or heading | [src/i18n/strings.js](../src/i18n/strings.js) (both `en` and `bn`) |
 | Add a new icon | the `paths` object in [Icon.jsx](../src/components/Icon.jsx) |

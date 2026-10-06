@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { programImage } from "../data/gallery";
 import { useLang } from "../i18n/LanguageContext";
 import Icon from "./Icon";
 
@@ -8,7 +9,7 @@ export default function ProgramCard({ program }) {
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-oasis-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-oasis-200 hover:shadow-xl">
       <div className="relative h-44 overflow-hidden bg-oasis-100">
         <img
-          src={program.image}
+          src={programImage(program)}
           alt=""
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

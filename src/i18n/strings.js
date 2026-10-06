@@ -99,9 +99,11 @@ export const strings = {
 
     /* gallery */
     "gallery.title": "Gallery",
-    "gallery.sub": "Photographs from our drives, camps and celebrations.",
+    "gallery.sub": "Our projects, year by year, in photographs.",
     "gallery.all": "All",
     "gallery.empty": "No photos in this category yet.",
+    "gallery.photos": "{n} photos",
+    "gallery.viewProject": "See the photos",
     "gallery.close": "Close",
     "gallery.prev": "Previous photo",
     "gallery.next": "Next photo",
@@ -351,9 +353,11 @@ export const strings = {
 
     /* gallery */
     "gallery.title": "গ্যালারি",
-    "gallery.sub": "আমাদের কর্মসূচি, শিবির ও উৎসবের ছবি।",
+    "gallery.sub": "বছর ধরে আমাদের উদ্যোগগুলির ছবি।",
     "gallery.all": "সব",
     "gallery.empty": "এই বিভাগে এখনও কোনও ছবি নেই।",
+    "gallery.photos": "{n}টি ছবি",
+    "gallery.viewProject": "ছবিগুলি দেখুন",
     "gallery.close": "বন্ধ করুন",
     "gallery.prev": "আগের ছবি",
     "gallery.next": "পরের ছবি",

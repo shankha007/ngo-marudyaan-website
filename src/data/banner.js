@@ -3,6 +3,7 @@
    -------------------------------------------------------------------
    HOW TO CHANGE THE BANNER
    1. Put your new picture in:  public/images/   (e.g. puja-drive.jpg)
+      — or use any gallery photo, e.g. "/images/projects/<id>/01.jpg"
    2. Edit the slide below: set `image` to "/images/puja-drive.jpg"
       and rewrite the English (en) and Bengali (bn) text.
    3. Save. That's it.
@@ -22,7 +23,7 @@ export const bannerSlides = [
   {
     id: "puja-2026",
     active: true,
-    image: "/images/banner-1.svg",          // TODO: replace with your photo
+    image: "/images/projects/2022-sharodiya-sahosathi/02.jpg",
     align: "left",                          // "left" | "center"
     kicker: { en: "Our current drive", bn: "আমাদের চলতি উদ্যোগ" },
     title: {
