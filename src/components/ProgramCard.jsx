@@ -2,16 +2,16 @@ import { Link } from "react-router-dom";
 import { programImage } from "../data/gallery";
 import { useLang } from "../i18n/LanguageContext";
 import Icon from "./Icon";
+import Photo from "./Photo";
 
 export default function ProgramCard({ program }) {
   const { tr, t } = useLang();
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-oasis-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-oasis-200 hover:shadow-xl">
       <div className="relative h-44 overflow-hidden bg-oasis-100">
-        <img
+        <Photo
           src={programImage(program)}
-          alt=""
-          loading="lazy"
+          sizes="(min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Icon from "../components/Icon";
+import Photo from "../components/Photo";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
@@ -60,10 +61,9 @@ export default function OurWork() {
             >
               <Reveal>
                 <div className="overflow-hidden rounded-3xl shadow-lg">
-                  <img
+                  <Photo
                     src={programImage(p)}
-                    alt=""
-                    loading="lazy"
+                    sizes="(min-width: 1280px) 600px, (min-width: 1024px) 50vw, 100vw"
                     className="aspect-[4/3] w-full object-cover"
                   />
                 </div>

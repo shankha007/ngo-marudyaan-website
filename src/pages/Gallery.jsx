@@ -1,13 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Icon from "../components/Icon";
+import Photo from "../components/Photo";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import { programs } from "../data/content";
-import { galleryProjects } from "../data/gallery";
+import { galleryProjects, preloadPhoto } from "../data/gallery";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFocusTrap from "../hooks/useFocusTrap";
 import usePageMeta from "../hooks/usePageMeta";
+
+/* How wide a photo is on screen, so the browser downloads the right size:
+   thumbnails sit 2 / 3 / 4 to a row; the lightbox is at most 896px wide. */
+const THUMB_SIZES = "(min-width: 1280px) 300px, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw";
+const LIGHTBOX_SIZES = "(min-width: 896px) 896px, 100vw";
 
 /* Filter buttons: "All", then each programme category that has a project
    in it (in the order the programmes are listed on the site). */
@@ -54,6 +60,12 @@ export default function Gallery() {
       document.body.style.overflow = "";
     };
   }, [openIndex, close, step]);
+
+  /* While a photo is open, fetch its neighbours so ← / → feel instant. */
+  useEffect(() => {
+    if (openIndex === null || items.length < 2) return;
+    for (const d of [1, -1]) preloadPhoto(items[(openIndex + d + items.length) % items.length].src, LIGHTBOX_SIZES);
+  }, [openIndex, items]);
 
   /* Keyboard focus: jump into the lightbox when it opens, keep Tab inside
      it, and on close return to the thumbnail of the photo last viewed. */
@@ -136,10 +148,10 @@ export default function Gallery() {
                             data-thumb={i}
                             className="group relative block w-full overflow-hidden rounded-2xl bg-oasis-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-oasis-700 focus-visible:ring-offset-2"
                           >
-                            <img
+                            <Photo
                               src={photo.src}
                               alt={tr(photo.caption)}
-                              loading="lazy"
+                              sizes={THUMB_SIZES}
                               className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />
                             <span className="absolute inset-0 flex items-end bg-gradient-to-t from-oasis-900/85 via-oasis-900/10 to-transparent p-3 text-left text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
@@ -208,9 +220,12 @@ export default function Gallery() {
             className="max-h-full w-full max-w-4xl text-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
+            <Photo
+              key={active.id}
               src={active.src}
               alt={tr(active.caption)}
+              sizes={LIGHTBOX_SIZES}
+              priority
               className="mx-auto max-h-[72vh] w-auto rounded-2xl object-contain shadow-2xl"
             />
             <figcaption className="mt-4 text-sand-200">

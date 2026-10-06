@@ -94,21 +94,25 @@ export const projects = [
 
 export const projectPhotoSrc = (id, file) => `/images/projects/${id}/${file}`;
 
-/* Joins the projects above with the photos found in their folders
-   (photoMap: { [id]: ["01.jpg", …] }). Hidden projects and projects
-   with no photos yet are left out. Newest year first. */
+/* Joins the projects above with the photos found in their folders.
+   photoMap: { [id]: ["01.jpg", …] } — or, on the site, entries like
+   { file, width, height, blur, srcset } with the WebP copies (see
+   scripts/project-photos.mjs). Hidden projects and projects with no
+   photos yet are left out. Newest year first. */
 export function buildGallery(list, photoMap) {
   return list
     .filter((p) => p.active !== false && photoMap[p.id]?.length)
     .map((p) => {
-      const files = photoMap[p.id];
-      const photos = files.map((file) => ({
+      const entries = photoMap[p.id].map((e) => (typeof e === "string" ? { file: e } : e));
+      const photos = entries.map(({ file, ...image }) => ({
+        ...image,
         id: `${p.id}/${file}`,
+        file,
         src: projectPhotoSrc(p.id, file),
         caption: p.captions?.[file] ?? p.title,
       }));
-      const coverFile = files.includes(p.cover) ? p.cover : files[0];
-      return { ...p, photos, coverSrc: projectPhotoSrc(p.id, coverFile) };
+      const cover = photos.find((ph) => ph.file === p.cover) ?? photos[0];
+      return { ...p, photos, cover, coverSrc: cover.src };
     })
     .sort((a, b) => b.year - a.year);
 }
