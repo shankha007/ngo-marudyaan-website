@@ -124,11 +124,20 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* giant wordmark */}
-        <div aria-hidden="true" className="container-page overflow-hidden select-none">
-          <p className="font-display -mb-[0.22em] text-[19vw] leading-none font-bold tracking-tighter whitespace-nowrap text-white/[0.06] lg:text-[14rem]">
-            {lang === "bn" ? site.nameBn : "marudyaan"}
-          </p>
+        {/* giant wordmark — an SVG, so it scales to fit the width exactly on
+            every screen (text sized in vw would overflow on narrow phones) */}
+        <div aria-hidden="true" className="container-page select-none">
+          <svg viewBox="0 0 1000 245" className="block w-full text-white/[0.06]">
+            <text
+              x="0"
+              y="180"
+              className="fill-current font-display font-bold"
+              fontSize="200"
+              {...(lang === "bn" ? {} : { textLength: 1000, lengthAdjust: "spacingAndGlyphs" })}
+            >
+              {lang === "bn" ? site.nameBn : "marudyaan"}
+            </text>
+          </svg>
         </div>
 
         <div className="border-t border-white/10">
