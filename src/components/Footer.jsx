@@ -124,22 +124,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* giant wordmark — an SVG, so it scales to fit the width exactly on
-            every screen (text sized in vw would overflow on narrow phones) */}
-        <div aria-hidden="true" className="container-page select-none">
-          <svg viewBox="0 0 1000 245" className="block w-full text-white/[0.06]">
-            <text
-              x="0"
-              y="180"
-              className="fill-current font-display font-bold"
-              fontSize="200"
-              {...(lang === "bn" ? {} : { textLength: 1000, lengthAdjust: "spacingAndGlyphs" })}
-            >
-              {lang === "bn" ? site.nameBn : "marudyaan"}
-            </text>
-          </svg>
-        </div>
-
         <div className="border-t border-white/10">
           {/* pb-20 on phones keeps the last line clear of Netlify's corner badge */}
           <div className="container-page flex flex-col gap-2 py-6 pb-20 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between sm:pb-6">
