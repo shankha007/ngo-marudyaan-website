@@ -210,8 +210,12 @@ export default function HeroBanner() {
             <defs>
               <path id="hero-ring" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
             </defs>
-            <text className="fill-current font-display text-[15px] font-semibold tracking-[0.2em] uppercase">
-              <textPath href="#hero-ring">{t("hero.ring").repeat(2)}</textPath>
+            {/* the text goes round once: textLength stretches it to the circle's
+                circumference (2π × 78 ≈ 490), so it neither overlaps nor leaves a gap */}
+            <text className="fill-current font-display text-[15px] font-semibold uppercase">
+              <textPath href="#hero-ring" textLength="488" lengthAdjust="spacing">
+                {t("hero.ring")}
+              </textPath>
             </text>
           </svg>
           <span className="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-lime-400 text-oasis-900">
