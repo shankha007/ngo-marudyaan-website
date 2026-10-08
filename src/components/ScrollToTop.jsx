@@ -24,12 +24,19 @@ export default function ScrollToTop() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    const target = hashTarget(hash);
-    if (target) {
-      // one frame so the newly routed page has been laid out
-      const frame = requestAnimationFrame(() =>
-        target.scrollIntoView({ behavior: "smooth", block: "start" }),
-      );
+    if (hash.length > 1) {
+      /* Pages load on demand (see App.jsx), so the section may not exist
+         yet: look for it on each frame for up to 3 seconds. */
+      const until = performance.now() + 3000;
+      let frame;
+      const find = () => {
+        const target = hashTarget(hash);
+        // found: one more frame so the newly routed page has been laid out
+        if (target) frame = requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+        else if (performance.now() < until) frame = requestAnimationFrame(find);
+      };
+      if (!hashTarget(hash)) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      find();
       return () => cancelAnimationFrame(frame);
     }
     // "instant", not "auto": index.css sets scroll-behavior: smooth, and "auto"

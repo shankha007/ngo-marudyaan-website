@@ -16,7 +16,7 @@ function Initials({ name }) {
     .join("")
     .toUpperCase();
   return (
-    <span className="font-display text-2xl font-bold text-oasis-600">{letters || "M"}</span>
+    <span className="font-display text-2xl font-bold text-oasis-800">{letters || "M"}</span>
   );
 }
 
@@ -41,21 +41,19 @@ export default function About() {
       <PageHeader title={t("about.title")} sub={t("about.sub")} />
 
       {/* mission + vision */}
-      <section className="py-18 sm:py-22">
-        <div className="container-page grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <section className="py-16 sm:py-20">
+        <div className="container-page grid grid-cols-1 gap-4 lg:grid-cols-2">
           {[
-            { icon: "sprout", title: t("about.mission.title"), body: t("about.mission.body") },
-            { icon: "globe", title: t("about.vision.title"), body: t("about.vision.body") },
+            { icon: "sprout", title: t("about.mission.title"), body: t("about.mission.body"), look: "bg-lime-400 text-oasis-900", tile: "bg-oasis-900 text-lime-300", text: "text-oasis-900/80" },
+            { icon: "globe", title: t("about.vision.title"), body: t("about.vision.body"), look: "bg-night text-white", tile: "bg-lime-400 text-oasis-900", text: "text-white/75" },
           ].map((card, i) => (
             <Reveal key={card.title} delay={i * 100}>
-              <div className="h-full rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8">
-                <span className="inline-flex rounded-2xl bg-oasis-50 p-3 text-oasis-600">
+              <div className={`h-full rounded-4xl p-7 sm:p-10 ${card.look}`}>
+                <span className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl ${card.tile}`}>
                   <Icon name={card.icon} className="h-7 w-7" />
                 </span>
-                <h2 className="font-display mt-5 text-2xl font-bold text-oasis-900">
-                  {card.title}
-                </h2>
-                <p className="mt-3 leading-relaxed text-oasis-800/80">{card.body}</p>
+                <h2 className="font-display mt-6 text-3xl font-bold sm:text-4xl">{card.title}</h2>
+                <p className={`mt-4 text-lg leading-relaxed ${card.text}`}>{card.body}</p>
               </div>
             </Reveal>
           ))}
@@ -63,20 +61,25 @@ export default function About() {
       </section>
 
       {/* values */}
-      <section className="bg-sand-100 py-20">
+      <section className="mx-2 rounded-4xl bg-surface-2 py-20 sm:mx-3 sm:rounded-5xl">
         <div className="container-page">
           <SectionHeading title={t("about.values.title")} />
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <Reveal key={v.id} delay={i * 80}>
-                <div className="h-full rounded-2xl border border-oasis-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                  <span className="inline-flex rounded-xl bg-saffron-500/10 p-2.5 text-saffron-600">
-                    <Icon name="shield" className="h-5 w-5" />
-                  </span>
-                  <h3 className="font-display mt-4 text-lg font-semibold text-oasis-900">
+                <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-soft text-brand-ink">
+                      <Icon name="shield" className="h-5 w-5" />
+                    </span>
+                    <span aria-hidden="true" className="font-display text-3xl font-bold text-line-strong">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h3 className="font-display mt-4 text-lg font-semibold text-ink">
                     {tr(v.title)}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-oasis-800/75">{tr(v.text)}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-2">{tr(v.text)}</p>
                 </div>
               </Reveal>
             ))}
@@ -91,7 +94,7 @@ export default function About() {
           <ol className="relative mx-auto mt-14 max-w-3xl">
             <span
               aria-hidden="true"
-              className="absolute top-2 bottom-2 left-[15px] w-0.5 bg-oasis-100 sm:left-1/2 sm:-translate-x-1/2"
+              className="absolute top-2 bottom-2 left-[15px] w-0.5 bg-gradient-to-b from-lime-400 via-brand to-line sm:left-1/2 sm:-translate-x-1/2"
             />
             {milestones.map((m, i) => (
               <Reveal
@@ -103,17 +106,17 @@ export default function About() {
                 }`}
               >
                 <span
-                  className={`absolute top-1.5 left-2 h-4 w-4 rounded-full border-4 border-sand-50 bg-saffron-500 ${
+                  className={`absolute top-1.5 left-2 h-4 w-4 rounded-full border-4 border-canvas bg-lime-400 ring-2 ring-brand ${
                     i % 2 === 0 ? "sm:left-auto sm:-right-2" : "sm:-left-2"
                   }`}
                 />
-                <div className="font-display text-sm font-bold tracking-widest text-oasis-500">
+                <div className="inline-flex rounded-full bg-brand-soft px-3 py-0.5 font-display text-sm font-bold tracking-widest text-brand-ink">
                   {m.year}
                 </div>
-                <h3 className="font-display mt-1 text-xl font-semibold text-oasis-900">
+                <h3 className="font-display mt-1 text-xl font-semibold text-ink">
                   {tr(m.title)}
                 </h3>
-                <p className="mt-2 leading-relaxed text-oasis-800/75">{tr(m.text)}</p>
+                <p className="mt-2 leading-relaxed text-ink-2">{tr(m.text)}</p>
               </Reveal>
             ))}
           </ol>
@@ -121,7 +124,7 @@ export default function About() {
       </section>
 
       {/* team */}
-      <section className="bg-sand-100 py-20">
+      <section className="mx-2 rounded-4xl bg-surface-2 py-20 sm:mx-3 sm:rounded-5xl">
         <div className="container-page">
           <SectionHeading title={t("about.team.title")} sub={t("about.team.sub")} />
           {/* Flex rather than grid so a short last row sits in the middle. */}
@@ -132,8 +135,8 @@ export default function About() {
                 delay={i * 80}
                 className="w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
               >
-                <div className="h-full rounded-2xl border border-oasis-100 bg-white p-4 text-center shadow-sm sm:p-6">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center overflow-hidden rounded-full sm:h-24 sm:w-24 bg-oasis-50 ring-4 ring-oasis-100">
+                <div className="h-full rounded-3xl border border-line bg-surface p-4 text-center shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift sm:p-6">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center overflow-hidden rounded-full sm:h-24 sm:w-24 bg-lime-200 ring-4 ring-lime-400/50">
                     {member.photo ? (
                       <img
                         src={member.photo}
@@ -145,10 +148,10 @@ export default function About() {
                       <Initials name={tr(member.name)} />
                     )}
                   </div>
-                  <h3 className="font-display mt-3 text-base font-semibold text-balance text-oasis-900 sm:mt-4 sm:text-lg">
+                  <h3 className="font-display mt-3 text-base font-semibold text-balance text-ink sm:mt-4 sm:text-lg">
                     {tr(member.name)}
                   </h3>
-                  <p className="mt-1 text-sm text-oasis-600">{tr(member.role)}</p>
+                  <p className="mt-1 text-sm text-brand-ink">{tr(member.role)}</p>
                 </div>
               </Reveal>
             ))}
@@ -161,18 +164,18 @@ export default function About() {
         <div className="container-page">
           <SectionHeading title={t("about.legal.title")} sub={t("about.legal.note")} />
           <Reveal className="mx-auto mt-12 max-w-2xl">
-            <dl className="overflow-hidden rounded-2xl border border-oasis-100 bg-white shadow-sm">
+            <dl className="overflow-hidden rounded-3xl border border-line bg-surface shadow-soft">
               {legalRows.map((row, i) => (
                 <div
                   key={row.label}
                   className={`flex flex-col gap-1 px-5 py-3.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 sm:px-6 sm:py-4 ${
-                    i % 2 ? "bg-sand-50" : "bg-white"
+                    i % 2 ? "bg-canvas" : "bg-surface"
                   }`}
                 >
                   {/* stacked on phones so every row looks the same, even when a long
                       value (the Act's name) would not fit beside its label */}
-                  <dt className="shrink-0 text-sm text-oasis-800/70">{row.label}</dt>
-                  <dd className="font-medium text-oasis-900 sm:text-right">{row.value}</dd>
+                  <dt className="shrink-0 text-sm text-ink-2">{row.label}</dt>
+                  <dd className="font-medium text-ink sm:text-right">{row.value}</dd>
                 </div>
               ))}
             </dl>

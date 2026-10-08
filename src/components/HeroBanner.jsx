@@ -1,14 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { bannerSettings, bannerSlides } from "../data/banner";
+import { stats } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import Photo from "./Photo";
 import Icon from "./Icon";
+import { arrow, btn, size } from "./ui";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   typeof window.matchMedia === "function" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const control =
+  "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/25";
 
 /* The home page banner. Content comes from src/data/banner.js —
    editing that file is all you need to change what appears here.
@@ -41,10 +46,11 @@ export default function HeroBanner() {
   const slide = slides[index];
   const centred = slide.align === "center";
   const num = (n) => n.toLocaleString(lang === "bn" ? "bn-BD" : "en-IN");
+  const volunteers = stats.find((s) => s.id === "volunteers");
 
   return (
     <section
-      className="relative isolate overflow-hidden bg-oasis-900"
+      className="relative px-2 pt-2 sm:px-3 sm:pt-3"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       /* focus on the Pause/Play button itself does not count — otherwise
@@ -56,161 +62,187 @@ export default function HeroBanner() {
       aria-roledescription="carousel"
       aria-label={t("carousel.label")}
     >
-      {/* Slides stacked, cross-fading */}
-      {slides.map((s, i) => (
-        <div
-          key={s.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
-          aria-hidden={i !== index}
-        >
-          <Photo
-            src={s.image}
-            sizes="100vw"
-            priority={i === 0}
-            className="h-full w-full object-cover"
-          />
-        </div>
-      ))}
-
-      {/* readability wash */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-oasis-900/92 via-oasis-900/70 to-oasis-900/25"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-oasis-900/70 to-transparent"
-      />
-
-      {/* announce slide changes the user causes, but stay quiet while it
-          auto-rotates (constant announcements would be unbearable) */}
-      <div
-        aria-live={rotating ? "off" : "polite"}
-        className={`container-page relative flex min-h-[78vh] flex-col justify-center py-20 sm:min-h-[80vh] ${
-          centred ? "items-center text-center" : "items-start"
-        }`}
-      >
-        <div key={slide.id} className={`max-w-2xl ${centred ? "mx-auto" : ""}`}>
-          <p className="reveal is-visible mb-4 inline-flex items-center gap-2 rounded-full bg-saffron-500/15 px-4 py-1.5 text-xs font-semibold tracking-[0.15em] text-saffron-400 uppercase ring-1 ring-saffron-500/30">
-            <span className="h-1.5 w-1.5 rounded-full bg-saffron-400" />
-            {tr(slide.kicker)}
-          </p>
-          <h1
-            className="reveal is-visible font-display text-4xl leading-[1.12] font-bold text-balance text-white sm:text-5xl lg:text-6xl"
-            style={{ animationDelay: "90ms" }}
-          >
-            {tr(slide.title)}
-          </h1>
-          <p
-            className="reveal is-visible mt-5 max-w-xl text-lg leading-relaxed text-sand-200"
-            style={{ animationDelay: "180ms" }}
-          >
-            {tr(slide.subtitle)}
-          </p>
+      <div className="relative isolate overflow-hidden rounded-4xl bg-night sm:rounded-5xl">
+        {/* Slides stacked, cross-fading; the visible one zooms in slowly */}
+        {slides.map((s, i) => (
           <div
-            className={`reveal is-visible mt-9 flex flex-wrap gap-3 ${centred ? "justify-center" : ""}`}
-            style={{ animationDelay: "270ms" }}
+            key={s.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+            aria-hidden={i !== index}
           >
-            {slide.primaryCta && (
-              <Link
-                to={slide.primaryCta.to}
-                className="group inline-flex items-center gap-2 rounded-full bg-saffron-500 px-7 py-3.5 font-semibold text-oasis-900 shadow-lg shadow-saffron-500/20 transition hover:bg-saffron-400"
-              >
-                {tr(slide.primaryCta.label)}
-                <Icon
-                  name="arrowRight"
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                />
-              </Link>
-            )}
-            {slide.secondaryCta && (
-              <Link
-                to={slide.secondaryCta.to}
-                className="inline-flex items-center gap-2 rounded-full border border-white/35 px-7 py-3.5 font-semibold text-white backdrop-blur-sm transition hover:border-white hover:bg-white/10"
-              >
-                {tr(slide.secondaryCta.label)}
-              </Link>
-            )}
+            <Photo
+              src={s.image}
+              sizes="100vw"
+              priority={i === 0}
+              className={`h-full w-full object-cover transition-transform duration-[9000ms] ease-out motion-reduce:transition-none ${
+                i === index ? "scale-105" : "scale-100"
+              }`}
+            />
           </div>
-        </div>
-      </div>
+        ))}
 
-      {/* controls — kept on the LEFT: Netlify's injected badge occupies the
-          bottom-right corner of the screen and would cover arrows placed there */}
-      {count > 1 && (
-        <div className="container-page relative pb-8">
-          {/* on narrow phones the dots stack ABOVE the buttons: in one row the
-              dots would reach into the badge's corner at the bottom right */}
-          <div className="flex flex-col-reverse items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
-            <div className="flex gap-2">
-              <button
-                ref={toggleRef}
-                type="button"
-                onClick={() => {
-                  // an explicit "Play" should start rotating right away,
-                  // even though the mouse is over the banner
-                  if (userPaused) setHovered(false);
-                  setUserPaused((p) => !p);
-                }}
-                aria-label={userPaused ? t("carousel.play") : t("carousel.pause")}
-                className="rounded-full border border-white/30 p-2.5 text-white transition hover:bg-white/10"
-              >
-                <Icon name={userPaused ? "play" : "pause"} className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => go(index - 1)}
-                aria-label={t("carousel.prev")}
-                className="rounded-full border border-white/30 p-2.5 text-white transition hover:bg-white/10"
-              >
-                <Icon name="chevronLeft" className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => go(index + 1)}
-                aria-label={t("carousel.next")}
-                className="rounded-full border border-white/30 p-2.5 text-white transition hover:bg-white/10"
-              >
-                <Icon name="chevronRight" className="h-4 w-4" />
-              </button>
-            </div>
-            {/* each dot is a 32px-tall button (comfortable tap target);
-                the thin bar inside is only the visual */}
-            <div className="flex gap-1">
-              {slides.map((s, i) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setIndex(i)}
-                  aria-label={`${t("carousel.goto")} ${num(i + 1)}`}
-                  aria-current={i === index}
-                  className="group flex h-8 min-w-8 items-center justify-center px-1"
+        {/* readability wash */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-r from-night/95 via-night/65 to-night/5"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-night/90 via-night/15 to-transparent"
+        />
+
+        {/* announce slide changes the user causes, but stay quiet while it
+            auto-rotates (constant announcements would be unbearable) */}
+        <div
+          aria-live={rotating ? "off" : "polite"}
+          className={`container-page relative flex min-h-[78svh] flex-col justify-end pt-20 pb-8 sm:min-h-[82svh] sm:pb-10 lg:pb-14 ${
+            centred ? "items-center text-center" : "items-start"
+          }`}
+        >
+          <div key={slide.id} className={`max-w-3xl ${centred ? "mx-auto" : ""}`}>
+            <p className="reveal is-visible mb-5 inline-flex items-center gap-2 rounded-full bg-lime-400 px-3.5 py-1.5 text-xs font-bold tracking-[0.12em] text-oasis-900 uppercase">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-oasis-700 opacity-60 motion-reduce:animate-none" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-oasis-700" />
+              </span>
+              {tr(slide.kicker)}
+            </p>
+            <h1
+              className="reveal is-visible font-display text-[2.5rem] leading-[1.04] font-bold text-balance text-white sm:text-6xl lg:text-7xl"
+              style={{ animationDelay: "90ms" }}
+            >
+              {tr(slide.title)}
+            </h1>
+            <p
+              className="reveal is-visible mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg"
+              style={{ animationDelay: "180ms" }}
+            >
+              {tr(slide.subtitle)}
+            </p>
+            <div
+              className={`reveal is-visible mt-8 flex flex-wrap gap-3 ${centred ? "justify-center" : ""}`}
+              style={{ animationDelay: "270ms" }}
+            >
+              {slide.primaryCta && (
+                <Link
+                  to={slide.primaryCta.to}
+                  className={`${slide.primaryCta.to === "/donate" ? btn.donate : btn.lime} ${size.lg}`}
                 >
-                  <span
-                    className={`block h-1.5 rounded-full transition-all ${
-                      i === index
-                        ? "w-10 bg-saffron-500"
-                        : "w-5 bg-white/40 group-hover:bg-white/70"
-                    }`}
-                  />
-                </button>
-              ))}
+                  {tr(slide.primaryCta.label)}
+                  <Icon name="arrowRight" className={arrow} />
+                </Link>
+              )}
+              {slide.secondaryCta && (
+                <Link to={slide.secondaryCta.to} className={`${btn.glass} ${size.lg}`}>
+                  {tr(slide.secondaryCta.label)}
+                </Link>
+              )}
             </div>
           </div>
-        </div>
-      )}
 
-      {/* curved bottom edge */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 1440 70"
-        preserveAspectRatio="none"
-        className="absolute inset-x-0 -bottom-px h-12 w-full text-sand-50"
-      >
-        <path fill="currentColor" d="M0 70V34c240 28 480 36 720 22s480-28 720-18v32Z" />
-      </svg>
+          {/* controls — kept on the LEFT: Netlify's injected badge occupies the
+              bottom-right corner of the screen and would cover arrows placed there.
+              On narrow phones the dots stack ABOVE the buttons: in one row the
+              dots would reach into the badge's corner at the bottom right. */}
+          {count > 1 && (
+            <div className="mt-10 flex flex-col-reverse items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+              <div className="flex gap-2">
+                <button
+                  ref={toggleRef}
+                  type="button"
+                  onClick={() => {
+                    // an explicit "Play" should start rotating right away,
+                    // even though the mouse is over the banner
+                    if (userPaused) setHovered(false);
+                    setUserPaused((p) => !p);
+                  }}
+                  aria-label={userPaused ? t("carousel.play") : t("carousel.pause")}
+                  className={control}
+                >
+                  <Icon name={userPaused ? "play" : "pause"} className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => go(index - 1)}
+                  aria-label={t("carousel.prev")}
+                  className={control}
+                >
+                  <Icon name="chevronLeft" className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => go(index + 1)}
+                  aria-label={t("carousel.next")}
+                  className={control}
+                >
+                  <Icon name="chevronRight" className="h-4 w-4" />
+                </button>
+              </div>
+              {/* each dot is a 32px-tall button (comfortable tap target);
+                  the thin bar inside is only the visual */}
+              <div className="flex gap-1">
+                {slides.map((s, i) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setIndex(i)}
+                    aria-label={`${t("carousel.goto")} ${num(i + 1)}`}
+                    aria-current={i === index}
+                    className="group flex h-8 min-w-8 items-center justify-center px-1"
+                  >
+                    <span
+                      className={`block h-1.5 rounded-full transition-all duration-500 ${
+                        i === index ? "w-12 bg-lime-400" : "w-5 bg-white/35 group-hover:bg-white/70"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* spinning badge + floating "crew" card — large screens only, decorative */}
+        <div aria-hidden="true" className="pointer-events-none absolute top-16 right-10 hidden lg:block xl:right-16">
+          <svg viewBox="0 0 200 200" className="h-36 w-36 animate-spin-slow text-white/85 xl:h-40 xl:w-40">
+            <defs>
+              <path id="hero-ring" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+            </defs>
+            <text className="fill-current font-display text-[15px] font-semibold tracking-[0.2em] uppercase">
+              <textPath href="#hero-ring">{t("hero.ring").repeat(2)}</textPath>
+            </text>
+          </svg>
+          <span className="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-lime-400 text-oasis-900">
+            <Icon name="sprout" className="h-7 w-7" />
+          </span>
+        </div>
+        {volunteers && (
+          <div
+            aria-hidden="true"
+            className="animate-float-slow absolute right-16 bottom-14 hidden items-center gap-3 rounded-2xl border border-white/15 bg-white/10 py-3 pr-5 pl-3 text-white shadow-2xl backdrop-blur-xl xl:flex"
+          >
+            <span className="flex -space-x-2.5">
+              {[
+                ["bg-lime-400", "heart"],
+                ["bg-saffron-400", "book"],
+                ["bg-coral-400", "bowl"],
+              ].map(([bg, icon]) => (
+                <span
+                  key={icon}
+                  className={`flex h-9 w-9 items-center justify-center rounded-full text-oasis-900 ring-2 ring-night ${bg}`}
+                >
+                  <Icon name={icon} className="h-4 w-4" />
+                </span>
+              ))}
+            </span>
+            <span className="max-w-44 text-sm leading-tight font-semibold">
+              {t("hero.volunteers").replace("{n}", `${volunteers.value.toLocaleString("en-IN")}${volunteers.suffix}`)}
+            </span>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

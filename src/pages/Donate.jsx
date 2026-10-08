@@ -4,6 +4,15 @@ import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
+import { btn, size } from "../components/ui";
+
+/* colour of each donation amount card, in turn */
+const tierLooks = [
+  { card: "bg-lime-400 text-oasis-900", sub: "text-oasis-900/80", upi: "border-oasis-900/25 hover:bg-oasis-900/10" },
+  { card: "border border-line bg-surface text-ink", sub: "text-ink-2", upi: "border-line-strong hover:border-ink" },
+  { card: "bg-saffron-400 text-oasis-900", sub: "text-oasis-900/80", upi: "border-oasis-900/25 hover:bg-oasis-900/10" },
+  { card: "bg-night text-white", sub: "text-white/75", upi: "border-white/25 hover:bg-white/10" },
+];
 import { donationTiers } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
@@ -42,19 +51,24 @@ export default function Donate() {
 
       {/* QR + bank details */}
       <section className="py-16 sm:py-20">
-        <div className="container-page grid grid-cols-1 gap-8 lg:grid-cols-5">
+        <div className="container-page grid grid-cols-1 gap-4 lg:grid-cols-5">
           {/* QR card */}
           <Reveal className="lg:col-span-2">
-            <div className="flex h-full flex-col items-center rounded-3xl border border-oasis-100 bg-white p-6 text-center shadow-sm sm:p-8">
-              <h2 className="font-display text-2xl font-bold text-oasis-900">
+            <div className="relative flex h-full flex-col items-center rounded-4xl border-2 border-lime-400 bg-surface p-6 text-center shadow-lift sm:p-8">
+              <span className="absolute -top-3.5 inline-flex items-center gap-1.5 rounded-full bg-lime-400 px-3 py-1 text-xs font-bold tracking-wide text-oasis-900 uppercase">
+                <Icon name="sparkle" filled className="h-3.5 w-3.5" />
+                <span>UPI</span>
+              </span>
+              <h2 className="font-display text-3xl font-bold text-ink">
                 {t("donate.qr.title")}
               </h2>
-              <div className="mt-6 w-full max-w-72 rounded-2xl bg-sand-100 p-3 ring-1 ring-oasis-100 sm:p-4">
+              {/* always white behind the QR code: scanners need dark-on-light, even in dark mode */}
+              <div className="mt-6 w-full max-w-72 rounded-3xl bg-white p-3 ring-1 ring-line sm:p-4">
                 {qrFailed ? (
-                  <div className="flex aspect-square w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-oasis-300 px-6 text-sm text-oasis-800/60">
-                    <Icon name="copy" className="mb-3 h-8 w-8 text-oasis-300" />
+                  <div className="flex aspect-square w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-line-strong px-6 text-sm text-ink-3">
+                    <Icon name="copy" className="mb-3 h-8 w-8 text-ink-3" />
                     {t("donate.qr.missing")}
-                    <code className="mt-2 text-[11px] break-all text-oasis-600">
+                    <code className="mt-2 text-[11px] break-all text-brand-ink">
                       public{donation.qrImage}
                     </code>
                   </div>
@@ -63,34 +77,34 @@ export default function Donate() {
                     src={donation.qrImage}
                     alt={t("donate.qr.alt")}
                     onError={() => setQrFailed(true)}
-                    className="aspect-square w-full rounded-xl bg-white object-contain"
+                    className="aspect-square w-full rounded-2xl bg-white object-contain"
                   />
                 )}
               </div>
-              <p className="mt-4 max-w-xs text-sm text-oasis-800/65">{t("donate.qr.note")}</p>
+              <p className="mt-4 max-w-xs text-sm text-ink-2">{t("donate.qr.note")}</p>
               {donation.upiButtons && (
                 <div className="hidden w-full flex-col items-center pointer-coarse:flex">
                   <a
                     href={upiHref()}
-                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-oasis-700 px-6 py-3.5 font-semibold text-white transition hover:bg-oasis-600"
+                    className={`mt-5 w-full ${btn.donate} ${size.lg}`}
                   >
                     <Icon name="heart" className="h-5 w-5" />
                     {t("donate.upi.pay")}
                   </a>
-                  <p className="mt-2 text-xs text-oasis-800/55">{t("donate.upi.payNote")}</p>
+                  <p className="mt-2 text-xs text-ink-3">{t("donate.upi.payNote")}</p>
                 </div>
               )}
-              <div className="mt-6 w-full rounded-2xl bg-oasis-50 px-5 py-1">
+              <div className="mt-6 w-full rounded-3xl bg-brand-soft px-5 py-1 text-left">
                 <CopyField label={t("donate.upi.label")} value={donation.upiId} mono compact />
               </div>
-              <p className="mt-4 text-xs text-oasis-800/50">{donation.upiName}</p>
+              <p className="mt-4 text-xs text-ink-3">{donation.upiName}</p>
             </div>
           </Reveal>
 
           {/* bank card */}
           <Reveal delay={100} className="lg:col-span-3">
-            <div className="flex h-full flex-col rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8">
-              <h2 className="font-display text-2xl font-bold text-oasis-900">
+            <div className="flex h-full flex-col rounded-4xl border border-line bg-surface p-6 shadow-soft sm:p-8">
+              <h2 className="font-display text-3xl font-bold text-ink">
                 {t("donate.bank.title")}
               </h2>
               <div className="mt-4">
@@ -113,8 +127,8 @@ export default function Donate() {
                 />
               </div>
 
-              <div className="mt-6 flex items-start gap-3 rounded-2xl bg-saffron-500/10 p-4 text-sm text-oasis-900/80">
-                <Icon name="shield" className="mt-0.5 h-5 w-5 shrink-0 text-saffron-600" />
+              <div className="mt-6 flex items-start gap-3 rounded-3xl bg-saffron-500/10 p-4 text-sm text-ink-2">
+                <Icon name="shield" className="mt-0.5 h-5 w-5 shrink-0 text-saffron-700 dark:text-saffron-400" />
                 <p>{t("donate.safety")}</p>
               </div>
             </div>
@@ -123,24 +137,26 @@ export default function Donate() {
       </section>
 
       {/* what your donation does */}
-      <section className="bg-sand-100 py-20">
+      <section className="mx-2 rounded-4xl bg-surface-2 py-20 sm:mx-3 sm:rounded-5xl">
         <div className="container-page">
           <SectionHeading title={t("donate.impact.title")} sub={t("donate.impact.note")} />
-          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {donationTiers.map((tier, i) => (
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {donationTiers.map((tier, i) => {
+              const look = tierLooks[i % tierLooks.length];
+              return (
               <Reveal key={tier.id} delay={i * 80}>
-                <div className="flex h-full flex-col items-center rounded-2xl border border-oasis-100 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                  <div className="font-display text-3xl font-bold text-oasis-700">
+                <div className={`flex h-full flex-col rounded-4xl p-7 transition duration-300 hover:-translate-y-1 hover:shadow-lift ${look.card}`}>
+                  <div className="font-display text-5xl font-bold tracking-tight">
                     ₹{tier.amount.toLocaleString("en-IN")}
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-oasis-800/75">
+                  <p className={`mt-4 leading-relaxed ${look.sub}`}>
                     {tr(tier.impact)}
                   </p>
                   {donation.upiButtons && (
                     <div className="mt-auto hidden pt-5 pointer-coarse:block">
                       <a
                         href={upiHref(tier.amount)}
-                        className="inline-flex items-center gap-2 rounded-full border border-oasis-300 px-5 py-2.5 text-sm font-semibold text-oasis-700 transition hover:border-oasis-500 hover:bg-oasis-50"
+                        className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition ${look.upi}`}
                       >
                         {t("donate.upi.give")} ₹{tier.amount.toLocaleString("en-IN")}
                       </a>
@@ -148,40 +164,45 @@ export default function Donate() {
                   )}
                 </div>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* after you donate */}
       <section className="py-20">
-        <div className="container-page grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="container-page grid grid-cols-1 gap-4 lg:grid-cols-2">
           <Reveal>
-            <div className="h-full rounded-3xl bg-oasis-800 p-6 text-sand-100 sm:p-8">
-              <h2 className="font-display text-2xl font-bold text-white">
+            <div className="relative isolate h-full overflow-hidden rounded-4xl bg-night p-7 text-white/85 sm:p-10">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-20 -bottom-24 -z-10 h-72 w-72 rounded-full bg-lime-400/20 blur-3xl"
+              />
+              <h2 className="font-display text-3xl font-bold text-white">
                 {t("donate.after.title")}
               </h2>
-              <p className="mt-3 leading-relaxed text-sand-200/85">{t("donate.after.body")}</p>
+              <p className="mt-3 leading-relaxed text-white/80">{t("donate.after.body")}</p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <a
                   href={whatsappHref}
                   target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-saffron-500 px-6 py-3 text-sm font-semibold text-oasis-900 transition hover:bg-saffron-400"
+                  rel="noopener noreferrer"
+                  className={`${btn.lime} ${size.md}`}
                 >
                   <Icon name="whatsapp" className="h-4 w-4" />
                   {t("donate.after.whatsapp")}
                 </a>
                 <a
                   href={mailHref}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/35 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                  className={`${btn.glass} ${size.md}`}
                 >
                   <Icon name="mail" className="h-4 w-4" />
                   {t("donate.after.email")}
                 </a>
               </div>
               {site.donation.taxNote && site.registration.eightyG && (
-                <p className="mt-6 border-t border-white/15 pt-5 text-sm text-sand-200/70">
+                <p className="mt-6 border-t border-white/15 pt-5 text-sm text-white/70">
                   {t("about.legal.80g")}: {site.registration.eightyG}
                 </p>
               )}
@@ -189,36 +210,36 @@ export default function Donate() {
           </Reveal>
 
           <Reveal delay={100}>
-            <div className="h-full rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8">
-              <span className="inline-flex rounded-2xl bg-oasis-50 p-3 text-oasis-600">
+            <div className="h-full rounded-4xl border border-line bg-surface p-7 shadow-soft sm:p-10">
+              <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-saffron-400 text-oasis-900">
                 <Icon name="gift" className="h-7 w-7" />
               </span>
-              <h2 className="font-display mt-5 text-2xl font-bold text-oasis-900">
+              <h2 className="font-display mt-6 text-3xl font-bold text-ink">
                 {t("donate.goods.title")}
               </h2>
-              <p className="mt-3 leading-relaxed text-oasis-800/80">{t("donate.goods.body")}</p>
+              <p className="mt-3 leading-relaxed text-ink-2">{t("donate.goods.body")}</p>
               <div className="mt-7 space-y-3 text-sm">
                 <a
                   href={`tel:${contact.phoneHref}`}
-                  className="flex items-center gap-3 rounded-xl border border-oasis-100 px-4 py-3 text-oasis-800 transition hover:border-oasis-300 hover:bg-oasis-50"
+                  className="flex items-center gap-3 rounded-2xl border border-line px-4 py-3.5 font-medium text-ink transition hover:border-line-strong hover:bg-surface-2"
                 >
-                  <Icon name="phone" className="h-4 w-4 text-oasis-600" />
+                  <Icon name="phone" className="h-4 w-4 text-brand-ink" />
                   {contact.phone}
                 </a>
                 <a
                   href={`https://wa.me/${contact.whatsappHref}`}
                   target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-oasis-100 px-4 py-3 text-oasis-800 transition hover:border-oasis-300 hover:bg-oasis-50"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 rounded-2xl border border-line px-4 py-3.5 font-medium text-ink transition hover:border-line-strong hover:bg-surface-2"
                 >
-                  <Icon name="whatsapp" className="h-4 w-4 text-oasis-600" />
+                  <Icon name="whatsapp" className="h-4 w-4 text-brand-ink" />
                   {contact.whatsapp}
                 </a>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="flex items-center gap-3 rounded-xl border border-oasis-100 px-4 py-3 break-all text-oasis-800 transition hover:border-oasis-300 hover:bg-oasis-50"
+                  className="flex items-center gap-3 rounded-2xl border border-line px-4 py-3.5 font-medium break-all text-ink transition hover:border-line-strong hover:bg-surface-2"
                 >
-                  <Icon name="mail" className="h-4 w-4 shrink-0 text-oasis-600" />
+                  <Icon name="mail" className="h-4 w-4 shrink-0 text-brand-ink" />
                   {contact.email}
                 </a>
               </div>

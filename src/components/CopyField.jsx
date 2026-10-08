@@ -26,13 +26,15 @@ export default function CopyField({ label, value, mono = false, compact = false 
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-oasis-100 py-3 last:border-b-0">
+    <div
+      data-copy-row
+      className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-line py-3.5 last:border-b-0"
+    >
       <div className="min-w-0">
-        <div className="text-xs tracking-wide text-oasis-800/60 uppercase">{label}</div>
+        <div className="text-xs font-semibold tracking-wide text-ink-3 uppercase">{label}</div>
         <div
-          className={`mt-0.5 break-words text-oasis-900 ${
-            mono ? "font-mono text-[15px] tracking-wide" : "font-medium"
-          }`}
+          data-copy-value
+          className={`mt-0.5 break-words text-ink ${mono ? "font-mono text-[15px] tracking-wide" : "font-medium"}`}
         >
           {value}
         </div>
@@ -40,10 +42,10 @@ export default function CopyField({ label, value, mono = false, compact = false 
       <button
         type="button"
         onClick={copy}
-        className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
+        className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
           copied
-            ? "border-oasis-300 bg-oasis-50 text-oasis-700"
-            : "border-oasis-200 text-oasis-700 hover:border-oasis-400 hover:bg-oasis-50"
+            ? "bg-brand text-on-brand"
+            : "border border-line-strong text-ink hover:border-ink"
         }`}
       >
         <Icon name={copied ? "check" : "copy"} className="h-3.5 w-3.5" />

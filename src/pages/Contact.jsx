@@ -3,6 +3,7 @@ import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
+import { field, fieldLabel } from "../components/ui";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
@@ -11,8 +12,6 @@ import { isValidEmail } from "../utils/validation";
 
 const empty = { name: "", email: "", subject: "", message: "" };
 
-const field =
-  "w-full rounded-xl border border-oasis-200 bg-white px-4 py-3 text-oasis-900 placeholder:text-oasis-800/35 transition focus:border-oasis-500 focus:outline-none focus:ring-2 focus:ring-oasis-500/20 aria-invalid:border-red-500 aria-invalid:ring-2 aria-invalid:ring-red-500/15";
 
 export default function Contact() {
   const { t } = useLang();
@@ -105,7 +104,7 @@ export default function Contact() {
         <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-5">
           {/* details */}
           <Reveal className="lg:col-span-2">
-            <h2 className="font-display text-2xl font-bold text-oasis-900">
+            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
               {t("contact.reach.title")}
             </h2>
             <ul className="mt-6 space-y-3">
@@ -114,31 +113,32 @@ export default function Contact() {
                   {d.href ? (
                     <a
                       href={d.href}
-                      {...(d.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                      className="flex gap-3 rounded-2xl border border-oasis-100 bg-white p-3.5 transition sm:gap-4 sm:p-4 hover:border-oasis-300 hover:shadow-sm"
+                      {...(d.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className="group flex items-center gap-3 rounded-3xl border border-line bg-surface p-3.5 transition duration-300 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-lift sm:gap-4 sm:p-4"
                     >
-                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2 text-oasis-600 sm:p-2.5">
+                      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand-ink transition group-hover:bg-lime-400 group-hover:text-oasis-900">
                         <Icon name={d.icon} className="h-5 w-5" />
                       </span>
                       <span className="min-w-0">
-                        <span className="block text-xs tracking-wide text-oasis-800/55 uppercase">
+                        <span className="block text-xs tracking-wide text-ink-3 uppercase">
                           {d.label}
                         </span>
-                        <span className="block break-words text-[15px] font-medium text-oasis-900 sm:text-base">
+                        <span className="block break-words text-[15px] font-medium text-ink sm:text-base">
                           {d.value}
                         </span>
                       </span>
+                      <Icon name="arrowUpRight" className="ml-auto h-4 w-4 shrink-0 text-ink-3 transition group-hover:text-ink" />
                     </a>
                   ) : (
-                    <div className="flex gap-3 rounded-2xl border border-oasis-100 bg-white p-3.5 sm:gap-4 sm:p-4">
-                      <span className="shrink-0 self-start rounded-xl bg-oasis-50 p-2 text-oasis-600 sm:p-2.5">
+                    <div className="group flex items-center gap-3 rounded-3xl border border-line bg-surface p-3.5 sm:gap-4 sm:p-4">
+                      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand-ink transition group-hover:bg-lime-400 group-hover:text-oasis-900">
                         <Icon name={d.icon} className="h-5 w-5" />
                       </span>
                       <span className="min-w-0">
-                        <span className="block text-xs tracking-wide text-oasis-800/55 uppercase">
+                        <span className="block text-xs tracking-wide text-ink-3 uppercase">
                           {d.label}
                         </span>
-                        <span className="block font-medium text-oasis-900">{d.value}</span>
+                        <span className="block font-medium text-ink">{d.value}</span>
                       </span>
                     </div>
                   )}
@@ -148,7 +148,7 @@ export default function Contact() {
 
             {socials.length > 0 && (
               <>
-                <h3 className="font-display mt-8 text-lg font-semibold text-oasis-900">
+                <h3 className="font-display mt-8 text-lg font-semibold text-ink">
                   {t("contact.social.title")}
                 </h3>
                 <div className="mt-3 flex gap-2">
@@ -157,9 +157,9 @@ export default function Contact() {
                       key={s.label}
                       href={s.url}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="rounded-full border border-oasis-200 p-3 text-oasis-700 transition hover:border-oasis-600 hover:bg-oasis-50"
+                      className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line-strong text-ink transition hover:border-ink hover:bg-ink hover:text-canvas"
                     >
                       <Icon name={s.icon} filled={s.icon === "facebook"} className="h-5 w-5" />
                     </a>
@@ -174,21 +174,22 @@ export default function Contact() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8"
+              className="rounded-4xl border border-line bg-surface p-6 shadow-lift sm:p-10"
             >
-              <h2 className="font-display text-2xl font-bold text-oasis-900">
+              <h2 className="font-display text-3xl font-bold text-ink">
                 {t("contact.form.title")}
               </h2>
-              <p className="mt-2 text-sm text-oasis-800/65">{t(sender.direct ? "contact.form.note.direct" : "contact.form.note")}</p>
+              <p className="mt-2 text-sm text-ink-2">{t(sender.direct ? "contact.form.note.direct" : "contact.form.note")}</p>
 
               <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                  <span className={fieldLabel}>
                     {t("contact.form.name")}
-                    <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
+                    <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
                   </span>
                   <input
                     type="text"
+                    maxLength={120}
                     ref={nameRef}
                     aria-invalid={invalid.name || undefined}
                     aria-describedby={invalid.name ? "contact-error" : undefined}
@@ -199,11 +200,12 @@ export default function Contact() {
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                  <span className={fieldLabel}>
                     {t("contact.form.email")}
                   </span>
                   <input
                     type="email"
+                    maxLength={254}
                     ref={emailRef}
                     aria-invalid={invalid.email || undefined}
                     aria-describedby={invalid.email ? "contact-error" : undefined}
@@ -215,18 +217,19 @@ export default function Contact() {
               </div>
 
               <label className="mt-4 block">
-                <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                <span className={fieldLabel}>
                   {t("contact.form.subject")}
                 </span>
-                <input type="text" value={form.subject} onChange={set("subject")} className={field} />
+                <input type="text" maxLength={150} value={form.subject} onChange={set("subject")} className={field} />
               </label>
 
               <label className="mt-4 block">
-                <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                <span className={fieldLabel}>
                   {t("contact.form.message")}
-                  <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
+                  <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
                 </span>
                 <textarea
+                  maxLength={4000}
                   ref={messageRef}
                   aria-invalid={invalid.message || undefined}
                   aria-describedby={invalid.message ? "contact-error" : undefined}
@@ -238,7 +241,7 @@ export default function Contact() {
                 />
               </label>
 
-              <p id="contact-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-red-600">
+              <p id="contact-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-danger">
                 {errorKey ? t(errorKey) : ""}
               </p>
 
@@ -258,16 +261,19 @@ export default function Contact() {
       {/* map */}
       <section className="pb-20">
         <div className="container-page">
-          <h2 className="font-display text-2xl font-bold text-oasis-900">
+          <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">
             {t("contact.map.title")}
           </h2>
-          <div className="mt-5 overflow-hidden rounded-3xl border border-oasis-100 shadow-sm">
+          <div className="mt-6 overflow-hidden rounded-4xl border border-line shadow-soft">
             <iframe
               title={t("contact.map.title")}
               src={site.contact.mapEmbed}
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="h-[380px] w-full border-0"
+              referrerPolicy="strict-origin-when-cross-origin"
+              /* the map may run its own scripts and open Google Maps in a new
+                 tab, but cannot reach this page or navigate it */
+              sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+              className="h-[420px] w-full border-0 dark:[filter:invert(0.9)_hue-rotate(180deg)_saturate(0.6)]"
             />
           </div>
         </div>

@@ -121,8 +121,8 @@ export default async function features({ browser, base, report }) {
     ];
     const wrong = [];
     for (const [label, shown, copied] of rows) {
-      const row = page.locator("div.flex.items-center.justify-between", { has: page.getByText(label, { exact: true }) });
-      const onScreen = await row.locator("div.min-w-0 > div").nth(1).innerText();
+      const row = page.locator("[data-copy-row]", { has: page.getByText(label, { exact: true }) });
+      const onScreen = await row.locator("[data-copy-value]").innerText();
       await row.getByRole("button").click();
       await page.waitForTimeout(80);
       const clip = await page.evaluate(() => navigator.clipboard.readText());
@@ -357,7 +357,7 @@ export default async function features({ browser, base, report }) {
     const page = await openPage(browser, base);
     await page.goto(base + "/", { waitUntil: "networkidle" });
     await scrollLikeAUser(page);
-    const shown = await page.evaluate(() => [...document.querySelectorAll(".font-display.text-saffron-400")].map((e) => e.textContent));
+    const shown = await page.evaluate(() => [...document.querySelectorAll("[data-stat]")].map((e) => e.textContent));
     const want = stats.map((s) => s.value.toLocaleString("en-IN") + s.suffix);
     report.check(want.every((w) => shown.includes(w)), `impact counters count up to ${want.join(", ")}`, `shown: ${shown.join(", ")}`);
     await page.context().close();

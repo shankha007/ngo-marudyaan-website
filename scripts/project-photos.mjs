@@ -132,8 +132,10 @@ export function projectPhotosPlugin() {
     },
     /* Home page: start downloading the first banner photo straight away,
        instead of waiting for the site's JavaScript to load and ask for it.
-       A tiny inline script adds the preload only on "/", so other pages
-       don't download a banner they never show. */
+       This only writes the photo's details into a <meta name="hero-preload">
+       tag; the fixed script in index.html adds the preload on "/" alone, so
+       other pages don't download a banner they never show. (Keeping that
+       script fixed lets the Content-Security-Policy allow it by its hash.) */
     async transformIndexHtml() {
       const banner = await import(pathToFileURL(join(root, "src", "data", "banner.js")).href + `?t=${Date.now()}`);
       const first = banner.bannerSlides.find((s) => s.active !== false);
@@ -147,11 +149,7 @@ export function projectPhotosPlugin() {
         fetchPriority: "high",
         ...(photo && { imageSrcset: photo.variants.map((v) => `${v.url} ${v.w}w`).join(", "), imageSizes: "100vw" }),
       };
-      const code =
-        `if(location.pathname==="/"){var l=document.createElement("link");` +
-        Object.entries(link).map(([k, v]) => `l.${k}=${JSON.stringify(v)};`).join("") +
-        `document.head.appendChild(l)}`;
-      return [{ tag: "script", children: code, injectTo: "head" }];
+      return [{ tag: "meta", attrs: { name: "hero-preload", content: JSON.stringify(link) }, injectTo: "head-prepend" }];
     },
     /* build: write every WebP copy into dist/ */
     async generateBundle() {
