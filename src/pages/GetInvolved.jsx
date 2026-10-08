@@ -3,6 +3,7 @@ import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
+import { field, fieldLabel } from "../components/ui";
 import SectionHeading from "../components/SectionHeading";
 import { faqs, volunteerRoles } from "../data/content";
 import { site } from "../data/site";
@@ -11,27 +12,36 @@ import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
-const field =
-  "w-full rounded-xl border border-oasis-200 bg-white px-4 py-3 text-oasis-900 placeholder:text-oasis-800/35 transition focus:border-oasis-500 focus:outline-none focus:ring-2 focus:ring-oasis-500/20 aria-invalid:border-red-500 aria-invalid:ring-2 aria-invalid:ring-red-500/15";
+
+/* icon + colour for each "way to help" card, in turn */
+const roleLooks = [
+  ["users", "bg-lime-400 text-oasis-900"],
+  ["heart", "bg-saffron-400 text-oasis-900"],
+  ["book", "bg-coral-400 text-oasis-900"],
+  ["hands", "bg-brand text-on-brand"],
+  ["globe", "bg-oasis-200 text-oasis-900"],
+  ["sparkle", "bg-night text-lime-300"],
+];
 
 function Faq({ item }) {
   const { tr } = useLang();
   const [open, setOpen] = useState(false);
   return (
-    <div className="overflow-hidden rounded-2xl border border-oasis-100 bg-white">
+    <div className={`overflow-hidden rounded-3xl border bg-surface transition ${open ? "border-brand shadow-soft" : "border-line"}`}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left focus-visible:outline-offset-[-3px]"
       >
-        <span className="font-semibold text-oasis-900">{tr(item.q)}</span>
-        <Icon
-          name="chevronDown"
-          className={`h-5 w-5 shrink-0 text-oasis-600 transition-transform ${
-            open ? "rotate-180" : ""
+        <span className="font-semibold text-ink">{tr(item.q)}</span>
+        <span
+          className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition duration-300 ${
+            open ? "rotate-180 bg-brand text-on-brand" : "bg-surface-2 text-ink"
           }`}
-        />
+        >
+          <Icon name="chevronDown" className="h-4 w-4" />
+        </span>
       </button>
       <div
         className={`grid transition-all duration-300 ${
@@ -39,7 +49,7 @@ function Faq({ item }) {
         }`}
       >
         <div className="overflow-hidden">
-          <p className="px-6 pb-5 leading-relaxed text-oasis-800/80">{tr(item.a)}</p>
+          <p className="px-6 pb-5 leading-relaxed text-ink-2">{tr(item.a)}</p>
         </div>
       </div>
     </div>
@@ -129,43 +139,46 @@ export default function GetInvolved() {
       <section className="py-16 sm:py-20">
         <div className="container-page">
           <SectionHeading title={t("involved.roles.title")} />
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {volunteerRoles.map((role, i) => (
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {volunteerRoles.map((role, i) => {
+              const [icon, look] = roleLooks[i % roleLooks.length];
+              return (
               <Reveal key={role.id} delay={i * 70}>
-                <div className="h-full rounded-2xl border border-oasis-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                  <span className="inline-flex rounded-xl bg-oasis-50 p-3 text-oasis-600">
-                    <Icon name="users" className="h-6 w-6" />
+                <div className="h-full rounded-4xl border border-line bg-surface p-7 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+                  <span className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl ${look}`}>
+                    <Icon name={icon} className="h-6 w-6" />
                   </span>
-                  <h3 className="font-display mt-4 text-lg font-semibold text-oasis-900">
+                  <h3 className="font-display mt-6 text-xl font-bold text-ink">
                     {tr(role.title)}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-oasis-800/75">{tr(role.text)}</p>
+                  <p className="mt-2 leading-relaxed text-ink-2">{tr(role.text)}</p>
                 </div>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* sign-up form */}
-      <section className="bg-sand-100 py-20">
+      <section className="mx-2 rounded-4xl bg-surface-2 py-20 sm:mx-3 sm:rounded-5xl">
         <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-2">
           <Reveal>
             <SectionHeading align="left" title={t("involved.form.title")} sub={t(sender.direct ? "involved.form.note.direct" : "involved.form.note")} />
             <a
               href={whatsappHref}
               target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-oasis-200 bg-white px-5 py-4 transition hover:border-oasis-400 hover:shadow-sm"
+              rel="noopener noreferrer"
+              className="group mt-8 inline-flex items-center gap-4 rounded-3xl border border-line bg-surface py-3 pr-6 pl-3 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-lift"
             >
-              <span className="rounded-xl bg-oasis-50 p-2.5 text-oasis-600">
-                <Icon name="whatsapp" className="h-5 w-5" />
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#25d366] text-white">
+                <Icon name="whatsapp" className="h-6 w-6" />
               </span>
               <span>
-                <span className="block text-sm font-semibold text-oasis-900">
+                <span className="block text-sm font-semibold text-ink">
                   {t("involved.form.whatsapp")}
                 </span>
-                <span className="block text-sm text-oasis-800/60">{site.contact.whatsapp}</span>
+                <span className="block text-sm text-ink-3">{site.contact.whatsapp}</span>
               </span>
             </a>
           </Reveal>
@@ -174,17 +187,18 @@ export default function GetInvolved() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8"
+              className="rounded-4xl border border-line bg-surface p-6 shadow-lift sm:p-10"
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                  <span className={fieldLabel}>
                     {t("involved.form.name")}
-                    <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
+                    <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
                   </span>
                   <input
                     ref={nameRef}
                     type="text"
+                    maxLength={120}
                     required
                     aria-invalid={invalid.name || undefined}
                     aria-describedby={invalid.name ? "involved-error" : undefined}
@@ -194,13 +208,14 @@ export default function GetInvolved() {
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                  <span className={fieldLabel}>
                     {t("involved.form.phone")}
-                    <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>
+                    <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
                   </span>
                   <input
                     ref={phoneRef}
                     type="tel"
+                    maxLength={20}
                     required
                     autoComplete="tel"
                     inputMode="tel"
@@ -214,12 +229,13 @@ export default function GetInvolved() {
               </div>
 
               <label className="mt-4 block">
-                <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                <span className={fieldLabel}>
                   {t("involved.form.email")}
                 </span>
                 <input
                   ref={emailRef}
                   type="email"
+                  maxLength={254}
                   aria-invalid={invalid.email || undefined}
                   aria-describedby={invalid.email ? "involved-error" : undefined}
                   value={form.email}
@@ -229,7 +245,7 @@ export default function GetInvolved() {
               </label>
 
               <label className="mt-4 block">
-                <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                <span className={fieldLabel}>
                   {t("involved.form.interest")}
                 </span>
                 <select value={form.interest} onChange={set("interest")} className={field}>
@@ -242,10 +258,11 @@ export default function GetInvolved() {
               </label>
 
               <label className="mt-4 block">
-                <span className="mb-1.5 block text-sm font-medium text-oasis-900">
+                <span className={fieldLabel}>
                   {t("involved.form.message")}
                 </span>
                 <textarea
+                  maxLength={4000}
                   rows={4}
                   value={form.message}
                   onChange={set("message")}
@@ -253,7 +270,7 @@ export default function GetInvolved() {
                 />
               </label>
 
-              <p id="involved-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-red-600">
+              <p id="involved-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-danger">
                 {errorKey ? t(errorKey) : ""}
               </p>
 

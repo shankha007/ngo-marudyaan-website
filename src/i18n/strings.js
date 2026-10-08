@@ -244,6 +244,21 @@ export const strings = {
     "contact.map.title": "Where we work",
     "contact.social.title": "Follow our work",
 
+    /* redesign: theme, hero extras, volunteer band */
+    "theme.dark": "Switch to dark mode",
+    "theme.light": "Switch to light mode",
+    "misc.new": "New",
+    "hero.ring": "Volunteer-run • Since 2017 • Kolkata • ",
+    "hero.volunteers": "{n} volunteers and counting",
+    "home.join.kicker": "Join the crew",
+    "home.join.title": "Got a free Sunday? We've got a plan.",
+    "home.join.body":
+      "Students, working folks, homemakers, retirees: anyone can volunteer. Hand out meals, teach a class, take photos, or help run our socials.",
+    "home.join.perk1": "No experience needed",
+    "home.join.perk2": "Pick a time that suits you",
+    "home.join.perk3": "Make friends who care",
+    "home.work.all": "See all our work",
+
     /* footer */
     "footer.about":
       "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health and relief.",
@@ -497,6 +512,21 @@ export const strings = {
     "donate.qr.alt": "এনজিও মরুদ্যানের ইউপিআই কিউআর কোড",
     "contact.map.title": "আমরা যেখানে কাজ করি",
     "contact.social.title": "আমাদের কাজ দেখুন",
+
+    /* redesign: theme, hero extras, volunteer band */
+    "theme.dark": "ডার্ক মোড চালু করুন",
+    "theme.light": "লাইট মোড চালু করুন",
+    "misc.new": "নতুন",
+    "hero.ring": "স্বেচ্ছাসেবী সংগঠন • ২০১৭ থেকে • কলকাতা • ",
+    "hero.volunteers": "{n} জন স্বেচ্ছাসেবক, আরও বাড়ছে",
+    "home.join.kicker": "দলে যোগ দিন",
+    "home.join.title": "রবিবারটা ফাঁকা? আমাদের কাছে পরিকল্পনা আছে।",
+    "home.join.body":
+      "ছাত্রছাত্রী, চাকুরিজীবী, গৃহিণী, অবসরপ্রাপ্ত — যে কেউ স্বেচ্ছাসেবক হতে পারেন। খাবার বিতরণ করুন, ক্লাস নিন, ছবি তুলুন, কিংবা আমাদের সোশ্যাল মিডিয়া সামলান।",
+    "home.join.perk1": "আগে থেকে অভিজ্ঞতা লাগবে না",
+    "home.join.perk2": "সুবিধামতো সময় বেছে নিন",
+    "home.join.perk3": "সমমনস্ক বন্ধু পান",
+    "home.work.all": "আমাদের সব কাজ দেখুন",
 
     /* footer */
     "footer.about":

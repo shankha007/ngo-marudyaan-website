@@ -23,7 +23,7 @@ export default function BackToTop() {
       aria-hidden={!show}
       /* bottom-LEFT: Netlify injects its "Powered by Netlify" badge in the
          bottom-right corner above everything, which would swallow clicks */
-      className={`fixed bottom-5 left-5 z-40 rounded-full bg-oasis-700 p-3 text-white shadow-lg transition-all hover:bg-oasis-600 ${
+      className={`fixed bottom-5 left-5 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-ink text-canvas shadow-lift transition-all duration-300 hover:-translate-y-0.5 ${
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >

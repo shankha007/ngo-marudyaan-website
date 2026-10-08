@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-/* Counts up from 0 to `value` the first time it scrolls into view. */
-export default function StatCounter({ value, suffix = "", label }) {
+/* Counts up from 0 to `value` the first time it scrolls into view.
+   `className` styles the number (colour, size); the label sits below. */
+export default function StatCounter({ value, suffix = "", label, className = "", labelClassName = "" }) {
   const ref = useRef(null);
   const [shown, setShown] = useState(0);
 
@@ -44,12 +45,12 @@ export default function StatCounter({ value, suffix = "", label }) {
   }, [value]);
 
   return (
-    <div ref={ref} className="text-center">
-      <div className="font-display text-4xl font-bold text-saffron-400 sm:text-5xl">
+    <div ref={ref}>
+      <div data-stat className={`font-display font-bold tracking-tight tabular-nums ${className}`}>
         {shown.toLocaleString("en-IN")}
         {suffix}
       </div>
-      <div className="mt-2 text-sm text-sand-200/80">{label}</div>
+      <div className={`mt-1 text-sm font-medium ${labelClassName}`}>{label}</div>
     </div>
   );
 }
