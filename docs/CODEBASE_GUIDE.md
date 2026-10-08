@@ -117,7 +117,7 @@ The single HTML document Vite serves. It contains:
 
 - `<title>`, meta description, `theme-color` and the canonical URL.
 - **Open Graph / Twitter tags** for link previews on WhatsApp and Facebook. These point at `/images/og-image.jpg`.
-- On the built site, a small inline script that preloads the first banner photo, on the home page only (added by the `project-photos` Vite plugin; see [§16](#16-scripts-scripts)).
+- A small inline script that runs before the first paint: it sets `<html data-theme>` (the saved light/dark choice, else the device setting) and, on `/` only, preloads the first banner photo described by the `<meta name="hero-preload">` tag (added by the `project-photos` Vite plugin; see [§16](#16-scripts-scripts)). The Content-Security-Policy allows this exact script by its sha256 hash, so the build checks that the two match.
 - `<div id="root">`, where React mounts, and the script tag that loads `/src/main.jsx`.
 
 ### [src/main.jsx](../src/main.jsx)
@@ -312,6 +312,10 @@ Sends one form. `form` is `"contact"`, `"involved"` or `"help"`, which selects t
 
 Sets `document.title` and the `<meta name="description">` tag when a page mounts, and again when the values change (for example on a language switch). The site has no server rendering, so every page calls this itself.
 
+### [useTheme.js](../src/hooks/useTheme.js): `useTheme()` → `{ theme, toggle }`
+
+Light / dark mode. Reads `<html data-theme>` (set before the first paint by the script in `index.html`), and `toggle()` switches it and remembers the choice in `localStorage` (`marudyaan-theme`). Until the visitor chooses, the site follows the device setting, even if it changes while the page is open.
+
 ---
 
 ## 8. Utilities: `src/utils/`
@@ -345,7 +349,7 @@ Sets `document.title` and the `<meta name="description">` tag when a page mounts
 | [HeroBanner](../src/components/HeroBanner.jsx) | none | The home-page carousel. Details below. |
 | [Photo](../src/components/Photo.jsx) | `src`, `alt`, `sizes`, `priority`, plus any `<img>` props | Use instead of `<img>` for pictures. Always lazy (`loading="lazy"`, `decoding="async"`) unless `priority` (eager, `fetchpriority="high"`; only for the first banner slide and the open lightbox photo). For a photo under `/images/projects/` it also sets `srcset` from the WebP copies, `sizes` (how wide it is on screen), the real `width`/`height` (no layout shift) and a blurred background preview until it loads. Anything else renders as a plain `<img>`. |
 | [PageHeader](../src/components/PageHeader.jsx) | `title`, `sub?` | The green banner at the top of every inner page. It contains the page's only `<h1>`, plus decorative blurred circles and a curved bottom edge. |
-| [SectionHeading](../src/components/SectionHeading.jsx) | `kicker?`, `title`, `sub?`, `align` (`"center"` or `"left"`), `light` (for dark backgrounds) | A section `<h2>` with an optional small uppercase kicker, a subtitle and a saffron underline bar. It is wrapped in `Reveal`. |
+| [SectionHeading](../src/components/SectionHeading.jsx) | `kicker?`, `title`, `sub?`, `align` (`"center"` or `"left"`), `light` (for dark backgrounds) | A section `<h2>` with an optional kicker chip and a subtitle. It is wrapped in `Reveal`. |
 | [Reveal](../src/components/Reveal.jsx) | `as` (tag, default `div`), `delay` (ms), `className`, `...rest` | Fades and lifts its children in the first time they scroll into view, using an `IntersectionObserver` with a 12% threshold. It adds the `is-visible` class, which triggers the `rise` keyframes in `index.css`. If `IntersectionObserver` is missing, the content shows immediately. |
 | [StatCounter](../src/components/StatCounter.jsx) | `value`, `suffix`, `label` | Counts up from 0 to `value` over 1.4 s with an ease-out-cubic curve the first time it is 40% visible. It jumps straight to the final value for reduced-motion users. |
 | [ProgramCard](../src/components/ProgramCard.jsx) | `program` | A card with the programme image, an icon badge straddling the image edge, the title, the summary, and a "Read more" link to `/our-work#<id>`. |
@@ -541,19 +545,18 @@ Key design points:
 ### [src/index.css](../src/index.css)
 
 - `@import "tailwindcss"` loads Tailwind v4. There is no `tailwind.config.js`; Tailwind v4 is configured in CSS.
-- **`@theme`** defines the design tokens that become Tailwind classes:
-  - `oasis-50` … `oasis-900`: brand greens (`bg-oasis-700`, `text-oasis-900`…)
-  - `sand-50` … `sand-300`: warm backgrounds
-  - `saffron-400` … `saffron-600`: the accent colour, used for Donate buttons and highlights
-  - `--font-display` (Baloo 2) and `--font-sans` (Inter), each falling back to Noto Sans Bengali
-  - Changing these hex values re-skins the whole site.
+- **Two kinds of colour token**, both usable as Tailwind classes:
+  - *Semantic* colours that switch with light/dark mode: `canvas` (page background), `surface` / `surface-2` (cards, tinted bands), `ink` / `ink-2` / `ink-3` (text, strongest to softest), `line` / `line-strong` (borders), `brand`, `on-brand`, `brand-soft`, `brand-ink`, `focus`, `danger`. Their values are the `--c-*` variables in the `:root` (light) and `[data-theme="dark"]` blocks. Use these for anything sitting on the page.
+  - *Fixed* colours that look the same in both modes: `night` (the dark banner/footer panels), `oasis-*` greens, `lime-*` (the fresh accent), `saffron-*` (giving/Donate), `coral-400`. Use these on photos and the always-dark panels.
+  - `--font-display` (Bricolage Grotesque) and `--font-sans` (Inter), each falling back to Noto Sans Bengali.
+- `@custom-variant dark` makes `dark:` classes follow `<html data-theme="dark">`, set by the script in `index.html` and the [useTheme](../src/hooks/useTheme.js) hook (the navbar's sun/moon button).
 - `html[lang="bn"] body { line-height: 1.8 }`: Bengali script needs more line height.
-- **`@utility container-page`**: the page-width wrapper (max 80 rem, 1.25 rem side padding), used everywhere.
-- **Animations**: `rise` (used by `.reveal.is-visible`) and `float-slow` (`.animate-float-slow`).
-- **`prefers-reduced-motion`**: turns off smooth scrolling, reveal animations and floating.
+- **Utilities**: `container-page` (the page-width wrapper, used everywhere), `shadow-soft` / `shadow-lift` (shadows that work in both modes), `marker` (highlighter stroke) and `bg-dots` (dotted texture).
+- **Animations**: `rise` (used by `.reveal.is-visible`), `float-slow`, `marquee` (the moving strip under the home banner) and `spin-slow` (the banner badge).
+- **`prefers-reduced-motion`**: turns off smooth scrolling, reveal animations, floating, the marquee and spinning.
 - A thin on-brand scrollbar for WebKit browsers.
 
-Everything else is Tailwind utility classes written inline in the JSX. The `field` class string is copied into each form page so all inputs look the same, including `aria-invalid:` red borders.
+Everything else is Tailwind utility classes written inline in the JSX. Shared looks live in [src/components/ui.js](../src/components/ui.js): `btn.*` + `size.*` for buttons, `field` / `fieldLabel` for form inputs (including `aria-invalid:` red borders), `card`, `pill`, and `arrow` (the arrow that nudges on hover).
 
 ---
 
@@ -567,14 +570,14 @@ Copied unchanged into `dist/`.
 | [sitemap.xml](../public/sitemap.xml) | Lists every real page for search engines. Must match `App.jsx`. |
 | [robots.txt](../public/robots.txt) | Allows everything and points to the sitemap. |
 | `favicon.png`, `apple-touch-icon.png` | Browser tab icon and the icon phones use for a home-screen shortcut, both cut from the logo. |
-| [_headers](../public/_headers) | **Netlify response headers.** `Cache-Control: immutable` for a year on `/assets/*` (Vite's hashed JS and CSS) and `/images/projects/:project/_w/*` (the hashed WebP copies). [vercel.json](../vercel.json) sets the same for Vercel. |
+| [_headers](../public/_headers) | **Netlify response headers.** Security headers on every page (Content-Security-Policy, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`), and `Cache-Control: immutable` for a year on `/assets/*` (Vite's hashed JS, CSS and fonts) and `/images/projects/:project/_w/*` (the hashed WebP copies). [vercel.json](../vercel.json) sets the same for Vercel. [scripts/security-headers.mjs](../scripts/security-headers.mjs) checks on every build that the two agree and that the CSP allows the inline script in `index.html`, and serves the same headers in `npm run preview` / `npm test`. |
 | `images/` | `projects/<id>/` holds the gallery photos, one folder per project (see `projects.js`). `banner-2.svg` and `work-*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
 
 ---
 
 ## 14. Build, hosting and branch rules
 
-- **[vite.config.js](../vite.config.js)**: the React and Tailwind plugins, plus `projectPhotosPlugin()` (gallery photo list, WebP copies, banner preload). For GitHub Pages hosting you would add `base: "/<repo>/"`.
+- **[vite.config.js](../vite.config.js)**: the React and Tailwind plugins, `projectPhotosPlugin()` (gallery photo list, WebP copies, banner preload) and `securityHeadersPlugin()` (the build-time header check). `preview.headers` serves the security headers locally; source maps are off. For GitHub Pages hosting you would add `base: "/<repo>/"`.
 - **[vercel.json](../vercel.json)**: rewrites every path to `/index.html`, for hosting on Vercel. Note that unlike `_redirects`, it doesn't produce real 404 statuses.
 - **[.oxlintrc.json](../.oxlintrc.json)**: enforces React's rules of hooks and warns when a file exports non-components alongside components (needed for fast refresh).
 - **[.claude/launch.json](../.claude/launch.json)**: tells the Claude desktop app how to start the dev server (`npm run dev`, port 5173).
@@ -641,7 +644,7 @@ Suites run in this order: `smoke`, `navigation`, `features`, `a11y`, `netlify-ba
 - **`projectPhotosPlugin()`**: a Vite plugin registered in [vite.config.js](../vite.config.js).
   - Serves `{ [id]: [{ file, width, height, blur, srcset }] }` as the module `virtual:project-photos`, which [src/data/gallery.js](../src/data/gallery.js) imports.
   - **Build:** writes every WebP copy into `dist/`. **Dev:** makes each copy the first time it is requested.
-  - Injects into `index.html` an inline script that preloads the first active banner slide (with the same `srcset`/`sizes` as its `<img>`) when the page is `/`.
+  - Injects into `index.html` a `<meta name="hero-preload">` tag describing the first active banner slide (with the same `srcset`/`sizes` as its `<img>`); the fixed inline script in `index.html` turns it into a preload on `/` only.
   - In `npm run dev`, reloads the page when a photo or folder is added, changed or removed.
 
 The tests import the same function, so they always expect exactly what the site shows.
@@ -672,7 +675,7 @@ Generates `public/images/og-image.jpg`, the 1200×630 image shown when the site 
 | Add a Request Help drive or need | `helpPrograms` in [content.js](../src/data/content.js) |
 | Change a button label or heading | [src/i18n/strings.js](../src/i18n/strings.js) (both `en` and `bn`) |
 | Add a new icon | the `paths` object in [Icon.jsx](../src/components/Icon.jsx) |
-| Change brand colours or fonts | `@theme` in [src/index.css](../src/index.css); fonts are `@fontsource/*` packages imported in [src/main.jsx](../src/main.jsx) |
+| Change brand colours or fonts | The `--c-*` variables (light and dark) and `@theme` in [src/index.css](../src/index.css); fonts are `@fontsource-variable/*` packages imported in [src/main.jsx](../src/main.jsx) |
 | Show a picture on a page | the [Photo](../src/components/Photo.jsx) component, with a `sizes` that matches its on-screen width |
 | Add a new page | Create it in `src/pages/`, add a `<Route>` in [App.jsx](../src/App.jsx), add the path to [_redirects](../public/_redirects) and [sitemap.xml](../public/sitemap.xml), add it to `links` in [Navbar.jsx](../src/components/Navbar.jsx) and `quickLinks` in [Footer.jsx](../src/components/Footer.jsx), and add its strings |
 | Change the link-preview image | `npm run og-image` (text comes from `site.js`) |

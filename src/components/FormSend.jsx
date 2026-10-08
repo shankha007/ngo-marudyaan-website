@@ -4,18 +4,22 @@
 import Icon from "./Icon";
 import { useLang } from "../i18n/LanguageContext";
 import { mailtoHref, whatsappHref } from "../utils/sendForm";
+import { btn, size } from "./ui";
 
 /* `direct`: this form sends straight to the inbox (useFormSender's `direct`) */
 export function SubmitButton({ status, direct, label, labelDirect }) {
   const { t } = useLang();
   const sending = status === "sending";
   return (
-    <button
-      type="submit"
-      disabled={sending}
-      className="mt-3 inline-flex items-center gap-2 rounded-full bg-oasis-700 px-7 py-3.5 font-semibold text-white transition hover:bg-oasis-600 disabled:cursor-wait disabled:opacity-70"
-    >
-      <Icon name="mail" className="h-4 w-4" />
+    <button type="submit" disabled={sending} className={`mt-3 ${btn.primary} ${size.lg} w-full sm:w-auto`}>
+      {sending ? (
+        <span
+          aria-hidden="true"
+          className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+        />
+      ) : (
+        <Icon name="mail" className="h-4 w-4" />
+      )}
       {sending ? t("form.sending") : t(direct ? labelDirect : label)}
     </button>
   );
@@ -36,8 +40,7 @@ export function Honeypot({ direct }) {
   );
 }
 
-const linkClass =
-  "inline-flex items-center gap-2 rounded-full border border-oasis-300 bg-white px-5 py-2.5 text-sm font-semibold text-oasis-700 transition hover:border-oasis-500";
+const linkClass = `${btn.outline} ${size.sm}`;
 
 /* What happened after Send. `sentKey` is the form's own "what happens next" line. */
 export function SendResult({ status, message, sentKey }) {
@@ -46,21 +49,23 @@ export function SendResult({ status, message, sentKey }) {
 
   if (status === "sent") {
     box = (
-      <div className="mt-6 flex gap-3 rounded-2xl border border-oasis-200 bg-oasis-50 p-5">
-        <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-oasis-600" />
+      <div className="mt-6 flex gap-3 rounded-3xl border border-brand/30 bg-brand-soft p-5">
+        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-on-brand">
+          <Icon name="check" className="h-4 w-4" />
+        </span>
         <div>
-          <p className="font-semibold text-oasis-900">{t("form.sent.title")}</p>
-          <p className="mt-1 text-sm leading-relaxed text-oasis-800/75">{t(sentKey)}</p>
+          <p className="font-semibold text-ink">{t("form.sent.title")}</p>
+          <p className="mt-1 text-sm leading-relaxed text-ink-2">{t(sentKey)}</p>
         </div>
       </div>
     );
   } else if (status === "failed" && message) {
     box = (
-      <div className="mt-6 rounded-2xl border border-saffron-500/40 bg-saffron-500/10 p-5">
-        <p className="font-semibold text-oasis-900">{t("form.failed.title")}</p>
-        <p className="mt-1 text-sm leading-relaxed text-oasis-800/75">{t("form.failed.body")}</p>
+      <div className="mt-6 rounded-3xl border border-saffron-500/50 bg-saffron-500/10 p-5">
+        <p className="font-semibold text-ink">{t("form.failed.title")}</p>
+        <p className="mt-1 text-sm leading-relaxed text-ink-2">{t("form.failed.body")}</p>
         <div className="mt-4 flex flex-wrap gap-2">
-          <a href={whatsappHref(message.body)} target="_blank" rel="noreferrer" className={linkClass}>
+          <a href={whatsappHref(message.body)} target="_blank" rel="noopener noreferrer" className={linkClass}>
             <Icon name="whatsapp" className="h-4 w-4" />
             {t("form.whatsapp")}
           </a>
@@ -74,13 +79,13 @@ export function SendResult({ status, message, sentKey }) {
   } else if (status === "opened" && message) {
     // not everyone has an email app set up on their phone
     box = (
-      <div className="mt-6 rounded-2xl border border-oasis-200 bg-oasis-50 p-5">
-        <p className="font-semibold text-oasis-900">{t("form.opened.title")}</p>
-        <p className="mt-1 text-sm leading-relaxed text-oasis-800/75">{t("form.opened.body")}</p>
+      <div className="mt-6 rounded-3xl border border-line bg-surface-2 p-5">
+        <p className="font-semibold text-ink">{t("form.opened.title")}</p>
+        <p className="mt-1 text-sm leading-relaxed text-ink-2">{t("form.opened.body")}</p>
         <a
           href={whatsappHref(message.body)}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className={`mt-4 ${linkClass}`}
         >
           <Icon name="whatsapp" className="h-4 w-4" />

@@ -169,13 +169,41 @@ from a project folder (as above).
 - **The home banner** is the one picture that loads first: it starts downloading before the
   page's JavaScript.
 - **The lightbox** fetches the next and previous photos while you look at one.
-- **Fonts** (Baloo 2, Inter, Noto Sans Bengali) are served from this site rather than Google
-  Fonts, so the first paint doesn't wait for another server.
+- **Fonts** (Bricolage Grotesque, Inter, Noto Sans Bengali) are served from this site rather
+  than Google Fonts, so the first paint doesn't wait for another server. They are variable
+  fonts: one small file per alphabet covers every weight.
+- **Pages load on demand:** the home page downloads only its own code; the other pages are
+  fetched quietly in the background once it is idle, so clicking around still feels instant.
 - **Caching:** on Netlify (`public/_headers`) and Vercel (`vercel.json`), the photo copies and
   the site's scripts are cached by browsers for a year. Their names change whenever their
   content does, so visitors never see an old version.
 
 The `performance` test suite checks all of this.
+
+### Light and dark mode
+
+The site follows the visitor's phone or computer setting, and the sun/moon button in the
+header (in the menu, on phones) switches it; the choice is remembered. Colours are set once in
+`src/index.css`: the `:root` block is light mode, `[data-theme="dark"]` is dark mode.
+
+### Security
+
+The site has no server or database to break into, and `public/_headers` adds the browser-side
+protections on every page:
+
+- a **Content-Security-Policy**: the browser only runs this site's own scripts and only talks to
+  Web3Forms (the forms) and Google Maps (the map). Anything injected from elsewhere is refused;
+- the site can't be shown inside another site's frame (clickjacking), browsers can't guess
+  file types, visitors' addresses aren't leaked to sites they follow links to, and the camera,
+  microphone and location are switched off;
+- the Google map runs in a sandbox, external links open with `noopener`, the forms have a
+  spam trap, and no source maps are published.
+
+`vercel.json` must carry the same headers; `npm run build` stops with a clear message if the
+two files disagree, or if the small script in `index.html` changes without its hash being
+updated. `npm test` serves these headers too, so anything they would block shows up as a
+failing test. If you add an outside service (a video, a payment widget…), add its address to
+the policy in both files.
 
 ---
 

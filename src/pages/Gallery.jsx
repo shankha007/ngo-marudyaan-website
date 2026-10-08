@@ -13,6 +13,7 @@ import usePageMeta from "../hooks/usePageMeta";
 /* How wide a photo is on screen, so the browser downloads the right size:
    thumbnails sit 2 / 3 / 4 to a row; the lightbox is at most 896px wide. */
 const THUMB_SIZES = "(min-width: 1280px) 300px, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw";
+const FIRST_SIZES = "(min-width: 1280px) 620px, (min-width: 1024px) 50vw, (min-width: 768px) 66vw, 100vw";
 const LIGHTBOX_SIZES = "(min-width: 896px) 896px, 100vw";
 
 /* Filter buttons: "All", then each programme category that has a project
@@ -86,10 +87,10 @@ export default function Gallery() {
     <>
       <PageHeader title={t("gallery.title")} sub={t("gallery.sub")} />
 
-      <section className="py-14 sm:py-18">
-        <div className="container-page">
-          {/* filters */}
-          <div className="flex flex-wrap justify-center gap-2">
+      <section className="pb-16 sm:pb-24">
+        {/* filters — stick under the header while you scroll */}
+        <div className="sticky top-[4.75rem] z-30 mt-4 sm:top-[5rem]">
+          <div className="container-page flex gap-2 overflow-x-auto py-2 [scrollbar-width:none] sm:justify-center [&::-webkit-scrollbar]:hidden">
             {categories.map((c) => (
               <button
                 key={c}
@@ -99,62 +100,72 @@ export default function Gallery() {
                   setOpenIndex(null);
                 }}
                 aria-pressed={filter === c}
-                className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+                className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap shadow-soft backdrop-blur-xl transition ${
                   filter === c
-                    ? "bg-oasis-700 text-white shadow-sm"
-                    : "border border-oasis-200 bg-white text-oasis-700 hover:border-oasis-500 hover:bg-oasis-50"
+                    ? "bg-ink text-canvas"
+                    : "border border-line bg-surface/85 text-ink hover:border-ink"
                 }`}
               >
                 {c === "all" ? t("gallery.all") : t(`cat.${c}`)}
               </button>
             ))}
           </div>
+        </div>
 
+        <div className="container-page">
           {/* albums */}
           {items.length === 0 ? (
-            <p className="mt-16 text-center text-oasis-800/60">{t("gallery.empty")}</p>
+            <p className="mt-16 text-center text-ink-3">{t("gallery.empty")}</p>
           ) : (
             shownProjects.map((project) => {
               const first = items.findIndex((it) => it.project === project);
               return (
-                <section key={project.id} id={project.id} aria-labelledby={`${project.id}-title`} className="mt-14 scroll-mt-24">
-                  <Reveal>
+                <section key={project.id} id={project.id} aria-labelledby={`${project.id}-title`} className="mt-12 scroll-mt-36 sm:mt-16">
+                  <Reveal className="grid gap-x-8 gap-y-3 lg:grid-cols-[auto_1fr] lg:items-end">
+                    <span
+                      aria-hidden="true"
+                      className="font-display text-6xl leading-none font-bold tracking-tighter text-transparent [-webkit-text-stroke:1.5px_var(--c-line-strong)] sm:text-8xl"
+                    >
+                      {project.year}
+                    </span>
+                    <div>
                     <div className="flex flex-wrap items-center gap-2 text-sm">
-                      <span className="rounded-full bg-saffron-500/15 px-3 py-1 font-semibold text-saffron-700">
+                      <span className="rounded-full bg-lime-400 px-3 py-1 font-bold text-oasis-900">
                         {project.year}
                       </span>
-                      <span className="rounded-full bg-oasis-50 px-3 py-1 font-medium text-oasis-700">
+                      <span className="rounded-full bg-brand-soft px-3 py-1 font-medium text-brand-ink">
                         {t(`cat.${project.category}`)}
                       </span>
-                      <span className="text-oasis-800/60">
+                      <span className="text-ink-3">
                         {t("gallery.photos").replace("{n}", project.photos.length)}
                       </span>
                     </div>
-                    <h2 id={`${project.id}-title`} className="font-display mt-3 text-2xl font-bold text-oasis-900 sm:text-3xl">
+                    <h2 id={`${project.id}-title`} className="font-display mt-3 text-3xl leading-tight font-bold text-ink sm:text-4xl">
                       {tr(project.title)}
                     </h2>
                     {project.summary && (
-                      <p className="mt-2 max-w-3xl leading-relaxed text-oasis-800/75">{tr(project.summary)}</p>
+                      <p className="mt-2 max-w-3xl leading-relaxed text-ink-2">{tr(project.summary)}</p>
                     )}
+                    </div>
                   </Reveal>
-                  <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
                     {project.photos.map((photo, j) => {
                       const i = first + j;
                       return (
-                        <Reveal key={photo.id} delay={(j % 8) * 50}>
+                        <Reveal key={photo.id} delay={(j % 8) * 50} className={j === 0 ? "col-span-2 row-span-2" : ""}>
                           <button
                             type="button"
                             onClick={() => setOpenIndex(i)}
                             data-thumb={i}
-                            className="group relative block w-full overflow-hidden rounded-2xl bg-oasis-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-oasis-700 focus-visible:ring-offset-2"
+                            className="group relative block h-full w-full overflow-hidden rounded-3xl bg-surface-2"
                           >
                             <Photo
                               src={photo.src}
                               alt={tr(photo.caption)}
-                              sizes={THUMB_SIZES}
-                              className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              sizes={j === 0 ? FIRST_SIZES : THUMB_SIZES}
+                              className="aspect-square h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                             />
-                            <span className="absolute inset-0 flex items-end bg-gradient-to-t from-oasis-900/85 via-oasis-900/10 to-transparent p-3 text-left text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                            <span className="absolute inset-0 flex items-end bg-gradient-to-t from-night/85 via-night/10 to-transparent p-4 text-left text-xs font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                               {tr(photo.caption)}
                             </span>
                           </button>
@@ -176,7 +187,7 @@ export default function Gallery() {
           role="dialog"
           aria-modal="true"
           aria-label={tr(active.caption)}
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-oasis-900/95 p-4"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-night/90 p-4 backdrop-blur-xl"
           onClick={close}
         >
           <button
@@ -184,7 +195,7 @@ export default function Gallery() {
             type="button"
             onClick={close}
             aria-label={t("gallery.close")}
-            className="absolute top-4 right-4 rounded-full border border-white/25 p-2.5 text-white transition hover:bg-white/10"
+            className="absolute top-4 right-4 rounded-full border border-white/20 bg-white/10 p-2.5 text-white transition hover:bg-white/25"
           >
             <Icon name="close" className="h-5 w-5" />
           </button>
@@ -198,7 +209,7 @@ export default function Gallery() {
                   step(-1);
                 }}
                 aria-label={t("gallery.prev")}
-                className="absolute left-3 rounded-full border border-white/25 p-3 text-white transition hover:bg-white/10 sm:left-6"
+                className="absolute left-3 rounded-full border border-white/20 bg-white/10 p-3 text-white backdrop-blur-md transition hover:bg-white/25 sm:left-6"
               >
                 <Icon name="chevronLeft" className="h-5 w-5" />
               </button>
@@ -209,7 +220,7 @@ export default function Gallery() {
                   step(1);
                 }}
                 aria-label={t("gallery.next")}
-                className="absolute right-3 rounded-full border border-white/25 p-3 text-white transition hover:bg-white/10 sm:right-6"
+                className="absolute right-3 rounded-full border border-white/20 bg-white/10 p-3 text-white backdrop-blur-md transition hover:bg-white/25 sm:right-6"
               >
                 <Icon name="chevronRight" className="h-5 w-5" />
               </button>
@@ -226,14 +237,14 @@ export default function Gallery() {
               alt={tr(active.caption)}
               sizes={LIGHTBOX_SIZES}
               priority
-              className="mx-auto max-h-[72vh] w-auto rounded-2xl object-contain shadow-2xl"
+              className="mx-auto max-h-[72vh] w-auto rounded-3xl object-contain shadow-2xl"
             />
-            <figcaption className="mt-4 text-sand-200">
+            <figcaption className="mt-4 text-white/80">
               <span className="font-medium">{tr(active.caption)}</span>
-              <span className="mt-1 block text-sm text-sand-200/80">
+              <span className="mt-1 block text-sm text-white/80">
                 {tr(active.project.title)} · {active.project.year}
               </span>
-              <span className="mt-1 block text-xs text-sand-200/60">
+              <span className="mt-3 inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 tabular-nums">
                 {openIndex + 1} {t("gallery.counter")} {items.length}
               </span>
             </figcaption>

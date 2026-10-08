@@ -3,6 +3,7 @@ import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
+import { btn, field, fieldLabel, size } from "../components/ui";
 import { helpPrograms } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
@@ -10,14 +11,11 @@ import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
-const field =
-  "w-full rounded-xl border border-oasis-200 bg-white px-4 py-3 text-oasis-900 placeholder:text-oasis-800/35 transition focus:border-oasis-500 focus:outline-none focus:ring-2 focus:ring-oasis-500/20 aria-invalid:border-red-500 aria-invalid:ring-2 aria-invalid:ring-red-500/15";
 
-const labelText = "mb-1.5 block text-sm font-medium text-oasis-900";
-const groupTitle = "font-display text-lg font-semibold text-oasis-900";
+const groupTitle = "font-display text-xl font-bold text-ink";
 
 function Required() {
-  return <span aria-hidden="true" className="text-red-600">{"\u00a0"}*</span>;
+  return <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>;
 }
 
 /* "" → 0, "3" → 3, anything that is not a whole number → NaN */
@@ -186,24 +184,24 @@ export default function RequestHelp() {
         <div className="container-page grid grid-cols-1 gap-10 lg:grid-cols-5">
           {/* how it works */}
           <Reveal className="lg:col-span-2">
-            <h2 className="font-display text-2xl font-bold text-oasis-900">{t("help.how.title")}</h2>
-            <ol className="mt-6 space-y-4">
+            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">{t("help.how.title")}</h2>
+            <ol className="relative mt-8 space-y-6 before:absolute before:top-2 before:bottom-2 before:left-[21px] before:w-0.5 before:bg-line before:content-['']">
               {steps.map((key, i) => (
-                <li key={key} className="flex gap-4">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-saffron-500 font-display font-bold text-oasis-900">
+                <li key={key} className="relative flex gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-lime-400 font-display text-lg font-bold text-oasis-900 ring-4 ring-canvas">
                     {i + 1}
                   </span>
-                  <p className="pt-1.5 leading-relaxed text-oasis-800/80">{t(key)}</p>
+                  <p className="pt-2 leading-relaxed text-ink-2">{t(key)}</p>
                 </li>
               ))}
             </ol>
 
-            <div className="mt-8 rounded-2xl border border-oasis-100 bg-white p-5">
-              <p className="text-sm leading-relaxed text-oasis-800/75">{t(sender.direct ? "help.how.note.direct" : "help.how.note")}</p>
+            <div className="mt-10 rounded-4xl border border-line bg-surface p-6 shadow-soft">
+              <p className="text-sm leading-relaxed text-ink-2">{t(sender.direct ? "help.how.note.direct" : "help.how.note")}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a
                   href={`tel:${site.contact.phoneHref}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-oasis-200 px-4 py-2 text-sm font-medium text-oasis-700 transition hover:border-oasis-400"
+                  className={`${btn.outline} ${size.sm}`}
                 >
                   <Icon name="phone" className="h-4 w-4" />
                   {site.contact.phone}
@@ -211,8 +209,8 @@ export default function RequestHelp() {
                 <a
                   href={`https://wa.me/${site.contact.whatsappHref}`}
                   target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-oasis-200 px-4 py-2 text-sm font-medium text-oasis-700 transition hover:border-oasis-400"
+                  rel="noopener noreferrer"
+                  className={`${btn.outline} ${size.sm}`}
                 >
                   <Icon name="whatsapp" className="h-4 w-4" />
                   {site.contact.whatsapp}
@@ -226,10 +224,10 @@ export default function RequestHelp() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-3xl border border-oasis-100 bg-white p-6 shadow-sm sm:p-8"
+              className="rounded-4xl border border-line bg-surface p-6 shadow-lift sm:p-10"
             >
-              <h2 className="font-display text-2xl font-bold text-oasis-900">{t("help.form.title")}</h2>
-              <p className="mt-2 text-sm text-oasis-800/65">{t("help.form.note")}</p>
+              <h2 className="font-display text-3xl font-bold text-ink">{t("help.form.title")}</h2>
+              <p className="mt-2 text-sm text-ink-2">{t("help.form.note")}</p>
 
               {/* which drive */}
               <fieldset className="mt-6">
@@ -243,12 +241,12 @@ export default function RequestHelp() {
                     return (
                       <label
                         key={p.id}
-                        className={`relative flex cursor-pointer flex-col rounded-2xl border p-4 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-oasis-500/40 ${
+                        className={`relative flex cursor-pointer flex-col rounded-3xl border-2 p-4 transition has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-brand/30 ${
                           checked
-                            ? "border-oasis-600 bg-oasis-50"
+                            ? "border-brand bg-brand-soft"
                             : invalid.program
-                              ? "border-red-500"
-                              : "border-oasis-200 hover:border-oasis-400"
+                              ? "border-danger"
+                              : "border-line-strong hover:border-ink"
                         }`}
                       >
                         <input
@@ -262,13 +260,17 @@ export default function RequestHelp() {
                           className="sr-only"
                         />
                         <span className="flex items-center justify-between">
-                          <span className="rounded-xl bg-white p-2 text-oasis-600 shadow-sm">
+                          <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-lime-400 text-oasis-900">
                             <Icon name={p.icon} className="h-5 w-5" />
                           </span>
-                          {checked && <Icon name="check" className="h-5 w-5 text-oasis-600" />}
+                          {checked && (
+                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand text-on-brand">
+                              <Icon name="check" className="h-3.5 w-3.5" />
+                            </span>
+                          )}
                         </span>
-                        <span className="mt-3 font-semibold text-oasis-900">{tr(p.title)}</span>
-                        <span className="mt-1 text-sm leading-snug text-oasis-800/65">{tr(p.text)}</span>
+                        <span className="mt-3 font-semibold text-ink">{tr(p.title)}</span>
+                        <span className="mt-1 text-sm leading-snug text-ink-2">{tr(p.text)}</span>
                       </label>
                     );
                   })}
@@ -280,13 +282,14 @@ export default function RequestHelp() {
                 <legend className={groupTitle}>{t("help.form.you")}</legend>
                 <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <label className="block">
-                    <span className={labelText}>
+                    <span className={fieldLabel}>
                       {t("help.form.name")}
                       <Required />
                     </span>
                     <input
                       name="name"
                       type="text"
+                      maxLength={120}
                       required
                       autoComplete="name"
                       aria-invalid={invalid.name || undefined}
@@ -297,13 +300,14 @@ export default function RequestHelp() {
                     />
                   </label>
                   <label className="block">
-                    <span className={labelText}>
+                    <span className={fieldLabel}>
                       {t("help.form.phone")}
                       <Required />
                     </span>
                     <input
                       name="phone"
                       type="tel"
+                      maxLength={20}
                       required
                       autoComplete="tel"
                       inputMode="tel"
@@ -315,10 +319,11 @@ export default function RequestHelp() {
                     />
                   </label>
                   <label className="block">
-                    <span className={labelText}>{t("help.form.email")}</span>
+                    <span className={fieldLabel}>{t("help.form.email")}</span>
                     <input
                       name="email"
                       type="email"
+                      maxLength={254}
                       autoComplete="email"
                       aria-invalid={invalid.email || undefined}
                       aria-describedby={describedBy("email")}
@@ -328,7 +333,7 @@ export default function RequestHelp() {
                     />
                   </label>
                   <label className="block">
-                    <span className={labelText}>{t("help.form.for")}</span>
+                    <span className={fieldLabel}>{t("help.form.for")}</span>
                     <select value={form.requestFor} onChange={set("requestFor")} className={field}>
                       {forOptions.map((o) => (
                         <option key={o.id} value={o.id}>
@@ -339,11 +344,12 @@ export default function RequestHelp() {
                   </label>
                 </div>
                 <label className="mt-4 block">
-                  <span className={labelText}>
+                  <span className={fieldLabel}>
                     {t("help.form.address")}
                     <Required />
                   </span>
                   <textarea
+                    maxLength={4000}
                     name="address"
                     rows={2}
                     required
@@ -363,7 +369,7 @@ export default function RequestHelp() {
                 <legend className={groupTitle}>{t("help.form.people")}</legend>
                 <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <label className="block">
-                    <span className={labelText}>
+                    <span className={fieldLabel}>
                       {t("help.form.total")}
                       <Required />
                     </span>
@@ -381,7 +387,7 @@ export default function RequestHelp() {
                     />
                   </label>
                   <label className="block">
-                    <span className={labelText}>{t("help.form.children")}</span>
+                    <span className={fieldLabel}>{t("help.form.children")}</span>
                     <input
                       name="children"
                       type="number"
@@ -395,7 +401,7 @@ export default function RequestHelp() {
                     />
                   </label>
                   <label className="block">
-                    <span className={labelText}>{t("help.form.elderly")}</span>
+                    <span className={fieldLabel}>{t("help.form.elderly")}</span>
                     <input
                       type="number"
                       min="0"
@@ -421,12 +427,12 @@ export default function RequestHelp() {
                     {program.needs.map((n) => (
                       <label
                         key={n.id}
-                        className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${
+                        className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 transition ${
                           form.needs.includes(n.id)
-                            ? "border-oasis-600 bg-oasis-50"
+                            ? "border-brand bg-brand-soft"
                             : invalid.needs
-                              ? "border-red-500"
-                              : "border-oasis-200 hover:border-oasis-400"
+                              ? "border-danger"
+                              : "border-line-strong hover:border-ink"
                         }`}
                       >
                         <input
@@ -436,9 +442,9 @@ export default function RequestHelp() {
                           onChange={() => toggleNeed(n.id)}
                           aria-invalid={invalid.needs || undefined}
                           aria-describedby={describedBy("needs")}
-                          className="h-4 w-4 shrink-0 accent-oasis-600"
+                          className="h-4 w-4 shrink-0 accent-[var(--c-brand)]"
                         />
-                        <span className="text-sm font-medium text-oasis-900">{tr(n.label)}</span>
+                        <span className="text-sm font-medium text-ink">{tr(n.label)}</span>
                       </label>
                     ))}
                   </div>
@@ -446,7 +452,7 @@ export default function RequestHelp() {
               )}
 
               <label className="mt-6 block">
-                <span className={labelText}>
+                <span className={fieldLabel}>
                   {program && program.needs.length === 0 ? (
                     <>
                       {t("help.form.details.other")}
@@ -457,6 +463,7 @@ export default function RequestHelp() {
                   )}
                 </span>
                 <textarea
+                  maxLength={4000}
                   name="details"
                   required={program?.needs.length === 0}
                   rows={4}
@@ -469,7 +476,7 @@ export default function RequestHelp() {
                 />
               </label>
 
-              <p id="help-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-red-600">
+              <p id="help-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-danger">
                 {errorKey ? t(errorKey) : ""}
               </p>
 

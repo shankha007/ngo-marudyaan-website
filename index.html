@@ -10,7 +10,9 @@
       name="description"
       content="NGO Marudyaan (মরুদ্যান) is a volunteer-run organisation in Kolkata working on food, education, health camps, winter relief and women's livelihood."
     />
-    <meta name="theme-color" content="#185436" />
+    <meta name="theme-color" content="#f7f6ef" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#06120d" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
 
     <link rel="canonical" href="https://ngo-marudyaan.netlify.app/" />
 
@@ -33,7 +35,17 @@
     <meta property="og:locale" content="en_IN" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Fonts (Baloo 2, Inter, Noto Sans Bengali) are self-hosted: see src/main.jsx -->
+    <!-- Fonts (Bricolage Grotesque, Inter, Noto Sans Bengali) are self-hosted: see src/main.jsx -->
+
+    <!-- Runs before the first paint:
+         1. light / dark mode — the visitor's saved choice, else the device setting
+            (no flash of the wrong colours);
+         2. on the home page only, start downloading the first banner photo
+            (its details are in the hero-preload tag added by scripts/project-photos.mjs).
+         The Content-Security-Policy in public/_headers allows this exact script by
+         its hash. If you change a single character here, `npm run build` stops
+         and prints the new hash to put in public/_headers and vercel.json. -->
+    <script>try{var t=localStorage.getItem("marudyaan-theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}var m=document.querySelector('meta[name="hero-preload"]');if(m&&location.pathname==="/"){try{var d=JSON.parse(m.content),l=document.createElement("link");for(var k in d)l[k]=d[k];document.head.appendChild(l)}catch(e){}}</script>
   </head>
   <body>
     <div id="root"></div>
