@@ -1,5 +1,5 @@
 /* ===================================================================
-   PAGE CONTENT  —  programmes, team, timeline, FAQs
+   PAGE CONTENT  —  programmes, team, FAQs
    (Gallery photos and projects live in projects.js.)
    -------------------------------------------------------------------
    Every text field has an English (en) and a Bengali (bn) version.
@@ -146,74 +146,6 @@ export const programs = [
         "স্যানিটারি ন্যাপকিন বিতরণ ও ঋতুকালীন স্বাস্থ্য সচেতনতা।",
         "নথিপত্র, ব্যাঙ্ক অ্যাকাউন্ট ও সরকারি প্রকল্পে আবেদনে সহায়তা।",
       ],
-    },
-  },
-];
-
-/* --- OUR STORY / MILESTONES -------------------------------------- */
-export const milestones = [
-  {
-    year: "2017",
-    title: { en: "A handful of friends, one winter", bn: "কয়েকজন বন্ধু, একটি শীত" },
-    text: {
-      en: "A small group of friends in Kolkata came together in August 2017. On Christmas Day they ran their first drive, bringing warmth to people spending the winter on the city's footpaths.",
-      bn: "২০১৭-র আগস্টে কলকাতার কয়েকজন বন্ধু একসঙ্গে কাজ শুরু করেন। সেই বছরের বড়দিনে হয় প্রথম উদ্যোগ — শহরের ফুটপাতে শীত কাটানো মানুষের কাছে একটু উষ্ণতা পৌঁছে দেওয়া।",
-    },
-  },
-  {
-    year: "2018",
-    title: { en: "Marudyaan takes its name", bn: "মরুদ্যান নাম পায়" },
-    text: {
-      en: "The team was registered as NGO Marudyaan — 'an oasis' — a society under the West Bengal Societies Registration Act. The same year we helped an author in need and made our first trip outside Kolkata, to support children in Shantipur.",
-      bn: "দলটি ‘এনজিও মরুদ্যান’ নামে পশ্চিমবঙ্গ সোসাইটি রেজিস্ট্রেশন আইনে নথিভুক্ত হয়। সে বছরই এক লেখকের পাশে দাঁড়ানো হয়, আর প্রথমবার কলকাতার বাইরে — শান্তিপুরের শিশুদের পাশে — পৌঁছয় মরুদ্যান।",
-    },
-  },
-  {
-    year: "2019",
-    title: { en: "Winter, learning and Puja", bn: "শীত, শেখা আর পুজো" },
-    text: {
-      en: "On Netaji's birthday we went out to help people on the streets through the cold, took children on an excursion to the Indian Museum, and held the first Sharodiya Sahosathi for children with special needs in Diamond Harbour.",
-      bn: "নেতাজির জন্মদিনে শীতার্ত পথবাসীর পাশে দাঁড়ানো, শিশুদের নিয়ে ভারতীয় সংগ্রহশালায় ভ্রমণ, আর ডায়মন্ড হারবারে বিশেষ চাহিদাসম্পন্ন শিশুদের জন্য প্রথম শারদীয়া সহসাথী।",
-    },
-  },
-  {
-    year: "2020",
-    title: { en: "The pandemic years", bn: "অতিমারির বছরগুলি" },
-    text: {
-      en: "During the lockdown our Covid relief brought rice, dal and other essentials to labourers' families in Belgharia who had lost all work, and helped a family pay for their son's brain tumour operation. When Cyclone Amphan flooded the Sundarbans, volunteers took relief by boat to cut-off island villages around Gosaba. What began as a routine became a responsibility.",
-      bn: "লকডাউনে কোভিড ত্রাণের মাধ্যমে বেলঘরিয়ায় কাজ হারানো শ্রমিক পরিবারের হাতে চাল, ডাল ও প্রয়োজনীয় সামগ্রী তুলে দেওয়া হয়, এবং একটি ছোট্ট ছেলের ব্রেন টিউমার অপারেশনে তার পরিবারকে অর্থসাহায্য করা হয়। ঘূর্ণিঝড় আমফানে সুন্দরবন প্লাবিত হলে স্বেচ্ছাসেবকরা নৌকায় গোসাবার জলবন্দি দ্বীপের গ্রামে ত্রাণ পৌঁছে দেন। অভ্যাস তখন দায়িত্বে বদলে যায়।",
-    },
-  },
-  {
-    year: "2021",
-    title: { en: "A library of our own", bn: "নিজেদের একটি গ্রন্থাগার" },
-    text: {
-      en: "Donated books became a Micro Library at a women and children's development centre in Santoshpur, so that children could borrow storybooks and school guides for free.",
-      bn: "দানের বই দিয়ে সন্তোষপুরের একটি নারী ও শিশু উন্নয়ন কেন্দ্রে গড়ে ওঠে মাইক্রো লাইব্রেরি, যেখান থেকে শিশুরা বিনামূল্যে গল্পের বই ও স্কুলের সহায়িকা নিতে পারে।",
-    },
-  },
-  {
-    year: "2022",
-    title: { en: "Sharodiya Sahosathi", bn: "শারদীয়া সহসাথী" },
-    text: {
-      en: "Sharodiya Sahosathi returned before Durga Puja, giving children new shoes, stationery and books, so that they too had something new for the festival.",
-      bn: "দুর্গাপুজোর আগে ফিরে আসে শারদীয়া সহসাথী — শিশুদের হাতে তুলে দেওয়া হয় নতুন জুতো, খাতা-পেন ও বই, যাতে উৎসবে তাদের কাছেও কিছু নতুন থাকে।",
-    },
-  },
-  {
-    year: "2024",
-    title: { en: "Reaching further", bn: "আরও দূরে" },
-    text: {
-      en: "With a growing circle of volunteers and small donors, our relief and winter drives now reach more districts across West Bengal.",
-      bn: "ক্রমবর্ধমান স্বেচ্ছাসেবক ও ছোট দাতাদের সহায়তায় আমাদের ত্রাণ ও শীতবস্ত্র কর্মসূচি এখন পশ্চিমবঙ্গের আরও বেশি জেলায় পৌঁছয়।",
-    },
-  },
-  {
-    year: "2026",
-    title: { en: "Where we are today", bn: "আজ আমরা যেখানে" },
-    text: {
-      en: "Six running programmes, a volunteer team across the city, and a promise that every rupee is accounted for.",
-      bn: "ছ’টি চলমান কর্মসূচি, শহরজুড়ে স্বেচ্ছাসেবকদের দল, এবং প্রতিটি টাকার হিসেব রাখার অঙ্গীকার।",
     },
   },
 ];

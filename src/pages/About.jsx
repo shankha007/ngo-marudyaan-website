@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
+import Photo from "../components/Photo";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import { WorkCardCompact } from "../components/WorkCard";
 import { arrow, btn, size } from "../components/ui";
-import { milestones, team, values } from "../data/content";
+import { programs, team, values } from "../data/content";
+import { findProject, programImage } from "../data/gallery";
 import { sortedPastWorks } from "../data/pastWorks";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
@@ -24,11 +26,94 @@ function Initials({ name }) {
   );
 }
 
+/* One programme: photo on one side, details on the other (sides
+   alternate). Arriving at /about#food scrolls here — handled centrally
+   in <ScrollToTop>. */
+function Programme({ program: p, index: i }) {
+  const { t, tr } = useLang();
+  const past = sortedPastWorks.filter((w) => w.category === p.id);
+  return (
+    <section
+      id={p.id}
+      className={`scroll-mt-36 py-14 sm:py-20 ${i % 2 ? "mx-2 rounded-4xl bg-surface-2 sm:mx-3 sm:rounded-5xl" : ""}`}
+    >
+      <div className={`container-page grid items-center gap-10 lg:grid-cols-2 ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
+        <Reveal>
+          <div className="overflow-hidden rounded-4xl shadow-lift">
+            <Photo
+              src={programImage(p)}
+              sizes="(min-width: 1280px) 600px, (min-width: 1024px) 50vw, 100vw"
+              className="aspect-[4/3] w-full object-cover"
+            />
+          </div>
+        </Reveal>
+        <Reveal delay={90}>
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime-400 text-oasis-900">
+              <Icon name={p.icon} className="h-6 w-6" />
+            </span>
+            <span aria-hidden="true" className="font-display text-sm font-bold tracking-widest text-ink-3">
+              {String(i + 1).padStart(2, "0")} / {String(programs.length).padStart(2, "0")}
+            </span>
+          </div>
+          <h3 className="font-display mt-5 text-4xl leading-tight font-bold text-ink sm:text-5xl">{tr(p.title)}</h3>
+          <p className="mt-4 text-lg leading-relaxed text-ink-2">{tr(p.summary)}</p>
+          <ul className="mt-6 space-y-3">
+            {tr(p.details).map((d) => (
+              <li key={d} className="flex gap-3">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center self-start rounded-full bg-brand text-on-brand">
+                  <Icon name="check" className="h-3.5 w-3.5" />
+                </span>
+                <span className="leading-relaxed text-ink-2">{d}</span>
+              </li>
+            ))}
+          </ul>
+          {past.length > 0 && (
+            <div className="mt-7">
+              <h4 className="text-xs font-bold tracking-[0.14em] text-ink-3 uppercase">{t("work.past")}</h4>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {past.map((w) => (
+                  <li key={w.id}>
+                    <Link
+                      to={`/past-works#${w.id}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-sm font-medium text-ink transition hover:border-ink"
+                    >
+                      <Icon name="clock" className="h-3.5 w-3.5 text-brand-ink" />
+                      {tr(w.title)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/donate" className={`${btn.donate} ${size.md}`}>
+              {t("cta.donate")}
+            </Link>
+            <Link to="/get-involved" className={`${btn.outline} ${size.md}`}>
+              {t("cta.volunteer")}
+            </Link>
+            {findProject(p.project) && (
+              <Link
+                to={`/gallery#${p.project}`}
+                className="group inline-flex items-center gap-1.5 px-2 py-3 text-sm font-semibold text-brand-ink transition hover:text-ink"
+              >
+                {t("gallery.viewProject")}
+                <Icon name="arrowRight" className={arrow} />
+              </Link>
+            )}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 export default function About() {
   const { t, tr } = useLang();
   usePageMeta(
     `${t("about.title")} — ${site.name}`,
-    "The story, mission, values, team and registration details of NGO Marudyaan, Kolkata.",
+    "Who NGO Marudyaan is and what it does: its mission, values and programmes in food, education, health camps, winter relief, festivals and women's livelihood, plus its team and registration details.",
   );
 
   const legalRows = [
@@ -39,6 +124,12 @@ export default function About() {
     { label: t("about.legal.80g"), value: site.registration.eightyG },
     { label: t("about.legal.founded"), value: site.registration.founded },
   ].filter((r) => r.value);
+
+  const steps = [1, 2, 3, 4, 5].map((n) => ({
+    n,
+    title: t(`work.how.s${n}.t`),
+    body: t(`work.how.s${n}.b`),
+  }));
 
   return (
     <>
@@ -91,6 +182,55 @@ export default function About() {
         </div>
       </section>
 
+      {/* what we do: one section per programme (this was the Our Work page) */}
+      <div id="our-work" className="scroll-mt-28 pt-20 sm:pt-24">
+        <div className="container-page">
+          <SectionHeading kicker={t("home.work.kicker")} title={t("work.title")} sub={t("work.sub")} />
+        </div>
+
+        {/* quick jump chips — stick under the header while you scroll the programmes */}
+        <div className="sticky top-[4.75rem] z-30 mt-8 sm:top-[5rem]">
+          <div className="container-page flex gap-2 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:justify-center">
+            {programs.map((p) => (
+              <a
+                key={p.id}
+                href={`#${p.id}`}
+                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line bg-surface/85 px-4 py-2 text-sm font-semibold whitespace-nowrap text-ink shadow-soft backdrop-blur-xl transition hover:border-ink"
+              >
+                <Icon name={p.icon} className="h-4 w-4 text-brand-ink" />
+                {tr(p.title)}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="pt-6 pb-10 sm:pb-14">
+          {programs.map((p, i) => (
+            <Programme key={p.id} program={p} index={i} />
+          ))}
+        </div>
+      </div>
+
+      {/* how a drive happens */}
+      <section className="mx-2 rounded-4xl bg-night py-20 sm:mx-3 sm:rounded-5xl sm:py-24">
+        <div className="container-page">
+          <SectionHeading light title={t("work.how.title")} />
+          <ol className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {steps.map((s, i) => (
+              <Reveal as="li" key={s.n} delay={i * 80}>
+                <div className="h-full rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-lime-400/40">
+                  <span className="font-display inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-lime-400 text-lg font-bold text-oasis-900">
+                    {s.n}
+                  </span>
+                  <h3 className="font-display mt-4 text-lg font-semibold text-white">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/70">{s.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* the latest few works, with a link to all of them */}
       <section className="pt-20 sm:pt-24">
         <div className="container-page">
@@ -108,42 +248,6 @@ export default function About() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* timeline */}
-      <section className="py-20 sm:py-24">
-        <div className="container-page">
-          <SectionHeading title={t("about.story.title")} />
-          <ol className="relative mx-auto mt-14 max-w-3xl">
-            <span
-              aria-hidden="true"
-              className="absolute top-2 bottom-2 left-[15px] w-0.5 bg-gradient-to-b from-lime-400 via-brand to-line sm:left-1/2 sm:-translate-x-1/2"
-            />
-            {milestones.map((m, i) => (
-              <Reveal
-                as="li"
-                key={m.year}
-                delay={i * 80}
-                className={`relative mb-10 pl-12 sm:w-1/2 sm:pl-0 ${
-                  i % 2 === 0 ? "sm:pr-12 sm:text-right" : "sm:ml-auto sm:pl-12"
-                }`}
-              >
-                <span
-                  className={`absolute top-1.5 left-2 h-4 w-4 rounded-full border-4 border-canvas bg-lime-400 ring-2 ring-brand ${
-                    i % 2 === 0 ? "sm:left-auto sm:-right-2" : "sm:-left-2"
-                  }`}
-                />
-                <div className="inline-flex rounded-full bg-brand-soft px-3 py-0.5 font-display text-sm font-bold tracking-widest text-brand-ink">
-                  {m.year}
-                </div>
-                <h3 className="font-display mt-1 text-xl font-semibold text-ink">
-                  {tr(m.title)}
-                </h3>
-                <p className="mt-2 leading-relaxed text-ink-2">{tr(m.text)}</p>
-              </Reveal>
-            ))}
-          </ol>
         </div>
       </section>
 

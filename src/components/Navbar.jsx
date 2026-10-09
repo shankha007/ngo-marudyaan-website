@@ -12,7 +12,6 @@ import { btn, size } from "./ui";
 const links = [
   { to: "/", key: "nav.home", end: true },
   { to: "/about", key: "nav.about" },
-  { to: "/our-work", key: "nav.work" },
   { to: "/past-works", key: "nav.works" },
   { to: "/gallery", key: "nav.gallery" },
   { to: "/get-involved", key: "nav.involved" },

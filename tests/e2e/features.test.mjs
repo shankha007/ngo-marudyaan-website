@@ -85,11 +85,11 @@ export default async function features({ browser, base, report }) {
     for (const viewport of ["mobile", "desktop"]) {
       const page = await openPage(browser, base, { viewport });
       for (const p of linked) {
-        // straight from a shared link, and by clicking "See the photos" on Our Work
+        // straight from a shared link, and by clicking "See the photos" on About Us
         await page.goto(`${base}/gallery#${p.project}`, { waitUntil: "load" });
         await page.waitForTimeout(1500);
         const direct = await page.evaluate((id) => document.getElementById(id).getBoundingClientRect().top, p.project);
-        await page.goto(base + "/our-work", { waitUntil: "networkidle" });
+        await page.goto(base + "/about", { waitUntil: "networkidle" });
         await page.locator(`a[href="/gallery#${p.project}"]`).click();
         await page.waitForTimeout(1500);
         const clicked = await page.evaluate((id) => document.getElementById(id).getBoundingClientRect().top, p.project);

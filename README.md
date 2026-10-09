@@ -45,7 +45,6 @@ npm run preview # check the built site locally before uploading
 | --- | --- | --- |
 | Home | `/` | `src/pages/Home.jsx` |
 | About Us | `/about` | `src/pages/About.jsx` |
-| Our Work | `/our-work` | `src/pages/OurWork.jsx` |
 | Past Works | `/past-works` | `src/pages/PastWorks.jsx` |
 | Gallery | `/gallery` | `src/pages/Gallery.jsx` |
 | Get Involved | `/get-involved` | `src/pages/GetInvolved.jsx` |
@@ -112,7 +111,7 @@ shown automatically**, in file-name order.
      id: "2025-puja-drive",
      year: 2025,
      category: "festival",
-     cover: "03.jpg",                       // optional: photo for Home / Our Work
+     cover: "03.jpg",                       // optional: photo for Home / About Us
      title: { en: "Puja Drive", bn: "পুজোর উদ্যোগ" },
      summary: { en: "…", bn: "…" },
      captions: {                            // optional, per photo
@@ -128,7 +127,7 @@ The Gallery's filter buttons only show categories that have a project.
 files into its folder. Nothing else changes. Photos without a caption are captioned with the
 project's title. Set `active: false` to hide a project without deleting it.
 
-To show a project on a programme in Our Work, set `project: "<project id>"` on that programme
+To show a project on a programme (Home and About Us), set `project: "<project id>"` on that programme
 in `content.js`: the programme then uses the project's cover photo and links to its album.
 
 `npm test` checks that every folder has an entry and every entry has a folder, and that covers

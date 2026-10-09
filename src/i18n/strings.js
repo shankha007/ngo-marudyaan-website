@@ -8,7 +8,6 @@ export const strings = {
     /* nav */
     "nav.home": "Home",
     "nav.about": "About Us",
-    "nav.work": "Our Work",
     "nav.works": "Past Works",
     "nav.gallery": "Gallery",
     "nav.involved": "Get Involved",
@@ -73,7 +72,6 @@ export const strings = {
     "about.vision.body":
       "A Kolkata where poverty is not a private emergency: where a neighbourhood notices, and responds, before a family falls through the cracks.",
     "about.values.title": "What we hold to",
-    "about.story.title": "How we got here",
     "about.recent.kicker": "Recent works",
     "about.recent.title": "What we have been up to",
     "about.recent.all": "See all our past works",
@@ -289,7 +287,6 @@ export const strings = {
     /* nav */
     "nav.home": "হোম",
     "nav.about": "আমাদের কথা",
-    "nav.work": "আমাদের কাজ",
     "nav.works": "অতীতের কাজ",
     "nav.gallery": "গ্যালারি",
     "nav.involved": "যুক্ত হন",
@@ -354,7 +351,6 @@ export const strings = {
     "about.vision.body":
       "এমন একটা কলকাতা, যেখানে দারিদ্র্য কারও একার লড়াই নয় — যেখানে পরিবার ভেঙে পড়ার আগেই পাড়া খেয়াল করে, পাশে দাঁড়ায়।",
     "about.values.title": "আমরা যা মেনে চলি",
-    "about.story.title": "আমাদের পথচলা",
     "about.recent.kicker": "সাম্প্রতিক কাজ",
     "about.recent.title": "সম্প্রতি আমরা যা করেছি",
     "about.recent.all": "আমাদের সব কাজ দেখুন",

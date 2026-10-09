@@ -7,7 +7,6 @@ import { arrow, btn, size } from "./ui";
 
 const quickLinks = [
   { to: "/about", key: "nav.about" },
-  { to: "/our-work", key: "nav.work" },
   { to: "/past-works", key: "nav.works" },
   { to: "/gallery", key: "nav.gallery" },
   { to: "/get-involved", key: "nav.involved" },

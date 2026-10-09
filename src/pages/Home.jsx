@@ -191,7 +191,7 @@ export default function Home() {
         <div className="container-page">
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
             <SectionHeading align="left" kicker={t("home.work.kicker")} title={t("home.work.title")} sub={t("home.work.sub")} />
-            <Link to="/our-work" className={`${btn.outline} ${size.md} shrink-0`}>
+            <Link to="/about#our-work" className={`${btn.outline} ${size.md} shrink-0`}>
               {t("home.work.all")}
               <Icon name="arrowRight" className={arrow} />
             </Link>
