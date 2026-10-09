@@ -47,7 +47,7 @@ export default function ProgramCard({ program, feature = false }) {
           {tr(program.summary)}
         </p>
         <Link
-          to={`/our-work#${program.id}`}
+          to={`/about#${program.id}`}
           className="mt-3 -mb-2 inline-flex items-center gap-1.5 py-2 text-sm font-semibold text-lime-300 after:absolute after:inset-0 after:content-['']"
         >
           {t("cta.readMore")}

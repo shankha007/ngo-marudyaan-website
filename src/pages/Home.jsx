@@ -56,7 +56,7 @@ function Marquee() {
 }
 
 export default function Home() {
-  const { t, tr } = useLang();
+  const { t, tr, lang } = useLang();
   usePageMeta(
     `${site.name} — ${site.tagline}`,
     "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health, winter relief and livelihood support.",
@@ -80,6 +80,22 @@ export default function Home() {
     <>
       <HeroBanner />
       <Marquee />
+
+      {/* --- tagline ---------------------------------------------------- */}
+      <section className="pb-16 sm:pb-20">
+        <Reveal className="container-page text-center">
+          <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.14em] text-brand-ink uppercase">
+            <Icon name="sprout" className="h-4 w-4" />
+            {t("home.tagline.kicker")}
+          </p>
+          <h2 className="font-display mx-auto mt-4 max-w-4xl text-4xl leading-[1.08] font-bold text-balance text-ink sm:text-6xl">
+            <span aria-hidden="true" className="text-brand">“</span>
+            {lang === "bn" ? site.taglineBn : site.tagline}
+            <span aria-hidden="true" className="text-brand">”</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-2">{t("home.tagline.body")}</p>
+        </Reveal>
+      </section>
 
       {/* --- impact numbers (bento) ------------------------------------ */}
       <section className="pb-20 sm:pb-24">
@@ -157,10 +173,15 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <Link to="/about" className={`mt-9 ${btn.primary} ${size.lg}`}>
-              {t("cta.learnMore")}
-              <Icon name="arrowRight" className={arrow} />
-            </Link>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link to="/about" className={`${btn.primary} ${size.lg}`}>
+                {t("cta.learnMore")}
+                <Icon name="arrowRight" className={arrow} />
+              </Link>
+              <Link to="/past-works" className={`${btn.outline} ${size.lg}`}>
+                {t("about.recent.all")}
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -170,7 +191,7 @@ export default function Home() {
         <div className="container-page">
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
             <SectionHeading align="left" kicker={t("home.work.kicker")} title={t("home.work.title")} sub={t("home.work.sub")} />
-            <Link to="/our-work" className={`${btn.outline} ${size.md} shrink-0`}>
+            <Link to="/about#our-work" className={`${btn.outline} ${size.md} shrink-0`}>
               {t("home.work.all")}
               <Icon name="arrowRight" className={arrow} />
             </Link>
