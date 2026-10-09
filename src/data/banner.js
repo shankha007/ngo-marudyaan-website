@@ -35,7 +35,7 @@ export const bannerSlides = [
       bn: "নতুন জামা, উৎসবের খাবার আর একটা আনন্দের দিন — সেই সব শিশু ও পরিবারের জন্য, যারা সাধারণত উৎসবের বাইরেই থেকে যায়।",
     },
     primaryCta: { label: { en: "Support this drive", bn: "এই উদ্যোগে পাশে থাকুন" }, to: "/donate" },
-    secondaryCta: { label: { en: "See our work", bn: "আমাদের কাজ দেখুন" }, to: "/our-work" },
+    secondaryCta: { label: { en: "See our work", bn: "আমাদের কাজ দেখুন" }, to: "/about#our-work" },
   },
   {
     id: "winter-2026",

@@ -24,7 +24,7 @@ const html = `<!doctype html>
   .text { position: absolute; left: 80px; top: 64px; width: 760px; }
   .logo { width: 132px; height: 132px; border-radius: 50%; background: #fff; display: block; }
   h1 { font-family: "Baloo 2", sans-serif; font-size: 84px; line-height: 1; color: #fff; margin-top: 30px; }
-  .bn { font-family: "Noto Sans Bengali", sans-serif; font-size: 40px; color: #fbbf4a; margin-top: 10px; }
+  .bn { font-family: "Noto Sans Bengali", sans-serif; font-size: 34px; white-space: nowrap; color: #fbbf4a; margin-top: 10px; }
   .tag { font-size: 30px; font-weight: 600; margin-top: 22px; color: #fff; }
   .work { font-size: 22px; font-weight: 500; margin-top: 14px; color: #d5ebdd; }
   .url { position: absolute; left: 80px; bottom: 24px; font-size: 22px; font-weight: 600; color: #0c2c1d; }

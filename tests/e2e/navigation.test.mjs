@@ -124,14 +124,14 @@ export default async function navigation({ browser, base, live, report }) {
 
     const page = await openPage(browser, base);
     const target = programs[programs.length - 1].id;
-    await page.goto(`${base}/our-work#${target}`, { waitUntil: "networkidle" });
+    await page.goto(`${base}/about#${target}`, { waitUntil: "networkidle" });
     await page.waitForTimeout(1600);
     const top1 = await page.evaluate((id) => Math.round(document.getElementById(id).getBoundingClientRect().top), target);
-    report.check(top1 >= -20 && top1 <= 200, `/our-work#${target} lands on that programme`, `section top at ${top1}px`);
+    report.check(top1 >= -20 && top1 <= 200, `/about#${target} lands on that programme`, `section top at ${top1}px`);
 
     await page.goto(base + "/", { waitUntil: "networkidle" });
     const second = programs[1].id;
-    await page.locator(`a[href="/our-work#${second}"]`).click();
+    await page.locator(`a[href="/about#${second}"]`).click();
     await page.waitForTimeout(1600);
     const top2 = await page.evaluate((id) => Math.round(document.getElementById(id).getBoundingClientRect().top), second);
     const headerBottom = await page.evaluate(() => Math.round(document.querySelector("header").getBoundingClientRect().bottom));

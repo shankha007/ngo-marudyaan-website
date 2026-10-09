@@ -12,7 +12,7 @@ import Home from "./pages/Home";
    still feels instant. */
 const pages = {
   About: () => import("./pages/About"),
-  OurWork: () => import("./pages/OurWork"),
+  PastWorks: () => import("./pages/PastWorks"),
   Gallery: () => import("./pages/Gallery"),
   GetInvolved: () => import("./pages/GetInvolved"),
   RequestHelp: () => import("./pages/RequestHelp"),
@@ -21,7 +21,7 @@ const pages = {
   NotFound: () => import("./pages/NotFound"),
 };
 const About = lazy(pages.About);
-const OurWork = lazy(pages.OurWork);
+const PastWorks = lazy(pages.PastWorks);
 const Gallery = lazy(pages.Gallery);
 const GetInvolved = lazy(pages.GetInvolved);
 const RequestHelp = lazy(pages.RequestHelp);
@@ -56,7 +56,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/our-work" element={<OurWork />} />
+            <Route path="/past-works" element={<PastWorks />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/get-involved" element={<GetInvolved />} />
             <Route path="/request-help" element={<RequestHelp />} />

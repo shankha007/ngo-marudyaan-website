@@ -33,7 +33,7 @@ For day-to-day content editing (changing the banner, donation details, gallery p
 
 A static, front-end-only website for **NGO Marudyaan (মরুদ্যান)**, a volunteer-run organisation in Kolkata. It has:
 
-- 8 pages: Home, About, Our Work, Gallery, Get Involved, Request Help, Donate and Contact, plus a 404 page.
+- 8 pages: Home, About (which includes the programmes, formerly the Our Work page), Past Works, Gallery, Get Involved, Request Help, Donate and Contact, plus a 404 page. Old `/our-work` links are sent to `/about` by a 301 in `public/_redirects`.
 - An **English ⇄ Bengali** language toggle that covers every label and every piece of content.
 - Three forms (Contact, Get Involved, Request Help). They either post straight to the NGO's inbox through [Web3Forms](https://web3forms.com) or open the visitor's email app.
 - A donation page with a UPI QR code, copyable bank details, and one-tap UPI payment links on phones.
@@ -152,7 +152,7 @@ The page layout shared by every route, plus the route table.
 | --- | --- |
 | `/` | `Home` |
 | `/about` | `About` |
-| `/our-work` | `OurWork` |
+| `/past-works` | `PastWorks` |
 | `/gallery` | `Gallery` |
 | `/get-involved` | `GetInvolved` |
 | `/request-help` | `RequestHelp` |
@@ -212,7 +212,6 @@ All page copy. Exports:
 | Export | Shape | Rendered on |
 | --- | --- | --- |
 | `programs` | `{ id, icon, image, project?, title, summary, details: {en:[…], bn:[…]} }`. With `project`, the programme shows that project's cover photo instead of `image` and links to its album. Ids: `food`, `education`, `health`, `winter`, `festival`, `women`. | Home (cards), Our Work (sections, anchored by `id`) |
-| `milestones` | `{ year, title, text }` | About (timeline) |
 | `values` | `{ id, title, text }` | Home (mission list), About (values grid) |
 | `team` | `{ id, photo, name, role }`. An empty `photo` shows the person's initials. | About |
 | `testimonials` | `{ id, quote, author }` | Home |
@@ -236,6 +235,17 @@ The Gallery's project albums. Photos are not listed here: they are whatever file
 ### [src/data/gallery.js](../src/data/gallery.js)
 
 The browser-side wiring: imports the photo list from `virtual:project-photos` (see [§16](#16-scripts-scripts)) and exports `galleryProjects` (the result of `buildGallery`), `galleryPhotos` (all photos, flattened), `findProject(id)`, and `programImage(program)`, which returns the programme's project cover or else its own `image`. Edit `projects.js`, not this file.
+
+### [src/data/pastWorks.js](../src/data/pastWorks.js)
+
+Every drive the NGO has done, shown on the Past Works page and (the latest three) on About Us.
+
+| Export | What it is |
+| --- | --- |
+| `pastWorks` | `{ id, date, place?, category, title, summary, highlights?, project? }`. `date` is `"YYYY-MM-DD"` or `"YYYY"`. `category` is a programme id (sets the icon, and lists the work under that programme on About Us). `highlights` are dated points: `{ date, en, bn }`. `project` is a gallery album id: the work then shows its cover and a "See the photos" link. |
+| `sortedPastWorks` | `pastWorks`, newest first. |
+| `formatWorkDate(date, lang)` | "25 December 2017" / "২৫ ডিসেম্বর, ২০১৭", or just the year. |
+| `workYear(work)` | The work's year, as a string. |
 
 ---
 
@@ -352,7 +362,8 @@ Light / dark mode. Reads `<html data-theme>` (set before the first paint by the 
 | [SectionHeading](../src/components/SectionHeading.jsx) | `kicker?`, `title`, `sub?`, `align` (`"center"` or `"left"`), `light` (for dark backgrounds) | A section `<h2>` with an optional kicker chip and a subtitle. It is wrapped in `Reveal`. |
 | [Reveal](../src/components/Reveal.jsx) | `as` (tag, default `div`), `delay` (ms), `className`, `...rest` | Fades and lifts its children in the first time they scroll into view, using an `IntersectionObserver` with a 12% threshold. It adds the `is-visible` class, which triggers the `rise` keyframes in `index.css`. If `IntersectionObserver` is missing, the content shows immediately. |
 | [StatCounter](../src/components/StatCounter.jsx) | `value`, `suffix`, `label` | Counts up from 0 to `value` over 1.4 s with an ease-out-cubic curve the first time it is 40% visible. It jumps straight to the final value for reduced-motion users. |
-| [ProgramCard](../src/components/ProgramCard.jsx) | `program` | A card with the programme image, an icon badge straddling the image edge, the title, the summary, and a "Read more" link to `/our-work#<id>`. |
+| [WorkCard](../src/components/WorkCard.jsx) | `work` | A past work in full (Past Works page): picture, date and place, title, summary, dated highlights, and "See the photos" when it has an album. The named export `WorkCardCompact` is the small linked card used on About Us. Without an album the picture is a tile with the programme's icon. |
+| [ProgramCard](../src/components/ProgramCard.jsx) | `program` | A card with the programme image, an icon badge straddling the image edge, the title, the summary, and a "Read more" link to `/about#<id>`. |
 | [CopyField](../src/components/CopyField.jsx) | `label`, `value`, `mono`, `compact` | A label and value row with a Copy button, used for UPI and bank details. `compact` strips spaces before copying, because banking apps reject pasted spaces. The button shows "Copied" for 1.8 s. Clipboard failures are ignored, since the value is visible on screen anyway. |
 | [FormSend](../src/components/FormSend.jsx) | (three named exports) | Shared form parts. See below. |
 | [Icon](../src/components/Icon.jsx) | `name`, `className`, `filled`, `...rest` | A built-in inline SVG icon set (no library). Returns `null` for unknown names. It renders stroked by default; `filled` switches to a solid fill. Always `aria-hidden`. Available names: `bowl book heart blanket gift hands phone mail pin clock globe whatsapp facebook instagram youtube arrowRight arrowUp check copy close menu chevronLeft chevronRight chevronDown pause play quote sprout shield users`. |
@@ -422,14 +433,19 @@ Sections, top to bottom:
 ### [About.jsx](../src/pages/About.jsx)
 
 - **`Initials({ name })`**: shows up to two initials from a name. It is the fallback when a team member has no photo, and defaults to "M".
-- **`About()`**: mission and vision cards, a `values` grid, a `milestones` timeline (alternating left and right on wider screens), a `team` grid, and a legal/registration table. `legalRows` filters out empty values.
-
-### [OurWork.jsx](../src/pages/OurWork.jsx): `OurWork()`
-
-- **Jump chips**: `<a href="#food">`-style links to each programme.
-- **One `<section id={program.id}>` per programme**, with alternating image side (`programImage()`), the details list, Donate and Volunteer buttons, and a "See the photos" link to `/gallery#<project id>` when the programme has a `project`. `scroll-mt-24` keeps a section clear of the sticky header when it is scrolled to.
+- **`About()`**: mission and vision cards, a `values` grid, the programmes (below), "How a drive happens", the three latest past works with a link to `/past-works`, a `team` grid, and a legal/registration table. `legalRows` filters out empty values.
+- **Programmes** (`<div id="our-work">`, which Home's "See all our work" and the banner link to):
+- **Jump chips**: `<a href="#food">`-style links to each programme, sticky only while the programmes are on screen.
+- **One `<section id={program.id}>` per programme** (the `Programme` component), with alternating image side (`programImage()`), the details list, Donate and Volunteer buttons, and a "See the photos" link to `/gallery#<project id>` when the programme has a `project`. `scroll-mt-24` keeps a section clear of the sticky header when it is scrolled to.
+- **Past works**: under each programme, links to its works on `/past-works#<work id>`.
 - **"How a drive happens"**: 5 numbered steps from the string keys `work.how.s1.t` / `work.how.s1.b` through `s5`.
-- Arriving at `/our-work#food` is handled centrally by `ScrollToTop`; the page has no anchor-scroll effect of its own.
+- Arriving at `/about#food` is handled centrally by `ScrollToTop`; the page has no anchor-scroll effect of its own.
+
+### [PastWorks.jsx](../src/pages/PastWorks.jsx): `PastWorks()`
+
+- **Year chips**: sticky links to `#<year>`.
+- **One `<section id={year}>` per year**, newest first, each with that year's works as `WorkCard`s (`id={work.id}`, so `/past-works#covid-relief` scrolls to it).
+- **Closing CTA**: Donate and Volunteer buttons.
 
 ### [Gallery.jsx](../src/pages/Gallery.jsx): `Gallery()`
 
@@ -627,9 +643,9 @@ Suites run in this order: `smoke`, `navigation`, `features`, `a11y`, `netlify-ba
 | Suite | File | What it checks |
 | --- | --- | --- |
 | **smoke** | [smoke.test.mjs](../tests/e2e/smoke.test.mjs) | Every real route plus one unknown route, at every viewport, in both languages. For each page: no JavaScript or console errors, no failed requests, no broken images, no horizontal overflow, no `.reveal` content stuck invisible, exactly one `<h1>`, and the correct `<html lang>`. |
-| **navigation** | [navigation.test.mjs](../tests/e2e/navigation.test.mjs) | `App.jsx`, `_redirects` and `sitemap.xml` list the same pages. Header links open the right page at the top. The Bengali choice survives a reload. Odd `#fragments` don't crash. `/our-work#id` and Home's "Read more" scroll to the section, clear of the header. The header fits on one line at 1280 px and up. **Live only:** HTTP status codes (real pages 200, unknown 404). |
+| **navigation** | [navigation.test.mjs](../tests/e2e/navigation.test.mjs) | `App.jsx`, `_redirects` and `sitemap.xml` list the same pages. Header links open the right page at the top. The Bengali choice survives a reload. Odd `#fragments` don't crash. `/about#<programme id>` and Home's "Read more" scroll to the programme, clear of the header. The header fits on one line at 1280 px and up. **Live only:** HTTP status codes (real pages 200, unknown 404). |
 | **features** | [features.test.mjs](../tests/e2e/features.test.mjs) | Gallery: `projects.js` matches the photo folders (no missing or unlisted folders, valid categories, covers and caption file names), filters show the right photos, lightbox keys, "See the photos" and shared album links land on the album. Copy buttons copy the right values (without spaces where needed). WhatsApp link format. QR image or its placeholder. UPI buttons hidden on desktop and shown on phones. Validation, focus, sending and fallbacks on all three forms in both languages. The FAQ accordion. Impact counters reach their values. Ends with **warnings** for placeholder content still on the site (QR, bank details, registration numbers, team names, missing Web3Forms keys, `.svg` placeholder images). |
-| **performance** | [performance.test.mjs](../tests/e2e/performance.test.mjs) | Every gallery photo has WebP copies, and the thumbnails are smaller than the originals. On phone and desktop, Home, Our Work and Gallery show WebP copies (never the full photo), lazy-loaded unless high-priority, with `width`/`height`, and not much larger than shown. Layout shift stays under 0.05. No Google Fonts requests. The banner photo is the first image requested on `/` and isn't preloaded elsewhere. The lightbox fetches the next and previous photos. **Live only:** the copies and scripts are sent with `immutable` caching. |
+| **performance** | [performance.test.mjs](../tests/e2e/performance.test.mjs) | Every gallery photo has WebP copies, and the thumbnails are smaller than the originals. On phone and desktop, Home, About and Gallery show WebP copies (never the full photo), lazy-loaded unless high-priority, with `width`/`height`, and not much larger than shown. Layout shift stays under 0.05. No Google Fonts requests. The banner photo is the first image requested on `/` and isn't preloaded elsewhere. The lightbox fetches the next and previous photos. **Live only:** the copies and scripts are sent with `immutable` caching. |
 | **a11y** | [a11y.test.mjs](../tests/e2e/a11y.test.mjs) | The banner's Pause/Play, focus-pause, hover-pause and reduced-motion behaviour, and its 24 px tap targets. The mobile menu and lightbox focus traps and focus return. The skip link. Back-to-top is never a hidden tab stop. Icon badges aren't stretched. Required-field `*` markers match the required fields. No English-only `aria-label` or `alt` text in Bengali mode. |
 | **netlify-badge** | [netlify-badge.test.mjs](../tests/e2e/netlify-badge.test.mjs) | **Live only.** At 9 screen sizes, checks that Netlify's injected "Powered by Netlify" badge (`#nl-badge-frame`) doesn't cover any of our buttons, both on load and after scrolling, including inside the open mobile menu. The helper `covered(page, menuOnly)` returns the labels of covered controls. |
 
@@ -669,7 +685,7 @@ Generates `public/images/og-image.jpg`, the 1200×630 image shown when the site 
 | Update UPI, bank or QR details | [src/data/site.js](../src/data/site.js) (`site.donation`), plus `public/images/donate-qr.png` |
 | Turn direct form sending on or off | [src/data/site.js](../src/data/site.js) (`site.forms.keys`) |
 | Change impact numbers | [src/data/site.js](../src/data/site.js) (`stats`) |
-| Edit programmes, team, timeline, FAQs or testimonials | [src/data/content.js](../src/data/content.js) |
+| Edit programmes, team, FAQs or testimonials | [src/data/content.js](../src/data/content.js) |
 | Add a gallery project | `npm run add-photos -- "<folder>" <id>`, then a block in `projects` in [projects.js](../src/data/projects.js) |
 | Add photos to a gallery project | drop them in `public/images/projects/<id>/` (or `npm run add-photos`) |
 | Add a Request Help drive or need | `helpPrograms` in [content.js](../src/data/content.js) |

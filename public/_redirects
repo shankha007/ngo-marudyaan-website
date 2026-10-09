@@ -21,11 +21,14 @@ http://www.marudyaan.com/*      https://marudyaan.com/:splat    301!
 # https://ngo-marudyaan.netlify.app/*   https://marudyaan.com/:splat   301!
 
 /about          /index.html   200
-/our-work       /index.html   200
+/past-works     /index.html   200
 /gallery        /index.html   200
 /get-involved   /index.html   200
 /request-help   /index.html   200
 /donate         /index.html   200
 /contact        /index.html   200
+
+# Our Work is now part of About Us (a #section in the link is kept)
+/our-work       /about        301
 
 /*              /index.html   404

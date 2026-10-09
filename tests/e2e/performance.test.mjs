@@ -67,7 +67,7 @@ export default async function performance({ browser, base, live, report }) {
     });
     const problems = [];
     let cls = 0;
-    for (const route of ["/", "/our-work", "/gallery"]) {
+    for (const route of ["/", "/about", "/gallery"]) {
       await page.goto(base + route, { waitUntil: "networkidle" });
       await scrollLikeAUser(page);
       const imgs = await page.$$eval("main img, section img", (all) =>

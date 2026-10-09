@@ -1,5 +1,5 @@
 /* ===================================================================
-   PAGE CONTENT  —  programmes, team, timeline, FAQs
+   PAGE CONTENT  —  programmes, team, FAQs
    (Gallery photos and projects live in projects.js.)
    -------------------------------------------------------------------
    Every text field has an English (en) and a Bengali (bn) version.
@@ -146,66 +146,6 @@ export const programs = [
         "স্যানিটারি ন্যাপকিন বিতরণ ও ঋতুকালীন স্বাস্থ্য সচেতনতা।",
         "নথিপত্র, ব্যাঙ্ক অ্যাকাউন্ট ও সরকারি প্রকল্পে আবেদনে সহায়তা।",
       ],
-    },
-  },
-];
-
-/* --- OUR STORY / MILESTONES -------------------------------------- */
-export const milestones = [
-  {
-    year: "2017",
-    title: { en: "A handful of friends, one Sunday", bn: "কয়েকজন বন্ধু, একটি রবিবার" },
-    text: {
-      en: "A small group of friends in Kolkata started cooking and distributing meals to people sleeping on the footpath. There was no name, no registration — only a Sunday routine.",
-      bn: "কলকাতার কয়েকজন বন্ধু ফুটপাতে ঘুমোনো মানুষের জন্য রান্না করে খাবার বিতরণ শুরু করেন। তখন নাম ছিল না, নথিভুক্তিও নয় — শুধু একটা রবিবারের অভ্যাস।",
-    },
-  },
-  {
-    year: "2018",
-    title: { en: "Marudyaan takes its name", bn: "মরুদ্যান নাম পায়" },
-    text: {
-      en: "The team was registered as NGO Marudyaan — 'an oasis' — a society under the West Bengal Societies Registration Act, and added education and health camps to the regular food drives.",
-      bn: "দলটি ‘এনজিও মরুদ্যান’ নামে পশ্চিমবঙ্গ সোসাইটি রেজিস্ট্রেশন আইনে নথিভুক্ত হয় এবং নিয়মিত খাদ্য বিতরণের সঙ্গে শিক্ষা ও স্বাস্থ্য শিবির যুক্ত হয়।",
-    },
-  },
-  {
-    year: "2020",
-    title: { en: "The pandemic years", bn: "অতিমারির বছরগুলি" },
-    text: {
-      en: "During the lockdown the group delivered ration kits, masks and medicines to families who had lost all work. When cyclones Amphan and Yaas flooded the Sundarbans, volunteers took relief by boat to cut-off island villages. What began as a routine became a responsibility.",
-      bn: "লকডাউনে কাজ হারানো পরিবারের কাছে রেশন কিট, মাস্ক ও ওষুধ পৌঁছে দেওয়া হয়। আমফান ও ইয়াস ঘূর্ণিঝড়ে সুন্দরবন প্লাবিত হলে স্বেচ্ছাসেবকরা নৌকায় জলবন্দি দ্বীপের গ্রামে ত্রাণ পৌঁছে দেন। অভ্যাস তখন দায়িত্বে বদলে যায়।",
-    },
-  },
-  {
-    year: "2021",
-    title: { en: "A library of our own", bn: "নিজেদের একটি গ্রন্থাগার" },
-    text: {
-      en: "Donated books became a Micro Library at a women and children's development centre in Santoshpur, so that children could borrow storybooks and school guides for free.",
-      bn: "দানের বই দিয়ে সন্তোষপুরের একটি নারী ও শিশু উন্নয়ন কেন্দ্রে গড়ে ওঠে মাইক্রো লাইব্রেরি, যেখান থেকে শিশুরা বিনামূল্যে গল্পের বই ও স্কুলের সহায়িকা নিতে পারে।",
-    },
-  },
-  {
-    year: "2022",
-    title: { en: "Sharodiya Sahosathi", bn: "শারদীয়া সহসাথী" },
-    text: {
-      en: "Before Durga Puja, our Sharodiya Sahosathi drive gave children new shoes, stationery and books, so that they too had something new for the festival.",
-      bn: "দুর্গাপুজোর আগে শারদীয়া সহসাথী উদ্যোগে শিশুদের হাতে নতুন জুতো, খাতা-পেন ও বই তুলে দেওয়া হয়, যাতে উৎসবে তাদের কাছেও কিছু নতুন থাকে।",
-    },
-  },
-  {
-    year: "2024",
-    title: { en: "Beyond the city", bn: "শহরের বাইরে" },
-    text: {
-      en: "Relief and winter drives reached districts outside Kolkata, supported by a growing circle of volunteers and small donors.",
-      bn: "ক্রমবর্ধমান স্বেচ্ছাসেবক ও ছোট দাতাদের সহায়তায় ত্রাণ ও শীতবস্ত্র কর্মসূচি কলকাতার বাইরের জেলাগুলিতেও পৌঁছয়।",
-    },
-  },
-  {
-    year: "2026",
-    title: { en: "Where we are today", bn: "আজ আমরা যেখানে" },
-    text: {
-      en: "Six running programmes, a volunteer team across the city, and a promise that every rupee is accounted for.",
-      bn: "ছ’টি চলমান কর্মসূচি, শহরজুড়ে স্বেচ্ছাসেবকদের দল, এবং প্রতিটি টাকার হিসেব রাখার অঙ্গীকার।",
     },
   },
 ];
