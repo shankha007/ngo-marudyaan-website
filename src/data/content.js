@@ -257,6 +257,9 @@ export const team = [
   { id: "t5", photo: "/images/team/anik-misra.jpg", name: { en: "Anik Misra", bn: "অনীক মিশ্র" }, role: { en: "Treasurer", bn: "কোষাধ্যক্ষ" } },
   { id: "t6", photo: "/images/team/suvam-mitra.jpg", name: { en: "Suvam Mitra", bn: "শুভম মিত্র" }, role: { en: "Assistant Treasurer", bn: "সহকারী কোষাধ্যক্ষ" } },
   { id: "t7", photo: "/images/team/subhabrata-sengupta.jpg", name: { en: "Subhabrata Sengupta", bn: "শুভব্রত সেনগুপ্ত" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
+  { id: "t8", photo: "/images/team/tuhina-seth.jpg", name: { en: "Tuhina Seth", bn: "তুহিনা শেঠ" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
+  { id: "t9", photo: "/images/team/nilajit-sarkar.jpg", name: { en: "Nilajit Sarkar", bn: "নীলাজিৎ সরকার" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
+  { id: "t10", photo: "/images/team/arindam-sarkar.jpg", name: { en: "Arindam Sarkar", bn: "অরিন্দম সরকার" }, role: { en: "Governing Body Member", bn: "পরিচালন সমিতির সদস্য" } },
 ];
 
 /* --- VOICES ------------------------------------------------------- */
