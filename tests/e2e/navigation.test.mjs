@@ -1,8 +1,11 @@
 /* Routing, navigation, language switching, links with #fragments,
-   header layout, and (on Netlify) HTTP status codes.                    */
+   search-engine tags, header layout, and (on Netlify) HTTP status codes.                    */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { programs } from "../../src/data/content.js";
+import { site } from "../../src/data/site.js";
 import { strings } from "../../src/i18n/strings.js";
-import { appRoutes, openPage, realRoutes, sitemapRoutes } from "./lib.mjs";
+import { ROOT, appRoutes, openPage, realRoutes, sitemapRoutes } from "./lib.mjs";
 
 export const title = "Navigation & routing";
 
@@ -27,6 +30,55 @@ export default async function navigation({ browser, base, live, report }) {
     `public/sitemap.xml lists exactly the ${inApp.length} pages in src/App.jsx`,
     `${notMapped.length ? `add to sitemap.xml: ${notMapped.join(", ")}. ` : ""}${notPages.length ? `in sitemap.xml but not a page: ${notPages.join(", ")}` : ""}`,
   );
+
+  /* ---- robots.txt and sitemap.xml point at the site's own domain (site.url) ---- */
+  {
+    const sitemap = readFileSync(join(ROOT, "public", "sitemap.xml"), "utf8");
+    const robots = readFileSync(join(ROOT, "public", "robots.txt"), "utf8");
+    const foreign = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]).filter((u) => !u.startsWith(site.url + "/"));
+    const robotsOk = robots.includes(`Sitemap: ${site.url}/sitemap.xml`);
+    report.check(
+      foreign.length === 0 && robotsOk,
+      `sitemap.xml and robots.txt use ${site.url}`,
+      `${foreign.length ? `sitemap.xml has: ${foreign.slice(0, 3).join(", ")}. ` : ""}${robotsOk ? "" : `robots.txt needs "Sitemap: ${site.url}/sitemap.xml"`}`,
+    );
+  }
+
+  /* ---- every page names its own canonical address; the 404 page asks not to be indexed ---- */
+  {
+    const page = await openPage(browser, base);
+    const wrong = [];
+    for (const path of [...inRedirects, "/about/", "/gallery?utm_source=facebook"]) {
+      await page.goto(base + path, { waitUntil: "networkidle" });
+      const want = site.url + path.split("?")[0].replace(/(.)\/$/, "$1"); // no query, no trailing slash
+      const r = await page.evaluate(() => ({
+        canonical: document.querySelector('link[rel="canonical"]')?.href,
+        og: document.querySelector('meta[property="og:url"]')?.content,
+        robots: document.querySelector('meta[name="robots"]')?.content,
+      }));
+      if (r.canonical !== want || r.og !== want || /noindex/.test(r.robots)) wrong.push(`${path}: canonical ${r.canonical}, og:url ${r.og}, robots ${r.robots}`);
+    }
+    await page.goto(base + "/no-such-page", { waitUntil: "networkidle" });
+    const nf = await page.evaluate(() => ({
+      canonical: !!document.querySelector('link[rel="canonical"]'),
+      robots: document.querySelector('meta[name="robots"]')?.content,
+    }));
+    if (nf.canonical || !/noindex/.test(nf.robots)) wrong.push(`/no-such-page: canonical ${nf.canonical}, robots ${nf.robots}`);
+    report.check(wrong.length === 0, `each page's canonical link and og:url are its ${site.url} address; 404 is noindex`, wrong.join("; "));
+
+    /* the organisation's JSON-LD is valid JSON with the right address */
+    await page.goto(base + "/", { waitUntil: "networkidle" });
+    const ld = await page.evaluate(() => {
+      try {
+        return JSON.parse(document.querySelector('script[type="application/ld+json"]')?.textContent || "null");
+      } catch {
+        return "invalid";
+      }
+    });
+    const org = ld?.["@graph"]?.find((n) => n["@type"] === "NGO");
+    report.check(org?.url === site.url + "/" && org?.name === site.name, "structured data (JSON-LD) describes the NGO at site.url", JSON.stringify(ld)?.slice(0, 120));
+    await page.context().close();
+  }
 
   /* ---- header links go to the right page, starting at the top ---- */
   {

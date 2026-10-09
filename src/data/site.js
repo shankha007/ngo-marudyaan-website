@@ -11,6 +11,10 @@ export const site = {
   tagline: "An oasis of hope",
   taglineBn: "আশার এক মরুদ্যান",
 
+  // The site's own address: used for search engines (canonical links,
+  // sitemap, social previews). No trailing slash.
+  url: "https://marudyaan.com",
+
   registration: {
     regNo: "S0000579 of 2018-2019",
     regAct: "West Bengal Societies Registration Act, 1961",

@@ -14,25 +14,32 @@
     <meta name="theme-color" content="#06120d" media="(prefers-color-scheme: dark)" />
     <meta name="color-scheme" content="light dark" />
 
-    <link rel="canonical" href="https://ngo-marudyaan.netlify.app/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- __SITE_URL__ (below) is replaced with site.url from src/data/site.js
+         (scripts/seo.mjs, which also adds the organisation's JSON-LD).
+         Each page then updates the canonical link and og:url / og:title /
+         og:description for its own address: see src/hooks/usePageMeta.js -->
+    <link rel="canonical" href="__SITE_URL__/" />
 
     <!-- Social sharing (Facebook / WhatsApp / X preview).
          The image must be a JPG or PNG at a full https:// address.
          Remake it with: npm run og-image -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="NGO Marudyaan" />
-    <meta property="og:url" content="https://ngo-marudyaan.netlify.app/" />
+    <meta property="og:url" content="__SITE_URL__/" />
     <meta property="og:title" content="NGO Marudyaan — An oasis of hope" />
     <meta
       property="og:description"
       content="A volunteer-run NGO in Kolkata: food, education, health, winter relief and livelihood support."
     />
-    <meta property="og:image" content="https://ngo-marudyaan.netlify.app/images/og-image.jpg" />
+    <meta property="og:image" content="__SITE_URL__/images/og-image.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="NGO Marudyaan — an oasis of hope, Kolkata" />
     <meta property="og:locale" content="en_IN" />
+    <meta property="og:locale:alternate" content="bn_IN" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Fonts (Bricolage Grotesque, Inter, Noto Sans Bengali) are self-hosted: see src/main.jsx -->

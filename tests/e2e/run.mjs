@@ -1,7 +1,7 @@
 /* End-to-end test runner.
 
    npm test                 build the site, serve it locally, run every suite
-   npm run test:live        run against the live Netlify site
+   npm run test:live        run against the live site
    npm run test:quick       fewer screen sizes/languages (about 2 minutes)
 
    Options (after --):  --only=smoke,features   --base=https://…   --no-build
@@ -12,6 +12,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { ROOT, createReporter, launchBrowser } from "./lib.mjs";
 
+// Switch to "https://marudyaan.com" (site.url) once the domain points at Netlify.
 const LIVE_URL = process.env.LIVE_URL || "https://ngo-marudyaan.netlify.app";
 const SUITES = ["smoke", "navigation", "features", "performance", "a11y", "netlify-badge"];
 
@@ -19,7 +20,7 @@ const args = process.argv.slice(2);
 const flag = (name) => args.includes(`--${name}`);
 const option = (name) => args.find((a) => a.startsWith(`--${name}=`))?.split("=").slice(1).join("=");
 
-const live = flag("live") || (option("base") || "").includes("netlify.app");
+const live = flag("live") || /netlify\.app|marudyaan\.com/.test(option("base") || "");
 const quick = flag("quick") || !!process.env.QUICK;
 const only = option("only")?.split(",").map((s) => s.trim());
 const selected = only ? SUITES.filter((s) => only.includes(s)) : SUITES;

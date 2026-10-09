@@ -7,7 +7,7 @@ import usePageMeta from "../hooks/usePageMeta";
 
 export default function NotFound() {
   const { t } = useLang();
-  usePageMeta(`404 — ${site.name}`);
+  usePageMeta(`404 — ${site.name}`, undefined, { noindex: true });
 
   return (
     <section className="container-page flex min-h-[66vh] flex-col items-center justify-center py-20 text-center">
