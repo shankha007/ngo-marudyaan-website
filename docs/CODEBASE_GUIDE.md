@@ -115,7 +115,7 @@ ngo-marudyaan/
 
 The single HTML document Vite serves. It contains:
 
-- `<title>`, meta description, `theme-color` and the canonical URL.
+- `<title>`, meta description, `theme-color` and the canonical URL. Addresses are written as `__SITE_URL__`; the `seo` Vite plugin ([scripts/seo.mjs](../scripts/seo.mjs)) swaps in `site.url` (https://marudyaan.com) from [src/data/site.js](../src/data/site.js) and adds the NGO's JSON-LD structured data. Each page then sets its own canonical link, `og:url`, `og:title` and `og:description` through `usePageMeta`; the 404 page is marked `noindex`.
 - **Open Graph / Twitter tags** for link previews on WhatsApp and Facebook. These point at `/images/og-image.jpg`.
 - A small inline script that runs before the first paint: it sets `<html data-theme>` (the saved light/dark choice, else the device setting) and, on `/` only, preloads the first banner photo described by the `<meta name="hero-preload">` tag (added by the `project-photos` Vite plugin; see [§16](#16-scripts-scripts)). The Content-Security-Policy allows this exact script by its sha256 hash, so the build checks that the two match.
 - `<div id="root">`, where React mounts, and the script tag that loads `/src/main.jsx`.

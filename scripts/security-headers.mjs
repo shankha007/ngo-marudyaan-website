@@ -43,9 +43,10 @@ export function securityHeadersPlugin() {
         const csp = headers["Content-Security-Policy"] || "";
         const problems = [];
 
-        // every inline script (no src=) must be allowed by its hash
+        // every inline script (no src=) must be allowed by its hash;
+        // JSON-LD is data the browser never runs, so the policy ignores it
         for (const [, attrs, code] of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
-          if (/\bsrc=/.test(attrs) || !code.trim()) continue;
+          if (/\bsrc=/.test(attrs) || /application\/ld\+json/.test(attrs) || !code.trim()) continue;
           const hash = hashOf(code);
           if (!csp.includes(hash)) {
             problems.push(`public/_headers: the Content-Security-Policy's script-src must list ${hash} (replace the old 'sha256-…' value)`);

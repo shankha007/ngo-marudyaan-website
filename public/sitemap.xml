@@ -3,12 +3,12 @@
      When you add a page to src/App.jsx and public/_redirects, add it here too.
      (The navigation test checks that all three lists match.) -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://ngo-marudyaan.netlify.app/</loc></url>
-  <url><loc>https://ngo-marudyaan.netlify.app/about</loc></url>
-  <url><loc>https://ngo-marudyaan.netlify.app/our-work</loc></url>
-  <url><loc>https://ngo-marudyaan.netlify.app/gallery</loc></url>
-  <url><loc>https://ngo-marudyaan.netlify.app/get-involved</loc></url>
-  <url><loc>https://ngo-marudyaan.netlify.app/request-help</loc></url>
-  <url><loc>https://ngo-marudyaan.netlify.app/donate</loc></url>
-  <url><loc>https://ngo-marudyaan.netlify.app/contact</loc></url>
+  <url><loc>https://marudyaan.com/</loc></url>
+  <url><loc>https://marudyaan.com/about</loc></url>
+  <url><loc>https://marudyaan.com/our-work</loc></url>
+  <url><loc>https://marudyaan.com/gallery</loc></url>
+  <url><loc>https://marudyaan.com/get-involved</loc></url>
+  <url><loc>https://marudyaan.com/request-help</loc></url>
+  <url><loc>https://marudyaan.com/donate</loc></url>
+  <url><loc>https://marudyaan.com/contact</loc></url>
 </urlset>
