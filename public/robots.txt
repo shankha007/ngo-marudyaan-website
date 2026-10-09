@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ngo-marudyaan.netlify.app/sitemap.xml
+Sitemap: https://marudyaan.com/sitemap.xml

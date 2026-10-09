@@ -48,7 +48,7 @@ const html = `<!doctype html>
     <div class="tag">${site.tagline} — Kolkata</div>
     <div class="work">Food · Education · Health camps · Winter relief · Livelihood</div>
   </div>
-  <div class="url">ngo-marudyaan.netlify.app</div>
+  <div class="url">${new URL(site.url).host}</div>
 </body></html>`;
 
 const browser = await launchBrowser();

@@ -7,6 +7,19 @@
 # IMPORTANT: when you add a new page to src/App.jsx, add its path here too,
 # or it will load fine but report itself to search engines as "not found".
 
+# ---- One address for search engines: https://marudyaan.com -------------
+# www.marudyaan.com moves visitors (and search rankings) to the bare
+# domain. These rules only match requests for that host, so they do
+# nothing until the domain's DNS points at Netlify.
+https://www.marudyaan.com/*     https://marudyaan.com/:splat    301!
+http://www.marudyaan.com/*      https://marudyaan.com/:splat    301!
+#
+# AFTER marudyaan.com is live on this site, remove the "# " in front of the
+# next line so the old Netlify address forwards to the new one too.
+# (Switching it on earlier would send visitors to a domain that is not
+# serving the site yet.)
+# https://ngo-marudyaan.netlify.app/*   https://marudyaan.com/:splat   301!
+
 /about          /index.html   200
 /our-work       /index.html   200
 /gallery        /index.html   200
