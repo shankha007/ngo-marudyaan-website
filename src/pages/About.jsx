@@ -1,8 +1,12 @@
+import { Link } from "react-router-dom";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
+import { WorkCardCompact } from "../components/WorkCard";
+import { arrow, btn, size } from "../components/ui";
 import { milestones, team, values } from "../data/content";
+import { sortedPastWorks } from "../data/pastWorks";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
@@ -81,6 +85,26 @@ export default function About() {
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-ink-2">{tr(v.text)}</p>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* the latest few works, with a link to all of them */}
+      <section className="pt-20 sm:pt-24">
+        <div className="container-page">
+          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+            <SectionHeading align="left" kicker={t("about.recent.kicker")} title={t("about.recent.title")} />
+            <Link to="/past-works" className={`${btn.outline} ${size.md} shrink-0`}>
+              {t("about.recent.all")}
+              <Icon name="arrowRight" className={arrow} />
+            </Link>
+          </div>
+          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {sortedPastWorks.slice(0, 3).map((w, i) => (
+              <Reveal key={w.id} delay={i * 80}>
+                <WorkCardCompact work={w} />
               </Reveal>
             ))}
           </div>

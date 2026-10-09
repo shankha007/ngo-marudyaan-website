@@ -22,6 +22,7 @@ http://www.marudyaan.com/*      https://marudyaan.com/:splat    301!
 
 /about          /index.html   200
 /our-work       /index.html   200
+/past-works     /index.html   200
 /gallery        /index.html   200
 /get-involved   /index.html   200
 /request-help   /index.html   200

@@ -7,6 +7,7 @@ import SectionHeading from "../components/SectionHeading";
 import { arrow, btn, size } from "../components/ui";
 import { programs } from "../data/content";
 import { findProject, programImage } from "../data/gallery";
+import { sortedPastWorks } from "../data/pastWorks";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
@@ -90,6 +91,26 @@ export default function OurWork() {
                     </li>
                   ))}
                 </ul>
+                {sortedPastWorks.some((w) => w.category === p.id) && (
+                  <div className="mt-7">
+                    <h3 className="text-xs font-bold tracking-[0.14em] text-ink-3 uppercase">{t("work.past")}</h3>
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {sortedPastWorks
+                        .filter((w) => w.category === p.id)
+                        .map((w) => (
+                          <li key={w.id}>
+                            <Link
+                              to={`/past-works#${w.id}`}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-sm font-medium text-ink transition hover:border-ink"
+                            >
+                              <Icon name="clock" className="h-3.5 w-3.5 text-brand-ink" />
+                              {tr(w.title)}
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                )}
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link to="/donate" className={`${btn.donate} ${size.md}`}>
                     {t("cta.donate")}

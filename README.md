@@ -46,6 +46,7 @@ npm run preview # check the built site locally before uploading
 | Home | `/` | `src/pages/Home.jsx` |
 | About Us | `/about` | `src/pages/About.jsx` |
 | Our Work | `/our-work` | `src/pages/OurWork.jsx` |
+| Past Works | `/past-works` | `src/pages/PastWorks.jsx` |
 | Gallery | `/gallery` | `src/pages/Gallery.jsx` |
 | Get Involved | `/get-involved` | `src/pages/GetInvolved.jsx` |
 | Donate | `/donate` | `src/pages/Donate.jsx` |
@@ -132,6 +133,11 @@ in `content.js`: the programme then uses the project's cover photo and links to 
 
 `npm test` checks that every folder has an entry and every entry has a folder, and that covers
 and captions name real files.
+
+**Past works** (the Past Works page, and the latest three on About Us) are listed in
+`src/data/pastWorks.js`, one block per drive with its date, place, programme and text. To give a
+past work photos, make an album for it as above and set `project: "<project id>"` on the work:
+it then shows the album's cover and links to it. Until then it shows its programme's icon.
 
 ### 4. `src/data/content.js` — programmes, team, story, FAQs
 

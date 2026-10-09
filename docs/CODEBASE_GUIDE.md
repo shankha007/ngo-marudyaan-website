@@ -153,6 +153,7 @@ The page layout shared by every route, plus the route table.
 | `/` | `Home` |
 | `/about` | `About` |
 | `/our-work` | `OurWork` |
+| `/past-works` | `PastWorks` |
 | `/gallery` | `Gallery` |
 | `/get-involved` | `GetInvolved` |
 | `/request-help` | `RequestHelp` |
@@ -236,6 +237,17 @@ The Gallery's project albums. Photos are not listed here: they are whatever file
 ### [src/data/gallery.js](../src/data/gallery.js)
 
 The browser-side wiring: imports the photo list from `virtual:project-photos` (see [§16](#16-scripts-scripts)) and exports `galleryProjects` (the result of `buildGallery`), `galleryPhotos` (all photos, flattened), `findProject(id)`, and `programImage(program)`, which returns the programme's project cover or else its own `image`. Edit `projects.js`, not this file.
+
+### [src/data/pastWorks.js](../src/data/pastWorks.js)
+
+Every drive the NGO has done, shown on the Past Works page and (the latest three) on About Us.
+
+| Export | What it is |
+| --- | --- |
+| `pastWorks` | `{ id, date, place?, category, title, summary, highlights?, project? }`. `date` is `"YYYY-MM-DD"` or `"YYYY"`. `category` is a programme id (sets the icon, and lists the work under that programme on Our Work). `highlights` are dated points: `{ date, en, bn }`. `project` is a gallery album id: the work then shows its cover and a "See the photos" link. |
+| `sortedPastWorks` | `pastWorks`, newest first. |
+| `formatWorkDate(date, lang)` | "25 December 2017" / "২৫ ডিসেম্বর, ২০১৭", or just the year. |
+| `workYear(work)` | The work's year, as a string. |
 
 ---
 
@@ -352,6 +364,7 @@ Light / dark mode. Reads `<html data-theme>` (set before the first paint by the 
 | [SectionHeading](../src/components/SectionHeading.jsx) | `kicker?`, `title`, `sub?`, `align` (`"center"` or `"left"`), `light` (for dark backgrounds) | A section `<h2>` with an optional kicker chip and a subtitle. It is wrapped in `Reveal`. |
 | [Reveal](../src/components/Reveal.jsx) | `as` (tag, default `div`), `delay` (ms), `className`, `...rest` | Fades and lifts its children in the first time they scroll into view, using an `IntersectionObserver` with a 12% threshold. It adds the `is-visible` class, which triggers the `rise` keyframes in `index.css`. If `IntersectionObserver` is missing, the content shows immediately. |
 | [StatCounter](../src/components/StatCounter.jsx) | `value`, `suffix`, `label` | Counts up from 0 to `value` over 1.4 s with an ease-out-cubic curve the first time it is 40% visible. It jumps straight to the final value for reduced-motion users. |
+| [WorkCard](../src/components/WorkCard.jsx) | `work` | A past work in full (Past Works page): picture, date and place, title, summary, dated highlights, and "See the photos" when it has an album. The named export `WorkCardCompact` is the small linked card used on About Us. Without an album the picture is a tile with the programme's icon. |
 | [ProgramCard](../src/components/ProgramCard.jsx) | `program` | A card with the programme image, an icon badge straddling the image edge, the title, the summary, and a "Read more" link to `/our-work#<id>`. |
 | [CopyField](../src/components/CopyField.jsx) | `label`, `value`, `mono`, `compact` | A label and value row with a Copy button, used for UPI and bank details. `compact` strips spaces before copying, because banking apps reject pasted spaces. The button shows "Copied" for 1.8 s. Clipboard failures are ignored, since the value is visible on screen anyway. |
 | [FormSend](../src/components/FormSend.jsx) | (three named exports) | Shared form parts. See below. |
@@ -422,14 +435,21 @@ Sections, top to bottom:
 ### [About.jsx](../src/pages/About.jsx)
 
 - **`Initials({ name })`**: shows up to two initials from a name. It is the fallback when a team member has no photo, and defaults to "M".
-- **`About()`**: mission and vision cards, a `values` grid, a `milestones` timeline (alternating left and right on wider screens), a `team` grid, and a legal/registration table. `legalRows` filters out empty values.
+- **`About()`**: mission and vision cards, a `values` grid, the three latest past works with a link to `/past-works`, a `milestones` timeline (alternating left and right on wider screens), a `team` grid, and a legal/registration table. `legalRows` filters out empty values.
 
 ### [OurWork.jsx](../src/pages/OurWork.jsx): `OurWork()`
 
 - **Jump chips**: `<a href="#food">`-style links to each programme.
 - **One `<section id={program.id}>` per programme**, with alternating image side (`programImage()`), the details list, Donate and Volunteer buttons, and a "See the photos" link to `/gallery#<project id>` when the programme has a `project`. `scroll-mt-24` keeps a section clear of the sticky header when it is scrolled to.
+- **Past works**: under each programme, links to its works on `/past-works#<work id>`.
 - **"How a drive happens"**: 5 numbered steps from the string keys `work.how.s1.t` / `work.how.s1.b` through `s5`.
 - Arriving at `/our-work#food` is handled centrally by `ScrollToTop`; the page has no anchor-scroll effect of its own.
+
+### [PastWorks.jsx](../src/pages/PastWorks.jsx): `PastWorks()`
+
+- **Year chips**: sticky links to `#<year>`.
+- **One `<section id={year}>` per year**, newest first, each with that year's works as `WorkCard`s (`id={work.id}`, so `/past-works#covid-relief` scrolls to it).
+- **Closing CTA**: Donate and Volunteer buttons.
 
 ### [Gallery.jsx](../src/pages/Gallery.jsx): `Gallery()`
 

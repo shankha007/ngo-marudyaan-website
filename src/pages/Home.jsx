@@ -173,10 +173,15 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <Link to="/about" className={`mt-9 ${btn.primary} ${size.lg}`}>
-              {t("cta.learnMore")}
-              <Icon name="arrowRight" className={arrow} />
-            </Link>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link to="/about" className={`${btn.primary} ${size.lg}`}>
+                {t("cta.learnMore")}
+                <Icon name="arrowRight" className={arrow} />
+              </Link>
+              <Link to="/past-works" className={`${btn.outline} ${size.lg}`}>
+                {t("about.recent.all")}
+              </Link>
+            </div>
           </div>
         </div>
       </section>
