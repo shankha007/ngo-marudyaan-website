@@ -44,6 +44,9 @@ export const strings = {
     "stat.children": "Children supported",
     "stat.camps": "Camps & drives held",
     "stat.volunteers": "Active volunteers",
+    "home.tagline.kicker": "What we stand for",
+    "home.tagline.body":
+      "Since 2017 our volunteers have been feeding, teaching and caring for people in Kolkata — one small effort at a time, towards a fairer, kinder society.",
     "home.mission.kicker": "Who we are",
     "home.mission.title": "An oasis for people the city forgets",
     "home.mission.body":
@@ -61,7 +64,7 @@ export const strings = {
 
     /* about */
     "about.title": "About Us",
-    "about.sub": "A volunteer-run NGO working in and around Kolkata since 2017.",
+    "about.sub": "An effort to make society better — a volunteer-run NGO working in and around Kolkata since 2017.",
     "about.mission.title": "Our Mission",
     "about.mission.body":
       "To make sure that no one within our reach goes without a meal, a school bag or basic medical care — and to do it in a way that protects the dignity of every person we serve.",
@@ -248,7 +251,6 @@ export const strings = {
     "theme.dark": "Switch to dark mode",
     "theme.light": "Switch to light mode",
     "misc.new": "New",
-    "hero.ring": "Volunteer-run • Since 2017 • Kolkata • ",
     "hero.volunteers": "{n} volunteers and counting",
     "home.join.kicker": "Join the crew",
     "home.join.title": "Got a free Sunday? We've got a plan.",
@@ -313,6 +315,9 @@ export const strings = {
     "stat.children": "শিশু সহায়তা পেয়েছে",
     "stat.camps": "শিবির ও কর্মসূচি",
     "stat.volunteers": "সক্রিয় স্বেচ্ছাসেবক",
+    "home.tagline.kicker": "আমাদের মূলমন্ত্র",
+    "home.tagline.body":
+      "২০১৭ সাল থেকে আমাদের স্বেচ্ছাসেবকরা কলকাতার মানুষের মুখে খাবার তুলে দিচ্ছেন, পড়াচ্ছেন, পাশে দাঁড়াচ্ছেন — ছোট ছোট প্রয়াসে, আরও ন্যায্য ও সহমর্মী এক সমাজের দিকে।",
     "home.mission.kicker": "আমরা কারা",
     "home.mission.title": "শহর যাদের ভুলে যায়, তাদের জন্য এক মরুদ্যান",
     "home.mission.body":
@@ -330,7 +335,7 @@ export const strings = {
 
     /* about */
     "about.title": "আমাদের কথা",
-    "about.sub": "২০১৭ সাল থেকে কলকাতা ও আশেপাশে কাজ করা একটি স্বেচ্ছাসেবী সংগঠন।",
+    "about.sub": "সমাজকে আরও সুন্দর করার এক প্রয়াস — ২০১৭ সাল থেকে কলকাতা ও আশেপাশে কাজ করা একটি স্বেচ্ছাসেবী সংগঠন।",
     "about.mission.title": "আমাদের লক্ষ্য",
     "about.mission.body":
       "আমাদের নাগালের মধ্যে যেন কেউ খাবার, স্কুলব্যাগ বা প্রাথমিক চিকিৎসা ছাড়া না থাকে — এবং সেটা এমনভাবে করা, যাতে প্রত্যেক মানুষের সম্মান অক্ষুণ্ণ থাকে।",
@@ -517,7 +522,6 @@ export const strings = {
     "theme.dark": "ডার্ক মোড চালু করুন",
     "theme.light": "লাইট মোড চালু করুন",
     "misc.new": "নতুন",
-    "hero.ring": "স্বেচ্ছাসেবী সংগঠন • ২০১৭ থেকে • কলকাতা • ",
     "hero.volunteers": "{n} জন স্বেচ্ছাসেবক, আরও বাড়ছে",
     "home.join.kicker": "দলে যোগ দিন",
     "home.join.title": "রবিবারটা ফাঁকা? আমাদের কাছে পরিকল্পনা আছে।",

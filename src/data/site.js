@@ -8,8 +8,8 @@
 export const site = {
   name: "NGO Marudyaan",
   nameBn: "মরুদ্যান",
-  tagline: "An oasis of hope",
-  taglineBn: "আশার এক মরুদ্যান",
+  tagline: "An effort to make society better",
+  taglineBn: "সমাজকে আরও সুন্দর করার এক প্রয়াস",
 
   // The site's own address: used for search engines (canonical links,
   // sitemap, social previews). No trailing slash.

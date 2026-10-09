@@ -1,7 +1,8 @@
 /* Search-engine details for index.html, from src/data/site.js.
 
-   - Every "__SITE_URL__" in index.html becomes site.url (https://marudyaan.com),
-     so the domain is written in one place only.
+   - Every "__SITE_URL__" in index.html becomes site.url (https://marudyaan.com)
+     and every "__SITE_TAGLINE__" becomes site.tagline, so each is written in
+     one place only.
    - Adds the organisation's details as JSON-LD (schema.org) — what Google
      uses for the site name and the knowledge panel beside search results.
      It is plain data, not a script that runs, so the Content-Security-Policy
@@ -62,6 +63,7 @@ export function seoPlugin() {
       const json = JSON.stringify(structuredData()).replace(/</g, "\\u003c");
       return html
         .replaceAll("__SITE_URL__", site.url)
+        .replaceAll("__SITE_TAGLINE__", site.tagline)
         .replace("</head>", `  <script type="application/ld+json">${json}</script>\n  </head>`);
     },
   };

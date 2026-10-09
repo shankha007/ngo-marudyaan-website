@@ -56,7 +56,7 @@ function Marquee() {
 }
 
 export default function Home() {
-  const { t, tr } = useLang();
+  const { t, tr, lang } = useLang();
   usePageMeta(
     `${site.name} — ${site.tagline}`,
     "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health, winter relief and livelihood support.",
@@ -80,6 +80,22 @@ export default function Home() {
     <>
       <HeroBanner />
       <Marquee />
+
+      {/* --- tagline ---------------------------------------------------- */}
+      <section className="pb-16 sm:pb-20">
+        <Reveal className="container-page text-center">
+          <p className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.14em] text-brand-ink uppercase">
+            <Icon name="sprout" className="h-4 w-4" />
+            {t("home.tagline.kicker")}
+          </p>
+          <h2 className="font-display mx-auto mt-4 max-w-4xl text-4xl leading-[1.08] font-bold text-balance text-ink sm:text-6xl">
+            <span aria-hidden="true" className="text-brand">“</span>
+            {lang === "bn" ? site.taglineBn : site.tagline}
+            <span aria-hidden="true" className="text-brand">”</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-2">{t("home.tagline.body")}</p>
+        </Reveal>
+      </section>
 
       {/* --- impact numbers (bento) ------------------------------------ */}
       <section className="pb-20 sm:pb-24">

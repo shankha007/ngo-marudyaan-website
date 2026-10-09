@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { bannerSettings, bannerSlides } from "../data/banner";
-import { stats } from "../data/site";
+import { site, stats } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import Photo from "./Photo";
 import Icon from "./Icon";
@@ -214,7 +214,7 @@ export default function HeroBanner() {
                 circumference (2π × 78 ≈ 490), so it neither overlaps nor leaves a gap */}
             <text className="fill-current font-display text-[15px] font-semibold uppercase">
               <textPath href="#hero-ring" textLength="488" lengthAdjust="spacing">
-                {t("hero.ring")}
+                {`${lang === "bn" ? site.taglineBn : site.tagline} • `}
               </textPath>
             </text>
           </svg>
