@@ -14,28 +14,6 @@
 ------------------------------------------------------------------- */
 export const programs = [
   {
-    id: "food",
-    icon: "bowl",
-    image: "/images/work-food.svg",
-    title: { en: "Food & Nutrition", bn: "খাদ্য ও পুষ্টি" },
-    summary: {
-      en: "Cooked meals and dry ration kits for people living on the streets, in slums and in old-age homes across Kolkata.",
-      bn: "কলকাতার ফুটপাত, বস্তি ও বৃদ্ধাশ্রমের মানুষের জন্য রান্না করা খাবার ও শুকনো রেশন কিট।",
-    },
-    details: {
-      en: [
-        "Weekly street-food drives where volunteers hand out freshly cooked meals.",
-        "Monthly dry ration kits — rice, dal, oil, soya and spices — for families with no steady income.",
-        "Birthday and festival meal sponsorships, where a donor funds one full day of meals.",
-      ],
-      bn: [
-        "প্রতি সপ্তাহে রাস্তায় খাবার বিতরণ — স্বেচ্ছাসেবকরা সদ্য রান্না করা খাবার তুলে দেন।",
-        "নিয়মিত আয় নেই এমন পরিবারের জন্য মাসিক শুকনো রেশন কিট — চাল, ডাল, তেল, সয়াবিন ও মশলা।",
-        "জন্মদিন ও উৎসবে খাবারের পৃষ্ঠপোষকতা, যেখানে একজন দাতা একদিনের সম্পূর্ণ খাবারের দায়িত্ব নেন।",
-      ],
-    },
-  },
-  {
     id: "education",
     icon: "book",
     image: "/images/work-education.svg",
@@ -59,24 +37,25 @@ export const programs = [
     },
   },
   {
-    id: "health",
-    icon: "heart",
-    image: "/images/work-health.svg",
-    title: { en: "Health Camps", bn: "স্বাস্থ্য শিবির" },
+    id: "festival",
+    icon: "gift",
+    image: "/images/work-festival.svg",
+    project: "2022-sharodiya-sahosathi",
+    title: { en: "Festivals for Everyone", bn: "সবার জন্য উৎসব" },
     summary: {
-      en: "Free medical check-up camps, blood donation drives and medicine support in underserved neighbourhoods.",
-      bn: "সুবিধাবঞ্চিত এলাকায় বিনামূল্যে স্বাস্থ্য পরীক্ষা শিবির, রক্তদান শিবির ও ওষুধের সহায়তা।",
+      en: "New clothes and a proper celebration at Durga Puja, Eid and Poila Boishakh for children who would otherwise watch from outside.",
+      bn: "দুর্গাপুজো, ইদ ও পয়লা বৈশাখে নতুন জামা ও আনন্দের আয়োজন — সেই শিশুদের জন্য, যারা নইলে বাইরে থেকেই দেখত।",
     },
     details: {
       en: [
-        "General check-up camps with volunteer doctors, plus free basic medicines.",
-        "Blood donation camps organised with local clubs and hospitals.",
-        "Awareness sessions on hygiene, menstrual health and seasonal illness.",
+        "Puja shopping days where children pick their own new clothes.",
+        "Community feasts with sweets, music and games.",
+        "Gift drives for children in shelter homes.",
       ],
       bn: [
-        "স্বেচ্ছাসেবী চিকিৎসকদের নিয়ে সাধারণ স্বাস্থ্য পরীক্ষা শিবির ও বিনামূল্যে প্রাথমিক ওষুধ।",
-        "স্থানীয় ক্লাব ও হাসপাতালের সঙ্গে যৌথভাবে রক্তদান শিবির।",
-        "স্বাস্থ্যবিধি, ঋতুকালীন স্বাস্থ্য ও মরশুমি অসুখ নিয়ে সচেতনতা শিবির।",
+        "পুজোর কেনাকাটার দিন, যেখানে শিশুরা নিজের পছন্দে নতুন জামা বেছে নেয়।",
+        "মিষ্টি, গান আর খেলা নিয়ে সম্প্রদায়ের ভোজ।",
+        "হোমে থাকা শিশুদের জন্য উপহার বিতরণ।",
       ],
     },
   },
@@ -100,29 +79,6 @@ export const programs = [
         "ডিসেম্বর ও জানুয়ারি জুড়ে রাতে কম্বল বিতরণ।",
         "ঘূর্ণিঝড় ও বন্যার ত্রাণ কিট: ত্রিপল, খাবার, জল ও প্রাথমিক ওষুধ।",
         "আগুন বা ঝড়ে ঘর হারানো পরিবারের পুনর্গঠনে সহায়তা।",
-      ],
-    },
-  },
-  {
-    id: "festival",
-    icon: "gift",
-    image: "/images/work-festival.svg",
-    project: "2022-sharodiya-sahosathi",
-    title: { en: "Festivals for Everyone", bn: "সবার জন্য উৎসব" },
-    summary: {
-      en: "New clothes and a proper celebration at Durga Puja, Eid and Poila Boishakh for children who would otherwise watch from outside.",
-      bn: "দুর্গাপুজো, ইদ ও পয়লা বৈশাখে নতুন জামা ও আনন্দের আয়োজন — সেই শিশুদের জন্য, যারা নইলে বাইরে থেকেই দেখত।",
-    },
-    details: {
-      en: [
-        "Puja shopping days where children pick their own new clothes.",
-        "Community feasts with sweets, music and games.",
-        "Gift drives for children in shelter homes.",
-      ],
-      bn: [
-        "পুজোর কেনাকাটার দিন, যেখানে শিশুরা নিজের পছন্দে নতুন জামা বেছে নেয়।",
-        "মিষ্টি, গান আর খেলা নিয়ে সম্প্রদায়ের ভোজ।",
-        "হোমে থাকা শিশুদের জন্য উপহার বিতরণ।",
       ],
     },
   },

@@ -120,7 +120,7 @@ shown automatically**, in file-name order.
    },
    ```
 
-`category` must be one of: `food`, `education`, `health`, `winter`, `festival`.
+`category` must be one of: `education`, `festival`, `winter`.
 The Gallery's filter buttons only show categories that have a project.
 
 **Adding photos to an existing project:** run `add-photos` with that project's id, or drop the
