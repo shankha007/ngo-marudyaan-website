@@ -10,7 +10,7 @@
    • id          short unique name, used in links: /past-works#<id>
    • date        "2019-07-03" — or "2021" when only the year is known
    • place       optional, where it happened
-   • category    one of: food, education, health, winter, festival
+   • category    one of: education, festival, winter
                  (sets the icon and lists the work under that programme
                  on the Our Work page)
    • title, summary   English (en) and Bengali (bn)
@@ -65,7 +65,7 @@ export const pastWorks = [
     id: "covid-relief",
     date: "2020-05-16",
     place: { en: "Belgharia, Kolkata", bn: "বেলঘরিয়া, কলকাতা" },
-    category: "food",
+    category: "winter",
     title: { en: "Covid Relief", bn: "কোভিড ত্রাণ" },
     summary: {
       en: "When the lockdown took away daily work, we brought food to families who had nothing left to fall back on. The Corona Relief Project carried on side by side with our Amphan relief.",

@@ -32,12 +32,13 @@ const voiceTiles = [
    the same names are listed as cards further down the page). */
 function Marquee() {
   const { tr } = useLang();
-  const names = programs.map((p) => tr(p.title));
+  // repeated so one run is wider than a large screen (only three programmes)
+  const names = [...programs, ...programs, ...programs].map((p) => tr(p.title));
   // two identical runs side by side; the strip slides by exactly one run
   const run = (key) => (
     <div key={key} className="flex shrink-0 items-center">
-      {names.map((n) => (
-        <span key={n} className="flex items-center">
+      {names.map((n, i) => (
+        <span key={i} className="flex items-center">
           <span className="px-6 font-display text-xl font-semibold whitespace-nowrap sm:text-2xl">{n}</span>
           <Icon name="sparkle" filled className="h-5 w-5 shrink-0" />
         </span>
@@ -59,7 +60,7 @@ export default function Home() {
   const { t, tr, lang } = useLang();
   usePageMeta(
     `${site.name} — ${site.tagline}`,
-    "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health, winter relief and festivals.",
+    "NGO Marudyaan is a volunteer-run organisation in Kolkata working on education for children who cannot afford it, festivals for everyone and winter relief.",
   );
 
   /* Gallery preview: each project's cover (newest first), then their
@@ -201,7 +202,7 @@ export default function Home() {
               <Reveal
                 key={p.id}
                 delay={(i % 3) * 70}
-                className={i === 0 ? "sm:col-span-2 lg:row-span-2" : "lg:last:col-span-2"}
+                className={i === 0 ? "sm:col-span-2 lg:row-span-2" : ""}
               >
                 <ProgramCard program={p} feature={i === 0} />
               </Reveal>

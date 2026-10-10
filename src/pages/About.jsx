@@ -27,7 +27,7 @@ function Initials({ name }) {
 }
 
 /* One programme: photo on one side, details on the other (sides
-   alternate). Arriving at /about#food scrolls here — handled centrally
+   alternate). Arriving at /about#education scrolls here — handled centrally
    in <ScrollToTop>. */
 function Programme({ program: p, index: i }) {
   const { t, tr } = useLang();
@@ -113,7 +113,7 @@ export default function About() {
   const { t, tr } = useLang();
   usePageMeta(
     `${t("about.title")} — ${site.name}`,
-    "Who NGO Marudyaan is and what it does: its mission, values and programmes in food, education, health camps, winter relief and festivals, plus its team and registration details.",
+    "Who NGO Marudyaan is and what it does: its mission, values and programmes in education for children, festivals for everyone and winter relief, plus its team and registration details.",
   );
 
   const legalRows = [

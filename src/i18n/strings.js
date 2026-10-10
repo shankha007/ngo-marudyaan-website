@@ -46,13 +46,13 @@ export const strings = {
     "stat.volunteers": "Active volunteers",
     "home.tagline.kicker": "What we stand for",
     "home.tagline.body":
-      "Since 2017 our volunteers have been feeding, teaching and caring for people in Kolkata — one small effort at a time, towards a fairer, kinder society.",
+      "Since 2017 our volunteers have been teaching children, bringing festivals to every doorstep and keeping families warm through the winter in Kolkata — one small effort at a time, towards a fairer, kinder society.",
     "home.mission.kicker": "Who we are",
     "home.mission.title": "An oasis for people the city forgets",
     "home.mission.body":
-      "Marudyaan means oasis. We are a volunteer-run organisation in Kolkata that reaches families living on the edge — with food, schooling, medical care and a little dignity. No middlemen, no waiting lists: our volunteers walk into the neighbourhood and hand over the help themselves.",
+      "Marudyaan means oasis. We are a volunteer-run organisation in Kolkata that reaches families living on the edge — with schooling for their children, new clothes at festival time, warmth in winter and a little dignity. No middlemen, no waiting lists: our volunteers walk into the neighbourhood and hand over the help themselves.",
     "home.work.kicker": "What we do",
-    "home.work.title": "Five ways we show up",
+    "home.work.title": "Three ways we show up",
     "home.work.sub": "Regular programmes that run through the year, not one-off gestures.",
     "home.gallery.kicker": "From the field",
     "home.gallery.title": "Moments from our drives",
@@ -67,7 +67,7 @@ export const strings = {
     "about.sub": "An effort to make society better — a volunteer-run NGO working in and around Kolkata since 2017.",
     "about.mission.title": "Our Mission",
     "about.mission.body":
-      "To make sure that no one within our reach goes without a meal, a school bag or basic medical care — and to do it in a way that protects the dignity of every person we serve.",
+      "To make sure that no one within our reach is kept from school because they cannot afford it, sits out a festival, or spends a winter without a blanket — and to do it in a way that protects the dignity of every person we serve.",
     "about.vision.title": "Our Vision",
     "about.vision.body":
       "A Kolkata where poverty is not a private emergency: where a neighbourhood notices, and responds, before a family falls through the cracks.",
@@ -89,7 +89,7 @@ export const strings = {
 
     /* work */
     "work.title": "Our Work",
-    "work.sub": "Five programmes, running through the year across Kolkata and nearby districts.",
+    "work.sub": "Three programmes, running through the year across Kolkata and nearby districts.",
     "work.how.title": "How a drive actually happens",
     "work.past": "Past works",
     "works.title": "Our Past Works",
@@ -119,9 +119,7 @@ export const strings = {
     "gallery.prev": "Previous photo",
     "gallery.next": "Next photo",
     "gallery.counter": "of",
-    "cat.food": "Food",
     "cat.education": "Education",
-    "cat.health": "Health",
     "cat.winter": "Winter & Relief",
     "cat.festival": "Festivals",
 
@@ -270,7 +268,7 @@ export const strings = {
 
     /* footer */
     "footer.about":
-      "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health and relief.",
+      "NGO Marudyaan is a volunteer-run organisation in Kolkata working on education for children, festivals for everyone and winter relief.",
     "footer.quick": "Quick links",
     "footer.contact": "Contact",
     "footer.follow": "Follow us",
@@ -324,13 +322,13 @@ export const strings = {
     "stat.volunteers": "সক্রিয় স্বেচ্ছাসেবক",
     "home.tagline.kicker": "আমাদের মূলমন্ত্র",
     "home.tagline.body":
-      "২০১৭ সাল থেকে আমাদের স্বেচ্ছাসেবকরা কলকাতার মানুষের মুখে খাবার তুলে দিচ্ছেন, পড়াচ্ছেন, পাশে দাঁড়াচ্ছেন — ছোট ছোট প্রয়াসে, আরও ন্যায্য ও সহমর্মী এক সমাজের দিকে।",
+      "২০১৭ সাল থেকে আমাদের স্বেচ্ছাসেবকরা কলকাতায় শিশুদের পড়াচ্ছেন, উৎসবের আনন্দ সবার দোরগোড়ায় পৌঁছে দিচ্ছেন, শীতে পরিবারগুলিকে উষ্ণ রাখছেন — ছোট ছোট প্রয়াসে, আরও ন্যায্য ও সহমর্মী এক সমাজের দিকে।",
     "home.mission.kicker": "আমরা কারা",
     "home.mission.title": "শহর যাদের ভুলে যায়, তাদের জন্য এক মরুদ্যান",
     "home.mission.body":
-      "মরুদ্যান মানে মরুভূমির বুকে সবুজ আশ্রয়। আমরা কলকাতার একটি স্বেচ্ছাসেবী সংগঠন, যারা প্রান্তিক পরিবারের পাশে দাঁড়াই — খাবার, পড়াশোনা, চিকিৎসা আর একটুখানি সম্মান নিয়ে। কোনও মধ্যস্থতাকারী নেই, অপেক্ষার তালিকাও নেই: আমাদের স্বেচ্ছাসেবকরা নিজেরাই পাড়ায় গিয়ে সাহায্য তুলে দেন।",
+      "মরুদ্যান মানে মরুভূমির বুকে সবুজ আশ্রয়। আমরা কলকাতার একটি স্বেচ্ছাসেবী সংগঠন, যারা প্রান্তিক পরিবারের পাশে দাঁড়াই — শিশুদের পড়াশোনা, উৎসবে নতুন জামা, শীতে উষ্ণতা আর একটুখানি সম্মান নিয়ে। কোনও মধ্যস্থতাকারী নেই, অপেক্ষার তালিকাও নেই: আমাদের স্বেচ্ছাসেবকরা নিজেরাই পাড়ায় গিয়ে সাহায্য তুলে দেন।",
     "home.work.kicker": "আমরা কী করি",
-    "home.work.title": "পাঁচটি ভাবে আমরা পাশে থাকি",
+    "home.work.title": "তিনটি ভাবে আমরা পাশে থাকি",
     "home.work.sub": "সারা বছরের নিয়মিত কর্মসূচি — কেবল একদিনের আয়োজন নয়।",
     "home.gallery.kicker": "মাঠ থেকে",
     "home.gallery.title": "আমাদের কাজের কিছু মুহূর্ত",
@@ -345,7 +343,7 @@ export const strings = {
     "about.sub": "সমাজকে আরও সুন্দর করার এক প্রয়াস — ২০১৭ সাল থেকে কলকাতা ও আশেপাশে কাজ করা একটি স্বেচ্ছাসেবী সংগঠন।",
     "about.mission.title": "আমাদের লক্ষ্য",
     "about.mission.body":
-      "আমাদের নাগালের মধ্যে যেন কেউ খাবার, স্কুলব্যাগ বা প্রাথমিক চিকিৎসা ছাড়া না থাকে — এবং সেটা এমনভাবে করা, যাতে প্রত্যেক মানুষের সম্মান অক্ষুণ্ণ থাকে।",
+      "আমাদের নাগালের মধ্যে যেন কোনও শিশু টাকার অভাবে পড়াশোনা থেকে বঞ্চিত না হয়, কেউ উৎসবে বাদ না পড়ে, কেউ কম্বল ছাড়া শীত না কাটায় — এবং সেটা এমনভাবে করা, যাতে প্রত্যেক মানুষের সম্মান অক্ষুণ্ণ থাকে।",
     "about.vision.title": "আমাদের স্বপ্ন",
     "about.vision.body":
       "এমন একটা কলকাতা, যেখানে দারিদ্র্য কারও একার লড়াই নয় — যেখানে পরিবার ভেঙে পড়ার আগেই পাড়া খেয়াল করে, পাশে দাঁড়ায়।",
@@ -367,7 +365,7 @@ export const strings = {
 
     /* work */
     "work.title": "আমাদের কাজ",
-    "work.sub": "পাঁচটি কর্মসূচি, সারা বছর কলকাতা ও পার্শ্ববর্তী জেলাগুলিতে।",
+    "work.sub": "তিনটি কর্মসূচি, সারা বছর কলকাতা ও পার্শ্ববর্তী জেলাগুলিতে।",
     "work.how.title": "একটি কর্মসূচি আসলে কীভাবে হয়",
     "work.past": "অতীতের কাজ",
     "works.title": "আমাদের অতীতের কাজ",
@@ -397,9 +395,7 @@ export const strings = {
     "gallery.prev": "আগের ছবি",
     "gallery.next": "পরের ছবি",
     "gallery.counter": "/",
-    "cat.food": "খাদ্য",
     "cat.education": "শিক্ষা",
-    "cat.health": "স্বাস্থ্য",
     "cat.winter": "শীতবস্ত্র ও ত্রাণ",
     "cat.festival": "উৎসব",
 
@@ -548,7 +544,7 @@ export const strings = {
 
     /* footer */
     "footer.about":
-      "এনজিও মরুদ্যান কলকাতার একটি স্বেচ্ছাসেবী সংগঠন, যারা খাদ্য, শিক্ষা, স্বাস্থ্য ও ত্রাণ নিয়ে কাজ করে।",
+      "এনজিও মরুদ্যান কলকাতার একটি স্বেচ্ছাসেবী সংগঠন, যারা শিশুদের শিক্ষা, সবার জন্য উৎসব ও শীতকালীন ত্রাণ নিয়ে কাজ করে।",
     "footer.quick": "দ্রুত লিঙ্ক",
     "footer.contact": "যোগাযোগ",
     "footer.follow": "ফলো করুন",
