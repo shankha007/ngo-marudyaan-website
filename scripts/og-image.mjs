@@ -46,7 +46,7 @@ const html = `<!doctype html>
     <h1>${site.name}</h1>
     <div class="bn">${site.nameBn} · ${site.taglineBn}</div>
     <div class="tag">${site.tagline} — Kolkata</div>
-    <div class="work">Food · Education · Health camps · Winter relief · Festivals</div>
+    <div class="work">Education · Festivals for everyone · Winter relief</div>
   </div>
   <div class="url">${new URL(site.url).host}</div>
 </body></html>`;

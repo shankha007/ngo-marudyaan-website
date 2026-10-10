@@ -17,7 +17,7 @@ function hashTarget(hash) {
 
 /* Controls scroll position on navigation, in one place:
    - "/gallery"        → jump to the top of the page
-   - "/about#food"     → scroll down to that section
+   - "/about#education"     → scroll down to that section
    Keeping both cases here avoids a page's own anchor-scrolling effect
    racing against this one. */
 export default function ScrollToTop() {
