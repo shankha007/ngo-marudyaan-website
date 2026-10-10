@@ -59,7 +59,7 @@ export default function Home() {
   const { t, tr, lang } = useLang();
   usePageMeta(
     `${site.name} — ${site.tagline}`,
-    "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health, winter relief and livelihood support.",
+    "NGO Marudyaan is a volunteer-run organisation in Kolkata working on food, education, health, winter relief and festivals.",
   );
 
   /* Gallery preview: each project's cover (newest first), then their
@@ -201,7 +201,7 @@ export default function Home() {
               <Reveal
                 key={p.id}
                 delay={(i % 3) * 70}
-                className={i === 0 ? "sm:col-span-2 lg:row-span-2" : "sm:last:col-span-2 lg:last:col-span-1"}
+                className={i === 0 ? "sm:col-span-2 lg:row-span-2" : "lg:last:col-span-2"}
               >
                 <ProgramCard program={p} feature={i === 0} />
               </Reveal>

@@ -13,7 +13,7 @@
 import { site } from "../src/data/site.js";
 
 const description =
-  "NGO Marudyaan (মরুদ্যান) is a volunteer-run organisation in Kolkata working on food, education, health camps, winter relief and women's livelihood.";
+  "NGO Marudyaan (মরুদ্যান) is a volunteer-run organisation in Kolkata working on food, education, health camps, winter relief and festivals.";
 
 export function structuredData() {
   const url = `${site.url}/`;

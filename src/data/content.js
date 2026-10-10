@@ -126,28 +126,6 @@ export const programs = [
       ],
     },
   },
-  {
-    id: "women",
-    icon: "hands",
-    image: "/images/work-women.svg",
-    title: { en: "Women & Livelihood", bn: "নারী ও জীবিকা" },
-    summary: {
-      en: "Skill training and small self-help groups that help women in our neighbourhoods earn with dignity.",
-      bn: "দক্ষতা প্রশিক্ষণ ও ছোট স্বনির্ভর গোষ্ঠী — যাতে এলাকার মহিলারা সম্মানের সঙ্গে রোজগার করতে পারেন।",
-    },
-    details: {
-      en: [
-        "Tailoring and handicraft training batches.",
-        "Sanitary napkin distribution and menstrual health awareness.",
-        "Help with documents, bank accounts and government scheme applications.",
-      ],
-      bn: [
-        "সেলাই ও হস্তশিল্প প্রশিক্ষণের ব্যাচ।",
-        "স্যানিটারি ন্যাপকিন বিতরণ ও ঋতুকালীন স্বাস্থ্য সচেতনতা।",
-        "নথিপত্র, ব্যাঙ্ক অ্যাকাউন্ট ও সরকারি প্রকল্পে আবেদনে সহায়তা।",
-      ],
-    },
-  },
 ];
 
 /* --- VALUES ------------------------------------------------------- */

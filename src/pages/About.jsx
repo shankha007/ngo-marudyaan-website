@@ -113,7 +113,7 @@ export default function About() {
   const { t, tr } = useLang();
   usePageMeta(
     `${t("about.title")} — ${site.name}`,
-    "Who NGO Marudyaan is and what it does: its mission, values and programmes in food, education, health camps, winter relief, festivals and women's livelihood, plus its team and registration details.",
+    "Who NGO Marudyaan is and what it does: its mission, values and programmes in food, education, health camps, winter relief and festivals, plus its team and registration details.",
   );
 
   const legalRows = [
