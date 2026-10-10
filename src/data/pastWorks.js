@@ -10,7 +10,7 @@
    • id          short unique name, used in links: /past-works#<id>
    • date        "2019-07-03" — or "2021" when only the year is known
    • place       optional, where it happened
-   • category    one of: food, education, health, winter, festival, women
+   • category    one of: food, education, health, winter, festival
                  (sets the icon and lists the work under that programme
                  on the Our Work page)
    • title, summary   English (en) and Bengali (bn)
