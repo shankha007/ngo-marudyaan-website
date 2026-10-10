@@ -211,7 +211,7 @@ All page copy. Exports:
 
 | Export | Shape | Rendered on |
 | --- | --- | --- |
-| `programs` | `{ id, icon, image, project?, title, summary, details: {en:[…], bn:[…]} }`. With `project`, the programme shows that project's cover photo instead of `image` and links to its album. Ids: `food`, `education`, `health`, `winter`, `festival`, `women`. | Home (cards), Our Work (sections, anchored by `id`) |
+| `programs` | `{ id, icon, image, project?, title, summary, details: {en:[…], bn:[…]} }`. With `project`, the programme shows that project's cover photo instead of `image` and links to its album. Ids: `food`, `education`, `health`, `winter`, `festival`. | Home (cards), Our Work (sections, anchored by `id`) |
 | `values` | `{ id, title, text }` | Home (mission list), About (values grid) |
 | `team` | `{ id, photo, name, role }`. An empty `photo` shows the person's initials. | About |
 | `testimonials` | `{ id, quote, author }` | Home |

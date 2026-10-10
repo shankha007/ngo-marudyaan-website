@@ -17,7 +17,7 @@
    • id        folder name in public/images/projects/  (year first keeps
                the folders in order: "2025-puja-drive")
    • year      shown on the album and used to sort (newest first)
-   • category  one of: food, education, health, winter, festival, women
+   • category  one of: food, education, health, winter, festival
                (drives the Gallery filter buttons)
    • cover     the photo used on the Home page and Our Work page;
                defaults to the first photo

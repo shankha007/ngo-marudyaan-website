@@ -52,7 +52,7 @@ export const strings = {
     "home.mission.body":
       "Marudyaan means oasis. We are a volunteer-run organisation in Kolkata that reaches families living on the edge — with food, schooling, medical care and a little dignity. No middlemen, no waiting lists: our volunteers walk into the neighbourhood and hand over the help themselves.",
     "home.work.kicker": "What we do",
-    "home.work.title": "Six ways we show up",
+    "home.work.title": "Five ways we show up",
     "home.work.sub": "Regular programmes that run through the year, not one-off gestures.",
     "home.gallery.kicker": "From the field",
     "home.gallery.title": "Moments from our drives",
@@ -89,7 +89,7 @@ export const strings = {
 
     /* work */
     "work.title": "Our Work",
-    "work.sub": "Six programmes, running through the year across Kolkata and nearby districts.",
+    "work.sub": "Five programmes, running through the year across Kolkata and nearby districts.",
     "work.how.title": "How a drive actually happens",
     "work.past": "Past works",
     "works.title": "Our Past Works",
@@ -124,7 +124,6 @@ export const strings = {
     "cat.health": "Health",
     "cat.winter": "Winter & Relief",
     "cat.festival": "Festivals",
-    "cat.women": "Women",
 
     /* get involved */
     "involved.title": "Get Involved",
@@ -331,7 +330,7 @@ export const strings = {
     "home.mission.body":
       "মরুদ্যান মানে মরুভূমির বুকে সবুজ আশ্রয়। আমরা কলকাতার একটি স্বেচ্ছাসেবী সংগঠন, যারা প্রান্তিক পরিবারের পাশে দাঁড়াই — খাবার, পড়াশোনা, চিকিৎসা আর একটুখানি সম্মান নিয়ে। কোনও মধ্যস্থতাকারী নেই, অপেক্ষার তালিকাও নেই: আমাদের স্বেচ্ছাসেবকরা নিজেরাই পাড়ায় গিয়ে সাহায্য তুলে দেন।",
     "home.work.kicker": "আমরা কী করি",
-    "home.work.title": "ছ’টি ভাবে আমরা পাশে থাকি",
+    "home.work.title": "পাঁচটি ভাবে আমরা পাশে থাকি",
     "home.work.sub": "সারা বছরের নিয়মিত কর্মসূচি — কেবল একদিনের আয়োজন নয়।",
     "home.gallery.kicker": "মাঠ থেকে",
     "home.gallery.title": "আমাদের কাজের কিছু মুহূর্ত",
@@ -368,7 +367,7 @@ export const strings = {
 
     /* work */
     "work.title": "আমাদের কাজ",
-    "work.sub": "ছ’টি কর্মসূচি, সারা বছর কলকাতা ও পার্শ্ববর্তী জেলাগুলিতে।",
+    "work.sub": "পাঁচটি কর্মসূচি, সারা বছর কলকাতা ও পার্শ্ববর্তী জেলাগুলিতে।",
     "work.how.title": "একটি কর্মসূচি আসলে কীভাবে হয়",
     "work.past": "অতীতের কাজ",
     "works.title": "আমাদের অতীতের কাজ",
@@ -403,7 +402,6 @@ export const strings = {
     "cat.health": "স্বাস্থ্য",
     "cat.winter": "শীতবস্ত্র ও ত্রাণ",
     "cat.festival": "উৎসব",
-    "cat.women": "নারী",
 
     /* get involved */
     "involved.title": "যুক্ত হন",
