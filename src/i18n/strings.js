@@ -58,7 +58,7 @@ export const strings = {
     "home.gallery.title": "Moments from our drives",
     "home.voices.kicker": "Voices",
     "home.voices.title": "In their words",
-    "home.cta.title": "You can be the reason someone eats tonight",
+    "home.cta.title": "You can be the reason a child goes to school tomorrow",
     "home.cta.body": "Give once, give monthly, or give your Sunday. All three change something.",
     "home.partners.title": "Supported by neighbours, clubs and small businesses",
 
@@ -334,7 +334,7 @@ export const strings = {
     "home.gallery.title": "আমাদের কাজের কিছু মুহূর্ত",
     "home.voices.kicker": "কণ্ঠস্বর",
     "home.voices.title": "তাঁদের ভাষায়",
-    "home.cta.title": "আজ রাতে কারও পেট ভরার কারণ আপনি হতে পারেন",
+    "home.cta.title": "কাল একটি শিশুর স্কুলে যাওয়ার কারণ আপনি হতে পারেন",
     "home.cta.body": "একবার দিন, প্রতি মাসে দিন, কিংবা আপনার রবিবারটা দিন। তিনটেই কিছু না কিছু বদলে দেয়।",
     "home.partners.title": "পাড়া, ক্লাব ও ছোট ব্যবসার সহযোগিতায়",
 
