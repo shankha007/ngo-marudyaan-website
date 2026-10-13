@@ -100,6 +100,12 @@ const paths = {
       <path d="M5 15V6a1 1 0 0 1 1-1h9" />
     </>
   ),
+  alert: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7.5v5.5M12 16.5h.01" />
+    </>
+  ),
   close: <path d="M6 6l12 12M18 6 6 18" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   chevronLeft: <path d="m14 6-6 6 6 6" />,

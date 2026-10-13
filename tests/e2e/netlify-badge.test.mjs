@@ -66,6 +66,9 @@ export default async function netlifyBadge({ browser, base, live, report }) {
     }
     // and a real click on Back-to-top must work
     await page.evaluate(() => window.scrollTo(0, 1800));
+    await page.waitForTimeout(300);
+    // on phones it shows when scrolling back up, the way a visitor reaches for it
+    await page.evaluate(() => window.scrollTo(0, 1700));
     await page.waitForTimeout(700);
     let backToTop = true;
     try {

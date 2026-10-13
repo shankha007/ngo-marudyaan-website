@@ -40,6 +40,20 @@ export function Honeypot({ direct }) {
   );
 }
 
+/* The problem with one field, right under it, so on a phone it is seen
+   where the visitor is looking (the summary by the button may be off-screen).
+   `msg` is a string KEY, so it re-translates on a language switch. */
+export function FieldError({ id, msg }) {
+  const { t } = useLang();
+  if (!msg) return null;
+  return (
+    <span id={id} className="mt-1.5 flex items-start gap-1.5 text-sm font-medium text-danger">
+      <Icon name="alert" className="mt-0.5 h-4 w-4 shrink-0" />
+      {t(msg)}
+    </span>
+  );
+}
+
 const linkClass = `${btn.outline} ${size.sm}`;
 
 /* What happened after Send. `sentKey` is the form's own "what happens next" line. */

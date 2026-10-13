@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
+import { FieldError, Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
@@ -33,7 +33,7 @@ export default function Contact() {
   const set = (key) => (e) => {
     setForm((f) => ({ ...f, [key]: e.target.value }));
     sender.reset();
-    if (invalid[key]) setInvalid((v) => ({ ...v, [key]: false }));
+    if (invalid[key]) setInvalid((v) => ({ ...v, [key]: "" }));
   };
 
   const onSubmit = async (e) => {
@@ -45,7 +45,12 @@ export default function Contact() {
       message: !form.message.trim(),
     };
     if (bad.name || bad.email || bad.message) {
-      setInvalid(bad);
+      // each field keeps its own message KEY, shown right under it
+      setInvalid({
+        name: bad.name ? "form.required" : "",
+        email: bad.email ? "form.email.invalid" : "",
+        message: bad.message ? "form.required" : "",
+      });
       setErrorKey(bad.name || bad.message ? "contact.form.required" : "form.email.invalid");
       (bad.name ? nameRef : bad.email ? emailRef : messageRef).current?.focus();
       return;
@@ -182,38 +187,44 @@ export default function Contact() {
               <p className="mt-2 text-sm text-ink-2">{t(sender.direct ? "contact.form.note.direct" : "contact.form.note")}</p>
 
               <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <label className="block">
-                  <span className={fieldLabel}>
-                    {t("contact.form.name")}
-                    <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
-                  </span>
-                  <input
-                    type="text"
-                    maxLength={120}
-                    ref={nameRef}
-                    aria-invalid={invalid.name || undefined}
-                    aria-describedby={invalid.name ? "contact-error" : undefined}
-                    value={form.name}
-                    onChange={set("name")}
-                    className={field}
-                    required
-                  />
-                </label>
-                <label className="block">
-                  <span className={fieldLabel}>
-                    {t("contact.form.email")}
-                  </span>
-                  <input
-                    type="email"
-                    maxLength={254}
-                    ref={emailRef}
-                    aria-invalid={invalid.email || undefined}
-                    aria-describedby={invalid.email ? "contact-error" : undefined}
-                    value={form.email}
-                    onChange={set("email")}
-                    className={field}
-                  />
-                </label>
+                <div>
+                  <label className="block">
+                    <span className={fieldLabel}>
+                      {t("contact.form.name")}
+                      <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
+                    </span>
+                    <input
+                      type="text"
+                      maxLength={120}
+                      ref={nameRef}
+                      aria-invalid={!!invalid.name || undefined}
+                      aria-describedby={invalid.name ? "contact-name-error contact-error" : undefined}
+                      value={form.name}
+                      onChange={set("name")}
+                      className={field}
+                      required
+                    />
+                  </label>
+                    <FieldError id="contact-name-error" msg={invalid.name} />
+                </div>
+                <div>
+                  <label className="block">
+                    <span className={fieldLabel}>
+                      {t("contact.form.email")}
+                    </span>
+                    <input
+                      type="email"
+                      maxLength={254}
+                      ref={emailRef}
+                      aria-invalid={!!invalid.email || undefined}
+                      aria-describedby={invalid.email ? "contact-email-error contact-error" : undefined}
+                      value={form.email}
+                      onChange={set("email")}
+                      className={field}
+                    />
+                  </label>
+                    <FieldError id="contact-email-error" msg={invalid.email} />
+                </div>
               </div>
 
               <label className="mt-4 block">
@@ -223,26 +234,30 @@ export default function Contact() {
                 <input type="text" maxLength={150} value={form.subject} onChange={set("subject")} className={field} />
               </label>
 
-              <label className="mt-4 block">
-                <span className={fieldLabel}>
-                  {t("contact.form.message")}
-                  <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
-                </span>
-                <textarea
-                  maxLength={4000}
-                  ref={messageRef}
-                  aria-invalid={invalid.message || undefined}
-                  aria-describedby={invalid.message ? "contact-error" : undefined}
-                  rows={5}
-                  value={form.message}
-                  onChange={set("message")}
-                  className={`${field} resize-y`}
-                  required
-                />
-              </label>
+              <div className="mt-4">
+                <label className="block">
+                  <span className={fieldLabel}>
+                    {t("contact.form.message")}
+                    <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
+                  </span>
+                  <textarea
+                    maxLength={4000}
+                    ref={messageRef}
+                    aria-invalid={!!invalid.message || undefined}
+                    aria-describedby={invalid.message ? "contact-message-error contact-error" : undefined}
+                    rows={5}
+                    value={form.message}
+                    onChange={set("message")}
+                    className={`${field} resize-y`}
+                    required
+                  />
+                </label>
+                  <FieldError id="contact-message-error" msg={invalid.message} />
+              </div>
 
               <p id="contact-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-danger">
-                {errorKey ? t(errorKey) : ""}
+                {/* gone once every marked field is fixed */}
+                {errorKey && Object.values(invalid).some(Boolean) ? t(errorKey) : ""}
               </p>
 
               <Honeypot direct={sender.direct} />
