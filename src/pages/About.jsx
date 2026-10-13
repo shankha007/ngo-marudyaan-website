@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ChipBar from "../components/ChipBar";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Photo from "../components/Photo";
@@ -10,6 +11,7 @@ import { findProject, programImage } from "../data/gallery";
 import { sortedPastWorks } from "../data/pastWorks";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
+import useActiveSection from "../hooks/useActiveSection";
 import usePageMeta from "../hooks/usePageMeta";
 
 function Initials({ name }) {
@@ -111,6 +113,7 @@ function Programme({ program: p, index: i }) {
 
 export default function About() {
   const { t, tr } = useLang();
+  const activeProgram = useActiveSection(programs.map((p) => p.id));
   usePageMeta(
     `${t("about.title")} — ${site.name}`,
     "Who NGO Marudyaan is and what it does: its mission, values and programmes in education for children, festivals for everyone and winter relief, plus its team and registration details.",
@@ -189,20 +192,24 @@ export default function About() {
         </div>
 
         {/* quick jump chips — stick under the header while you scroll the programmes */}
-        <div className="sticky top-[4.75rem] z-30 mt-8 sm:top-[5rem]">
-          <div className="container-page flex gap-2 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:justify-center">
-            {programs.map((p) => (
+        <ChipBar active={activeProgram} className="mt-8" rowClassName="lg:justify-center">
+          {programs.map((p) => {
+            const on = activeProgram === p.id;
+            return (
               <a
                 key={p.id}
                 href={`#${p.id}`}
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line bg-surface/85 px-4 py-2 text-sm font-semibold whitespace-nowrap text-ink shadow-soft backdrop-blur-xl transition hover:border-ink"
+                aria-current={on || undefined}
+                className={`inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold whitespace-nowrap shadow-soft backdrop-blur-xl transition ${
+                  on ? "border-ink bg-ink text-canvas" : "border-line bg-surface/85 text-ink hover:border-ink"
+                }`}
               >
-                <Icon name={p.icon} className="h-4 w-4 text-brand-ink" />
+                <Icon name={p.icon} className={`h-4 w-4 ${on ? "text-lime-300" : "text-brand-ink"}`} />
                 {tr(p.title)}
               </a>
-            ))}
-          </div>
-        </div>
+            );
+          })}
+        </ChipBar>
 
         <div className="pt-6 pb-10 sm:pb-14">
           {programs.map((p, i) => (

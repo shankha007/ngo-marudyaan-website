@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import ChipBar from "../components/ChipBar";
 import Icon from "../components/Icon";
 import Photo from "../components/Photo";
 import PageHeader from "../components/PageHeader";
@@ -105,28 +106,26 @@ export default function Gallery() {
 
       <section className="pb-16 sm:pb-24">
         {/* filters — stick under the header while you scroll */}
-        <div className="sticky top-[4.75rem] z-30 mt-4 sm:top-[5rem]">
-          <div className="container-page flex gap-2 overflow-x-auto py-2 [scrollbar-width:none] sm:justify-center [&::-webkit-scrollbar]:hidden">
-            {categories.map((c) => (
-              <button
-                key={c}
-                type="button"
-                onClick={() => {
-                  setFilter(c);
-                  setOpenIndex(null);
-                }}
-                aria-pressed={filter === c}
-                className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap shadow-soft backdrop-blur-xl transition ${
-                  filter === c
-                    ? "bg-ink text-canvas"
-                    : "border border-line bg-surface/85 text-ink hover:border-ink"
-                }`}
-              >
-                {c === "all" ? t("gallery.all") : t(`cat.${c}`)}
-              </button>
-            ))}
-          </div>
-        </div>
+        <ChipBar active={filter} className="mt-4" rowClassName="sm:justify-center">
+          {categories.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => {
+                setFilter(c);
+                setOpenIndex(null);
+              }}
+              aria-pressed={filter === c}
+              className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap shadow-soft backdrop-blur-xl transition ${
+                filter === c
+                  ? "bg-ink text-canvas"
+                  : "border border-line bg-surface/85 text-ink hover:border-ink"
+              }`}
+            >
+              {c === "all" ? t("gallery.all") : t(`cat.${c}`)}
+            </button>
+          ))}
+        </ChipBar>
 
         <div className="container-page">
           {/* albums */}

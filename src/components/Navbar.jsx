@@ -40,7 +40,7 @@ function LanguageToggle({ compact = false, className = "" }) {
           onClick={() => setLang(code)}
           aria-pressed={lang === code}
           aria-label={langLabels[code].full}
-          className={`min-h-8 rounded-full text-xs font-semibold transition ${
+          className={`tap-target-y min-h-8 rounded-full text-xs font-semibold transition ${
             compact ? "px-2 py-1.5 min-[360px]:px-2.5" : "px-3 py-1.5"
           } ${lang === code ? "bg-ink text-canvas shadow-sm" : "text-ink-2 hover:text-ink"}`}
         >
@@ -61,7 +61,7 @@ function ThemeToggle({ className = "" }) {
       onClick={toggle}
       aria-label={dark ? t("theme.light") : t("theme.dark")}
       title={dark ? t("theme.light") : t("theme.dark")}
-      className={`h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-surface-2 text-ink transition hover:rotate-12 hover:border-line-strong ${className || "inline-flex"}`}
+      className={`tap-target h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-surface-2 text-ink transition hover:rotate-12 hover:border-line-strong ${className || "inline-flex"}`}
     >
       <Icon name={dark ? "sun" : "moon"} className="h-[18px] w-[18px]" />
     </button>
@@ -177,7 +177,7 @@ export default function Navbar() {
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-label={open ? t("nav.close") : t("nav.menu")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-ink text-canvas transition hover:opacity-90"
+              className="tap-target inline-flex h-10 w-10 items-center justify-center rounded-full bg-ink text-canvas transition hover:opacity-90"
             >
               <Icon name={open ? "close" : "menu"} className="h-5 w-5" />
             </button>
@@ -218,7 +218,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label={t("nav.close")}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink transition hover:bg-surface-2"
+              className="tap-target inline-flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink transition hover:bg-surface-2"
             >
               <Icon name="close" className="h-5 w-5" />
             </button>

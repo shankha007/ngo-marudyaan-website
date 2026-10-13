@@ -16,6 +16,10 @@ const quickLinks = [
 ];
 
 const footLink = "transition hover:text-lime-300";
+/* 44px tall on touch screens (easy to tap); the negative margin keeps the
+   rows from spreading apart as much as the padding grows. The text then
+   starts 8px lower, so the icons beside these links move down to match. */
+const contactLink = "-my-1 py-3 lg:-my-1.5 lg:py-1.5";
 
 export default function Footer() {
   const { t, lang } = useLang();
@@ -82,7 +86,7 @@ export default function Footer() {
             <ul className="mt-4 grid grid-cols-2 gap-x-4 text-sm lg:grid-cols-1">
               {quickLinks.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className={`inline-block py-1.5 ${footLink}`}>
+                  <Link to={l.to} className={`inline-block py-3 lg:py-1.5 ${footLink}`}>
                     {t(l.key)}
                   </Link>
                 </li>
@@ -98,25 +102,25 @@ export default function Footer() {
                 <span>{site.contact.addressLines.join(", ")}</span>
               </li>
               <li className="flex gap-3">
-                <Icon name="phone" className="mt-0.5 h-4 w-4 shrink-0 text-lime-300" />
-                <a href={`tel:${site.contact.phoneHref}`} className={`-my-1.5 py-1.5 ${footLink}`}>
+                <Icon name="phone" className="mt-2.5 h-4 w-4 shrink-0 text-lime-300 lg:mt-0.5" />
+                <a href={`tel:${site.contact.phoneHref}`} className={`${contactLink} ${footLink}`}>
                   {site.contact.phone}
                 </a>
               </li>
               <li className="flex gap-3">
-                <Icon name="whatsapp" className="mt-0.5 h-4 w-4 shrink-0 text-lime-300" />
+                <Icon name="whatsapp" className="mt-2.5 h-4 w-4 shrink-0 text-lime-300 lg:mt-0.5" />
                 <a
                   href={`https://wa.me/${site.contact.whatsappHref}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`-my-1.5 py-1.5 ${footLink}`}
+                  className={`${contactLink} ${footLink}`}
                 >
                   {site.contact.whatsapp}
                 </a>
               </li>
               <li className="flex gap-3">
-                <Icon name="mail" className="mt-0.5 h-4 w-4 shrink-0 text-lime-300" />
-                <a href={`mailto:${site.contact.email}`} className={`-my-1.5 py-1.5 break-all ${footLink}`}>
+                <Icon name="mail" className="mt-2.5 h-4 w-4 shrink-0 text-lime-300 lg:mt-0.5" />
+                <a href={`mailto:${site.contact.email}`} className={`${contactLink} break-all ${footLink}`}>
                   {site.contact.email}
                 </a>
               </li>
