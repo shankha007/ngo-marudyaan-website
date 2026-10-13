@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ChipBar from "../components/ChipBar";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
@@ -7,6 +8,7 @@ import { arrow, btn, size } from "../components/ui";
 import { sortedPastWorks, workYear } from "../data/pastWorks";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
+import useActiveSection from "../hooks/useActiveSection";
 import usePageMeta from "../hooks/usePageMeta";
 
 /* works grouped by year, newest year first */
@@ -17,6 +19,7 @@ const years = [...new Set(sortedPastWorks.map(workYear))].map((year) => ({
 
 export default function PastWorks() {
   const { t, lang } = useLang();
+  const activeYear = useActiveSection(years.map(({ year }) => String(year)));
   usePageMeta(
     `${t("works.title")} — ${site.name}`,
     "Every drive NGO Marudyaan has run since its first winter project in December 2017: relief, education, festival and winter drives across Kolkata and West Bengal.",
@@ -28,22 +31,23 @@ export default function PastWorks() {
       <PageHeader title={t("works.title")} sub={t("works.sub")} />
 
       {/* jump to a year — sticks under the header while you scroll */}
-      <div className="sticky top-[4.75rem] z-30 mt-4 sm:top-[5rem]">
-        <nav
-          aria-label={t("works.years")}
-          className="container-page flex gap-2 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {years.map(({ year }) => (
+      <ChipBar label={t("works.years")} active={activeYear} className="mt-4">
+        {years.map(({ year }) => {
+          const on = activeYear === String(year);
+          return (
             <a
               key={year}
               href={`#${year}`}
-              className="inline-flex shrink-0 items-center rounded-full border border-line bg-surface/85 px-4 py-2 font-display text-sm font-bold tracking-wider text-ink shadow-soft backdrop-blur-xl transition hover:border-ink"
+              aria-current={on || undefined}
+              className={`inline-flex shrink-0 items-center rounded-full border px-4 py-2.5 font-display text-sm font-bold tracking-wider shadow-soft backdrop-blur-xl transition ${
+                on ? "border-ink bg-ink text-canvas" : "border-line bg-surface/85 text-ink hover:border-ink"
+              }`}
             >
               {num(year)}
             </a>
-          ))}
-        </nav>
-      </div>
+          );
+        })}
+      </ChipBar>
 
       <div className="container-page py-12 sm:py-16">
         {years.map(({ year, works }) => (

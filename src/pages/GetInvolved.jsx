@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
+import { FieldError, Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
@@ -85,7 +85,7 @@ export default function GetInvolved() {
   const set = (key) => (e) => {
     setForm((f) => ({ ...f, [key]: e.target.value }));
     sender.reset();
-    if (invalid[key]) setInvalid((v) => ({ ...v, [key]: false }));
+    if (invalid[key]) setInvalid((v) => ({ ...v, [key]: "" }));
   };
 
   const onSubmit = async (e) => {
@@ -99,7 +99,12 @@ export default function GetInvolved() {
       email: form.email.trim() !== "" && !isValidEmail(form.email),
     };
     if (bad.name || bad.phone || bad.email) {
-      setInvalid(bad);
+      // each field keeps its own message KEY, shown right under it
+      setInvalid({
+        name: bad.name ? "form.required" : "",
+        phone: missing.phone ? "form.required" : bad.phone ? "form.phone.invalid" : "",
+        email: bad.email ? "form.email.invalid" : "",
+      });
       setErrorKey(
         missing.name || missing.phone
           ? "involved.form.required"
@@ -190,59 +195,68 @@ export default function GetInvolved() {
               className="rounded-4xl border border-line bg-surface p-6 shadow-lift sm:p-10"
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <label className="block">
-                  <span className={fieldLabel}>
-                    {t("involved.form.name")}
-                    <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
-                  </span>
-                  <input
-                    ref={nameRef}
-                    type="text"
-                    maxLength={120}
-                    required
-                    aria-invalid={invalid.name || undefined}
-                    aria-describedby={invalid.name ? "involved-error" : undefined}
-                    value={form.name}
-                    onChange={set("name")}
-                    className={field}
-                  />
-                </label>
-                <label className="block">
-                  <span className={fieldLabel}>
-                    {t("involved.form.phone")}
-                    <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
-                  </span>
-                  <input
-                    ref={phoneRef}
-                    type="tel"
-                    maxLength={20}
-                    required
-                    autoComplete="tel"
-                    inputMode="tel"
-                    aria-invalid={invalid.phone || undefined}
-                    aria-describedby={invalid.phone ? "involved-error" : undefined}
-                    value={form.phone}
-                    onChange={set("phone")}
-                    className={field}
-                  />
-                </label>
+                <div>
+                  <label className="block">
+                    <span className={fieldLabel}>
+                      {t("involved.form.name")}
+                      <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
+                    </span>
+                    <input
+                      ref={nameRef}
+                      type="text"
+                      maxLength={120}
+                      required
+                      aria-invalid={!!invalid.name || undefined}
+                      aria-describedby={invalid.name ? "involved-name-error involved-error" : undefined}
+                      value={form.name}
+                      onChange={set("name")}
+                      className={field}
+                    />
+                  </label>
+                    <FieldError id="involved-name-error" msg={invalid.name} />
+                </div>
+                <div>
+                  <label className="block">
+                    <span className={fieldLabel}>
+                      {t("involved.form.phone")}
+                      <span aria-hidden="true" className="text-danger">{"\u00a0"}*</span>
+                    </span>
+                    <input
+                      ref={phoneRef}
+                      type="tel"
+                      maxLength={20}
+                      required
+                      autoComplete="tel"
+                      inputMode="tel"
+                      aria-invalid={!!invalid.phone || undefined}
+                      aria-describedby={invalid.phone ? "involved-phone-error involved-error" : undefined}
+                      value={form.phone}
+                      onChange={set("phone")}
+                      className={field}
+                    />
+                  </label>
+                    <FieldError id="involved-phone-error" msg={invalid.phone} />
+                </div>
               </div>
 
-              <label className="mt-4 block">
-                <span className={fieldLabel}>
-                  {t("involved.form.email")}
-                </span>
-                <input
-                  ref={emailRef}
-                  type="email"
-                  maxLength={254}
-                  aria-invalid={invalid.email || undefined}
-                  aria-describedby={invalid.email ? "involved-error" : undefined}
-                  value={form.email}
-                  onChange={set("email")}
-                  className={field}
-                />
-              </label>
+              <div className="mt-4">
+                <label className="block">
+                  <span className={fieldLabel}>
+                    {t("involved.form.email")}
+                  </span>
+                  <input
+                    ref={emailRef}
+                    type="email"
+                    maxLength={254}
+                    aria-invalid={!!invalid.email || undefined}
+                    aria-describedby={invalid.email ? "involved-email-error involved-error" : undefined}
+                    value={form.email}
+                    onChange={set("email")}
+                    className={field}
+                  />
+                </label>
+                  <FieldError id="involved-email-error" msg={invalid.email} />
+              </div>
 
               <label className="mt-4 block">
                 <span className={fieldLabel}>
@@ -271,7 +285,8 @@ export default function GetInvolved() {
               </label>
 
               <p id="involved-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-danger">
-                {errorKey ? t(errorKey) : ""}
+                {/* gone once every marked field is fixed */}
+                {errorKey && Object.values(invalid).some(Boolean) ? t(errorKey) : ""}
               </p>
 
               <Honeypot direct={sender.direct} />

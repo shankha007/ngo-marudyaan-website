@@ -115,12 +115,12 @@ export default function Home() {
           {stats.map((s, i) => {
             const look = statTiles[i % statTiles.length];
             return (
-              <Reveal key={s.id} delay={i * 90} className={`rounded-4xl p-6 sm:p-7 ${look.tile}`}>
+              <Reveal key={s.id} delay={i * 90} className={`rounded-4xl p-4 min-[380px]:p-6 sm:p-7 ${look.tile}`}>
                 <StatCounter
                   value={s.value}
                   suffix={s.suffix}
                   label={t(`stat.${s.id}`)}
-                  className="text-4xl sm:text-5xl"
+                  className="text-[clamp(1.5rem,7.5vw,2.25rem)] sm:text-5xl lg:text-[2.75rem] xl:text-5xl"
                   labelClassName={look.label}
                 />
               </Reveal>

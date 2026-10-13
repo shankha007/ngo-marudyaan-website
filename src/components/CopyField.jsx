@@ -42,7 +42,7 @@ export default function CopyField({ label, value, mono = false, compact = false 
       <button
         type="button"
         onClick={copy}
-        className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+        className={`tap-target inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
           copied
             ? "bg-brand text-on-brand"
             : "border border-line-strong text-ink hover:border-ink"

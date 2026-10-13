@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
+import ChipBar from "../components/ChipBar";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Photo from "../components/Photo";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
-import { WorkCardCompact } from "../components/WorkCard";
 import { arrow, btn, size } from "../components/ui";
 import { programs, team, values } from "../data/content";
 import { findProject, programImage } from "../data/gallery";
 import { sortedPastWorks } from "../data/pastWorks";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
+import useActiveSection from "../hooks/useActiveSection";
 import usePageMeta from "../hooks/usePageMeta";
 
 function Initials({ name }) {
@@ -35,7 +36,7 @@ function Programme({ program: p, index: i }) {
   return (
     <section
       id={p.id}
-      className={`scroll-mt-36 py-14 sm:py-20 ${i % 2 ? "mx-2 rounded-4xl bg-surface-2 sm:mx-3 sm:rounded-5xl" : ""}`}
+      className={`scroll-mt-36 py-10 sm:py-20 ${i % 2 ? "mx-2 rounded-4xl bg-surface-2 sm:mx-3 sm:rounded-5xl" : ""}`}
     >
       <div className={`container-page grid items-center gap-10 lg:grid-cols-2 ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
         <Reveal>
@@ -43,7 +44,7 @@ function Programme({ program: p, index: i }) {
             <Photo
               src={programImage(p)}
               sizes="(min-width: 1280px) 600px, (min-width: 1024px) 50vw, 100vw"
-              className="aspect-[4/3] w-full object-cover"
+              className="aspect-[16/10] w-full object-cover sm:aspect-[4/3]"
             />
           </div>
         </Reveal>
@@ -87,10 +88,11 @@ function Programme({ program: p, index: i }) {
             </div>
           )}
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/donate" className={`${btn.donate} ${size.md}`}>
+            {/* phones and tablets skip these: the page already ends with the same two buttons */}
+            <Link to="/donate" className={`${btn.donate} ${size.md} max-lg:hidden`}>
               {t("cta.donate")}
             </Link>
-            <Link to="/get-involved" className={`${btn.outline} ${size.md}`}>
+            <Link to="/get-involved" className={`${btn.outline} ${size.md} max-lg:hidden`}>
               {t("cta.volunteer")}
             </Link>
             {findProject(p.project) && (
@@ -111,6 +113,7 @@ function Programme({ program: p, index: i }) {
 
 export default function About() {
   const { t, tr } = useLang();
+  const activeProgram = useActiveSection(programs.map((p) => p.id));
   usePageMeta(
     `${t("about.title")} — ${site.name}`,
     "Who NGO Marudyaan is and what it does: its mission, values and programmes in education for children, festivals for everyone and winter relief, plus its team and registration details.",
@@ -167,7 +170,7 @@ export default function About() {
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-soft text-brand-ink">
                       <Icon name="shield" className="h-5 w-5" />
                     </span>
-                    <span aria-hidden="true" className="font-display text-3xl font-bold text-line-strong">
+                    <span aria-hidden="true" className="font-display text-3xl font-bold text-ink-3">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
@@ -189,20 +192,24 @@ export default function About() {
         </div>
 
         {/* quick jump chips — stick under the header while you scroll the programmes */}
-        <div className="sticky top-[4.75rem] z-30 mt-8 sm:top-[5rem]">
-          <div className="container-page flex gap-2 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:justify-center">
-            {programs.map((p) => (
+        <ChipBar active={activeProgram} className="mt-8" rowClassName="lg:justify-center">
+          {programs.map((p) => {
+            const on = activeProgram === p.id;
+            return (
               <a
                 key={p.id}
                 href={`#${p.id}`}
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line bg-surface/85 px-4 py-2 text-sm font-semibold whitespace-nowrap text-ink shadow-soft backdrop-blur-xl transition hover:border-ink"
+                aria-current={on || undefined}
+                className={`inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold whitespace-nowrap shadow-soft backdrop-blur-xl transition ${
+                  on ? "border-ink bg-ink text-canvas" : "border-line bg-surface/85 text-ink hover:border-ink"
+                }`}
               >
-                <Icon name={p.icon} className="h-4 w-4 text-brand-ink" />
+                <Icon name={p.icon} className={`h-4 w-4 ${on ? "text-lime-300" : "text-brand-ink"}`} />
                 {tr(p.title)}
               </a>
-            ))}
-          </div>
-        </div>
+            );
+          })}
+        </ChipBar>
 
         <div className="pt-6 pb-10 sm:pb-14">
           {programs.map((p, i) => (
@@ -218,36 +225,19 @@ export default function About() {
           <ol className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {steps.map((s, i) => (
               <Reveal as="li" key={s.n} delay={i * 80}>
-                <div className="h-full rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-lime-400/40">
-                  <span className="font-display inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-lime-400 text-lg font-bold text-oasis-900">
+                {/* phones: number beside the text, so the five steps stay short */}
+                <div className="flex h-full gap-4 rounded-3xl border border-white/10 bg-white/5 p-5 transition duration-300 hover:-translate-y-1 hover:border-lime-400/40 sm:block sm:p-6">
+                  <span className="font-display inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-lime-400 text-lg font-bold text-oasis-900">
                     {s.n}
                   </span>
-                  <h3 className="font-display mt-4 text-lg font-semibold text-white">{s.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/70">{s.body}</p>
+                  <div>
+                    <h3 className="font-display text-lg font-semibold text-white sm:mt-4">{s.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-white/70 sm:mt-2">{s.body}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* the latest few works, with a link to all of them */}
-      <section className="pt-20 sm:pt-24">
-        <div className="container-page">
-          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-            <SectionHeading align="left" kicker={t("about.recent.kicker")} title={t("about.recent.title")} />
-            <Link to="/past-works" className={`${btn.outline} ${size.md} shrink-0`}>
-              {t("about.recent.all")}
-              <Icon name="arrowRight" className={arrow} />
-            </Link>
-          </div>
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {sortedPastWorks.slice(0, 3).map((w, i) => (
-              <Reveal key={w.id} delay={i * 80}>
-                <WorkCardCompact work={w} />
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 

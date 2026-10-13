@@ -49,7 +49,7 @@ export const projects = [
     year: 2021,
     category: "education",
     cover: "10.jpg",
-    title: { en: "Micro Library Setup", bn: "মাইক্রো লাইব্রেরি স্থাপন" },
+    title: { en: "Micro Library", bn: "মাইক্রো লাইব্রেরি" },
     summary: {
       en: "We collected Bengali storybooks, classics and school guidebooks and set up a small lending library at a women and children's development centre in Santoshpur, Kolkata — opened with the children who now use it.",
       bn: "বাংলা গল্পের বই, ক্লাসিক ও স্কুলের সহায়িকা সংগ্রহ করে কলকাতার সন্তোষপুরে একটি নারী ও শিশু উন্নয়ন কেন্দ্রে ছোট একটি গ্রন্থাগার গড়ে তোলা হয় — উদ্বোধন হয় সেই শিশুদের সঙ্গেই, যারা আজ এটি ব্যবহার করে।",
@@ -72,10 +72,10 @@ export const projects = [
     year: 2020,
     category: "winter",
     cover: "07.jpg",
-    title: { en: "Relief After Cyclones Amphan & Yaas", bn: "আমফান ও ইয়াস ঘূর্ণিঝড়ের পর ত্রাণ" },
+    title: { en: "Amphan Relief at Gosaba", bn: "গোসাবায় আমফান ত্রাণ" },
     summary: {
-      en: "When the cyclones flooded the Sundarbans, volunteers packed food and essentials in Kolkata, then carried them by boat to island villages cut off by the water and handed them out family by family.",
-      bn: "ঘূর্ণিঝড়ে সুন্দরবন প্লাবিত হলে স্বেচ্ছাসেবকরা কলকাতায় খাবার ও প্রয়োজনীয় সামগ্রী প্যাক করে নৌকায় জলবন্দি দ্বীপের গ্রামগুলিতে পৌঁছে দেন এবং পরিবার ধরে ধরে বিতরণ করেন।",
+      en: "When Cyclone Amphan flooded the Sundarbans, volunteers packed food and essentials in Kolkata, then carried them by boat to island villages cut off by the water and handed them out family by family.",
+      bn: "ঘূর্ণিঝড় আমফানে সুন্দরবন প্লাবিত হলে স্বেচ্ছাসেবকরা কলকাতায় খাবার ও প্রয়োজনীয় সামগ্রী প্যাক করে নৌকায় জলবন্দি দ্বীপের গ্রামগুলিতে পৌঁছে দেন এবং পরিবার ধরে ধরে বিতরণ করেন।",
     },
     captions: {
       "01.jpg": { en: "Packing rice, biscuits and essentials for the trip", bn: "যাত্রার জন্য চাল, বিস্কুট ও প্রয়োজনীয় সামগ্রী প্যাকিং" },

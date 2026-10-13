@@ -13,7 +13,7 @@ const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const control =
-  "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/25";
+  "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/25";
 
 /* The home page banner. Content comes from src/data/banner.js —
    editing that file is all you need to change what appears here.
@@ -180,9 +180,9 @@ export default function HeroBanner() {
                   <Icon name="chevronRight" className="h-4 w-4" />
                 </button>
               </div>
-              {/* each dot is a 32px-tall button (comfortable tap target);
+              {/* each dot is a 44px button (comfortable tap target);
                   the thin bar inside is only the visual */}
-              <div className="flex gap-1">
+              <div className="flex">
                 {slides.map((s, i) => (
                   <button
                     key={s.id}
@@ -190,7 +190,7 @@ export default function HeroBanner() {
                     onClick={() => setIndex(i)}
                     aria-label={`${t("carousel.goto")} ${num(i + 1)}`}
                     aria-current={i === index}
-                    className="group flex h-8 min-w-8 items-center justify-center px-1"
+                    className="group flex h-11 min-w-11 items-center justify-center px-1"
                   >
                     <span
                       className={`block h-1.5 rounded-full transition-all duration-500 ${

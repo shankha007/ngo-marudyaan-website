@@ -230,6 +230,29 @@
   -webkit-box-decoration-break: clone;
 }
 
+/* an invisible tap area of at least 44×44px around a small control, so it
+   is easy to hit on a phone without making it look any bigger.
+   (Insets are % of the control's own size; bigger controls are unchanged.) */
+@utility tap-target {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: min(0px, calc(50% - 22px));
+  }
+}
+/* the same, upwards and downwards only: for controls that sit side by side,
+   which would otherwise take taps meant for their neighbour */
+@utility tap-target-y {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block: min(0px, calc(50% - 22px));
+  }
+}
+
 /* subtle dotted texture for large plain areas */
 @utility bg-dots {
   background-image: radial-gradient(
