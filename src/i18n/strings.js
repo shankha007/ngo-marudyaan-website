@@ -72,8 +72,6 @@ export const strings = {
     "about.vision.body":
       "A Kolkata where poverty is not a private emergency: where a neighbourhood notices, and responds, before a family falls through the cracks.",
     "about.values.title": "What we hold to",
-    "about.recent.kicker": "Recent works",
-    "about.recent.title": "What we have been up to",
     "about.recent.all": "See all our past works",
     "about.team.title": "The people behind Marudyaan",
     "about.team.sub": "A small core team and a large circle of volunteers.",
@@ -188,6 +186,7 @@ export const strings = {
     "donate.upi.label": "UPI ID",
     "donate.upi.pay": "Pay with a UPI app",
     "donate.upi.payNote": "Opens GPay, PhonePe, Paytm or BHIM on this phone.",
+    "donate.upi.holder": "Your UPI app will show the account holder as:",
     "donate.upi.give": "Give",
     "donate.bank.title": "Bank transfer (NEFT / IMPS / RTGS)",
     "donate.bank.accountName": "Account name",
@@ -349,8 +348,6 @@ export const strings = {
     "about.vision.body":
       "এমন একটা কলকাতা, যেখানে দারিদ্র্য কারও একার লড়াই নয় — যেখানে পরিবার ভেঙে পড়ার আগেই পাড়া খেয়াল করে, পাশে দাঁড়ায়।",
     "about.values.title": "আমরা যা মেনে চলি",
-    "about.recent.kicker": "সাম্প্রতিক কাজ",
-    "about.recent.title": "সম্প্রতি আমরা যা করেছি",
     "about.recent.all": "আমাদের সব কাজ দেখুন",
     "about.team.title": "মরুদ্যানের মানুষজন",
     "about.team.sub": "ছোট একটি মূল দল, আর বিশাল স্বেচ্ছাসেবকের বৃত্ত।",
@@ -465,6 +462,7 @@ export const strings = {
     "donate.upi.label": "ইউপিআই আইডি",
     "donate.upi.pay": "ইউপিআই অ্যাপে দান করুন",
     "donate.upi.payNote": "এই ফোনে GPay, PhonePe, Paytm বা BHIM খুলবে।",
+    "donate.upi.holder": "আপনার ইউপিআই অ্যাপে প্রাপকের নাম দেখাবে:",
     "donate.upi.give": "দান করুন",
     "donate.bank.title": "ব্যাঙ্ক ট্রান্সফার (NEFT / IMPS / RTGS)",
     "donate.bank.accountName": "অ্যাকাউন্টের নাম",

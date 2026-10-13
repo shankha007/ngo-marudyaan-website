@@ -13,7 +13,7 @@ const tierLooks = [
   { card: "bg-saffron-400 text-oasis-900", sub: "text-oasis-900/80", upi: "border-oasis-900/25 hover:bg-oasis-900/10" },
   { card: "bg-night text-white", sub: "text-white/75", upi: "border-white/25 hover:bg-white/10" },
 ];
-import { donationTiers } from "../data/content";
+import { donationTiers, team } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
@@ -22,6 +22,9 @@ export default function Donate() {
   const { t, tr } = useLang();
   const [qrFailed, setQrFailed] = useState(false);
   const { donation, contact } = site;
+  // the UPI account holder, if they are on the team: shown with their role so
+  // donors can see the personal name their app shows belongs to the NGO
+  const upiHolder = team.find((m) => m.name.en === donation.upiName);
 
   usePageMeta(
     `${t("donate.title")} — ${site.name}`,
@@ -97,7 +100,18 @@ export default function Donate() {
               <div className="mt-6 w-full rounded-3xl bg-brand-soft px-5 py-1 text-left">
                 <CopyField label={t("donate.upi.label")} value={donation.upiId} mono compact />
               </div>
-              <p className="mt-4 text-xs text-ink-3">{donation.upiName}</p>
+              <div className="mt-4 text-xs leading-relaxed text-ink-3">
+                <p>{t("donate.upi.holder")}</p>
+                <p className="font-semibold text-ink-2">
+                  {/* exactly as the UPI app shows it, in any language */}
+                  {donation.upiName}
+                  {upiHolder && (
+                    <span className="font-normal">
+                      {" "}· {tr(upiHolder.role)}, {site.name}
+                    </span>
+                  )}
+                </p>
+              </div>
             </div>
           </Reveal>
 

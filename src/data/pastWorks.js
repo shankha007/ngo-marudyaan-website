@@ -31,7 +31,7 @@ export const pastWorks = [
     date: "2022",
     category: "festival",
     project: "2022-sharodiya-sahosathi",
-    title: { en: "Sharodiya Sahosathi 2022", bn: "শারদীয়া সহসাথী ২০২২" },
+    title: { en: "Sharodiya Sahosathi", bn: "শারদীয়া সহসাথী" },
     summary: {
       en: "Before Durga Puja, our volunteers spent an evening with a group of children and handed each of them new shoes, stationery and books, so that they too had something new for the festival.",
       bn: "দুর্গাপুজোর আগে আমাদের স্বেচ্ছাসেবকরা একদল শিশুর সঙ্গে একটা সন্ধ্যা কাটান এবং প্রত্যেকের হাতে নতুন জুতো, খাতা-পেন ও বই তুলে দেন, যাতে উৎসবে তাদের কাছেও কিছু নতুন থাকে।",

@@ -44,48 +44,36 @@ function WorkMeta({ work }) {
   );
 }
 
-/* A past work as a small card that links to its entry on the Past Works
-   page (used on About Us). The whole card is the link. */
-export function WorkCardCompact({ work }) {
-  const { tr, t } = useLang();
-  return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-4xl border border-line bg-surface shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift">
-      <WorkPicture
-        work={work}
-        sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
-        className="aspect-[16/10] w-full"
-      />
-      <div className="flex flex-1 flex-col p-6">
-        <WorkMeta work={work} />
-        <h3 className="font-display mt-3 text-xl font-bold text-ink">{tr(work.title)}</h3>
-        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-2">{tr(work.summary)}</p>
-        <Link
-          to={`/past-works#${work.id}`}
-          className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-brand-ink after:absolute after:inset-0 after:content-['']"
-        >
-          {t("cta.readMore")}
-          <Icon name="arrowRight" className={arrow} />
-        </Link>
-      </div>
-    </article>
-  );
-}
-
 /* A past work in full, on the Past Works page. */
 export default function WorkCard({ work }) {
   const { tr, t, lang } = useLang();
   const album = findProject(work.project);
+  const program = programs.find((p) => p.id === work.category);
   return (
     <article
       id={work.id}
       className="grid scroll-mt-36 overflow-hidden rounded-4xl border border-line bg-surface shadow-soft sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
     >
-      <WorkPicture
-        work={work}
-        sizes="(min-width: 1024px) 380px, (min-width: 640px) 40vw, 100vw"
-        className="aspect-[16/10] w-full sm:aspect-auto sm:h-full sm:min-h-64"
-      />
+      {album ? (
+        <WorkPicture
+          work={work}
+          sizes="(min-width: 1024px) 380px, (min-width: 640px) 40vw, 100vw"
+          className="aspect-[16/10] w-full sm:aspect-auto sm:h-full sm:min-h-64"
+        />
+      ) : (
+        /* no photos yet: on phones a big icon tile would only push the text
+           down, so the programme shows as a small label instead */
+        <div className="hidden sm:block">
+          <WorkPicture work={work} className="h-full min-h-64 w-full" />
+        </div>
+      )}
       <div className="p-6 sm:p-8">
+        {!album && program && (
+          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-ink sm:hidden">
+            <Icon name={program.icon} className="h-3.5 w-3.5" />
+            <span>{tr(program.title)}</span>
+          </span>
+        )}
         <WorkMeta work={work} />
         <h3 className="font-display mt-3 text-2xl font-bold text-ink sm:text-3xl">{tr(work.title)}</h3>
         <p className="mt-3 leading-relaxed text-ink-2">{tr(work.summary)}</p>
