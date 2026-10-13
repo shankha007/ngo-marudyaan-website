@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Honeypot, SendResult, SubmitButton } from "../components/FormSend";
+import { FieldError, Honeypot, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
@@ -55,7 +55,7 @@ export default function RequestHelp() {
 
   usePageMeta(
     `${t("help.title")} — ${site.name}`,
-    "Ask NGO Marudyaan for help from our Durga Puja clothes drive or winter blanket drive in Kolkata and West Bengal.",
+    "Ask NGO Marudyaan for help with schooling, Durga Puja clothes or winter blankets in Kolkata and West Bengal.",
   );
 
   const program = helpPrograms.find((p) => p.id === form.program);
@@ -63,7 +63,7 @@ export default function RequestHelp() {
   const clear = (...keys) => {
     sender.reset(); // the details changed, so the WhatsApp copy would be stale
     if (keys.some((k) => invalid[k])) {
-      setInvalid((v) => ({ ...v, ...Object.fromEntries(keys.map((k) => [k, false])) }));
+      setInvalid((v) => ({ ...v, ...Object.fromEntries(keys.map((k) => [k, ""])) }));
     }
   };
 
@@ -151,7 +151,11 @@ export default function RequestHelp() {
     const formEl = e.currentTarget;
     const problems = validate();
     if (problems.length) {
-      setInvalid(Object.fromEntries(problems.map(([key]) => [key, true])));
+      // each field keeps its own message KEY (the first problem found for
+      // it), shown right under it; the summary by the button names the first
+      const perField = {};
+      for (const [key, , msg] of problems) perField[key] ??= msg === "help.err.contact" ? "form.required" : msg;
+      setInvalid(perField);
       setErrorKey(problems[0][2]);
       sender.reset();
       formEl.querySelector(`[name="${problems[0][0]}"]`)?.focus();
@@ -172,7 +176,7 @@ export default function RequestHelp() {
     if (sent && sender.direct) setForm(emptyForm);
   };
 
-  const describedBy = (key) => (invalid[key] ? "help-error" : undefined);
+  const describedBy = (key) => (invalid[key] ? `help-${key}-error help-error` : undefined);
 
   const steps = ["help.how.1", sender.direct ? "help.how.2.direct" : "help.how.2", "help.how.3"];
 
@@ -235,7 +239,7 @@ export default function RequestHelp() {
                   {t("help.form.program")}
                   <Required />
                 </legend>
-                <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {helpPrograms.map((p) => {
                     const checked = form.program === p.id;
                     return (
@@ -255,7 +259,7 @@ export default function RequestHelp() {
                           value={p.id}
                           checked={checked}
                           onChange={() => pickProgram(p.id)}
-                          aria-invalid={invalid.program || undefined}
+                          aria-invalid={!!invalid.program || undefined}
                           aria-describedby={describedBy("program")}
                           className="sr-only"
                         />
@@ -275,63 +279,73 @@ export default function RequestHelp() {
                     );
                   })}
                 </div>
+                <FieldError id="help-program-error" msg={invalid.program} />
               </fieldset>
 
               {/* your details */}
               <fieldset className="mt-8">
                 <legend className={groupTitle}>{t("help.form.you")}</legend>
                 <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <label className="block">
-                    <span className={fieldLabel}>
-                      {t("help.form.name")}
-                      <Required />
-                    </span>
-                    <input
-                      name="name"
-                      type="text"
-                      maxLength={120}
-                      required
-                      autoComplete="name"
-                      aria-invalid={invalid.name || undefined}
-                      aria-describedby={describedBy("name")}
-                      value={form.name}
-                      onChange={set("name")}
-                      className={field}
-                    />
-                  </label>
-                  <label className="block">
-                    <span className={fieldLabel}>
-                      {t("help.form.phone")}
-                      <Required />
-                    </span>
-                    <input
-                      name="phone"
-                      type="tel"
-                      maxLength={20}
-                      required
-                      autoComplete="tel"
-                      inputMode="tel"
-                      aria-invalid={invalid.phone || undefined}
-                      aria-describedby={describedBy("phone")}
-                      value={form.phone}
-                      onChange={set("phone")}
-                      className={field}
-                    />
-                  </label>
-                  <label className="block">
-                    <span className={fieldLabel}>{t("help.form.email")}</span>
-                    <input
-                      name="email"
-                      type="email"
-                      maxLength={254}
-                      autoComplete="email"
-                      aria-invalid={invalid.email || undefined}
-                      aria-describedby={describedBy("email")}
-                      value={form.email}
-                      onChange={set("email")}
-                      className={field}
-                    />
-                  </label>
+                  <div>
+                    <label className="block">
+                      <span className={fieldLabel}>
+                        {t("help.form.name")}
+                        <Required />
+                      </span>
+                      <input
+                        name="name"
+                        type="text"
+                        maxLength={120}
+                        required
+                        autoComplete="name"
+                        aria-invalid={!!invalid.name || undefined}
+                        aria-describedby={describedBy("name")}
+                        value={form.name}
+                        onChange={set("name")}
+                        className={field}
+                      />
+                    </label>
+                      <FieldError id="help-name-error" msg={invalid.name} />
+                  </div>
+                  <div>
+                    <label className="block">
+                      <span className={fieldLabel}>
+                        {t("help.form.phone")}
+                        <Required />
+                      </span>
+                      <input
+                        name="phone"
+                        type="tel"
+                        maxLength={20}
+                        required
+                        autoComplete="tel"
+                        inputMode="tel"
+                        aria-invalid={!!invalid.phone || undefined}
+                        aria-describedby={describedBy("phone")}
+                        value={form.phone}
+                        onChange={set("phone")}
+                        className={field}
+                      />
+                    </label>
+                      <FieldError id="help-phone-error" msg={invalid.phone} />
+                  </div>
+                  <div>
+                    <label className="block">
+                      <span className={fieldLabel}>{t("help.form.email")}</span>
+                      <input
+                        name="email"
+                        type="email"
+                        maxLength={254}
+                        autoComplete="email"
+                        aria-invalid={!!invalid.email || undefined}
+                        aria-describedby={describedBy("email")}
+                        value={form.email}
+                        onChange={set("email")}
+                        className={field}
+                      />
+                    </label>
+                      <FieldError id="help-email-error" msg={invalid.email} />
+                  </div>
                   <label className="block">
                     <span className={fieldLabel}>{t("help.form.for")}</span>
                     <select value={form.requestFor} onChange={set("requestFor")} className={field}>
@@ -343,49 +357,55 @@ export default function RequestHelp() {
                     </select>
                   </label>
                 </div>
-                <label className="mt-4 block">
-                  <span className={fieldLabel}>
-                    {t("help.form.address")}
-                    <Required />
-                  </span>
-                  <textarea
-                    maxLength={4000}
-                    name="address"
-                    rows={2}
-                    required
-                    autoComplete="street-address"
-                    placeholder={t("help.form.address.hint")}
-                    aria-invalid={invalid.address || undefined}
-                    aria-describedby={describedBy("address")}
-                    value={form.address}
-                    onChange={set("address")}
-                    className={`${field} resize-y`}
-                  />
-                </label>
+                <div className="mt-4">
+                  <label className="block">
+                    <span className={fieldLabel}>
+                      {t("help.form.address")}
+                      <Required />
+                    </span>
+                    <textarea
+                      maxLength={4000}
+                      name="address"
+                      rows={2}
+                      required
+                      autoComplete="street-address"
+                      placeholder={t("help.form.address.hint")}
+                      aria-invalid={!!invalid.address || undefined}
+                      aria-describedby={describedBy("address")}
+                      value={form.address}
+                      onChange={set("address")}
+                      className={`${field} resize-y`}
+                    />
+                  </label>
+                    <FieldError id="help-address-error" msg={invalid.address} />
+                </div>
               </fieldset>
 
               {/* who needs help */}
               <fieldset className="mt-8">
                 <legend className={groupTitle}>{t("help.form.people")}</legend>
                 <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                  <label className="block">
-                    <span className={fieldLabel}>
-                      {t("help.form.total")}
-                      <Required />
-                    </span>
-                    <input
-                      name="total"
-                      type="number"
-                      min="1"
-                      inputMode="numeric"
-                      required
-                      aria-invalid={invalid.total || undefined}
-                      aria-describedby={describedBy("total")}
-                      value={form.total}
-                      onChange={set("total")}
-                      className={field}
-                    />
-                  </label>
+                  <div>
+                    <label className="block">
+                      <span className={fieldLabel}>
+                        {t("help.form.total")}
+                        <Required />
+                      </span>
+                      <input
+                        name="total"
+                        type="number"
+                        min="1"
+                        inputMode="numeric"
+                        required
+                        aria-invalid={!!invalid.total || undefined}
+                        aria-describedby={describedBy("total")}
+                        value={form.total}
+                        onChange={set("total")}
+                        className={field}
+                      />
+                    </label>
+                      <FieldError id="help-total-error" msg={invalid.total} />
+                  </div>
                   <label className="block">
                     <span className={fieldLabel}>{t("help.form.children")}</span>
                     <input
@@ -393,7 +413,7 @@ export default function RequestHelp() {
                       type="number"
                       min="0"
                       inputMode="numeric"
-                      aria-invalid={invalid.children || undefined}
+                      aria-invalid={!!invalid.children || undefined}
                       aria-describedby={describedBy("children")}
                       value={form.children}
                       onChange={set("children")}
@@ -406,7 +426,7 @@ export default function RequestHelp() {
                       type="number"
                       min="0"
                       inputMode="numeric"
-                      aria-invalid={invalid.children || undefined}
+                      aria-invalid={!!invalid.children || undefined}
                       aria-describedby={describedBy("children")}
                       value={form.elderly}
                       onChange={set("elderly")}
@@ -414,6 +434,7 @@ export default function RequestHelp() {
                     />
                   </label>
                 </div>
+                <FieldError id="help-children-error" msg={invalid.children} />
               </fieldset>
 
               {/* what help */}
@@ -440,7 +461,7 @@ export default function RequestHelp() {
                           name="needs"
                           checked={form.needs.includes(n.id)}
                           onChange={() => toggleNeed(n.id)}
-                          aria-invalid={invalid.needs || undefined}
+                          aria-invalid={!!invalid.needs || undefined}
                           aria-describedby={describedBy("needs")}
                           className="h-4 w-4 shrink-0 accent-[var(--c-brand)]"
                         />
@@ -448,36 +469,41 @@ export default function RequestHelp() {
                       </label>
                     ))}
                   </div>
+                  <FieldError id="help-needs-error" msg={invalid.needs} />
                 </fieldset>
               )}
 
-              <label className="mt-6 block">
-                <span className={fieldLabel}>
-                  {program && program.needs.length === 0 ? (
-                    <>
-                      {t("help.form.details.other")}
-                      <Required />
-                    </>
-                  ) : (
-                    t("help.form.details")
-                  )}
-                </span>
-                <textarea
-                  maxLength={4000}
-                  name="details"
-                  required={program?.needs.length === 0}
-                  rows={4}
-                  placeholder={t("help.form.details.hint")}
-                  aria-invalid={invalid.details || undefined}
-                  aria-describedby={describedBy("details")}
-                  value={form.details}
-                  onChange={set("details")}
-                  className={`${field} resize-y`}
-                />
-              </label>
+              <div className="mt-6">
+                <label className="block">
+                  <span className={fieldLabel}>
+                    {program && program.needs.length === 0 ? (
+                      <>
+                        {t("help.form.details.other")}
+                        <Required />
+                      </>
+                    ) : (
+                      t("help.form.details")
+                    )}
+                  </span>
+                  <textarea
+                    maxLength={4000}
+                    name="details"
+                    required={program?.needs.length === 0}
+                    rows={4}
+                    placeholder={t("help.form.details.hint")}
+                    aria-invalid={!!invalid.details || undefined}
+                    aria-describedby={describedBy("details")}
+                    value={form.details}
+                    onChange={set("details")}
+                    className={`${field} resize-y`}
+                  />
+                </label>
+                  <FieldError id="help-details-error" msg={invalid.details} />
+              </div>
 
               <p id="help-error" role="alert" className="mt-3 min-h-5 text-sm font-medium text-danger">
-                {errorKey ? t(errorKey) : ""}
+                {/* gone once every marked field is fixed */}
+                {errorKey && Object.values(invalid).some(Boolean) ? t(errorKey) : ""}
               </p>
 
               <Honeypot direct={sender.direct} />

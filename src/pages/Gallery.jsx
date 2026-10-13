@@ -70,6 +70,22 @@ export default function Gallery() {
 
   /* Keyboard focus: jump into the lightbox when it opens, keep Tab inside
      it, and on close return to the thumbnail of the photo last viewed. */
+  /* swipe left / right on a phone to move through the photos */
+  const touchStart = useRef(null);
+  const onTouchStart = (e) => {
+    const t0 = e.touches[0];
+    touchStart.current = e.touches.length === 1 ? { x: t0.clientX, y: t0.clientY } : null;
+  };
+  const onTouchEnd = (e) => {
+    const from = touchStart.current;
+    touchStart.current = null;
+    if (!from || items.length < 2) return;
+    const t1 = e.changedTouches[0];
+    const dx = t1.clientX - from.x;
+    const dy = t1.clientY - from.y;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+  };
+
   const dialogRef = useRef(null);
   const closeBtnRef = useRef(null);
   const lastIndexRef = useRef(null);
@@ -187,8 +203,10 @@ export default function Gallery() {
           role="dialog"
           aria-modal="true"
           aria-label={tr(active.caption)}
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-night/90 p-4 backdrop-blur-xl"
+          className="fixed inset-0 z-[70] flex touch-pan-y items-center justify-center overscroll-contain bg-night/90 p-4 backdrop-blur-xl"
           onClick={close}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
         >
           <button
             ref={closeBtnRef}

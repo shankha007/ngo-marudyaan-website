@@ -19,6 +19,10 @@ const links = [
   { to: "/contact", key: "nav.contact" },
 ];
 
+/* "NGO Marudyaan" → prefix "NGO " + "Marudyaan" */
+const shortName = site.name.replace(/^NGO\s+/, "");
+const namePrefix = site.name.slice(0, site.name.length - shortName.length);
+
 const langLabels = { en: { full: "English", short: "EN" }, bn: { full: "বাংলা", short: "বাং" } };
 
 function LanguageToggle({ compact = false, className = "" }) {
@@ -139,7 +143,9 @@ export default function Navbar() {
             <Logo className="h-9 w-9 shrink-0 ring-2 ring-line sm:h-10 sm:w-10" />
             <span className="min-w-0 leading-none">
               <span className="block truncate font-display text-[15px] font-bold tracking-tight text-ink min-[360px]:text-base sm:text-lg">
-                {site.name}
+                {/* the smallest phones drop the "NGO " prefix so the name is not cut off */}
+                <span className="max-[359px]:hidden">{namePrefix}</span>
+                {shortName}
               </span>
               <span className="mt-0.5 block truncate text-[11px] font-medium text-ink-3">{site.nameBn}</span>
             </span>

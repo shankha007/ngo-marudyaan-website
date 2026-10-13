@@ -205,6 +205,21 @@ export const volunteerRoles = [
    drives. The email the form sends always uses the English labels. */
 export const helpPrograms = [
   {
+    id: "education",
+    icon: "book",
+    title: { en: "Education support", bn: "পড়াশোনায় সাহায্য" },
+    text: {
+      en: "School kits, coaching and fee help so no child drops out.",
+      bn: "স্কুলের সরঞ্জাম, পড়ানো আর ফি-র সাহায্য — যাতে কোনও শিশুর পড়া বন্ধ না হয়।",
+    },
+    needs: [
+      { id: "edu-kit", label: { en: "School bag, books & stationery", bn: "স্কুলব্যাগ, বই ও খাতা-কলম" } },
+      { id: "edu-uniform", label: { en: "Uniform & shoes", bn: "স্কুলের পোশাক ও জুতো" } },
+      { id: "edu-coaching", label: { en: "Evening coaching / tuition", bn: "সন্ধ্যার পড়া / টিউশন" } },
+      { id: "edu-fees", label: { en: "Exam or admission fees", bn: "পরীক্ষা বা ভর্তির ফি" } },
+    ],
+  },
+  {
     id: "puja",
     icon: "gift",
     title: { en: "Durga Puja drive", bn: "দুর্গাপুজোর কর্মসূচি" },
@@ -239,8 +254,8 @@ export const helpPrograms = [
     icon: "hands",
     title: { en: "Something else", bn: "অন্য কোনও সাহায্য" },
     text: {
-      en: "Food, schooling, medical or relief needs — tell us below.",
-      bn: "খাবার, পড়াশোনা, চিকিৎসা বা ত্রাণ — নিচে লিখে জানান।",
+      en: "Food, medical or relief needs — tell us below.",
+      bn: "খাবার, চিকিৎসা বা ত্রাণ — নিচে লিখে জানান।",
     },
     needs: [],
   },
@@ -251,7 +266,7 @@ export const donationTiers = [
   { id: "d1", amount: 500,   impact: { en: "Feeds 20 people for one evening", bn: "একটি সন্ধ্যায় ২০ জনের খাবার" } },
   { id: "d2", amount: 1000,  impact: { en: "A full school kit for two children", bn: "দুই শিশুর সম্পূর্ণ স্কুল কিট" } },
   { id: "d3", amount: 2500,  impact: { en: "Ration for a family for a month", bn: "একটি পরিবারের এক মাসের রেশন" } },
-  { id: "d4", amount: 10000, impact: { en: "Sponsors an entire health camp", bn: "একটি সম্পূর্ণ স্বাস্থ্য শিবিরের খরচ" } },
+  { id: "d4", amount: 10000, impact: { en: "Full school kits for twenty children", bn: "কুড়ি জন শিশুর সম্পূর্ণ স্কুল কিট" } },
 ];
 
 /* --- FAQ ----------------------------------------------------------- */
