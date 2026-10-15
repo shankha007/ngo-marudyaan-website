@@ -62,18 +62,6 @@ export const pastWorks = [
     },
   },
   {
-    id: "sovabazar-winter-drive",
-    date: "2020",
-    place: { en: "Sovabazar, Kolkata", bn: "শোভাবাজার, কলকাতা" },
-    category: "winter",
-    project: "2020-sovabazar-winter-drive",
-    title: { en: "Blanket & Clothes Drive at Sovabazar", bn: "শোভাবাজারে কম্বল ও বস্ত্র বিতরণ" },
-    summary: {
-      en: "In the winter of 2020 we set up in a lane in Sovabazar, north Kolkata, and handed blankets and clothes to the families living there, one by one.",
-      bn: "২০২০-র শীতে উত্তর কলকাতার শোভাবাজারের একটি গলিতে শিবির করে সেখানকার পরিবারগুলির হাতে একে একে কম্বল ও জামাকাপড় তুলে দেওয়া হয়।",
-    },
-  },
-  {
     id: "covid-relief",
     date: "2020-05-16",
     place: { en: "Belgharia, Kolkata", bn: "বেলঘরিয়া, কলকাতা" },
@@ -121,12 +109,13 @@ export const pastWorks = [
   {
     id: "netaji-jayanti-winter-drive",
     date: "2019-01-23",
-    place: { en: "Kolkata", bn: "কলকাতা" },
+    place: { en: "Sovabazar, Kolkata", bn: "শোভাবাজার, কলকাতা" },
     category: "winter",
+    project: "2019-netaji-jayanti-winter-drive",
     title: { en: "Netaji's birthday winter drive", bn: "নেতাজির জন্মদিনে শীতবস্ত্র বিতরণ" },
     summary: {
-      en: "On Netaji Subhas Chandra Bose's birthday we went out to help people living on the streets through the winter cold.",
-      bn: "নেতাজি সুভাষচন্দ্র বসুর জন্মদিনে শীতের রাতে পথবাসী মানুষের পাশে দাঁড়ানোর উদ্যোগ নেয় মরুদ্যান।",
+      en: "On Netaji Subhas Chandra Bose's birthday we set up in a lane in Sovabazar, north Kolkata, and handed blankets and clothes to the families living there, one by one.",
+      bn: "নেতাজি সুভাষচন্দ্র বসুর জন্মদিনে উত্তর কলকাতার শোভাবাজারের একটি গলিতে শিবির করে সেখানকার পরিবারগুলির হাতে একে একে কম্বল ও জামাকাপড় তুলে দেওয়া হয়।",
     },
   },
   {
