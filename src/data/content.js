@@ -63,7 +63,7 @@ export const programs = [
     id: "winter",
     icon: "blanket",
     image: "/images/work-winter.svg",
-    project: "2020-cyclone-relief",
+    project: "2020-sovabazar-winter-drive",
     title: { en: "Winter & Relief", bn: "শীতবস্ত্র ও ত্রাণ" },
     summary: {
       en: "Blankets, warm clothes and emergency relief whenever the weather or a disaster leaves families exposed.",

@@ -40,7 +40,7 @@ export const bannerSlides = [
   {
     id: "winter-2026",
     active: true,
-    image: "/images/banner-2.svg",          // TODO: replace with your photo
+    image: "/images/projects/2020-sovabazar-winter-drive/01.jpg",
     align: "left",
     kicker: { en: "Coming up next", bn: "পরবর্তী উদ্যোগ" },
     title: {
