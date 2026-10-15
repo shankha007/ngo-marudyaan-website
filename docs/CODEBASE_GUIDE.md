@@ -587,7 +587,7 @@ Copied unchanged into `dist/`.
 | [robots.txt](../public/robots.txt) | Allows everything and points to the sitemap. |
 | `favicon.png`, `apple-touch-icon.png` | Browser tab icon and the icon phones use for a home-screen shortcut, both cut from the logo. |
 | [_headers](../public/_headers) | **Netlify response headers.** Security headers on every page (Content-Security-Policy, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`), and `Cache-Control: immutable` for a year on `/assets/*` (Vite's hashed JS, CSS and fonts) and `/images/projects/:project/_w/*` (the hashed WebP copies). [vercel.json](../vercel.json) sets the same for Vercel. [scripts/security-headers.mjs](../scripts/security-headers.mjs) checks on every build that the two agree and that the CSP allows the inline script in `index.html`, and serves the same headers in `npm run preview` / `npm test`. |
-| `images/` | `projects/<id>/` holds the gallery photos, one folder per project (see `projects.js`). `banner-2.svg` and `work-*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
+| `images/` | `projects/<id>/` holds the gallery photos, one folder per project (see `projects.js`). `work-*.svg` are **generated placeholders**, to be replaced with real photos. `logo.png` is the official logo. `donate-qr.png` is the UPI QR code. `og-image.jpg` is the 1200×630 link-preview image. |
 
 ---
 

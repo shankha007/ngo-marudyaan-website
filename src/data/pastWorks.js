@@ -62,6 +62,18 @@ export const pastWorks = [
     },
   },
   {
+    id: "sovabazar-winter-drive",
+    date: "2020",
+    place: { en: "Sovabazar, Kolkata", bn: "শোভাবাজার, কলকাতা" },
+    category: "winter",
+    project: "2020-sovabazar-winter-drive",
+    title: { en: "Blanket & Clothes Drive at Sovabazar", bn: "শোভাবাজারে কম্বল ও বস্ত্র বিতরণ" },
+    summary: {
+      en: "In the winter of 2020 we set up in a lane in Sovabazar, north Kolkata, and handed blankets and clothes to the families living there, one by one.",
+      bn: "২০২০-র শীতে উত্তর কলকাতার শোভাবাজারের একটি গলিতে শিবির করে সেখানকার পরিবারগুলির হাতে একে একে কম্বল ও জামাকাপড় তুলে দেওয়া হয়।",
+    },
+  },
+  {
     id: "covid-relief",
     date: "2020-05-16",
     place: { en: "Belgharia, Kolkata", bn: "বেলঘরিয়া, কলকাতা" },
