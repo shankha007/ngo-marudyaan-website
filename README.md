@@ -150,7 +150,7 @@ Add a key to **both** `en` and `bn`, then use it as `t("your.key")`.
 
 ## Placeholder images
 
-The `.svg` images in `public/images/` (`banner-2.svg` and the `work-*.svg` programme pictures)
+The `.svg` images in `public/images/` (the `work-*.svg` programme pictures)
 are generated placeholders that say what belongs there. Replace them with your own photos,
 keeping the same file names — or use new names and update the path in `src/data/`. Any gallery
 photo can be reused directly, e.g. `image: "/images/projects/2021-micro-library/09.jpg"`.

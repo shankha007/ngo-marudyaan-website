@@ -88,6 +88,23 @@ export const projects = [
       "08.jpg": { en: "Families gathered on the embankment", bn: "বাঁধের উপর জড়ো হওয়া পরিবারগুলি" },
     },
   },
+  {
+    id: "2020-sovabazar-winter-drive",
+    year: 2020,
+    category: "winter",
+    cover: "01.jpg",
+    title: { en: "Blanket & Clothes Drive at Sovabazar", bn: "শোভাবাজারে কম্বল ও বস্ত্র বিতরণ" },
+    summary: {
+      en: "In the winter of 2020 our volunteers set up in a lane in Sovabazar, north Kolkata, and handed blankets and clothes to the families living there, one by one.",
+      bn: "২০২০-র শীতে আমাদের স্বেচ্ছাসেবকরা উত্তর কলকাতার শোভাবাজারের একটি গলিতে শিবির করে সেখানকার পরিবারগুলির হাতে একে একে কম্বল ও জামাকাপড় তুলে দেন।",
+    },
+    captions: {
+      "01.jpg": { en: "A blanket handed over in the lane at Sovabazar", bn: "শোভাবাজারের গলিতে কম্বল তুলে দেওয়া হচ্ছে" },
+      "02.jpg": { en: "Trying on a new dress from the drive", bn: "বিতরণে পাওয়া নতুন জামা পরে দেখা" },
+      "03.jpg": { en: "The volunteer team at Sovabazar", bn: "শোভাবাজারে স্বেচ্ছাসেবক দল" },
+      "04.jpg": { en: "Our banner over the lane on the day of the drive", bn: "বিতরণের দিনে গলির উপর আমাদের ব্যানার" },
+    },
+  },
 ];
 
 /* --- helpers (used by the site and the tests) ----------------------- */
