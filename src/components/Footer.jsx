@@ -42,8 +42,9 @@ export default function Footer() {
           <h2 className="font-display max-w-2xl text-4xl leading-[1.05] font-bold text-balance text-white sm:text-5xl">
             {t("home.cta.title")}
           </h2>
-          <div className="flex flex-wrap gap-3">
-            <Link to="/donate" className={`${btn.donate} ${size.lg}`}>
+          {/* a grid, so both buttons are as wide as the wider one */}
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            <Link to="/donate" className={`${btn.donate} ${size.lg} border border-transparent`}>
               {t("nav.donate")}
               <Icon name="arrowRight" className={arrow} />
             </Link>
