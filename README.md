@@ -70,7 +70,9 @@ This is the one you will change most often, for each new drive or project.
 - Add another `{ ... }` block to `bannerSlides` for a second rotating banner.
 - Keep just one block if you want a single fixed banner.
 - Set `active: false` to hide a banner without deleting it.
-- The thin strip above the menu is the `announcement` object at the bottom of the file.
+- The thin strip above the menu is the `announcement` object at the bottom of the file:
+  flip `active` to `true`/`false` to show or hide it, and edit its `badge`, `text`
+  and `linkLabel` to change what it says. It is currently off.
 
 ### 2. `src/data/site.js` — contact and donation details
 

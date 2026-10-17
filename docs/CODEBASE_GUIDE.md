@@ -203,7 +203,9 @@ The home-page hero carousel and the announcement strip. Exports:
   - `align`: `"left"` or `"center"`
   - `kicker`, `title`, `subtitle`: bilingual text
   - `primaryCta` / `secondaryCta`: `{ label: {en,bn}, to: "/route" }`, both optional
-- **`announcement`**: `{ active, text, linkLabel, to }`. The thin strip above the header, rendered by `Navbar`.
+- **`announcement`**: `{ active, badge, text, linkLabel, to }`. The thin strip above the header, rendered by
+  `Navbar`. `active` is the single on/off flag; `badge`, `text` and `linkLabel` are bilingual text. An empty
+  `badge` drops the pill, an empty `linkLabel` drops the link.
 
 ### [src/data/content.js](../src/data/content.js)
 
