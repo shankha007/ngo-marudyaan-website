@@ -2,17 +2,17 @@
    PROJECTS  —  the photo albums on the Gallery page
    -------------------------------------------------------------------
    HOW TO ADD A PROJECT
-   1. Copy in the FOUR photos you want (they are renamed 01.jpg … 04.jpg
+   1. Copy in the FIVE photos you want (they are renamed 01.jpg … 05.jpg
       and duplicates are skipped):
         npm run add-photos -- "C:\path\to\photo folder" 2025-puja-drive
       Or put them in  public/images/projects/2025-puja-drive/  yourself.
    2. Add a block to `projects` below, with the same id as the folder.
-   3. Save. The four photos appear, in file-name order.
+   3. Save. The photos appear, in file-name order.
 
-   FOUR PHOTOS PER PROJECT
-   Every album holds four photos — the same size everywhere, and the
-   gallery stays quick to load. A fifth photo in the folder is simply not
-   shown, and `npm test` says which project has too many.
+   FIVE PHOTOS PER PROJECT
+   An album holds up to five photos — so the albums stay a similar size
+   and the gallery loads quickly. A sixth photo in the folder is simply
+   not shown, and `npm test` says which project has too many.
 
    HOW TO SWAP A PHOTO IN AN EXISTING PROJECT
    Delete the photo you don't want from its folder and its caption below,
@@ -65,6 +65,7 @@ export const projects = [
       "02.jpg": { en: "The Micro Library shelf", bn: "মাইক্রো লাইব্রেরির বইয়ের তাক" },
       "03.jpg": { en: "Families, volunteers and children on opening day", bn: "উদ্বোধনের দিনে পরিবার, স্বেচ্ছাসেবক ও শিশুরা" },
       "04.jpg": { en: "Donated books collected for the library", bn: "গ্রন্থাগারের জন্য সংগ্রহ করা দানের বই" },
+      "05.jpg": { en: "The first young members of the Micro Library", bn: "মাইক্রো লাইব্রেরির প্রথম খুদে সদস্যরা" },
     },
   },
   {
@@ -82,6 +83,7 @@ export const projects = [
       "02.jpg": { en: "Packing rice, biscuits and essentials for the trip", bn: "যাত্রার জন্য চাল, বিস্কুট ও প্রয়োজনীয় সামগ্রী প্যাকিং" },
       "03.jpg": { en: "Relief boats at the riverbank", bn: "নদীর পাড়ে ত্রাণের নৌকা" },
       "04.jpg": { en: "Families gathered on the embankment", bn: "বাঁধের উপর জড়ো হওয়া পরিবারগুলি" },
+      "05.jpg": { en: "The volunteer team with the relief load at dusk", bn: "সন্ধ্যায় ত্রাণসামগ্রী নিয়ে স্বেচ্ছাসেবক দল" },
     },
   },
   {

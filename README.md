@@ -96,15 +96,15 @@ The Gallery shows one album per project (newest year first). Each project's phot
 their own folder, `public/images/projects/<project id>/`, and they are **shown automatically**
 in file-name order.
 
-**Four photos per project.** Every album holds the same number of pictures, which keeps the
-Gallery tidy and quick to load. A fifth photo in a folder is simply not shown, and `npm test`
-points out which project has too many. To change a photo, delete the one you don't want (and
-its caption) and add the new one.
+**Five photos per project.** An album holds up to five pictures, which keeps the Gallery tidy
+and quick to load. A sixth photo in a folder is simply not shown, and `npm test` points out
+which project has too many. To change a photo, delete the one you don't want (and its caption)
+and add the new one.
 
 **Adding a new project** (two steps):
 
-1. Copy the four photos in. This renames them `01.jpg` … `04.jpg`, skips exact duplicates,
-   and stops once the project is full:
+1. Copy the photos in. This renames them `01.jpg` … `05.jpg`, skips exact duplicates, and
+   stops once the project is full:
 
    ```bash
    npm run add-photos -- "C:\Users\me\Downloads\Puja 2025" 2025-puja-drive

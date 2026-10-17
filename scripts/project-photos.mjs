@@ -20,11 +20,11 @@ import { pathToFileURL } from "node:url";
 
 export const PHOTO_EXTENSIONS = /\.(jpe?g|png|webp|avif)$/i;
 export const PROJECTS_DIR = ["public", "images", "projects"];
-/* House rule: four photos per project, so every album is the same size and
-   the gallery stays quick to load. Enforced here (the site and the tests both
-   read the list through listProjectPhotos), by `npm run add-photos`, and by a
-   test that fails if a folder holds more than this many pictures. */
-export const MAX_PHOTOS_PER_PROJECT = 4;
+/* House rule: five photos per project, so every album is about the same size
+   and the gallery stays quick to load. Enforced here (the site and the tests
+   both read the list through listProjectPhotos), by `npm run add-photos`, and
+   by a test that fails if a folder holds more than this many pictures. */
+export const MAX_PHOTOS_PER_PROJECT = 5;
 export const VARIANT_WIDTHS = [400, 800, 1600];
 const VARIANT_DIR = "_w"; // /images/projects/<id>/_w/<name>-<width>-<hash>.webp
 const BLUR_WIDTH = 16;

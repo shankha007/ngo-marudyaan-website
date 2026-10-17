@@ -7,8 +7,8 @@
      (after any photos already there, so it can add to an existing project).
    • Exact duplicates — of each other or of photos already in the project —
      are skipped.
-   • A project holds four photos (MAX_PHOTOS_PER_PROJECT). Once the folder is
-     full the remaining photos are left alone, so pick the four you want.
+   • A project holds five photos (MAX_PHOTOS_PER_PROJECT). Once the folder is
+     full the remaining photos are left alone, so pick the five you want.
    • Then add the project to src/data/projects.js if it isn't there yet. */
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
