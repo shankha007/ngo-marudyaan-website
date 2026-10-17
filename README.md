@@ -93,12 +93,18 @@ limit link payments to personal (non-merchant) UPI IDs.
 ### 3. `src/data/projects.js` — the Gallery's project albums
 
 The Gallery shows one album per project (newest year first). Each project's photos live in
-their own folder, `public/images/projects/<project id>/`, and **every photo in that folder is
-shown automatically**, in file-name order.
+their own folder, `public/images/projects/<project id>/`, and they are **shown automatically**
+in file-name order.
+
+**Five photos per project.** An album holds up to five pictures, which keeps the Gallery tidy
+and quick to load. A sixth photo in a folder is simply not shown, and `npm test` points out
+which project has too many. To change a photo, delete the one you don't want (and its caption)
+and add the new one.
 
 **Adding a new project** (two steps):
 
-1. Copy the photos in. This renames them `01.jpg`, `02.jpg`, … and skips exact duplicates:
+1. Copy the photos in. This renames them `01.jpg` … `05.jpg`, skips exact duplicates, and
+   stops once the project is full:
 
    ```bash
    npm run add-photos -- "C:\Users\me\Downloads\Puja 2025" 2025-puja-drive
@@ -125,9 +131,10 @@ shown automatically**, in file-name order.
 `category` must be one of: `education`, `festival`, `winter`.
 The Gallery's filter buttons only show categories that have a project.
 
-**Adding photos to an existing project:** run `add-photos` with that project's id, or drop the
-files into its folder. Nothing else changes. Photos without a caption are captioned with the
-project's title. Set `active: false` to hide a project without deleting it.
+**Swapping a photo in an existing project:** delete the photo you don't want from the folder
+(and its caption), then run `add-photos` with that project's id or drop the new file in. Nothing
+else changes. Photos without a caption are captioned with the project's title. Set
+`active: false` to hide a project without deleting it.
 
 To show a project on a programme (Home and About Us), set `project: "<project id>"` on that programme
 in `content.js`: the programme then uses the project's cover photo and links to its album.
