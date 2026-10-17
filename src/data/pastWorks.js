@@ -94,6 +94,7 @@ export const pastWorks = [
       en: "The first Sharodiya Sahosathi: ahead of Durga Puja we spent the day with children with special needs, so that the festival reached them too.",
       bn: "প্রথম শারদীয়া সহসাথী: দুর্গাপুজোর আগে বিশেষ চাহিদাসম্পন্ন শিশুদের সঙ্গে একটা দিন কাটানো, যাতে উৎসবের আনন্দ তাদের কাছেও পৌঁছয়।",
     },
+    project: "2019-sharodiya-sahosathi-special-children",
   },
   {
     id: "indian-museum-excursion",
