@@ -101,6 +101,7 @@ export const projects = [
       "02.jpg": { en: "Trying on a new dress from the drive", bn: "বিতরণে পাওয়া নতুন জামা পরে দেখা" },
       "03.jpg": { en: "The volunteer team with a portrait of Netaji", bn: "নেতাজির প্রতিকৃতির সঙ্গে স্বেচ্ছাসেবক দল" },
       "04.jpg": { en: "Our banner over the lane on the day of the drive", bn: "বিতরণের দিনে গলির উপর আমাদের ব্যানার" },
+      "05.jpg": { en: "The volunteer team with the blankets, before the hand-out began", bn: "বিতরণ শুরুর আগে কম্বল নিয়ে স্বেচ্ছাসেবক দল" },
     },
   },
 ];
