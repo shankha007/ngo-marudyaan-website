@@ -87,6 +87,24 @@ export const projects = [
     },
   },
   {
+    id: "2019-sharodiya-sahosathi-special-children",
+    year: 2019,
+    category: "festival",
+    cover: "01.jpg",
+    title: { en: "Sharodiya Sahosathi for special children", bn: "বিশেষ শিশুদের জন্য শারদীয়া সহসাথী" },
+    summary: {
+      en: "Before Durga Puja our volunteers went to a school in Falta, South 24 Parganas, and gave every child a set of new clothes along with a school bag, a water bottle, storybooks, stationery and chocolates — so the festival brought them something new too.",
+      bn: "দুর্গাপুজোর আগে আমাদের স্বেচ্ছাসেবকরা দক্ষিণ ২৪ পরগনার ফলতার একটি স্কুলে গিয়ে প্রত্যেক শিশুর হাতে নতুন জামাকাপড়ের সঙ্গে স্কুলব্যাগ, জলের বোতল, গল্পের বই, খাতা-পেন ও চকোলেট তুলে দেন — যাতে উৎসবে তাদের কাছেও কিছু নতুন থাকে।",
+    },
+    captions: {
+      "01.jpg": { en: "The volunteers and the children with our banner", bn: "আমাদের ব্যানারের সঙ্গে স্বেচ্ছাসেবক ও শিশুরা" },
+      "02.jpg": { en: "A packet of new clothes handed to a student", bn: "এক ছাত্রের হাতে নতুন জামার প্যাকেট" },
+      "03.jpg": { en: "Another packet handed over in the classroom", bn: "ক্লাসঘরে আরও একটি প্যাকেট তুলে দেওয়া হচ্ছে" },
+      "04.jpg": { en: "New clothes, bags, bottles, books and chocolates, ready to hand out", bn: "বিতরণের জন্য সাজানো নতুন জামা, ব্যাগ, বোতল, বই ও চকোলেট" },
+      "05.jpg": { en: "Everyone together at the school after the hand-out", bn: "বিতরণের পর স্কুলে সবাই একসঙ্গে" },
+    },
+  },
+  {
     id: "2019-netaji-jayanti-winter-drive",
     year: 2019,
     category: "winter",
