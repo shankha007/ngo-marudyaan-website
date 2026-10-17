@@ -2,16 +2,22 @@
    PROJECTS  —  the photo albums on the Gallery page
    -------------------------------------------------------------------
    HOW TO ADD A PROJECT
-   1. Copy the photos in (they are renamed 01.jpg, 02.jpg, … and
-      duplicates are skipped):
+   1. Copy in the FOUR photos you want (they are renamed 01.jpg … 04.jpg
+      and duplicates are skipped):
         npm run add-photos -- "C:\path\to\photo folder" 2025-puja-drive
       Or put them in  public/images/projects/2025-puja-drive/  yourself.
    2. Add a block to `projects` below, with the same id as the folder.
-   3. Save. Every photo in the folder appears, in file-name order.
+   3. Save. The four photos appear, in file-name order.
 
-   HOW TO ADD PHOTOS TO AN EXISTING PROJECT
-   Run the same command with that project's id, or drop the files into
-   its folder. Nothing in this file needs to change.
+   FOUR PHOTOS PER PROJECT
+   Every album holds four photos — the same size everywhere, and the
+   gallery stays quick to load. A fifth photo in the folder is simply not
+   shown, and `npm test` says which project has too many.
+
+   HOW TO SWAP A PHOTO IN AN EXISTING PROJECT
+   Delete the photo you don't want from its folder and its caption below,
+   then run the same command with that project's id, or drop the new file
+   into the folder yourself.
 
    FIELDS
    • id        folder name in public/images/projects/  (year first keeps
@@ -48,44 +54,34 @@ export const projects = [
     id: "2021-micro-library",
     year: 2021,
     category: "education",
-    cover: "10.jpg",
+    cover: "01.jpg",
     title: { en: "Micro Library", bn: "মাইক্রো লাইব্রেরি" },
     summary: {
       en: "We collected Bengali storybooks, classics and school guidebooks and set up a small lending library at a women and children's development centre in Santoshpur, Kolkata — opened with the children who now use it.",
       bn: "বাংলা গল্পের বই, ক্লাসিক ও স্কুলের সহায়িকা সংগ্রহ করে কলকাতার সন্তোষপুরে একটি নারী ও শিশু উন্নয়ন কেন্দ্রে ছোট একটি গ্রন্থাগার গড়ে তোলা হয় — উদ্বোধন হয় সেই শিশুদের সঙ্গেই, যারা আজ এটি ব্যবহার করে।",
     },
     captions: {
-      "01.jpg": { en: "Donated books collected for the library", bn: "গ্রন্থাগারের জন্য সংগ্রহ করা দানের বই" },
-      "02.jpg": { en: "Storybooks and school guides, shelved and ready", bn: "গল্পের বই ও স্কুলের সহায়িকা, তাকে সাজানো" },
-      "03.jpg": { en: "Bengali classics and textbooks for every age", bn: "সব বয়সের জন্য বাংলা ক্লাসিক ও পাঠ্যবই" },
-      "04.jpg": { en: "Meeting families at the centre", bn: "কেন্দ্রে পরিবারগুলির সঙ্গে আলোচনা" },
-      "05.jpg": { en: "Talking with families about the new library", bn: "নতুন গ্রন্থাগার নিয়ে পরিবারগুলির সঙ্গে কথা" },
-      "06.jpg": { en: "Opening day at the centre in Santoshpur", bn: "সন্তোষপুরের কেন্দ্রে উদ্বোধনের দিন" },
-      "07.jpg": { en: "The first young members of the Micro Library", bn: "মাইক্রো লাইব্রেরির প্রথম খুদে সদস্যরা" },
-      "08.jpg": { en: "Families, volunteers and children on opening day", bn: "উদ্বোধনের দিনে পরিবার, স্বেচ্ছাসেবক ও শিশুরা" },
-      "09.jpg": { en: "The Micro Library shelf", bn: "মাইক্রো লাইব্রেরির বইয়ের তাক" },
-      "10.jpg": { en: "Children with their new library", bn: "নতুন গ্রন্থাগার নিয়ে শিশুরা" },
+      "01.jpg": { en: "Children with their new library", bn: "নতুন গ্রন্থাগার নিয়ে শিশুরা" },
+      "02.jpg": { en: "The Micro Library shelf", bn: "মাইক্রো লাইব্রেরির বইয়ের তাক" },
+      "03.jpg": { en: "Families, volunteers and children on opening day", bn: "উদ্বোধনের দিনে পরিবার, স্বেচ্ছাসেবক ও শিশুরা" },
+      "04.jpg": { en: "Donated books collected for the library", bn: "গ্রন্থাগারের জন্য সংগ্রহ করা দানের বই" },
     },
   },
   {
     id: "2020-cyclone-relief",
     year: 2020,
     category: "winter",
-    cover: "07.jpg",
+    cover: "03.jpg",
     title: { en: "Amphan Relief at Gosaba", bn: "গোসাবায় আমফান ত্রাণ" },
     summary: {
       en: "When Cyclone Amphan flooded the Sundarbans, volunteers packed food and essentials in Kolkata, then carried them by boat to island villages cut off by the water and handed them out family by family.",
       bn: "ঘূর্ণিঝড় আমফানে সুন্দরবন প্লাবিত হলে স্বেচ্ছাসেবকরা কলকাতায় খাবার ও প্রয়োজনীয় সামগ্রী প্যাক করে নৌকায় জলবন্দি দ্বীপের গ্রামগুলিতে পৌঁছে দেন এবং পরিবার ধরে ধরে বিতরণ করেন।",
     },
     captions: {
-      "01.jpg": { en: "Packing rice, biscuits and essentials for the trip", bn: "যাত্রার জন্য চাল, বিস্কুট ও প্রয়োজনীয় সামগ্রী প্যাকিং" },
-      "02.jpg": { en: "Food packets ready, one for each family", bn: "প্রতিটি পরিবারের জন্য তৈরি খাবারের প্যাকেট" },
-      "03.jpg": { en: "Arriving at the jetty through the mangroves", bn: "ম্যানগ্রোভের মধ্য দিয়ে জেটিতে পৌঁছনো" },
-      "04.jpg": { en: "The volunteer team with the relief load at dusk", bn: "সন্ধ্যায় ত্রাণসামগ্রী নিয়ে স্বেচ্ছাসেবক দল" },
-      "05.jpg": { en: "Villagers waiting at the jetty", bn: "জেটিতে অপেক্ষারত গ্রামবাসী" },
-      "06.jpg": { en: "Relief handed out on the river embankment", bn: "নদীবাঁধের উপর ত্রাণ বিতরণ" },
-      "07.jpg": { en: "Relief boats at the riverbank", bn: "নদীর পাড়ে ত্রাণের নৌকা" },
-      "08.jpg": { en: "Families gathered on the embankment", bn: "বাঁধের উপর জড়ো হওয়া পরিবারগুলি" },
+      "01.jpg": { en: "Relief handed out on the river embankment", bn: "নদীবাঁধের উপর ত্রাণ বিতরণ" },
+      "02.jpg": { en: "Packing rice, biscuits and essentials for the trip", bn: "যাত্রার জন্য চাল, বিস্কুট ও প্রয়োজনীয় সামগ্রী প্যাকিং" },
+      "03.jpg": { en: "Relief boats at the riverbank", bn: "নদীর পাড়ে ত্রাণের নৌকা" },
+      "04.jpg": { en: "Families gathered on the embankment", bn: "বাঁধের উপর জড়ো হওয়া পরিবারগুলি" },
     },
   },
   {

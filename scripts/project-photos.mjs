@@ -1,8 +1,9 @@
 /* Finds and prepares the photos for each project in the gallery.
 
    Every project has its own folder:  public/images/projects/<project id>/
-   Whatever pictures are in that folder are shown, in file-name order.
-   So adding a photo is just dropping a file in — no code to change.
+   The pictures in that folder are shown in file-name order, and a project
+   shows at most MAX_PHOTOS_PER_PROJECT of them. So adding a photo is just
+   dropping a file in — no code to change.
 
    For fast pages, each photo is also turned into smaller WebP copies
    (400, 800 and 1600 px wide) and a tiny blurred preview, so a phone
@@ -19,14 +20,21 @@ import { pathToFileURL } from "node:url";
 
 export const PHOTO_EXTENSIONS = /\.(jpe?g|png|webp|avif)$/i;
 export const PROJECTS_DIR = ["public", "images", "projects"];
+/* House rule: four photos per project, so every album is the same size and
+   the gallery stays quick to load. Enforced here (the site and the tests both
+   read the list through listProjectPhotos), by `npm run add-photos`, and by a
+   test that fails if a folder holds more than this many pictures. */
+export const MAX_PHOTOS_PER_PROJECT = 4;
 export const VARIANT_WIDTHS = [400, 800, 1600];
 const VARIANT_DIR = "_w"; // /images/projects/<id>/_w/<name>-<width>-<hash>.webp
 const BLUR_WIDTH = 16;
 
 const byName = (a, b) => a.localeCompare(b, "en", { numeric: true });
 
-/* { "2021-micro-library": ["01.jpg", "02.jpg", …], … } */
-export function listProjectPhotos(root) {
+/* Every picture in each project's folder, in file-name order, however many
+   there are: { "2021-micro-library": ["01.jpg", "02.jpg", …], … }
+   Use listProjectPhotos below unless you specifically want the extras too. */
+export function listProjectPhotoFiles(root) {
   const dir = join(root, ...PROJECTS_DIR);
   if (!existsSync(dir)) return {};
   const out = {};
@@ -36,6 +44,14 @@ export function listProjectPhotos(root) {
       .sort(byName);
   }
   return out;
+}
+
+/* The photos a project actually shows: the first MAX_PHOTOS_PER_PROJECT of
+   them. Anything beyond that is ignored rather than quietly published. */
+export function listProjectPhotos(root) {
+  return Object.fromEntries(
+    Object.entries(listProjectPhotoFiles(root)).map(([id, files]) => [id, files.slice(0, MAX_PHOTOS_PER_PROJECT)]),
+  );
 }
 
 /* ---------- responsive copies ---------- */

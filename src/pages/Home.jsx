@@ -142,7 +142,7 @@ export default function Home() {
             </div>
             <div className="absolute right-0 bottom-0 w-[46%] rotate-3 overflow-hidden rounded-3xl border-4 border-canvas shadow-lift">
               <Photo
-                src="/images/projects/2021-micro-library/07.jpg"
+                src="/images/projects/2021-micro-library/03.jpg"
                 sizes="(min-width: 1024px) 260px, 45vw"
                 className="aspect-square w-full object-cover"
               />
@@ -255,14 +255,14 @@ export default function Home() {
             <Reveal delay={100} className="relative mx-auto w-full max-w-lg">
               <div className="overflow-hidden rounded-4xl -rotate-2 border border-white/10 shadow-2xl">
                 <Photo
-                  src="/images/projects/2020-cyclone-relief/04.jpg"
+                  src="/images/projects/2020-cyclone-relief/01.jpg"
                   sizes="(min-width: 1024px) 512px, 90vw"
                   className="aspect-[4/3] w-full object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -left-3 w-[42%] rotate-6 overflow-hidden rounded-3xl border-4 border-night shadow-2xl sm:-left-8">
                 <Photo
-                  src="/images/projects/2020-cyclone-relief/01.jpg"
+                  src="/images/projects/2020-cyclone-relief/02.jpg"
                   sizes="(min-width: 1024px) 220px, 40vw"
                   className="aspect-square w-full object-cover"
                 />

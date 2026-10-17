@@ -7,12 +7,14 @@
      (after any photos already there, so it can add to an existing project).
    • Exact duplicates — of each other or of photos already in the project —
      are skipped.
+   • A project holds four photos (MAX_PHOTOS_PER_PROJECT). Once the folder is
+     full the remaining photos are left alone, so pick the four you want.
    • Then add the project to src/data/projects.js if it isn't there yet. */
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
 import { extname, join } from "node:path";
 import { ROOT } from "../tests/e2e/lib.mjs";
-import { PHOTO_EXTENSIONS, PROJECTS_DIR } from "./project-photos.mjs";
+import { MAX_PHOTOS_PER_PROJECT, PHOTO_EXTENSIONS, PROJECTS_DIR } from "./project-photos.mjs";
 
 const [source, id] = process.argv.slice(2);
 if (!source || !id) {
@@ -42,7 +44,13 @@ const incoming = readdirSync(source)
 
 let added = 0;
 let skipped = 0;
+let over = 0;
 for (const file of incoming) {
+  /* the house rule: a project holds MAX_PHOTOS_PER_PROJECT photos */
+  if (existing.length + added >= MAX_PHOTOS_PER_PROJECT) {
+    over++;
+    continue;
+  }
   const from = join(source, file);
   const h = hash(from);
   if (seen.has(h)) {
@@ -59,6 +67,12 @@ for (const file of incoming) {
 }
 
 console.log(`\n${added} photo(s) added to public/images/projects/${id}/${skipped ? `, ${skipped} duplicate(s) skipped` : ""}.`);
+if (over) {
+  console.log(
+    `${over} photo(s) left behind: a project holds ${MAX_PHOTOS_PER_PROJECT} photos and this one is full.\n` +
+      `To swap one in, delete a photo from public/images/projects/${id}/ (and its caption in src/data/projects.js), then run this again.`,
+  );
+}
 const config = join(ROOT, "src", "data", "projects.js");
 const listed = existsSync(config) && readFileSync(config, "utf8").includes(`id: "${id}"`);
 if (!listed) console.log(`Next: add a project with id: "${id}" to src/data/projects.js (copy an existing one).`);

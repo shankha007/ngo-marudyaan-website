@@ -4,7 +4,7 @@
 import { bannerSlides } from "../../src/data/banner.js";
 import { donationTiers, faqs, helpPrograms, programs, team, volunteerRoles } from "../../src/data/content.js";
 import { projects } from "../../src/data/projects.js";
-import { listProjectPhotos } from "../../scripts/project-photos.mjs";
+import { MAX_PHOTOS_PER_PROJECT, listProjectPhotoFiles, listProjectPhotos } from "../../scripts/project-photos.mjs";
 import { site, stats } from "../../src/data/site.js";
 import { strings } from "../../src/i18n/strings.js";
 import { ROOT, captureSubmission, fileExists, galleryPhotos, galleryProjects, openPage, scrollLikeAUser } from "./lib.mjs";
@@ -37,6 +37,13 @@ export default async function features({ browser, base, report }) {
     for (const id of Object.keys(folders).filter((id) => !ids.includes(id))) issues.push(`folder public/images/projects/${id}/ is not listed in src/data/projects.js`);
     for (const p of programs.filter((p) => p.project && !ids.includes(p.project))) issues.push(`programme "${p.id}" points at unknown project "${p.project}"`);
     report.check(issues.length === 0, `gallery projects match their photo folders (${projects.length} projects, ${galleryPhotos.length} photos)`, issues.join("; "));
+
+    /* the house rule: four photos per project. Anything extra in a folder is
+       never shown, so it would just sit in the repo unnoticed. */
+    const tooMany = Object.entries(listProjectPhotoFiles(ROOT))
+      .filter(([, files]) => files.length > MAX_PHOTOS_PER_PROJECT)
+      .map(([id, files]) => `${id} has ${files.length}: keep ${MAX_PHOTOS_PER_PROJECT} and delete ${files.slice(MAX_PHOTOS_PER_PROJECT).join(", ")}`);
+    report.check(tooMany.length === 0, `every project has at most ${MAX_PHOTOS_PER_PROJECT} photos`, tooMany.join("; "));
   }
 
   /* ================= gallery ================= */

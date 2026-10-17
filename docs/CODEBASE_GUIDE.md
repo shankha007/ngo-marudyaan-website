@@ -91,7 +91,7 @@ ngo-marudyaan/
 ├── scripts/
 │   ├── og-image.mjs           renders public/images/og-image.jpg
 │   ├── add-photos.mjs         copies a folder of photos into a gallery project
-│   └── project-photos.mjs     lists project photos; Vite plugin for the gallery
+│   └── project-photos.mjs     lists project photos (4 per project); Vite plugin
 ├── src/
 │   ├── main.jsx               entry point: mounts <App> with providers
 │   ├── App.jsx                layout + route table
@@ -226,7 +226,7 @@ All page copy. Exports:
 
 ### [src/data/projects.js](../src/data/projects.js)
 
-The Gallery's project albums. Photos are not listed here: they are whatever files are in `public/images/projects/<id>/`, in file-name order.
+The Gallery's project albums. Photos are not listed here: they are the files in `public/images/projects/<id>/`, in file-name order, capped at `MAX_PHOTOS_PER_PROJECT` (4) — see [§16](#16-scripts-scripts).
 
 | Export | What it is |
 | --- | --- |
@@ -657,7 +657,9 @@ Suites run in this order: `smoke`, `navigation`, `features`, `a11y`, `netlify-ba
 
 ### [project-photos.mjs](../scripts/project-photos.mjs)
 
-- **`listProjectPhotos(root)`**: reads `public/images/projects/`, returning `{ [folder]: [photo files sorted by name] }`.
+- **`MAX_PHOTOS_PER_PROJECT`** (4): the house rule — a project album holds four photos, so every album is the same size and the gallery stays quick to load.
+- **`listProjectPhotoFiles(root)`**: reads `public/images/projects/`, returning `{ [folder]: [photo files sorted by name] }` — every file, however many there are.
+- **`listProjectPhotos(root)`**: the same, each project cut to its first `MAX_PHOTOS_PER_PROJECT` photos. This is what the site, the build and the tests all read, so an extra file in a folder is ignored rather than quietly published. The **features** test fails if a folder holds more than four, so the extras don't sit in the repo unnoticed.
 - **`describeProjectPhotos(root)`**: for each photo, its `width`/`height` (EXIF rotation applied), a 16 px blurred WebP preview as a data URI, and its WebP copies at `VARIANT_WIDTHS` (400, 800, 1600; never wider than the original). Copies are named `/images/projects/<id>/_w/<name>-<width>-<hash>.webp`, where the hash is of the original file's content. Results and copies are cached in `node_modules/.cache/project-photos/`, keyed by that hash, so only new or changed photos are processed (uses [sharp](https://sharp.pixelplumbing.com)).
 - **`projectPhotosPlugin()`**: a Vite plugin registered in [vite.config.js](../vite.config.js).
   - Serves `{ [id]: [{ file, width, height, blur, srcset }] }` as the module `virtual:project-photos`, which [src/data/gallery.js](../src/data/gallery.js) imports.
@@ -669,7 +671,7 @@ The tests import the same function, so they always expect exactly what the site 
 
 ### [add-photos.mjs](../scripts/add-photos.mjs)
 
-`npm run add-photos -- "<source folder>" <project id>` copies every JPG/PNG/WebP/AVIF from the source folder into `public/images/projects/<project id>/`, numbered after any photos already there (`01.jpg`, `02.jpg`, …; `.jpeg` becomes `.jpg`). Exact duplicates, of each other or of photos already in the project, are skipped by content hash. It reminds you to add the project to `projects.js` if it is not listed yet.
+`npm run add-photos -- "<source folder>" <project id>` copies JPG/PNG/WebP/AVIF files from the source folder into `public/images/projects/<project id>/`, numbered after any photos already there (`01.jpg`, `02.jpg`, …; `.jpeg` becomes `.jpg`). Exact duplicates, of each other or of photos already in the project, are skipped by content hash. It stops at `MAX_PHOTOS_PER_PROJECT` (4) and says how many photos it left behind and how to swap one in. It reminds you to add the project to `projects.js` if it is not listed yet.
 
 ### [og-image.mjs](../scripts/og-image.mjs)
 
