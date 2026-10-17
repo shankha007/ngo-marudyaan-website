@@ -68,8 +68,38 @@ function ThemeToggle({ className = "" }) {
   );
 }
 
+/* The thin strip above the header. Everything it shows — and whether it
+   shows at all — comes from `announcement` in src/data/banner.js. */
+function AnnouncementStrip() {
+  const { tr } = useLang();
+  const badge = tr(announcement.badge);
+  const label = tr(announcement.linkLabel);
+  return (
+    <div className="bg-night px-4 py-2.5 text-center text-sm text-white/85">
+      {badge && (
+        <span className="mr-2 inline-flex items-center gap-1 rounded-full bg-lime-400 px-2 py-0.5 align-middle text-[11px] font-bold tracking-wide text-oasis-900 uppercase">
+          <Icon name="sparkle" className="h-3 w-3" filled />
+          <span>{badge}</span>
+        </span>
+      )}
+      <span>{tr(announcement.text)}</span>
+      {label && announcement.to && (
+        <>
+          {" "}
+          <Link
+            to={announcement.to}
+            className="font-semibold text-lime-300 underline decoration-lime-300/40 underline-offset-4 transition hover:decoration-lime-300"
+          >
+            {label}
+          </Link>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function Navbar() {
-  const { t, tr } = useLang();
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -115,21 +145,7 @@ export default function Navbar() {
         {t("nav.skip")}
       </a>
 
-      {announcement.active && (
-        <div className="bg-night px-4 py-2.5 text-center text-sm text-white/85">
-          <span className="mr-2 inline-flex items-center gap-1 rounded-full bg-lime-400 px-2 py-0.5 align-middle text-[11px] font-bold tracking-wide text-oasis-900 uppercase">
-            <Icon name="sparkle" className="h-3 w-3" filled />
-            <span>{t("misc.new")}</span>
-          </span>
-          <span>{tr(announcement.text)}</span>{" "}
-          <Link
-            to={announcement.to}
-            className="font-semibold text-lime-300 underline decoration-lime-300/40 underline-offset-4 transition hover:decoration-lime-300"
-          >
-            {tr(announcement.linkLabel)}
-          </Link>
-        </div>
-      )}
+      {announcement.active && <AnnouncementStrip />}
 
       <header className="sticky top-0 z-50 px-2 pt-2 sm:px-3 sm:pt-3">
         <nav

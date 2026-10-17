@@ -56,9 +56,17 @@ export const bannerSlides = [
   },
 ];
 
-/* Thin strip above the header. Set active:false to hide it. */
+/* ===================================================================
+   THIN STRIP ABOVE THE HEADER  ("top banner")
+   -------------------------------------------------------------------
+   • Show or hide it with the one flag below:  active: true / false
+   • Everything it says — the little pill, the message and the link —
+     is text you edit right here. Leave `badge` empty ("") to drop the
+     pill, or `linkLabel` empty to drop the link.
+=================================================================== */
 export const announcement = {
-  active: true,
+  active: false,        // <-- the switch: true shows the strip, false hides it
+  badge: { en: "New", bn: "নতুন" },
   text: {
     en: "Puja donation drive is open — every contribution reaches a family directly.",
     bn: "পুজোর অনুদান সংগ্রহ চলছে — প্রতিটি সহায়তা সরাসরি পরিবারের কাছে পৌঁছয়।",
