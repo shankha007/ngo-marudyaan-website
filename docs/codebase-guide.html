@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marudyaan Website Guide</title>
+<meta name="description" content="A visual guide to the NGO Marudyaan website: how it works, and how to add projects, team members, pages and more.">
+<style>
+  :root {
+    --bg: #f6f8f4;
+    --surface: #ffffff;
+    --surface-2: #eef3ea;
+    --ink: #17221a;
+    --ink-2: #44524a;
+    --ink-3: #6b7a71;
+    --line: #dbe3d6;
+    --brand: #1f7a4d;
+    --brand-soft: #dff0e5;
+    --brand-ink: #135536;
+    --accent: #c98a12;
+    --accent-soft: #fbefd6;
+    --blue: #2f6db3;
+    --blue-soft: #e1ecf8;
+    --red: #b8433a;
+    --red-soft: #f8e3e0;
+    --code-bg: #12201a;
+    --code-ink: #e3efe7;
+    --code-key: #9fe0b8;
+    --code-str: #f3c98b;
+    --code-com: #7f998a;
+    --shadow: 0 1px 2px rgba(20, 40, 25, .06), 0 6px 20px rgba(20, 40, 25, .06);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1612;
+    --surface: #17211b;
+    --surface-2: #1d2a22;
+    --ink: #e7efe9;
+    --ink-2: #b4c3b9;
+    --ink-3: #8a9a90;
+    --line: #2a3a30;
+    --brand: #4fc185;
+    --brand-soft: #1c3a2a;
+    --brand-ink: #8fe0b2;
+    --accent: #e9b04a;
+    --accent-soft: #3a2e15;
+    --blue: #7fb2ec;
+    --blue-soft: #1a2c40;
+    --red: #ec8a80;
+    --red-soft: #3c1f1c;
+    --code-bg: #0a110d;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1612;
+      --surface: #17211b;
+      --surface-2: #1d2a22;
+      --ink: #e7efe9;
+      --ink-2: #b4c3b9;
+      --ink-3: #8a9a90;
+      --line: #2a3a30;
+      --brand: #4fc185;
+      --brand-soft: #1c3a2a;
+      --brand-ink: #8fe0b2;
+      --accent: #e9b04a;
+      --accent-soft: #3a2e15;
+      --blue: #7fb2ec;
+      --blue-soft: #1a2c40;
+      --red: #ec8a80;
+      --red-soft: #3c1f1c;
+      --code-bg: #0a110d;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Bengali", sans-serif;
+  }
+  a { color: var(--brand); }
+  h1, h2, h3, h4 { line-height: 1.25; margin: 0; }
+  h2 { font-size: 1.6rem; margin-bottom: .35rem; }
+  h3 { font-size: 1.15rem; }
+  p { margin: .4rem 0 .8rem; }
+  code, pre, .mono { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+  :not(pre) > code {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: .05em .35em;
+    border-radius: 5px;
+    font-size: .88em;
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; white-space: nowrap; }
+  .brand .dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--brand); color: #fff; display: grid; place-items: center; font-size: 15px;
+  }
+  .search {
+    flex: 1; max-width: 420px; margin-left: auto;
+    padding: 8px 12px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit;
+  }
+  .icon-btn {
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    border-radius: 10px; padding: 7px 10px; cursor: pointer; font: inherit;
+  }
+
+  /* ---------- layout ---------- */
+  .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); max-width: 1240px; margin: 0 auto; gap: 32px; padding: 0 16px; }
+  nav.toc { position: sticky; top: 70px; align-self: start; max-height: calc(100vh - 80px); overflow: auto; padding: 24px 0; }
+  nav.toc a {
+    display: block; padding: 6px 10px; border-radius: 8px;
+    color: var(--ink-2); text-decoration: none; font-size: .93rem;
+  }
+  nav.toc a:hover { background: var(--surface-2); }
+  nav.toc a.active { background: var(--brand-soft); color: var(--brand-ink); font-weight: 600; }
+  nav.toc .grp { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); margin: 16px 10px 4px; }
+  main { padding: 24px 0 80px; min-width: 0; }
+  section.block { margin: 0 0 56px; }
+  .lead { color: var(--ink-2); font-size: 1.05rem; max-width: 70ch; }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    nav.toc { display: none; }
+    .brand span.full { display: none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    margin: 8px 0 40px; padding: 28px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--brand-soft), var(--surface) 70%);
+    border: 1px solid var(--line);
+  }
+  .hero h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+  .hero .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 999px; font-size: .82rem; font-weight: 600;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink-2);
+  }
+  .chip.green { background: var(--brand-soft); color: var(--brand-ink); border-color: transparent; }
+  .chip.amber { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .chip.blue { background: var(--blue-soft); color: var(--blue); border-color: transparent; }
+  .chip.red { background: var(--red-soft); color: var(--red); border-color: transparent; }
+
+  /* ---------- cards & grids ---------- */
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 18px; box-shadow: var(--shadow); min-width: 0;
+  }
+  .card h3 { margin-bottom: 4px; }
+  .card .sub { color: var(--ink-3); font-size: .88rem; }
+  .quick a.card { text-decoration: none; color: inherit; display: block; transition: transform .15s, border-color .15s; }
+  .quick a.card:hover { transform: translateY(-2px); border-color: var(--brand); }
+  .quick .emoji { font-size: 1.6rem; }
+
+  /* ---------- flow diagrams ---------- */
+  .flow { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; margin: 18px 0; }
+  .flow .node {
+    flex: 1 1 150px; min-width: 140px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 14px; box-shadow: var(--shadow);
+  }
+  .flow .node b { display: block; }
+  .flow .node small { color: var(--ink-3); display: block; line-height: 1.4; margin-top: 4px; }
+  .flow .node.green { border-top: 4px solid var(--brand); }
+  .flow .node.amber { border-top: 4px solid var(--accent); }
+  .flow .node.blue { border-top: 4px solid var(--blue); }
+  .flow .node.red { border-top: 4px solid var(--red); }
+  .flow .arrow { display: grid; place-items: center; padding: 0 8px; color: var(--ink-3); font-size: 1.4rem; }
+  @media (max-width: 700px) {
+    .flow { flex-direction: column; }
+    .flow .arrow { transform: rotate(90deg); padding: 4px 0; }
+  }
+
+  /* layer diagram */
+  .layers { display: grid; gap: 10px; margin: 18px 0; }
+  .layer {
+    display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 14px; align-items: center;
+    border-radius: 14px; padding: 14px 16px; border: 1px solid var(--line); background: var(--surface);
+  }
+  .layer .tag { font-weight: 700; }
+  .layer .tag small { display: block; font-weight: 400; color: var(--ink-3); font-size: .8rem; }
+  .layer .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .layer .pills code { font-size: .8rem; }
+  .layer.edit { background: var(--brand-soft); border-color: transparent; }
+  .layer.rare { background: var(--accent-soft); border-color: transparent; }
+  .layer-arrow { text-align: center; color: var(--ink-3); font-size: .85rem; margin: -4px 0; }
+  @media (max-width: 600px) { .layer { grid-template-columns: minmax(0, 1fr); } }
+
+  /* ---------- folder tree ---------- */
+  .tree { font-family: ui-monospace, Consolas, monospace; font-size: .9rem; line-height: 1.9; overflow-x: auto; }
+  .tree .row { display: flex; gap: 10px; white-space: nowrap; }
+  .tree .name { min-width: 230px; }
+  .tree .desc { color: var(--ink-3); font-family: system-ui, sans-serif; font-size: .88rem; white-space: normal; }
+  .tree .star { color: var(--brand); font-weight: 700; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+
+  /* ---------- page map ---------- */
+  .pagemap .card { padding: 14px; }
+  .pagemap .url { font-family: ui-monospace, Consolas, monospace; font-size: .82rem; color: var(--brand-ink); background: var(--brand-soft); padding: 2px 8px; border-radius: 6px; display: inline-block; }
+  .pagemap ul { margin: 8px 0 0; padding-left: 18px; font-size: .88rem; color: var(--ink-2); }
+  .pagemap li { margin: 2px 0; }
+
+  /* ---------- recipes ---------- */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 18px; }
+  .filters button {
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink-2);
+    padding: 6px 12px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .88rem;
+  }
+  .filters button[aria-pressed="true"] { background: var(--brand); color: #fff; border-color: var(--brand); }
+  details.recipe {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    margin-bottom: 12px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  details.recipe > summary {
+    list-style: none; cursor: pointer; padding: 16px 18px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  details.recipe > summary::-webkit-details-marker { display: none; }
+  details.recipe > summary .emoji { font-size: 1.4rem; width: 32px; text-align: center; flex: none; }
+  details.recipe > summary .t { flex: 1; min-width: 0; }
+  details.recipe > summary .t b { display: block; font-size: 1.05rem; }
+  details.recipe > summary .t small { color: var(--ink-3); }
+  details.recipe > summary .chev { transition: transform .2s; color: var(--ink-3); flex: none; }
+  details.recipe[open] > summary .chev { transform: rotate(90deg); }
+  details.recipe[open] > summary { border-bottom: 1px solid var(--line); }
+  .recipe .body { padding: 18px; }
+  .files { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .file {
+    display: inline-flex; align-items: center; gap: 6px; font-family: ui-monospace, Consolas, monospace;
+    font-size: .82rem; padding: 4px 10px; border-radius: 8px; background: var(--blue-soft); color: var(--blue);
+    overflow-wrap: anywhere;
+  }
+  .file.opt { background: var(--surface-2); color: var(--ink-2); }
+  ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 0 0 18px 44px; }
+  ol.steps > li::before {
+    content: counter(s); position: absolute; left: 0; top: 0;
+    width: 30px; height: 30px; border-radius: 50%; background: var(--brand); color: #fff;
+    display: grid; place-items: center; font-weight: 700; font-size: .9rem;
+  }
+  ol.steps > li::after {
+    content: ""; position: absolute; left: 14px; top: 32px; bottom: 4px; width: 2px; background: var(--line);
+  }
+  ol.steps > li:last-child::after { display: none; }
+  ol.steps > li > b:first-child { display: block; }
+
+  .code { position: relative; margin: 10px 0; }
+  .code pre {
+    margin: 0; background: var(--code-bg); color: var(--code-ink);
+    padding: 14px 16px; border-radius: 12px; overflow-x: auto; font-size: .84rem; line-height: 1.55;
+  }
+  .code .k { color: var(--code-key); }
+  .code .s { color: var(--code-str); }
+  .code .c { color: var(--code-com); font-style: italic; }
+  .code .copy {
+    position: absolute; top: 8px; right: 8px;
+    border: 1px solid rgba(255, 255, 255, .2); background: rgba(255, 255, 255, .08); color: #e3efe7;
+    border-radius: 7px; padding: 3px 9px; font: inherit; font-size: .76rem; cursor: pointer;
+  }
+  .code .label {
+    display: inline-block; font-size: .74rem; font-family: ui-monospace, Consolas, monospace;
+    color: var(--ink-3); margin-bottom: 4px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--ink-3); font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); margin: 10px 0; }
+  .table-wrap table tr:last-child td { border-bottom: 0; }
+
+  .note {
+    border-radius: 12px; padding: 12px 14px; margin: 12px 0; font-size: .93rem;
+    background: var(--accent-soft); border-left: 4px solid var(--accent);
+  }
+  .note.tip { background: var(--brand-soft); border-left-color: var(--brand); }
+  .note.warn { background: var(--red-soft); border-left-color: var(--red); }
+  .note b:first-child { margin-right: 4px; }
+
+  .hidden { display: none !important; }
+  .empty { color: var(--ink-3); padding: 20px; text-align: center; }
+
+  footer.end { color: var(--ink-3); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 20px; }
+</style>
+<script>
+  try {
+    var saved = localStorage.getItem("guide-theme");
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="dot">🌿</span><span class="full">Marudyaan Website Guide</span></div>
+  <input class="search" id="search" type="search" placeholder="Search how-tos… (e.g. team, photo, page)" aria-label="Search how-to recipes">
+  <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark mode">🌓</button>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="On this page">
+    <div class="grp">Start here</div>
+    <a href="#overview">Overview</a>
+    <a href="#golden-rule">The golden rule</a>
+    <div class="grp">How it works</div>
+    <a href="#architecture">How the pieces connect</a>
+    <a href="#folders">Folder map</a>
+    <a href="#pages">Pages &amp; their data</a>
+    <div class="grp">Make changes</div>
+    <a href="#recipes">How-to recipes</a>
+    <a href="#bilingual">Writing in two languages</a>
+    <a href="#values">Allowed values</a>
+    <div class="grp">Publish</div>
+    <a href="#workflow">Test &amp; publish</a>
+    <a href="#troubleshoot">Troubleshooting</a>
+    <div class="grp">Under the hood</div>
+    <a href="#forms">How the forms work</a>
+    <a href="#tests">The test suites</a>
+    <a href="#reference">Code reference</a>
+  </nav>
+
+  <main>
+
+    <!-- ================= OVERVIEW ================= -->
+    <section class="block" id="overview">
+      <div class="hero">
+        <h1>NGO Marudyaan website: the visual guide</h1>
+        <p class="lead">How the site is built, which file controls what, and step-by-step recipes for every common change. Keep this page open while you edit.</p>
+        <div class="chips">
+          <span class="chip green">React 19</span>
+          <span class="chip green">Vite 8</span>
+          <span class="chip green">Tailwind CSS v4</span>
+          <span class="chip blue">English ⇄ বাংলা</span>
+          <span class="chip blue">Light / dark</span>
+          <span class="chip amber">No back end, no database</span>
+          <span class="chip amber">Hosted on Netlify</span>
+        </div>
+      </div>
+
+      <h2>What do you want to do?</h2>
+      <p class="lead">Jump straight to a recipe:</p>
+      <div class="grid g3 quick">
+        <a class="card" href="#r-project"><div class="emoji">📸</div><h3>Add a gallery project</h3><div class="sub">New photo album</div></a>
+        <a class="card" href="#r-pastwork"><div class="emoji">🗓️</div><h3>Add a past work</h3><div class="sub">A drive on the Past Works page</div></a>
+        <a class="card" href="#r-team"><div class="emoji">🧑‍🤝‍🧑</div><h3>Add a team member</h3><div class="sub">About page team grid</div></a>
+        <a class="card" href="#r-page"><div class="emoji">📄</div><h3>Add a new page</h3><div class="sub">Five files to touch</div></a>
+        <a class="card" href="#r-banner"><div class="emoji">🖼️</div><h3>Change the home banner</h3><div class="sub">Carousel slides</div></a>
+        <a class="card" href="#r-contact"><div class="emoji">☎️</div><h3>Update contact or donation info</h3><div class="sub">Phone, UPI, bank</div></a>
+      </div>
+    </section>
+
+    <!-- ================= GOLDEN RULE ================= -->
+    <section class="block" id="golden-rule">
+      <h2>The golden rule</h2>
+      <p class="lead">Almost everything you'll ever change is <b>content</b>, and all content lives in a handful of files. The code only <i>reads</i> them.</p>
+      <div class="layers">
+        <div class="layer edit">
+          <div class="tag">✏️ Content<small>edit these freely</small></div>
+          <div class="pills"><code>src/data/site.js</code><code>src/data/banner.js</code><code>src/data/content.js</code><code>src/data/projects.js</code><code>src/data/pastWorks.js</code><code>src/i18n/strings.js</code><code>public/images/</code></div>
+        </div>
+        <div class="layer-arrow">▼ is read by</div>
+        <div class="layer rare">
+          <div class="tag">🧩 Pages &amp; components<small>edit for layout or a new page</small></div>
+          <div class="pills"><code>src/pages/*.jsx</code><code>src/components/*.jsx</code><code>src/App.jsx</code></div>
+        </div>
+        <div class="layer-arrow">▼ which use</div>
+        <div class="layer">
+          <div class="tag">⚙️ Machinery<small>rarely needs touching</small></div>
+          <div class="pills"><code>src/hooks/</code><code>src/utils/</code><code>src/i18n/LanguageContext.jsx</code><code>scripts/</code><code>vite.config.js</code><code>index.css</code></div>
+        </div>
+      </div>
+      <div class="note tip"><b>Tip:</b> every data file starts with a comment block explaining its fields. Open the file and read the top first.</div>
+    </section>
+
+    <!-- ================= ARCHITECTURE ================= -->
+    <section class="block" id="architecture">
+      <h2>How the pieces connect</h2>
+      <p class="lead">What happens when someone opens the site:</p>
+      <div class="flow">
+        <div class="node blue"><b>index.html</b><small>Sets light/dark before paint, loads the app</small></div>
+        <div class="arrow">→</div>
+        <div class="node blue"><b>src/main.jsx</b><small>Wraps the app in ErrorBoundary, Router and LanguageProvider</small></div>
+        <div class="arrow">→</div>
+        <div class="node blue"><b>src/App.jsx</b><small>Navbar + the page for this URL + Footer</small></div>
+        <div class="arrow">→</div>
+        <div class="node green"><b>src/pages/X.jsx</b><small>Reads content from src/data and labels from strings.js</small></div>
+      </div>
+
+      <h3 style="margin-top:28px">And when you publish a change:</h3>
+      <div class="flow">
+        <div class="node amber"><b>Edit &amp; check</b><small><code>npm run dev</code> → localhost:5173</small></div>
+        <div class="arrow">→</div>
+        <div class="node amber"><b>Test</b><small><code>npm test</code></small></div>
+        <div class="arrow">→</div>
+        <div class="node amber"><b>Push to <code>uat</code></b><small>All work goes here first</small></div>
+        <div class="arrow">→</div>
+        <div class="node amber"><b>PR uat → main</b><small>Only <code>uat</code> may merge into <code>main</code></small></div>
+        <div class="arrow">→</div>
+        <div class="node green"><b>Netlify</b><small>Builds <code>main</code> and publishes the live site</small></div>
+      </div>
+    </section>
+
+    <!-- ================= FOLDERS ================= -->
+    <section class="block" id="folders">
+      <h2>Folder map</h2>
+      <div class="legend"><span class="chip green">★ edit often</span><span class="chip amber">edit sometimes</span><span class="chip">rarely</span></div>
+      <div class="card tree">
+        <div class="row"><span class="name">ngo-marudyaan/</span></div>
+        <div class="row"><span class="name">├─ <span class="star">src/data/</span> ★</span><span class="desc">All editable content: settings, banner, programmes, team, albums, past works</span></div>
+        <div class="row"><span class="name">├─ <span class="star">src/i18n/strings.js</span> ★</span><span class="desc">Every button, heading and label, in English and Bengali</span></div>
+        <div class="row"><span class="name">├─ <span class="star">public/images/</span> ★</span><span class="desc"><code>team/</code> photos, <code>projects/&lt;id&gt;/</code> album photos, QR code, logo</span></div>
+        <div class="row"><span class="name">├─ src/pages/</span><span class="desc">One file per page (Home.jsx, About.jsx …)</span></div>
+        <div class="row"><span class="name">├─ src/components/</span><span class="desc">Shared parts: Navbar, Footer, PageHeader, Photo, Icon …</span></div>
+        <div class="row"><span class="name">├─ src/App.jsx</span><span class="desc">The list of pages (routes)</span></div>
+        <div class="row"><span class="name">├─ src/index.css</span><span class="desc">Colours, fonts, animations</span></div>
+        <div class="row"><span class="name">├─ public/_redirects</span><span class="desc">Netlify: list of real page addresses</span></div>
+        <div class="row"><span class="name">├─ public/sitemap.xml</span><span class="desc">Search engines: list of real page addresses</span></div>
+        <div class="row"><span class="name">├─ src/hooks/, src/utils/</span><span class="desc">Reusable logic: page titles, forms, validation, theme</span></div>
+        <div class="row"><span class="name">├─ scripts/</span><span class="desc">Photo tools, social-preview image, build checks</span></div>
+        <div class="row"><span class="name">├─ tests/e2e/</span><span class="desc">Automatic browser tests (<code>npm test</code>)</span></div>
+        <div class="row"><span class="name">└─ docs/</span><span class="desc">This guide and CODEBASE_GUIDE.md</span></div>
+      </div>
+    </section>
+
+    <!-- ================= PAGES ================= -->
+    <section class="block" id="pages">
+      <h2>Pages and the data behind them</h2>
+      <p class="lead">Each card shows the page's address, its file, and which content feeds it.</p>
+      <div class="grid g3 pagemap">
+        <div class="card"><span class="url">/</span><h3>Home</h3><div class="sub">pages/Home.jsx</div>
+          <ul><li>Banner: <code>banner.js</code></li><li>Counters: <code>stats</code> in site.js</li><li>Programmes, values, testimonials: <code>content.js</code></li><li>Photo preview: <code>projects.js</code></li></ul></div>
+        <div class="card"><span class="url">/about</span><h3>About Us</h3><div class="sub">pages/About.jsx</div>
+          <ul><li>Programmes, values, team: <code>content.js</code></li><li>Latest 3 works: <code>pastWorks.js</code></li><li>Legal table: <code>site.registration</code></li></ul></div>
+        <div class="card"><span class="url">/past-works</span><h3>Past Works</h3><div class="sub">pages/PastWorks.jsx</div>
+          <ul><li>Every drive: <code>pastWorks.js</code></li><li>Photos via its <code>project</code> album</li></ul></div>
+        <div class="card"><span class="url">/gallery</span><h3>Gallery</h3><div class="sub">pages/Gallery.jsx</div>
+          <ul><li>Albums: <code>projects.js</code></li><li>Photos: <code>public/images/projects/&lt;id&gt;/</code></li></ul></div>
+        <div class="card"><span class="url">/get-involved</span><h3>Get Involved</h3><div class="sub">pages/GetInvolved.jsx</div>
+          <ul><li><code>volunteerRoles</code>, <code>faqs</code> in content.js</li><li>Form key: <code>forms.keys.involved</code></li></ul></div>
+        <div class="card"><span class="url">/request-help</span><h3>Request Help</h3><div class="sub">pages/RequestHelp.jsx</div>
+          <ul><li>Drives &amp; needs: <code>helpPrograms</code></li><li>Form key: <code>forms.keys.help</code></li></ul></div>
+        <div class="card"><span class="url">/donate</span><h3>Donate</h3><div class="sub">pages/Donate.jsx</div>
+          <ul><li>UPI, bank, QR: <code>site.donation</code></li><li>Amounts: <code>donationTiers</code></li></ul></div>
+        <div class="card"><span class="url">/contact</span><h3>Contact</h3><div class="sub">pages/Contact.jsx</div>
+          <ul><li>Details &amp; map: <code>site.contact</code></li><li>Socials: <code>site.social</code></li><li>Form key: <code>forms.keys.contact</code></li></ul></div>
+        <div class="card"><span class="url">anything else</span><h3>404</h3><div class="sub">pages/NotFound.jsx</div>
+          <ul><li>Text: <code>nf.*</code> in strings.js</li></ul></div>
+      </div>
+      <div class="note"><b>On every page:</b> the Navbar and Footer read <code>site.js</code> (name, contact, socials) and <code>banner.js</code> (the announcement strip). All button and heading text comes from <code>strings.js</code>.</div>
+    </section>
+
+    <!-- ================= RECIPES ================= -->
+    <section class="block" id="recipes">
+      <h2>How-to recipes</h2>
+      <p class="lead">Click a recipe to open it. Blue chips are the files you change. Every code block has a <b>Copy</b> button.</p>
+      <div class="filters" id="filters" role="group" aria-label="Filter recipes">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="photos" aria-pressed="false">Photos &amp; albums</button>
+        <button type="button" data-f="people" aria-pressed="false">People</button>
+        <button type="button" data-f="text" aria-pressed="false">Text &amp; content</button>
+        <button type="button" data-f="settings" aria-pressed="false">Settings</button>
+        <button type="button" data-f="code" aria-pressed="false">Pages &amp; code</button>
+      </div>
+
+      <div id="recipe-list">
+
+      <!-- ---------- project ---------- -->
+      <details class="recipe" id="r-project" data-cat="photos" data-k="gallery album project photos images pictures add new">
+        <summary><span class="emoji">📸</span><span class="t"><b>Add a gallery project (photo album)</b><small>A new album on the Gallery page, up to 5 photos</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">public/images/projects/&lt;id&gt;/</span><span class="file">src/data/projects.js</span><span class="file opt">pastWorks.js (optional)</span></div>
+          <ol class="steps">
+            <li><b>Pick an id</b>Year first, lowercase, dashes: <code>2025-puja-drive</code>. It becomes the folder name and the link <code>/gallery#2025-puja-drive</code>.</li>
+            <li><b>Copy the photos in</b>Run this in the project folder. It renames them <code>01.jpg</code>…<code>05.jpg</code>, skips duplicates and stops at five.
+              <div class="code"><pre>npm run add-photos -- "C:\Users\me\Downloads\Puja 2025" 2025-puja-drive</pre></div>
+              Or make the folder <code>public/images/projects/2025-puja-drive/</code> and drop the files in yourself.
+            </li>
+            <li><b>Add a block to <code>projects</code></b>Open <code>src/data/projects.js</code> and paste this at the top of the <code>projects</code> list. The <code>id</code> must match the folder exactly.
+              <div class="code"><pre><span class="c">// src/data/projects.js → inside  export const projects = [ … ]</span>
+{
+  <span class="k">id</span>: <span class="s">"2025-puja-drive"</span>,
+  <span class="k">year</span>: 2025,
+  <span class="k">category</span>: <span class="s">"festival"</span>,          <span class="c">// education | festival | winter</span>
+  <span class="k">cover</span>: <span class="s">"03.jpg"</span>,               <span class="c">// optional: defaults to the first photo</span>
+  <span class="k">title</span>: { en: <span class="s">"Puja Drive"</span>, bn: <span class="s">"পুজোর উদ্যোগ"</span> },
+  <span class="k">summary</span>: { en: <span class="s">"What happened…"</span>, bn: <span class="s">"কী হয়েছিল…"</span> },
+  <span class="k">captions</span>: {                    <span class="c">// optional, one per photo</span>
+    <span class="s">"01.jpg"</span>: { en: <span class="s">"Caption"</span>, bn: <span class="s">"ক্যাপশন"</span> },
+  },
+},</pre></div>
+            </li>
+            <li><b>Link it (optional)</b>To show the album on a past work, set <code>project: "2025-puja-drive"</code> on that work in <code>pastWorks.js</code>. To use it as a programme's photo, set <code>project:</code> on the programme in <code>content.js</code>.</li>
+            <li><b>Check it</b><code>npm run dev</code> → open <code>/gallery</code>. Then <code>npm test</code>.</li>
+          </ol>
+          <div class="table-wrap"><table>
+            <tr><th>Field</th><th>Required?</th><th>Meaning</th></tr>
+            <tr><td><code>id</code></td><td>yes</td><td>Folder name in <code>public/images/projects/</code></td></tr>
+            <tr><td><code>year</code></td><td>yes</td><td>Shown on the album; albums sort newest first</td></tr>
+            <tr><td><code>category</code></td><td>yes</td><td><code>education</code>, <code>festival</code> or <code>winter</code>: sets the Gallery filter</td></tr>
+            <tr><td><code>cover</code></td><td>no</td><td>File name of the photo used on Home and About</td></tr>
+            <tr><td><code>captions</code></td><td>no</td><td>Per photo; a photo without one uses the title</td></tr>
+            <tr><td><code>active</code></td><td>no</td><td>Set <code>false</code> to hide the album without deleting it</td></tr>
+          </table></div>
+          <div class="note"><b>Swap a photo:</b> delete the one you don't want from the folder (and its caption), then add the new file. A sixth photo is ignored, and <code>npm test</code> reports which album has too many.</div>
+        </div>
+      </details>
+
+      <!-- ---------- past work ---------- -->
+      <details class="recipe" id="r-pastwork" data-cat="text" data-k="past work drive event history timeline add new">
+        <summary><span class="emoji">🗓️</span><span class="t"><b>Add a past work</b><small>A drive on the Past Works page (latest 3 also show on About)</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/pastWorks.js</span></div>
+          <ol class="steps">
+            <li><b>Copy an existing block</b>Paste it anywhere in the <code>pastWorks</code> list. Order doesn't matter: the site sorts by date.
+              <div class="code"><pre><span class="c">// src/data/pastWorks.js → inside  export const pastWorks = [ … ]</span>
+{
+  <span class="k">id</span>: <span class="s">"puja-drive-2025"</span>,               <span class="c">// link: /past-works#puja-drive-2025</span>
+  <span class="k">date</span>: <span class="s">"2025-10-05"</span>,                   <span class="c">// or just "2025"</span>
+  <span class="k">place</span>: { en: <span class="s">"Belgharia, Kolkata"</span>, bn: <span class="s">"বেলঘরিয়া, কলকাতা"</span> },  <span class="c">// optional</span>
+  <span class="k">category</span>: <span class="s">"festival"</span>,                 <span class="c">// education | festival | winter</span>
+  <span class="k">project</span>: <span class="s">"2025-puja-drive"</span>,           <span class="c">// optional: a gallery album id</span>
+  <span class="k">title</span>: { en: <span class="s">"Puja Drive"</span>, bn: <span class="s">"পুজোর উদ্যোগ"</span> },
+  <span class="k">summary</span>: { en: <span class="s">"…"</span>, bn: <span class="s">"…"</span> },
+  <span class="k">highlights</span>: [                         <span class="c">// optional dated points</span>
+    { date: <span class="s">"2025-10-05"</span>, en: <span class="s">"…"</span>, bn: <span class="s">"…"</span> },
+  ],
+},</pre></div>
+            </li>
+            <li><b>Photos?</b>Without <code>project</code>, the card shows the programme's icon. To give it photos, <a href="#r-project">make an album</a> and set <code>project</code> to its id.</li>
+            <li><b>Check it</b>Open <code>/past-works</code>: it appears under its year.</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- ---------- team ---------- -->
+      <details class="recipe" id="r-team" data-cat="people" data-k="team member person committee board people add remove photo">
+        <summary><span class="emoji">🧑‍🤝‍🧑</span><span class="t"><b>Add, change or remove a team member</b><small>The team grid on the About page</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">public/images/team/</span><span class="file">src/data/content.js → team</span></div>
+          <ol class="steps">
+            <li><b>Add the photo</b>Save a square photo (about 400×400 px) as <code>public/images/team/firstname-lastname.jpg</code>. No photo? Skip this step: the site shows their initials.</li>
+            <li><b>Add a line to <code>team</code></b>In <code>src/data/content.js</code>, find <code>export const team = [</code> and add a line where you want them to appear. Give a new unique <code>id</code>.
+              <div class="code"><pre><span class="c">// src/data/content.js → inside  export const team = [ … ]</span>
+{ <span class="k">id</span>: <span class="s">"t11"</span>, <span class="k">photo</span>: <span class="s">"/images/team/firstname-lastname.jpg"</span>, <span class="k">name</span>: { en: <span class="s">"First Last"</span>, bn: <span class="s">"বাংলা নাম"</span> }, <span class="k">role</span>: { en: <span class="s">"Member"</span>, bn: <span class="s">"সদস্য"</span> } },</pre></div>
+              For no photo, use <code>photo: ""</code>.
+            </li>
+            <li><b>Check it</b>Open <code>/about</code> and scroll to the team.</li>
+          </ol>
+          <div class="note"><b>Remove someone:</b> delete their line (and their photo file). <b>Reorder:</b> move the lines; the list order is the page order.</div>
+        </div>
+      </details>
+
+      <!-- ---------- page ---------- -->
+      <details class="recipe" id="r-page" data-cat="code" data-k="new page route menu navigation link url add">
+        <summary><span class="emoji">📄</span><span class="t"><b>Add a new page</b><small>Five files must agree, or the tests fail</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/pages/MyPage.jsx (new)</span><span class="file">src/App.jsx</span><span class="file">public/_redirects</span><span class="file">public/sitemap.xml</span><span class="file">src/i18n/strings.js</span><span class="file opt">Navbar.jsx + Footer.jsx (for menus)</span></div>
+          <div class="flow">
+            <div class="node green"><b>1. Page file</b><small>src/pages/</small></div><div class="arrow">+</div>
+            <div class="node green"><b>2. Route</b><small>App.jsx</small></div><div class="arrow">+</div>
+            <div class="node green"><b>3. Netlify</b><small>_redirects</small></div><div class="arrow">+</div>
+            <div class="node green"><b>4. Sitemap</b><small>sitemap.xml</small></div><div class="arrow">+</div>
+            <div class="node green"><b>5. Labels</b><small>strings.js</small></div>
+          </div>
+          <ol class="steps">
+            <li><b>Create the page file</b><code>src/pages/MyPage.jsx</code>:
+              <div class="code"><pre>import PageHeader from "../components/PageHeader";
+import { site } from "../data/site";
+import { useLang } from "../i18n/LanguageContext";
+import usePageMeta from "../hooks/usePageMeta";
+
+export default function MyPage() {
+  const { t } = useLang();
+  usePageMeta(`${t("mypage.title")} — ${site.name}`, "English description for search engines.");
+
+  return (
+    &lt;&gt;
+      &lt;PageHeader title={t("mypage.title")} sub={t("mypage.sub")} /&gt;
+      &lt;section className="container-page py-16"&gt;
+        &lt;p className="text-ink-2"&gt;{t("mypage.intro")}&lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/&gt;
+  );
+}</pre></div>
+            </li>
+            <li><b>Register the route</b>In <code>src/App.jsx</code>: import it at the top, then add the route <i>above</i> the <code>path="*"</code> line.
+              <div class="code"><pre>import MyPage from "./pages/MyPage";
+<span class="c">// …inside &lt;Routes&gt;, above the "*" route:</span>
+&lt;Route path="/my-page" element={&lt;MyPage /&gt;} /&gt;</pre></div>
+            </li>
+            <li><b>Tell Netlify it's a real page</b>In <code>public/_redirects</code>, add a line with the other pages, <i>above</i> the <code>/*</code> line. Without it, the page works but reports "404" to search engines.
+              <div class="code"><pre>/my-page        /index.html   200</pre></div>
+            </li>
+            <li><b>Add it to the sitemap</b>In <code>public/sitemap.xml</code>:
+              <div class="code"><pre>&lt;url&gt;&lt;loc&gt;https://marudyaan.com/my-page&lt;/loc&gt;&lt;/url&gt;</pre></div>
+            </li>
+            <li><b>Add the labels in both languages</b>In <code>src/i18n/strings.js</code>, add the keys to the <code>en</code> block <i>and</i> the <code>bn</code> block.
+              <div class="code"><pre><span class="c">// in en: { … }</span>
+<span class="s">"nav.mypage"</span>: <span class="s">"My Page"</span>,
+<span class="s">"mypage.title"</span>: <span class="s">"My Page"</span>,
+<span class="s">"mypage.sub"</span>: <span class="s">"A short line under the title"</span>,
+<span class="s">"mypage.intro"</span>: <span class="s">"Opening paragraph."</span>,
+
+<span class="c">// in bn: { … }</span>
+<span class="s">"nav.mypage"</span>: <span class="s">"আমার পাতা"</span>,
+<span class="s">"mypage.title"</span>: <span class="s">"আমার পাতা"</span>,
+<span class="s">"mypage.sub"</span>: <span class="s">"শিরোনামের নিচের লাইন"</span>,
+<span class="s">"mypage.intro"</span>: <span class="s">"প্রথম অনুচ্ছেদ।"</span>,</pre></div>
+            </li>
+            <li><b>Put it in the menus (optional)</b>Add the same line to <code>links</code> in <code>src/components/Navbar.jsx</code> and to <code>quickLinks</code> in <code>src/components/Footer.jsx</code>:
+              <div class="code"><pre>{ to: "/my-page", key: "nav.mypage" },</pre></div>
+            </li>
+            <li><b>Check it</b><code>npm test</code>. The <b>navigation</b> suite fails if <code>App.jsx</code>, <code>_redirects</code> and <code>sitemap.xml</code> don't list the same pages.</li>
+          </ol>
+          <div class="note"><b>Rules for the new page:</b> exactly one <code>&lt;h1&gt;</code> (PageHeader gives you it), no hard-coded English (use <code>t()</code> or <code>tr()</code>), and <code>&lt;Photo&gt;</code> instead of <code>&lt;img&gt;</code>.</div>
+        </div>
+      </details>
+
+      <!-- ---------- banner ---------- -->
+      <details class="recipe" id="r-banner" data-cat="photos" data-k="home banner carousel slide hero picture">
+        <summary><span class="emoji">🖼️</span><span class="t"><b>Change the home banner / add a slide</b><small>The big rotating carousel on the home page</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/banner.js → bannerSlides</span><span class="file opt">public/images/ (new picture)</span></div>
+          <ol class="steps">
+            <li><b>Pick a picture</b>Any gallery photo works (<code>/images/projects/&lt;id&gt;/01.jpg</code>), or put a new one in <code>public/images/</code>. A wide landscape photo works best.</li>
+            <li><b>Edit or copy a slide</b>
+              <div class="code"><pre><span class="c">// src/data/banner.js → inside  export const bannerSlides = [ … ]</span>
+{
+  <span class="k">id</span>: <span class="s">"winter-2026"</span>,
+  <span class="k">active</span>: true,                         <span class="c">// false hides the slide</span>
+  <span class="k">image</span>: <span class="s">"/images/projects/2019-netaji-jayanti-winter-drive/01.jpg"</span>,
+  <span class="k">align</span>: <span class="s">"left"</span>,                         <span class="c">// "left" | "center"</span>
+  <span class="k">kicker</span>: { en: <span class="s">"Coming up next"</span>, bn: <span class="s">"পরবর্তী উদ্যোগ"</span> },
+  <span class="k">title</span>: { en: <span class="s">"…"</span>, bn: <span class="s">"…"</span> },
+  <span class="k">subtitle</span>: { en: <span class="s">"…"</span>, bn: <span class="s">"…"</span> },
+  <span class="k">primaryCta</span>: { label: { en: <span class="s">"Donate"</span>, bn: <span class="s">"দান করুন"</span> }, to: <span class="s">"/donate"</span> },     <span class="c">// optional</span>
+  <span class="k">secondaryCta</span>: { label: { en: <span class="s">"Contact us"</span>, bn: <span class="s">"যোগাযোগ করুন"</span> }, to: <span class="s">"/contact"</span> }, <span class="c">// optional</span>
+},</pre></div>
+            </li>
+            <li><b>Speed &amp; auto-play</b><code>bannerSettings</code> at the top of the file: <code>autoPlay: true/false</code>, <code>intervalMs: 6500</code>.</li>
+          </ol>
+          <div class="note tip"><b>The first active slide's photo loads first</b> for speed, so put your most important slide first.</div>
+        </div>
+      </details>
+
+      <!-- ---------- announcement ---------- -->
+      <details class="recipe" id="r-strip" data-cat="text" data-k="announcement strip top banner notice header bar">
+        <summary><span class="emoji">📢</span><span class="t"><b>Show, hide or change the top announcement strip</b><small>The thin bar above the header</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/banner.js → announcement</span></div>
+          <div class="code"><pre>export const announcement = {
+  <span class="k">active</span>: true,                          <span class="c">// the on/off switch</span>
+  <span class="k">badge</span>: { en: <span class="s">"New"</span>, bn: <span class="s">"নতুন"</span> },         <span class="c">// "" drops the pill</span>
+  <span class="k">text</span>: { en: <span class="s">"Puja donation drive is open…"</span>, bn: <span class="s">"…"</span> },
+  <span class="k">linkLabel</span>: { en: <span class="s">"Donate"</span>, bn: <span class="s">"দান করুন"</span> }, <span class="c">// "" drops the link</span>
+  <span class="k">to</span>: <span class="s">"/donate"</span>,
+};</pre></div>
+        </div>
+      </details>
+
+      <!-- ---------- contact & donation ---------- -->
+      <details class="recipe" id="r-contact" data-cat="settings" data-k="contact phone email whatsapp address map social facebook instagram upi bank qr donation registration pan 80g">
+        <summary><span class="emoji">☎️</span><span class="t"><b>Update contact, social, donation or registration details</b><small>All in one settings file</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/site.js</span><span class="file opt">public/images/donate-qr.png</span></div>
+          <div class="table-wrap"><table>
+            <tr><th>To change…</th><th>Edit in <code>site.js</code></th><th>Notes</th></tr>
+            <tr><td>Phone</td><td><code>contact.phone</code> + <code>contact.phoneHref</code></td><td><code>phone</code> is how it's shown (<code>+91 87775 94521</code>); <code>phoneHref</code> is digits only (<code>+918777594521</code>)</td></tr>
+            <tr><td>WhatsApp</td><td><code>contact.whatsapp</code> + <code>contact.whatsappHref</code></td><td><code>whatsappHref</code> is digits with country code, no <code>+</code> (<code>919163178138</code>)</td></tr>
+            <tr><td>Email</td><td><code>contact.email</code></td><td>Also where the email fallback for forms goes</td></tr>
+            <tr><td>Address, area, hours</td><td><code>contact.addressLines</code>, <code>serviceArea</code>, <code>hours</code></td><td><code>addressLines</code> is a list, one line each</td></tr>
+            <tr><td>Map</td><td><code>contact.mapEmbed</code></td><td>Google Maps → Share → Embed a map → copy the <code>src</code> URL</td></tr>
+            <tr><td>Social links</td><td><code>social.facebook</code>, <code>instagram</code>, <code>youtube</code>, <code>twitter</code></td><td><code>""</code> hides that icon</td></tr>
+            <tr><td>UPI</td><td><code>donation.upiId</code>, <code>upiName</code></td><td>Must be the same account as the QR code</td></tr>
+            <tr><td>QR code</td><td>replace the file <code>public/images/donate-qr.png</code></td><td>Any square PNG/JPG. If missing, the page shows a placeholder.</td></tr>
+            <tr><td>One-tap UPI buttons</td><td><code>donation.upiButtons</code></td><td><code>true</code> only with a real UPI ID. Shown on phones only.</td></tr>
+            <tr><td>Bank details</td><td><code>donation.bank.*</code></td><td>Account name, number, bank, branch, IFSC, type</td></tr>
+            <tr><td>Registration, PAN</td><td><code>registration.*</code></td><td>Shown in the About page legal table</td></tr>
+            <tr><td>80G</td><td><code>registration.eightyG</code> + <code>donation.taxNote: true</code></td><td>Empty hides it everywhere</td></tr>
+          </table></div>
+        </div>
+      </details>
+
+      <!-- ---------- stats ---------- -->
+      <details class="recipe" id="r-stats" data-cat="settings" data-k="impact numbers stats counters meals children volunteers">
+        <summary><span class="emoji">📊</span><span class="t"><b>Change the impact numbers</b><small>The counting-up numbers on the home page</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/site.js → stats</span><span class="file opt">strings.js (label for a new one)</span></div>
+          <div class="code"><pre>export const stats = [
+  { <span class="k">id</span>: <span class="s">"meals"</span>,      <span class="k">value</span>: 12000, <span class="k">suffix</span>: <span class="s">"+"</span> },
+  { <span class="k">id</span>: <span class="s">"children"</span>,   <span class="k">value</span>: 450,   <span class="k">suffix</span>: <span class="s">"+"</span> },
+  ...
+];</pre></div>
+          <p>To change a number, edit its <code>value</code>. To <b>add</b> a new counter, add a line with a new <code>id</code> and add its label <code>"stat.&lt;id&gt;"</code> to both <code>en</code> and <code>bn</code> in <code>strings.js</code>.</p>
+        </div>
+      </details>
+
+      <!-- ---------- programme ---------- -->
+      <details class="recipe" id="r-program" data-cat="text" data-k="programme program what we do education festival winter cards">
+        <summary><span class="emoji">🌱</span><span class="t"><b>Edit a programme</b><small>"What we do" cards on Home and sections on About</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/content.js → programs</span></div>
+          <div class="code"><pre>{
+  <span class="k">id</span>: <span class="s">"education"</span>,                    <span class="c">// link: /about#education</span>
+  <span class="k">icon</span>: <span class="s">"book"</span>,                         <span class="c">// a name from Icon.jsx</span>
+  <span class="k">image</span>: <span class="s">"/images/work-education.svg"</span>,  <span class="c">// used only if there is no project</span>
+  <span class="k">project</span>: <span class="s">"2021-micro-library"</span>,       <span class="c">// optional: use this album's cover &amp; link</span>
+  <span class="k">title</span>: { en: <span class="s">"…"</span>, bn: <span class="s">"…"</span> },
+  <span class="k">summary</span>: { en: <span class="s">"…"</span>, bn: <span class="s">"…"</span> },
+  <span class="k">details</span>: { en: [<span class="s">"point 1"</span>, <span class="s">"point 2"</span>], bn: [<span class="s">"…"</span>, <span class="s">"…"</span>] },
+},</pre></div>
+          <div class="note warn"><b>Careful:</b> the ids <code>education</code>, <code>festival</code> and <code>winter</code> are also the categories used by albums and past works. Adding a whole new programme means a new category, and every album and past work must use one of the ids in this list. Editing text is always safe.</div>
+        </div>
+      </details>
+
+      <!-- ---------- lists ---------- -->
+      <details class="recipe" id="r-lists" data-cat="text" data-k="faq question answer testimonial quote voice volunteer role donation tier amount values">
+        <summary><span class="emoji">💬</span><span class="t"><b>Edit FAQs, testimonials, volunteer roles, donation amounts or values</b><small>Simple lists, all in content.js</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/content.js</span></div>
+          <p>Each is a list. Copy a block, give it a new unique <code>id</code>, and change the text.</p>
+          <div class="table-wrap"><table>
+            <tr><th>List</th><th>One item looks like</th><th>Shown on</th></tr>
+            <tr><td><code>faqs</code></td><td><code>{ id: "f9", q: { en, bn }, a: { en, bn } }</code></td><td>Get Involved</td></tr>
+            <tr><td><code>testimonials</code></td><td><code>{ id: "v4", quote: { en, bn }, author: { en, bn } }</code></td><td>Home</td></tr>
+            <tr><td><code>volunteerRoles</code></td><td><code>{ id: "design", title: { en, bn }, text: { en, bn } }</code></td><td>Get Involved (cards + form dropdown)</td></tr>
+            <tr><td><code>donationTiers</code></td><td><code>{ id: "d5", amount: 5000, impact: { en, bn } }</code></td><td>Donate</td></tr>
+            <tr><td><code>values</code></td><td><code>{ id: "kindness", title: { en, bn }, text: { en, bn } }</code></td><td>Home, About</td></tr>
+          </table></div>
+          <div class="code"><pre><span class="c">// example: a new FAQ in  export const faqs = [ … ]</span>
+{
+  <span class="k">id</span>: <span class="s">"f9"</span>,
+  <span class="k">q</span>: { en: <span class="s">"Do you work outside Kolkata?"</span>, bn: <span class="s">"আপনারা কি কলকাতার বাইরে কাজ করেন?"</span> },
+  <span class="k">a</span>: { en: <span class="s">"Yes, across West Bengal."</span>, bn: <span class="s">"হ্যাঁ, পশ্চিমবঙ্গ জুড়ে।"</span> },
+},</pre></div>
+        </div>
+      </details>
+
+      <!-- ---------- help programs ---------- -->
+      <details class="recipe" id="r-help" data-cat="text" data-k="request help drive need checkbox form">
+        <summary><span class="emoji">🤝</span><span class="t"><b>Add a Request Help drive or need</b><small>The choices on the Request Help form</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/content.js → helpPrograms</span></div>
+          <div class="code"><pre>{
+  <span class="k">id</span>: <span class="s">"medical"</span>,
+  <span class="k">icon</span>: <span class="s">"heart"</span>,
+  <span class="k">title</span>: { en: <span class="s">"Medical help"</span>, bn: <span class="s">"চিকিৎসা সহায়তা"</span> },
+  <span class="k">text</span>: { en: <span class="s">"Medicines and check-ups."</span>, bn: <span class="s">"ওষুধ ও স্বাস্থ্য পরীক্ষা।"</span> },
+  <span class="k">needs</span>: [
+    { <span class="k">id</span>: <span class="s">"med-medicine"</span>, <span class="k">label</span>: { en: <span class="s">"Medicines"</span>, bn: <span class="s">"ওষুধ"</span> } },
+  ],
+},</pre></div>
+          <div class="note"><b>Rule:</b> every need <code>id</code> must be unique across <i>all</i> drives. Prefix it with the drive (<code>med-…</code>). Keep the <code>other</code> drive last, with <code>needs: []</code>.</div>
+        </div>
+      </details>
+
+      <!-- ---------- labels ---------- -->
+      <details class="recipe" id="r-labels" data-cat="text" data-k="button label heading text menu strings translation bengali">
+        <summary><span class="emoji">🔤</span><span class="t"><b>Change a button label, heading or menu name</b><small>Any fixed text on the site</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/i18n/strings.js</span></div>
+          <ol class="steps">
+            <li><b>Find the key</b>Search <code>strings.js</code> for the English text you see on the site, e.g. <code>"Get Involved"</code> → key <code>"nav.involved"</code>.</li>
+            <li><b>Change both languages</b>The same key appears once in the <code>en</code> block and once in the <code>bn</code> block. Update both.</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- ---------- forms ---------- -->
+      <details class="recipe" id="r-forms" data-cat="settings" data-k="forms web3forms key email inbox contact volunteer help">
+        <summary><span class="emoji">✉️</span><span class="t"><b>Turn direct form sending on or off</b><small>Web3Forms keys for the three forms</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/site.js → forms.keys</span></div>
+          <div class="code"><pre>forms: {
+  keys: {
+    <span class="k">contact</span>:  <span class="s">"…key…"</span>,   <span class="c">// Contact page</span>
+    <span class="k">involved</span>: <span class="s">"…key…"</span>,   <span class="c">// Get Involved page</span>
+    <span class="k">help</span>:     <span class="s">"…key…"</span>,   <span class="c">// Request Help page</span>
+  },
+},</pre></div>
+          <p>With a key, the form sends straight to the inbox. With <code>""</code>, it opens the visitor's email app instead. Get keys at <a href="https://web3forms.com" target="_blank" rel="noopener">web3forms.com</a>, one per form, using the NGO's email. They're safe to publish: a key can only send to the NGO's own inbox.</p>
+        </div>
+      </details>
+
+      <!-- ---------- name ---------- -->
+      <details class="recipe" id="r-name" data-cat="settings" data-k="name tagline og image social preview whatsapp share">
+        <summary><span class="emoji">🏷️</span><span class="t"><b>Change the NGO's name, tagline or share preview</b><small>And the image WhatsApp/Facebook show for links</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/data/site.js</span><span class="file opt">public/images/og-image.jpg (generated)</span></div>
+          <ol class="steps">
+            <li><b>Edit</b><code>name</code>, <code>nameBn</code>, <code>tagline</code>, <code>taglineBn</code> at the top of <code>site.js</code>.</li>
+            <li><b>Regenerate the preview image</b><div class="code"><pre>npm run og-image</pre></div>This renders a fresh <code>public/images/og-image.jpg</code> using your installed Chrome.</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- ---------- icon ---------- -->
+      <details class="recipe" id="r-icon" data-cat="code" data-k="icon svg symbol">
+        <summary><span class="emoji">⭐</span><span class="t"><b>Add an icon</b><small>Built-in SVG icon set</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/components/Icon.jsx → paths</span></div>
+          <p>Add an entry to the <code>paths</code> object with the SVG path data (24×24 viewBox, stroked). Then use it by name, e.g. <code>icon: "star"</code> in a data file, or <code>&lt;Icon name="star" /&gt;</code> in code.</p>
+        </div>
+      </details>
+
+      <!-- ---------- colours ---------- -->
+      <details class="recipe" id="r-colors" data-cat="code" data-k="colour color brand theme dark mode font style css">
+        <summary><span class="emoji">🎨</span><span class="t"><b>Change brand colours or fonts</b><small>Site-wide look</small></span><span class="chev">▶</span></summary>
+        <div class="body">
+          <div class="files"><span class="file">src/index.css</span><span class="file opt">src/main.jsx (font imports)</span></div>
+          <ul>
+            <li><b>Colours that change with dark mode</b>: the <code>--c-*</code> variables. Change them in <i>both</i> the <code>:root</code> (light) block and the <code>[data-theme="dark"]</code> block.</li>
+            <li><b>Fixed colours</b> (<code>oasis-*</code>, <code>lime-*</code>, <code>saffron-*</code>, <code>night</code>): in the <code>@theme</code> block.</li>
+            <li><b>Fonts</b>: <code>--font-display</code> and <code>--font-sans</code> in <code>@theme</code>; the font packages are imported in <code>main.jsx</code>.</li>
+          </ul>
+        </div>
+      </details>
+
+      <p class="empty hidden" id="no-results">No recipe matches. Try another word, or check the <a href="#reference">code reference</a>.</p>
+      </div>
+    </section>
+
+    <!-- ================= BILINGUAL ================= -->
+    <section class="block" id="bilingual">
+      <h2>Writing in two languages</h2>
+      <p class="lead">Every piece of visible text exists in English and Bengali. There are two kinds:</p>
+      <div class="grid g2">
+        <div class="card">
+          <span class="chip blue">Content</span>
+          <h3 style="margin-top:8px">In <code>src/data/*.js</code></h3>
+          <p>Written as an object with both languages, right where it's used:</p>
+          <div class="code"><pre><span class="k">title</span>: { en: <span class="s">"Winter drive"</span>, bn: <span class="s">"শীতবস্ত্র কর্মসূচি"</span> }</pre></div>
+          <p class="sub">Code reads it with <code>tr(item.title)</code>.</p>
+        </div>
+        <div class="card">
+          <span class="chip green">Labels</span>
+          <h3 style="margin-top:8px">In <code>src/i18n/strings.js</code></h3>
+          <p>A key in the <code>en</code> block <i>and</i> the same key in the <code>bn</code> block:</p>
+          <div class="code"><pre><span class="c">// en</span>  <span class="s">"nav.donate"</span>: <span class="s">"Donate"</span>,
+<span class="c">// bn</span>  <span class="s">"nav.donate"</span>: <span class="s">"দান করুন"</span>,</pre></div>
+          <p class="sub">Code reads it with <code>t("nav.donate")</code>.</p>
+        </div>
+      </div>
+      <div class="note"><b>Forgot the Bengali?</b> The site falls back to English rather than showing a blank, but the a11y test flags English leaking into Bengali mode. Outgoing form emails are always English, on purpose.</div>
+    </section>
+
+    <!-- ================= VALUES ================= -->
+    <section class="block" id="values">
+      <h2>Allowed values</h2>
+      <div class="table-wrap"><table>
+        <tr><th>Field</th><th>Allowed values</th></tr>
+        <tr><td><code>category</code> (albums, past works)</td><td><code>education</code> · <code>festival</code> · <code>winter</code> (the programme ids)</td></tr>
+        <tr><td><code>date</code> (past works)</td><td><code>"YYYY-MM-DD"</code> or <code>"YYYY"</code></td></tr>
+        <tr><td><code>align</code> (banner)</td><td><code>"left"</code> · <code>"center"</code></td></tr>
+        <tr><td><code>to</code> (links)</td><td>a page path: <code>/donate</code>, <code>/about#education</code>, <code>/gallery#2021-micro-library</code></td></tr>
+        <tr><td>photos per album</td><td>up to <b>5</b> (JPG, PNG, WebP, AVIF)</td></tr>
+        <tr><td><code>icon</code></td><td><code>bowl book heart blanket gift hands phone mail pin clock globe whatsapp facebook instagram youtube arrowRight arrowUp check copy close menu chevronLeft chevronRight chevronDown pause play quote sprout shield users</code></td></tr>
+        <tr><td><code>active</code></td><td><code>true</code> shows · <code>false</code> hides (slides, albums, the strip)</td></tr>
+      </table></div>
+    </section>
+
+    <!-- ================= WORKFLOW ================= -->
+    <section class="block" id="workflow">
+      <h2>Test and publish</h2>
+      <ol class="steps">
+        <li><b>Start the site locally</b>
+          <div class="code"><pre>npm run dev</pre></div>Open <code>http://localhost:5173</code>. It reloads every time you save. First time on a new computer, run <code>npm install</code> first.</li>
+        <li><b>Check both languages</b>Click the English / বাংলা toggle in the header and look at what you changed.</li>
+        <li><b>Run the tests</b>
+          <div class="code"><pre>npm test</pre></div>Use <code>npm run test:quick</code> for a faster check. Warnings about placeholders are fine; failures need fixing.</li>
+        <li><b>Commit and push to <code>uat</code></b>
+          <div class="code"><pre>git switch uat
+git add -A
+git commit -m "Add the 2025 Puja drive album"
+git push</pre></div></li>
+        <li><b>Open a pull request from <code>uat</code> into <code>main</code></b>
+          <div class="code"><pre>gh pr create --base main --head uat</pre></div></li>
+        <li><b>Merge it</b>Once the <code>source-branch-is-uat</code> check passes, merge. Netlify rebuilds and the live site updates in a minute or two.</li>
+      </ol>
+      <div class="note warn"><b>You can't push to <code>main</code> directly.</b> It's protected, and pull requests from any branch other than <code>uat</code> are blocked.</div>
+    </section>
+
+    <!-- ================= TROUBLESHOOT ================= -->
+    <section class="block" id="troubleshoot">
+      <h2>Troubleshooting</h2>
+      <div class="table-wrap"><table>
+        <tr><th>Problem</th><th>Likely cause</th><th>Fix</th></tr>
+        <tr><td>Album doesn't appear in the Gallery</td><td>The <code>id</code> doesn't match the folder name, the folder is empty, or <code>active: false</code></td><td>Make the <code>id</code> and folder name identical</td></tr>
+        <tr><td>A photo is missing from an album</td><td>More than 5 photos; only the first 5 by name show</td><td>Delete extras; rename to change the order</td></tr>
+        <tr><td>Test: "folder not listed in projects.js"</td><td>A photo folder has no block in <code>projects</code></td><td>Add the block, or delete the folder</td></tr>
+        <tr><td>Test: route lists don't match</td><td>New page missing from <code>App.jsx</code>, <code>_redirects</code> or <code>sitemap.xml</code></td><td>Add it to all three</td></tr>
+        <tr><td>A label shows as <code>mypage.title</code></td><td>The key is missing from <code>strings.js</code></td><td>Add it to <code>en</code> and <code>bn</code></td></tr>
+        <tr><td>English shows in Bengali mode</td><td>Missing <code>bn</code> text</td><td>Add the <code>bn</code> value</td></tr>
+        <tr><td>Icon doesn't show</td><td>The name isn't in <code>Icon.jsx</code></td><td>Use a name from <a href="#values">the list</a></td></tr>
+        <tr><td>Blank page or a red error screen</td><td>A typo in a data file (missing comma, quote or brace)</td><td>The error screen and the terminal running <code>npm run dev</code> show the file and line number</td></tr>
+        <tr><td>Change isn't on the live site</td><td>Not merged into <code>main</code> yet</td><td>Open and merge the <code>uat → main</code> PR</td></tr>
+      </table></div>
+    </section>
+
+    <!-- ================= FORMS ================= -->
+    <section class="block" id="forms">
+      <h2>How the forms work</h2>
+      <p class="lead">Contact, Get Involved and Request Help all follow the same path:</p>
+      <div class="flow">
+        <div class="node blue"><b>Visitor clicks Send</b><small>page's <code>onSubmit</code></small></div>
+        <div class="arrow">→</div>
+        <div class="node red"><b>Validate</b><small>Bad fields are outlined, the error is shown, focus moves to the first bad field</small></div>
+        <div class="arrow">→</div>
+        <div class="node blue"><b>useFormSender.send()</b><small>Is there a Web3Forms key?</small></div>
+      </div>
+      <div class="grid g3">
+        <div class="card"><span class="chip amber">No key</span><h3 style="margin-top:8px">Email app opens</h3><p class="sub">A <code>mailto:</code> link with the message filled in, plus a WhatsApp fallback.</p></div>
+        <div class="card"><span class="chip green">Key → success</span><h3 style="margin-top:8px">Sent to the inbox</h3><p class="sub">POST to Web3Forms. A success box, and the form clears.</p></div>
+        <div class="card"><span class="chip red">Key → failure</span><h3 style="margin-top:8px">Fallback links</h3><p class="sub">"Send on WhatsApp" and "Send by email", carrying the same message.</p></div>
+      </div>
+      <div class="note tip"><b>Spam trap:</b> a hidden "botcheck" checkbox. People never see it; if a bot ticks it, the form pretends to succeed and sends nothing.</div>
+    </section>
+
+    <!-- ================= TESTS ================= -->
+    <section class="block" id="tests">
+      <h2>The test suites</h2>
+      <p class="lead"><code>npm test</code> builds the site and drives your real Chrome/Edge through every page. Tests read their expectations from the data files, so content edits don't break them.</p>
+      <div class="grid g3">
+        <div class="card"><h3>🔥 smoke</h3><p class="sub">Every page × every screen size × both languages: no errors, no broken images, no overflow, one <code>&lt;h1&gt;</code>.</p></div>
+        <div class="card"><h3>🧭 navigation</h3><p class="sub">The three page lists match; links, anchors and the saved language work.</p></div>
+        <div class="card"><h3>🧪 features</h3><p class="sub">Albums match folders, max 5 photos, lightbox, copy buttons, UPI, forms, FAQ. Warns about placeholders.</p></div>
+        <div class="card"><h3>⚡ performance</h3><p class="sub">WebP copies, lazy loading, no layout jumps, banner photo first.</p></div>
+        <div class="card"><h3>♿ a11y</h3><p class="sub">Carousel pause, focus traps, skip link, no English labels in Bengali mode.</p></div>
+        <div class="card"><h3>🏷️ netlify-badge</h3><p class="sub">Live only: Netlify's badge never covers a button.</p></div>
+      </div>
+      <div class="table-wrap"><table>
+        <tr><th>Command</th><th>What it does</th></tr>
+        <tr><td><code>npm test</code></td><td>Everything</td></tr>
+        <tr><td><code>npm run test:quick</code></td><td>Fewer screen sizes, English only</td></tr>
+        <tr><td><code>npm run test:live</code></td><td>Against the live site</td></tr>
+        <tr><td><code>node tests/e2e/run.mjs --only=features</code></td><td>One suite only</td></tr>
+      </table></div>
+    </section>
+
+    <!-- ================= REFERENCE ================= -->
+    <section class="block" id="reference">
+      <h2>Code reference</h2>
+      <p class="lead">For when you need to change behaviour, not content. Full detail is in <code>docs/CODEBASE_GUIDE.md</code>.</p>
+      <div class="grid g2">
+        <div class="card">
+          <h3>Shared components</h3>
+          <div class="table-wrap"><table>
+            <tr><td><code>Navbar</code></td><td>Header, menu (<code>links</code>), language &amp; theme toggles, mobile drawer</td></tr>
+            <tr><td><code>Footer</code></td><td>Quick links (<code>quickLinks</code>), contact, socials</td></tr>
+            <tr><td><code>HeroBanner</code></td><td>Home carousel</td></tr>
+            <tr><td><code>PageHeader</code></td><td>Green title banner, the page's <code>&lt;h1&gt;</code></td></tr>
+            <tr><td><code>SectionHeading</code></td><td>Section <code>&lt;h2&gt;</code> with kicker and subtitle</td></tr>
+            <tr><td><code>Photo</code></td><td>Use instead of <code>&lt;img&gt;</code>: lazy, WebP, no layout jump</td></tr>
+            <tr><td><code>Reveal</code></td><td>Fade-in on scroll</td></tr>
+            <tr><td><code>ProgramCard</code>, <code>WorkCard</code></td><td>Programme and past-work cards</td></tr>
+            <tr><td><code>CopyField</code></td><td>Value + Copy button</td></tr>
+            <tr><td><code>FormSend</code></td><td>Submit button, spam trap, result box</td></tr>
+            <tr><td><code>ChipBar</code></td><td>Sticky row of jump links</td></tr>
+            <tr><td><code>Icon</code></td><td>SVG icons by name</td></tr>
+            <tr><td><code>ui.js</code></td><td>Shared classes: <code>btn.*</code>, <code>size.*</code>, <code>field</code>, <code>card</code>, <code>pill</code></td></tr>
+          </table></div>
+        </div>
+        <div class="card">
+          <h3>Hooks &amp; helpers</h3>
+          <div class="table-wrap"><table>
+            <tr><td><code>useLang()</code></td><td><code>{ lang, setLang, toggle, t, tr }</code></td></tr>
+            <tr><td><code>usePageMeta(title, desc)</code></td><td>Page title, description and share tags</td></tr>
+            <tr><td><code>useFormSender(form)</code></td><td>Sends a form, tracks its status</td></tr>
+            <tr><td><code>useFocusTrap</code></td><td>Keeps focus inside the menu or lightbox</td></tr>
+            <tr><td><code>useTheme()</code></td><td>Light/dark toggle</td></tr>
+            <tr><td><code>useActiveSection</code></td><td>Which section is on screen</td></tr>
+            <tr><td><code>sendForm.js</code></td><td>Web3Forms POST, <code>mailto:</code> and WhatsApp links</td></tr>
+            <tr><td><code>validation.js</code></td><td>Email and phone checks (10–15 digits)</td></tr>
+          </table></div>
+          <h3 style="margin-top:16px">Scripts</h3>
+          <div class="table-wrap"><table>
+            <tr><td><code>add-photos.mjs</code></td><td>Copies photos into an album</td></tr>
+            <tr><td><code>project-photos.mjs</code></td><td>Finds album photos, makes WebP copies</td></tr>
+            <tr><td><code>og-image.mjs</code></td><td>Renders the share preview image</td></tr>
+            <tr><td><code>seo.mjs</code>, <code>security-headers.mjs</code></td><td>Build-time SEO tags and header checks</td></tr>
+          </table></div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:24px">House rules</h3>
+      <div class="grid g3">
+        <div class="card"><b>🌐 Bilingual everything</b><p class="sub">No hard-coded English in JSX, including <code>alt</code> and <code>aria-label</code>.</p></div>
+        <div class="card"><b>🔑 Store ids, not text</b><p class="sub">So a language switch re-renders correctly.</p></div>
+        <div class="card"><b>1️⃣ One &lt;h1&gt; per page</b><p class="sub">PageHeader on inner pages, HeroBanner on Home.</p></div>
+        <div class="card"><b>↘️ Keep bottom-right clear</b><p class="sub">Netlify's badge sits there.</p></div>
+        <div class="card"><b>🛟 Fail soft</b><p class="sub">Missing QR, blocked storage or a crash still shows something usable.</p></div>
+        <div class="card"><b>📝 TODO markers</b><p class="sub"><code>// TODO</code> in data files marks placeholders; <code>npm test</code> lists them.</p></div>
+      </div>
+    </section>
+
+    <footer class="end">NGO Marudyaan website guide · lives at <code>docs/codebase-guide.html</code> · open it in any browser, no internet needed.</footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  // Theme toggle
+  var root = document.documentElement;
+  document.getElementById("theme").addEventListener("click", function () {
+    var dark = root.dataset.theme
+      ? root.dataset.theme === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("guide-theme", root.dataset.theme); } catch (e) {}
+  });
+
+  // Copy buttons on every code block
+  document.querySelectorAll(".code").forEach(function (box) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy";
+    btn.textContent = "Copy";
+    btn.addEventListener("click", function () {
+      var text = box.querySelector("pre").innerText;
+      var done = function () { btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+    });
+    box.appendChild(btn);
+  });
+
+  // Open a recipe when its link is followed
+  function openFromHash() {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === "DETAILS") el.open = true;
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+
+  // Search + category filter
+  var recipes = Array.prototype.slice.call(document.querySelectorAll("details.recipe"));
+  var search = document.getElementById("search");
+  var filterBtns = document.querySelectorAll("#filters button");
+  var noResults = document.getElementById("no-results");
+  var cat = "all";
+  function apply() {
+    var q = search.value.trim().toLowerCase();
+    var shown = 0;
+    recipes.forEach(function (r) {
+      var hay = (r.dataset.k + " " + r.querySelector("summary").textContent).toLowerCase();
+      var ok = (cat === "all" || r.dataset.cat === cat) && (!q || q.split(/\s+/).every(function (w) { return hay.indexOf(w) !== -1; }));
+      r.classList.toggle("hidden", !ok);
+      if (ok) shown++;
+    });
+    noResults.classList.toggle("hidden", shown > 0);
+  }
+  filterBtns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      cat = b.dataset.f;
+      filterBtns.forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      apply();
+    });
+  });
+  search.addEventListener("input", function () {
+    apply();
+    if (search.value.trim()) document.getElementById("recipes").scrollIntoView({ block: "start" });
+  });
+
+  // Highlight the current section in the side menu
+  var links = document.querySelectorAll("nav.toc a");
+  var sections = Array.prototype.map.call(links, function (a) { return document.querySelector(a.getAttribute("href")); });
+  function onScroll() {
+    var current = 0;
+    sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < 120) current = i; });
+    links.forEach(function (a, i) { a.classList.toggle("active", i === current); });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
