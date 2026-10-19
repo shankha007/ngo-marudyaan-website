@@ -46,35 +46,35 @@ export const strings = {
     "stat.volunteers": "Active volunteers",
     "home.tagline.kicker": "What we stand for",
     "home.tagline.body":
-      "Since 2017 our volunteers have been teaching children, bringing festivals to every doorstep and keeping families warm through the winter in Kolkata — one small effort at a time, towards a fairer, kinder society.",
+      "Since 2017 our volunteers in Kolkata have been teaching children, taking new clothes to kids before the Pujas and handing out blankets on cold nights. We do a little at a time, and we keep going.",
     "home.mission.kicker": "Who we are",
     "home.mission.title": "An oasis for people the city forgets",
     "home.mission.body":
-      "Marudyaan means oasis. We are a volunteer-run organisation in Kolkata that reaches families living on the edge — with schooling for their children, new clothes at festival time, warmth in winter and a little dignity. No middlemen, no waiting lists: our volunteers walk into the neighbourhood and hand over the help themselves.",
+      "Marudyaan means oasis. We are a group of volunteers in Kolkata who help families that are struggling to get by. We help their children stay in school, bring them new clothes at festival time and blankets in winter, and we treat every one of them with respect. There are no middlemen and no waiting lists. Our volunteers go to the neighbourhood and hand the help over themselves.",
     "home.work.kicker": "What we do",
-    "home.work.title": "Three ways we show up",
-    "home.work.sub": "Regular programmes that run through the year, not one-off gestures.",
+    "home.work.title": "The three things we do",
+    "home.work.sub": "We run each of these every year, not just once.",
     "home.gallery.kicker": "From the field",
     "home.gallery.title": "Moments from our drives",
     "home.voices.kicker": "Voices",
     "home.voices.title": "In their words",
-    "home.cta.title": "You can be the reason a child goes to school tomorrow",
-    "home.cta.body": "Give once, give monthly, or give your Sunday. All three change something.",
+    "home.cta.title": "Help a child stay in school this year",
+    "home.cta.body": "You can give once, give every month, or come and help us on a Sunday.",
     "home.partners.title": "Supported by neighbours, clubs and small businesses",
 
     /* about */
     "about.title": "About Us",
-    "about.sub": "An effort to make society better — a volunteer-run NGO working in and around Kolkata since 2017.",
+    "about.sub": "A volunteer-run NGO working in and around Kolkata since 2017.",
     "about.mission.title": "Our Mission",
     "about.mission.body":
-      "To make sure that no one within our reach is kept from school because they cannot afford it, sits out a festival, or spends a winter without a blanket — and to do it in a way that protects the dignity of every person we serve.",
+      "No child we can reach should miss school because the family can't pay. Nobody should have to sit out a festival or get through winter without a blanket. And whoever we help, we want them to be treated with respect.",
     "about.vision.title": "Our Vision",
     "about.vision.body":
-      "A Kolkata where poverty is not a private emergency: where a neighbourhood notices, and responds, before a family falls through the cracks.",
+      "A Kolkata where a family in trouble doesn't have to manage alone, because the neighbours notice and step in before things fall apart.",
     "about.values.title": "What we hold to",
     "about.recent.all": "See all our past works",
     "about.team.title": "The people behind Marudyaan",
-    "about.team.sub": "A small core team and a large circle of volunteers.",
+    "about.team.sub": "A small core team, and the volunteers who turn up for every drive.",
     "about.legal.title": "Registration & transparency",
     "about.legal.regNo": "Registration No.",
     "about.legal.act": "Registered under",
@@ -93,18 +93,18 @@ export const strings = {
     "works.title": "Our Past Works",
     "works.sub": "Every drive since our first winter project on Christmas Day 2017, newest first.",
     "works.years": "Jump to a year",
-    "works.next.title": "Help us write the next chapter",
-    "works.next.body": "Every work on this page happened because someone gave money, time or a helping hand. The next one can start with you.",
+    "works.next.title": "Help with the next one",
+    "works.next.body": "Every drive on this page happened because someone gave money, time or a pair of hands. The next one could start with you.",
     "work.how.s1.t": "We listen",
-    "work.how.s1.b": "Volunteers and local contacts tell us which families or streets need help.",
-    "work.how.s2.t": "We verify",
-    "work.how.s2.b": "A team visits, confirms the need and works out exactly what is required.",
+    "work.how.s1.b": "Volunteers and people in the area tell us which families or streets need help.",
+    "work.how.s2.t": "We check",
+    "work.how.s2.b": "A few of us visit, see the need for ourselves and work out exactly what is required.",
     "work.how.s3.t": "We raise",
-    "work.how.s3.b": "The requirement and its cost are posted publicly, and funds are collected.",
+    "work.how.s3.b": "We post what is needed and what it will cost, and collect the money.",
     "work.how.s4.t": "We deliver",
-    "work.how.s4.b": "Our own volunteers hand over the help — no agents, no deductions.",
+    "work.how.s4.b": "Our own volunteers hand it over. Nobody in between takes a cut.",
     "work.how.s5.t": "We report",
-    "work.how.s5.b": "Photographs and a full expense list go back to everyone who contributed.",
+    "work.how.s5.b": "Everyone who gave gets the photos and the full list of what we spent.",
 
     /* gallery */
     "gallery.title": "Gallery",
@@ -123,7 +123,7 @@ export const strings = {
 
     /* get involved */
     "involved.title": "Get Involved",
-    "involved.sub": "Time, skills, goods or money — every one of them counts.",
+    "involved.sub": "You can give time, a skill, things you no longer need, or money. We put all of it to use.",
     "involved.roles.title": "Ways to help",
     "involved.form.title": "Tell us you are interested",
     "involved.form.note":
@@ -139,12 +139,12 @@ export const strings = {
 
     /* request help */
     "help.title": "Request Help",
-    "help.sub": "School support for children, new clothes at the Pujas, warmth in winter — tell us what your family needs.",
+    "help.sub": "Does your family need help with school, new clothes for the Pujas or something warm for the winter? Tell us here.",
     "help.how.title": "How it works",
     "help.how.1": "Fill in the form: who you are, how many people need help, and what they need.",
     "help.how.2": "Your email app opens with everything filled in. Press Send.",
     "help.how.3": "A volunteer calls you to confirm the details before the drive.",
-    "help.how.note": "No email app? Call or WhatsApp us — we will note down the same details.",
+    "help.how.note": "No email app? Call or WhatsApp us and we'll take down the details over the phone.",
     "help.form.title": "Tell us what you need",
     "help.form.note": "Fields marked * are needed so we can reach you and plan the drive.",
     "help.form.program": "What do you need help with?",
@@ -172,14 +172,14 @@ export const strings = {
     "help.err.breakdown": "Children and elderly together cannot be more than the total number of people.",
     "help.err.needs": "Please tick at least one kind of help, or describe what you need.",
     "help.how.2.direct": "Press Send. Your request comes straight to our team.",
-    "help.how.note.direct": "Prefer to talk? Call or WhatsApp us — we will note down the same details.",
+    "help.how.note.direct": "Would you rather talk? Call or WhatsApp us and we'll take down the details over the phone.",
     "help.form.submit.direct": "Send request",
     "help.sent.direct": "A volunteer will call you to confirm the details before the drive.",
 
     /* donate */
     "donate.title": "Donate",
     "donate.sub":
-      "Scan the QR code, use our UPI ID, or transfer directly to our bank account. Every contribution is acknowledged.",
+      "Scan the QR code, use our UPI ID, or transfer straight to our bank account. We confirm every donation we receive.",
     "donate.qr.title": "Scan & pay",
     "donate.qr.note": "Works with GPay, PhonePe, Paytm, BHIM and any UPI app.",
     "donate.qr.missing": "QR code image not added yet",
@@ -198,10 +198,10 @@ export const strings = {
     "donate.copy": "Copy",
     "donate.copied": "Copied",
     "donate.impact.title": "What your donation does",
-    "donate.impact.note": "Indicative costs — the exact use is published after each drive.",
+    "donate.impact.note": "These are rough costs. After each drive we publish what the money was actually spent on.",
     "donate.after.title": "After you donate",
     "donate.after.body":
-      "Please send us the payment screenshot on WhatsApp or by email with your name and phone number. We will confirm and send you the photos from the drive your money goes to.",
+      "Please send us a screenshot of the payment on WhatsApp or by email, with your name and phone number. We'll let you know it arrived, and later send you photos from the drive your money paid for.",
     "donate.after.whatsapp": "Send screenshot on WhatsApp",
     "donate.after.email": "Email us the details",
     "donate.goods.title": "Prefer to donate goods?",
@@ -212,7 +212,7 @@ export const strings = {
 
     /* contact */
     "contact.title": "Contact Us",
-    "contact.sub": "Questions, collaborations, or a family that needs help — write to us.",
+    "contact.sub": "Have a question, want to work with us, or know a family that needs help? Write to us.",
     "contact.reach.title": "Reach us",
     "contact.phone": "Phone",
     "contact.whatsapp": "WhatsApp",
@@ -234,7 +234,7 @@ export const strings = {
     "form.phone.invalid": "Please enter a valid phone number, with at least 10 digits.",
     "form.required": "This field is required.",
     "form.sending": "Sending…",
-    "form.sent.title": "Thank you — we have received it.",
+    "form.sent.title": "Thank you, we've got it.",
     "form.failed.title": "Your message did not go through",
     "form.failed.body": "Check your internet connection and press Send again, or send the same details on WhatsApp or by email.",
     "form.whatsapp": "Send on WhatsApp",
@@ -257,26 +257,26 @@ export const strings = {
     "theme.light": "Switch to light mode",
     "hero.volunteers": "{n} volunteers and counting",
     "home.join.kicker": "Join the crew",
-    "home.join.title": "Got a free Sunday? We've got a plan.",
+    "home.join.title": "Free on a Sunday? Come along.",
     "home.join.body":
-      "Students, working folks, homemakers, retirees: anyone can volunteer. Hand out meals, teach a class, take photos, or help run our socials.",
+      "Students, people with day jobs, homemakers, retirees: anyone can volunteer. You could hand out meals, teach a class, take photos or help with our Facebook and Instagram.",
     "home.join.perk1": "No experience needed",
-    "home.join.perk2": "Pick a time that suits you",
-    "home.join.perk3": "Make friends who care",
+    "home.join.perk2": "Come when it suits you",
+    "home.join.perk3": "Meet people who care",
     "home.work.all": "See all our work",
 
     /* footer */
     "footer.about":
-      "NGO Marudyaan is a volunteer-run organisation in Kolkata working on education for children, festivals for everyone and winter relief.",
+      "NGO Marudyaan is a group of volunteers in Kolkata. We help children stay in school, make sure no child misses out on the festivals, and hand out blankets in winter.",
     "footer.quick": "Quick links",
     "footer.contact": "Contact",
     "footer.follow": "Follow us",
     "footer.rights": "All rights reserved.",
-    "footer.made": "Built with care for the people we serve.",
+    "footer.made": "Made for the people we work with.",
 
     /* 404 */
     "nf.title": "Page not found",
-    "nf.body": "The page you were looking for has moved or never existed.",
+    "nf.body": "We couldn't find that page. It may have moved, or the link may be wrong.",
   },
 
   bn: {
@@ -321,35 +321,35 @@ export const strings = {
     "stat.volunteers": "সক্রিয় স্বেচ্ছাসেবক",
     "home.tagline.kicker": "আমাদের মূলমন্ত্র",
     "home.tagline.body":
-      "২০১৭ সাল থেকে আমাদের স্বেচ্ছাসেবকরা কলকাতায় শিশুদের পড়াচ্ছেন, উৎসবের আনন্দ সবার দোরগোড়ায় পৌঁছে দিচ্ছেন, শীতে পরিবারগুলিকে উষ্ণ রাখছেন — ছোট ছোট প্রয়াসে, আরও ন্যায্য ও সহমর্মী এক সমাজের দিকে।",
+      "২০১৭ সাল থেকে কলকাতায় আমাদের স্বেচ্ছাসেবকরা শিশুদের পড়াচ্ছেন, পুজোর আগে বাচ্চাদের হাতে নতুন জামা তুলে দিচ্ছেন, শীতের রাতে কম্বল বিলোচ্ছেন। একটু একটু করে করি, কিন্তু থামি না।",
     "home.mission.kicker": "আমরা কারা",
     "home.mission.title": "শহর যাদের ভুলে যায়, তাদের জন্য এক মরুদ্যান",
     "home.mission.body":
-      "মরুদ্যান মানে মরুভূমির বুকে সবুজ আশ্রয়। আমরা কলকাতার একটি স্বেচ্ছাসেবী সংগঠন, যারা প্রান্তিক পরিবারের পাশে দাঁড়াই — শিশুদের পড়াশোনা, উৎসবে নতুন জামা, শীতে উষ্ণতা আর একটুখানি সম্মান নিয়ে। কোনও মধ্যস্থতাকারী নেই, অপেক্ষার তালিকাও নেই: আমাদের স্বেচ্ছাসেবকরা নিজেরাই পাড়ায় গিয়ে সাহায্য তুলে দেন।",
+      "মরুদ্যান মানে মরুভূমির বুকে সবুজ আশ্রয়। আমরা কলকাতার একদল স্বেচ্ছাসেবক, যাঁরা কষ্টে দিন কাটানো পরিবারগুলির পাশে থাকি। তাদের ছেলেমেয়েরা যাতে স্কুলে যেতে পারে, উৎসবে নতুন জামা আর শীতে কম্বল পায়, সেটুকু দেখি, আর প্রত্যেককে সম্মান দিয়েই করি। কোনও মধ্যস্থতাকারী নেই, অপেক্ষার তালিকাও নেই। আমাদের স্বেচ্ছাসেবকরা নিজেরাই পাড়ায় গিয়ে সাহায্য তুলে দেন।",
     "home.work.kicker": "আমরা কী করি",
-    "home.work.title": "তিনটি ভাবে আমরা পাশে থাকি",
-    "home.work.sub": "সারা বছরের নিয়মিত কর্মসূচি — কেবল একদিনের আয়োজন নয়।",
+    "home.work.title": "আমাদের তিনটি কাজ",
+    "home.work.sub": "প্রতিটি কাজ আমরা প্রতি বছর করি, শুধু একবার নয়।",
     "home.gallery.kicker": "মাঠ থেকে",
     "home.gallery.title": "আমাদের কাজের কিছু মুহূর্ত",
     "home.voices.kicker": "কণ্ঠস্বর",
     "home.voices.title": "তাঁদের ভাষায়",
-    "home.cta.title": "কাল একটি শিশুর স্কুলে যাওয়ার কারণ আপনি হতে পারেন",
-    "home.cta.body": "একবার দিন, প্রতি মাসে দিন, কিংবা আপনার রবিবারটা দিন। তিনটেই কিছু না কিছু বদলে দেয়।",
+    "home.cta.title": "এ বছর একটি শিশুর পড়া চালিয়ে যেতে সাহায্য করুন",
+    "home.cta.body": "একবার দিতে পারেন, প্রতি মাসে দিতে পারেন, কিংবা কোনও এক রবিবার এসে হাত লাগাতে পারেন।",
     "home.partners.title": "পাড়া, ক্লাব ও ছোট ব্যবসার সহযোগিতায়",
 
     /* about */
     "about.title": "আমাদের কথা",
-    "about.sub": "সমাজকে আরও সুন্দর করার এক প্রয়াস — ২০১৭ সাল থেকে কলকাতা ও আশেপাশে কাজ করা একটি স্বেচ্ছাসেবী সংগঠন।",
+    "about.sub": "২০১৭ সাল থেকে কলকাতা ও আশেপাশে কাজ করা একটি স্বেচ্ছাসেবী সংগঠন।",
     "about.mission.title": "আমাদের লক্ষ্য",
     "about.mission.body":
-      "আমাদের নাগালের মধ্যে যেন কোনও শিশু টাকার অভাবে পড়াশোনা থেকে বঞ্চিত না হয়, কেউ উৎসবে বাদ না পড়ে, কেউ কম্বল ছাড়া শীত না কাটায় — এবং সেটা এমনভাবে করা, যাতে প্রত্যেক মানুষের সম্মান অক্ষুণ্ণ থাকে।",
+      "আমাদের নাগালের মধ্যে কোনও শিশুর পড়া যেন শুধু টাকার অভাবে বন্ধ না হয়। কেউ যেন উৎসবে বাদ না পড়ে, কম্বল ছাড়া শীত না কাটায়। আর যাঁকেই সাহায্য করি, তিনি যেন সম্মানটুকু পান।",
     "about.vision.title": "আমাদের স্বপ্ন",
     "about.vision.body":
-      "এমন একটা কলকাতা, যেখানে দারিদ্র্য কারও একার লড়াই নয় — যেখানে পরিবার ভেঙে পড়ার আগেই পাড়া খেয়াল করে, পাশে দাঁড়ায়।",
+      "এমন একটা কলকাতা, যেখানে বিপদে পড়া পরিবারকে একা লড়তে হয় না, কারণ সব ভেঙে পড়ার আগেই প্রতিবেশীরা খেয়াল করেন আর পাশে দাঁড়ান।",
     "about.values.title": "আমরা যা মেনে চলি",
     "about.recent.all": "আমাদের সব কাজ দেখুন",
     "about.team.title": "মরুদ্যানের মানুষজন",
-    "about.team.sub": "ছোট একটি মূল দল, আর বিশাল স্বেচ্ছাসেবকের বৃত্ত।",
+    "about.team.sub": "ছোট একটি মূল দল, আর প্রতিটি কর্মসূচিতে হাজির থাকা স্বেচ্ছাসেবকরা।",
     "about.legal.title": "নথিভুক্তি ও স্বচ্ছতা",
     "about.legal.regNo": "রেজিস্ট্রেশন নম্বর",
     "about.legal.act": "নথিভুক্ত",
@@ -368,18 +368,18 @@ export const strings = {
     "works.title": "আমাদের অতীতের কাজ",
     "works.sub": "২০১৭-র বড়দিনে আমাদের প্রথম শীতবস্ত্র উদ্যোগ থেকে আজ পর্যন্ত সব কাজ — সাম্প্রতিকতম আগে।",
     "works.years": "বছর বেছে নিন",
-    "works.next.title": "পরের অধ্যায়টা লিখুন আমাদের সঙ্গে",
-    "works.next.body": "এই পাতার প্রতিটি কাজ সম্ভব হয়েছে কারও অনুদান, সময় বা সাহায্যের হাতে। পরেরটা শুরু হতে পারে আপনার হাত ধরেই।",
+    "works.next.title": "পরেরটায় হাত লাগান",
+    "works.next.body": "এই পাতার প্রতিটি কাজ হয়েছে কারও টাকা, সময় বা হাতের সাহায্যে। পরেরটা শুরু হতে পারে আপনাকে দিয়েই।",
     "work.how.s1.t": "আমরা শুনি",
-    "work.how.s1.b": "স্বেচ্ছাসেবক ও স্থানীয় মানুষ জানান কোন পরিবার বা এলাকায় সাহায্য দরকার।",
-    "work.how.s2.t": "আমরা যাচাই করি",
-    "work.how.s2.b": "একটি দল গিয়ে প্রয়োজন নিশ্চিত করে এবং ঠিক কী লাগবে তা হিসেব করে।",
+    "work.how.s1.b": "স্বেচ্ছাসেবক ও এলাকার মানুষ জানান কোন পরিবার বা এলাকায় সাহায্য দরকার।",
+    "work.how.s2.t": "আমরা দেখে আসি",
+    "work.how.s2.b": "আমাদের কয়েকজন গিয়ে নিজের চোখে দেখে আসেন, আর ঠিক কী লাগবে তা হিসেব করেন।",
     "work.how.s3.t": "আমরা সংগ্রহ করি",
-    "work.how.s3.b": "প্রয়োজন ও খরচ প্রকাশ্যে জানানো হয়, তারপর তহবিল সংগ্রহ হয়।",
+    "work.how.s3.b": "কী লাগবে আর কত খরচ, তা সবাইকে জানিয়ে টাকা তোলা হয়।",
     "work.how.s4.t": "আমরা পৌঁছে দিই",
-    "work.how.s4.b": "আমাদের নিজস্ব স্বেচ্ছাসেবকরাই সাহায্য তুলে দেন — কোনও এজেন্ট বা কাটছাঁট নেই।",
+    "work.how.s4.b": "আমাদের নিজেদের স্বেচ্ছাসেবকরাই সাহায্য তুলে দেন। মাঝখানে কেউ কিছু কেটে রাখে না।",
     "work.how.s5.t": "আমরা হিসেব দিই",
-    "work.how.s5.b": "ছবি ও সম্পূর্ণ খরচের তালিকা প্রত্যেক সহযোগীর কাছে ফিরে যায়।",
+    "work.how.s5.b": "যাঁরা দিয়েছেন, তাঁরা প্রত্যেকে ছবি আর খরচের পুরো তালিকা পান।",
 
     /* gallery */
     "gallery.title": "গ্যালারি",
@@ -398,7 +398,7 @@ export const strings = {
 
     /* get involved */
     "involved.title": "যুক্ত হন",
-    "involved.sub": "সময়, দক্ষতা, সামগ্রী বা অর্থ — সবেরই মূল্য আছে।",
+    "involved.sub": "সময়, কোনও দক্ষতা, আপনার আর দরকার নেই এমন জিনিস, কিংবা টাকা দিতে পারেন। সবই কাজে লাগাই।",
     "involved.roles.title": "সাহায্যের নানা পথ",
     "involved.form.title": "আগ্রহ জানান",
     "involved.form.note":
@@ -414,12 +414,12 @@ export const strings = {
 
     /* request help */
     "help.title": "সাহায্যের আবেদন",
-    "help.sub": "শিশুদের পড়াশোনায় সাহায্য, পুজোয় নতুন জামা, শীতে উষ্ণতা — আপনার পরিবারের কী দরকার, আমাদের জানান।",
+    "help.sub": "পড়াশোনায় সাহায্য, পুজোয় নতুন জামা বা শীতের গরম কাপড় কি আপনার পরিবারের দরকার? এখানে জানান।",
     "help.how.title": "কীভাবে কাজ করে",
     "help.how.1": "ফর্মটি পূরণ করুন: আপনি কে, কতজনের সাহায্য দরকার, আর কী দরকার।",
     "help.how.2": "সব তথ্য ভরা অবস্থায় আপনার ইমেল অ্যাপ খুলবে। Send চাপুন।",
     "help.how.3": "কর্মসূচির আগে একজন স্বেচ্ছাসেবক ফোন করে তথ্য যাচাই করবেন।",
-    "help.how.note": "ইমেল অ্যাপ নেই? ফোন বা হোয়াটসঅ্যাপ করুন — আমরাই তথ্যগুলি লিখে নেব।",
+    "help.how.note": "ইমেল অ্যাপ নেই? ফোন বা হোয়াটসঅ্যাপ করুন, আমরাই কথা বলে তথ্যগুলি লিখে নেব।",
     "help.form.title": "আপনার কী দরকার, জানান",
     "help.form.note": "* চিহ্নিত ঘরগুলি পূরণ করুন, যাতে আমরা আপনার সঙ্গে যোগাযোগ করে কর্মসূচির পরিকল্পনা করতে পারি।",
     "help.form.program": "কোন বিষয়ে সাহায্য চান?",
@@ -447,14 +447,14 @@ export const strings = {
     "help.err.breakdown": "শিশু ও বয়স্ক মিলিয়ে মোট মানুষের সংখ্যার চেয়ে বেশি হতে পারে না।",
     "help.err.needs": "অনুগ্রহ করে অন্তত একটি সাহায্যের ধরন বেছে নিন, অথবা কী দরকার লিখে জানান।",
     "help.how.2.direct": "পাঠান চাপুন। আপনার আবেদন সরাসরি আমাদের দলের কাছে পৌঁছাবে।",
-    "help.how.note.direct": "কথা বলতে চান? ফোন বা হোয়াটসঅ্যাপ করুন — আমরাই তথ্যগুলি লিখে নেব।",
+    "help.how.note.direct": "কথা বলতে চান? ফোন বা হোয়াটসঅ্যাপ করুন, আমরাই কথা বলে তথ্যগুলি লিখে নেব।",
     "help.form.submit.direct": "আবেদন পাঠান",
     "help.sent.direct": "কর্মসূচির আগে একজন স্বেচ্ছাসেবক ফোন করে তথ্য যাচাই করবেন।",
 
     /* donate */
     "donate.title": "দান করুন",
     "donate.sub":
-      "কিউআর কোড স্ক্যান করুন, ইউপিআই আইডি ব্যবহার করুন, অথবা সরাসরি ব্যাঙ্ক অ্যাকাউন্টে পাঠান। প্রতিটি অনুদান স্বীকার করা হয়।",
+      "কিউআর কোড স্ক্যান করুন, ইউপিআই আইডি ব্যবহার করুন, অথবা সরাসরি ব্যাঙ্ক অ্যাকাউন্টে পাঠান। প্রতিটি অনুদান পেলে আমরা জানিয়ে দিই।",
     "donate.qr.title": "স্ক্যান করে দিন",
     "donate.qr.note": "GPay, PhonePe, Paytm, BHIM-সহ যে কোনও ইউপিআই অ্যাপে কাজ করে।",
     "donate.qr.missing": "কিউআর কোডের ছবি এখনও যোগ করা হয়নি",
@@ -473,10 +473,10 @@ export const strings = {
     "donate.copy": "কপি",
     "donate.copied": "কপি হয়েছে",
     "donate.impact.title": "আপনার দান কী করে",
-    "donate.impact.note": "আনুমানিক খরচ — প্রকৃত ব্যবহার প্রতিটি কর্মসূচির পরে প্রকাশ করা হয়।",
+    "donate.impact.note": "এগুলি আনুমানিক খরচ। প্রতিটি কর্মসূচির পরে টাকা আসলে কোথায় খরচ হল, তা আমরা প্রকাশ করি।",
     "donate.after.title": "দান করার পরে",
     "donate.after.body":
-      "অনুগ্রহ করে পেমেন্টের স্ক্রিনশট আপনার নাম ও ফোন নম্বর-সহ হোয়াটসঅ্যাপ বা ইমেলে পাঠান। আমরা নিশ্চিত করে জানাব এবং যে কর্মসূচিতে টাকা যাচ্ছে তার ছবি পাঠিয়ে দেব।",
+      "অনুগ্রহ করে পেমেন্টের স্ক্রিনশট আপনার নাম ও ফোন নম্বর-সহ হোয়াটসঅ্যাপ বা ইমেলে পাঠান। টাকা পৌঁছলে আমরা জানাব, আর পরে যে কর্মসূচিতে আপনার টাকা লাগল তার ছবি পাঠিয়ে দেব।",
     "donate.after.whatsapp": "হোয়াটসঅ্যাপে স্ক্রিনশট পাঠান",
     "donate.after.email": "ইমেলে বিস্তারিত পাঠান",
     "donate.goods.title": "সামগ্রী দিতে চান?",
@@ -487,7 +487,7 @@ export const strings = {
 
     /* contact */
     "contact.title": "যোগাযোগ করুন",
-    "contact.sub": "প্রশ্ন, একসঙ্গে কাজ, কিংবা সাহায্যের প্রয়োজনে থাকা কোনও পরিবার — আমাদের লিখুন।",
+    "contact.sub": "কোনও প্রশ্ন আছে, একসঙ্গে কাজ করতে চান, বা এমন কোনও পরিবারকে চেনেন যাঁদের সাহায্য দরকার? আমাদের লিখুন।",
     "contact.reach.title": "আমাদের কাছে পৌঁছন",
     "contact.phone": "ফোন",
     "contact.whatsapp": "হোয়াটসঅ্যাপ",
@@ -509,7 +509,7 @@ export const strings = {
     "form.phone.invalid": "অনুগ্রহ করে অন্তত ১০ অঙ্কের একটি সঠিক ফোন নম্বর লিখুন।",
     "form.required": "এই ঘরটি পূরণ করা দরকার।",
     "form.sending": "পাঠানো হচ্ছে…",
-    "form.sent.title": "ধন্যবাদ — আমরা পেয়েছি।",
+    "form.sent.title": "ধন্যবাদ, আমরা পেয়ে গেছি।",
     "form.failed.title": "আপনার বার্তা পাঠানো যায়নি",
     "form.failed.body": "ইন্টারনেট সংযোগ দেখে আবার পাঠান চাপুন, অথবা একই তথ্য হোয়াটসঅ্যাপে বা ইমেলে পাঠান।",
     "form.whatsapp": "হোয়াটসঅ্যাপে পাঠান",
@@ -532,17 +532,17 @@ export const strings = {
     "theme.light": "লাইট মোড চালু করুন",
     "hero.volunteers": "{n} জন স্বেচ্ছাসেবক, আরও বাড়ছে",
     "home.join.kicker": "দলে যোগ দিন",
-    "home.join.title": "রবিবারটা ফাঁকা? আমাদের কাছে পরিকল্পনা আছে।",
+    "home.join.title": "রবিবারটা ফাঁকা? চলে আসুন।",
     "home.join.body":
-      "ছাত্রছাত্রী, চাকুরিজীবী, গৃহিণী, অবসরপ্রাপ্ত — যে কেউ স্বেচ্ছাসেবক হতে পারেন। খাবার বিতরণ করুন, ক্লাস নিন, ছবি তুলুন, কিংবা আমাদের সোশ্যাল মিডিয়া সামলান।",
+      "ছাত্রছাত্রী, চাকুরিজীবী, গৃহিণী, অবসরপ্রাপ্ত, যে কেউ স্বেচ্ছাসেবক হতে পারেন। খাবার বিতরণ করতে পারেন, ক্লাস নিতে পারেন, ছবি তুলতে পারেন, কিংবা আমাদের ফেসবুক আর ইনস্টাগ্রাম সামলাতে পারেন।",
     "home.join.perk1": "আগে থেকে অভিজ্ঞতা লাগবে না",
-    "home.join.perk2": "সুবিধামতো সময় বেছে নিন",
-    "home.join.perk3": "সমমনস্ক বন্ধু পান",
+    "home.join.perk2": "যখন সুবিধা, তখন আসুন",
+    "home.join.perk3": "সমমনস্ক মানুষদের সঙ্গে আলাপ হবে",
     "home.work.all": "আমাদের সব কাজ দেখুন",
 
     /* footer */
     "footer.about":
-      "এনজিও মরুদ্যান কলকাতার একটি স্বেচ্ছাসেবী সংগঠন, যারা শিশুদের শিক্ষা, সবার জন্য উৎসব ও শীতকালীন ত্রাণ নিয়ে কাজ করে।",
+      "এনজিও মরুদ্যান কলকাতার একদল স্বেচ্ছাসেবক। আমরা শিশুদের পড়াশোনা চালিয়ে যেতে সাহায্য করি, দেখি কোনও শিশু যেন উৎসবে বাদ না পড়ে, আর শীতে কম্বল বিতরণ করি।",
     "footer.quick": "দ্রুত লিঙ্ক",
     "footer.contact": "যোগাযোগ",
     "footer.follow": "ফলো করুন",
@@ -551,6 +551,6 @@ export const strings = {
 
     /* 404 */
     "nf.title": "পাতাটি পাওয়া যায়নি",
-    "nf.body": "আপনি যে পাতাটি খুঁজছেন, সেটি সরে গেছে বা কখনও ছিল না।",
+    "nf.body": "পাতাটি খুঁজে পাওয়া গেল না। হয়তো সেটি সরে গেছে, বা লিঙ্কটি ভুল।",
   },
 };

@@ -28,7 +28,7 @@ export default function Donate() {
 
   usePageMeta(
     `${t("donate.title")} — ${site.name}`,
-    "Donate to NGO Marudyaan by UPI QR code or bank transfer. Every contribution is acknowledged with photos and an expense report.",
+    "Donate to NGO Marudyaan by UPI QR code or bank transfer. We confirm every donation, then send photos and a list of what was spent.",
   );
 
   /* upi:// links open the visitor's UPI app (GPay, PhonePe, Paytm…) with the

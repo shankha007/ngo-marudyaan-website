@@ -57,8 +57,8 @@ export const projects = [
     cover: "01.jpg",
     title: { en: "Micro Library", bn: "মাইক্রো লাইব্রেরি" },
     summary: {
-      en: "We collected Bengali storybooks, classics and school guidebooks and set up a small lending library at a women and children's development centre in Santoshpur, Kolkata — opened with the children who now use it.",
-      bn: "বাংলা গল্পের বই, ক্লাসিক ও স্কুলের সহায়িকা সংগ্রহ করে কলকাতার সন্তোষপুরে একটি নারী ও শিশু উন্নয়ন কেন্দ্রে ছোট একটি গ্রন্থাগার গড়ে তোলা হয় — উদ্বোধন হয় সেই শিশুদের সঙ্গেই, যারা আজ এটি ব্যবহার করে।",
+      en: "We collected Bengali storybooks, classics and school guidebooks and set up a small lending library at a women and children's development centre in Santoshpur, Kolkata. The children who use it now helped us open it.",
+      bn: "বাংলা গল্পের বই, ক্লাসিক ও স্কুলের সহায়িকা সংগ্রহ করে কলকাতার সন্তোষপুরে একটি নারী ও শিশু উন্নয়ন কেন্দ্রে ছোট একটি গ্রন্থাগার গড়ে তোলা হয়। উদ্বোধন হয় সেই শিশুদের সঙ্গেই, যারা আজ এটি ব্যবহার করে।",
     },
     captions: {
       "01.jpg": { en: "Children with their new library", bn: "নতুন গ্রন্থাগার নিয়ে শিশুরা" },
@@ -93,8 +93,8 @@ export const projects = [
     cover: "01.jpg",
     title: { en: "Sharodiya Sahosathi for special children", bn: "বিশেষ শিশুদের জন্য শারদীয়া সহসাথী" },
     summary: {
-      en: "Before Durga Puja our volunteers went to a school in Diamond Harbour and gave every child a set of new clothes along with a school bag, a water bottle, storybooks, stationery and chocolates — so the festival brought them something new too.",
-      bn: "দুর্গাপুজোর আগে আমাদের স্বেচ্ছাসেবকরা ডায়মন্ড হারবারের একটি স্কুলে গিয়ে প্রত্যেক শিশুর হাতে নতুন জামাকাপড়ের সঙ্গে স্কুলব্যাগ, জলের বোতল, গল্পের বই, খাতা-পেন ও চকোলেট তুলে দেন — যাতে উৎসবে তাদের কাছেও কিছু নতুন থাকে।",
+      en: "Before Durga Puja our volunteers went to a school in Diamond Harbour and gave every child a set of new clothes along with a school bag, a water bottle, storybooks, stationery and chocolates, so they had something new for the festival too.",
+      bn: "দুর্গাপুজোর আগে আমাদের স্বেচ্ছাসেবকরা ডায়মন্ড হারবারের একটি স্কুলে গিয়ে প্রত্যেক শিশুর হাতে নতুন জামাকাপড়ের সঙ্গে স্কুলব্যাগ, জলের বোতল, গল্পের বই, খাতা-পেন ও চকোলেট তুলে দেন, যাতে উৎসবে তাদের কাছেও কিছু নতুন থাকে।",
     },
     captions: {
       "01.jpg": { en: "The volunteers and the children with our banner", bn: "আমাদের ব্যানারের সঙ্গে স্বেচ্ছাসেবক ও শিশুরা" },
