@@ -45,8 +45,8 @@ export const pastWorks = [
     project: "2021-micro-library",
     title: { en: "Micro Library", bn: "মাইক্রো লাইব্রেরি" },
     summary: {
-      en: "We collected Bengali storybooks, classics and school guides and set up a small free lending library at a women and children's development centre, opened together with the children who now use it.",
-      bn: "বাংলা গল্পের বই, ক্লাসিক ও স্কুলের সহায়িকা সংগ্রহ করে একটি নারী ও শিশু উন্নয়ন কেন্দ্রে বিনামূল্যের ছোট একটি গ্রন্থাগার গড়ে তোলা হয় — উদ্বোধন হয় সেই শিশুদের সঙ্গেই, যারা আজ এটি ব্যবহার করে।",
+      en: "We collected Bengali storybooks, classics and school guides and set up a small free lending library at a women and children's development centre. The children who use it now helped us open it.",
+      bn: "বাংলা গল্পের বই, ক্লাসিক ও স্কুলের সহায়িকা সংগ্রহ করে একটি নারী ও শিশু উন্নয়ন কেন্দ্রে বিনামূল্যের ছোট একটি গ্রন্থাগার গড়ে তোলা হয়। উদ্বোধন হয় সেই শিশুদের সঙ্গেই, যারা আজ এটি ব্যবহার করে।",
     },
   },
   {
@@ -103,8 +103,8 @@ export const pastWorks = [
     category: "education",
     title: { en: "A day at the Indian Museum", bn: "ভারতীয় সংগ্রহশালায় একটি দিন" },
     summary: {
-      en: "An excursion for underprivileged children to the Indian Museum, Kolkata, a chance to see history up close and spend a day learning outside the classroom.",
-      bn: "সুবিধাবঞ্চিত শিশুদের নিয়ে কলকাতার ভারতীয় সংগ্রহশালায় শিক্ষামূলক ভ্রমণ — ইতিহাসকে কাছ থেকে দেখা আর ক্লাসঘরের বাইরে শেখার একটা দিন।",
+      en: "We took a group of children from poor families to the Indian Museum in Kolkata, for a day of looking at history up close instead of reading about it in a classroom.",
+      bn: "দরিদ্র পরিবারের একদল শিশুকে নিয়ে আমরা কলকাতার ভারতীয় সংগ্রহশালায় গিয়েছিলাম। ক্লাসঘরে বই পড়ার বদলে সেদিন ইতিহাসকে কাছ থেকে দেখার দিন।",
     },
   },
   {
@@ -126,7 +126,7 @@ export const pastWorks = [
     category: "education",
     title: { en: "For the children of Shantipur", bn: "শান্তিপুরের শিশুদের পাশে" },
     summary: {
-      en: "Our first work outside Kolkata: volunteers travelled to Shantipur to support underprivileged children there.",
+      en: "Our first work outside Kolkata: volunteers travelled to Shantipur to help children from poor families there.",
       bn: "কলকাতার বাইরে আমাদের প্রথম কাজ: স্বেচ্ছাসেবকরা শান্তিপুরে গিয়ে সেখানকার সুবিধাবঞ্চিত শিশুদের পাশে দাঁড়ান।",
     },
   },
@@ -136,7 +136,7 @@ export const pastWorks = [
     category: "education",
     title: { en: "Help an Author", bn: "লেখকের পাশে" },
     summary: {
-      en: "We stood beside a writer who needed support, so that their work could reach readers.",
+      en: "We helped a writer who needed support to get their work out to readers.",
       bn: "সহায়তার প্রয়োজন ছিল এমন এক লেখকের পাশে দাঁড়ানো, যাতে তাঁর লেখা পাঠকের কাছে পৌঁছতে পারে।",
     },
   },
@@ -147,7 +147,7 @@ export const pastWorks = [
     category: "winter",
     title: { en: "Our first winter project", bn: "আমাদের প্রথম শীতবস্ত্র উদ্যোগ" },
     summary: {
-      en: "Where it all began: on Christmas Day 2017 our volunteers went out on the streets of Kolkata to bring warmth to people spending the winter on the footpath.",
+      en: "Where it all began: on Christmas Day 2017 our volunteers went out on the streets of Kolkata with warm clothes for people spending the winter on the footpath.",
       bn: "যেখান থেকে শুরু: ২০১৭-র বড়দিনে আমাদের স্বেচ্ছাসেবকরা কলকাতার পথে নেমেছিলেন ফুটপাতে শীত কাটানো মানুষদের কাছে একটু উষ্ণতা পৌঁছে দিতে।",
     },
   },

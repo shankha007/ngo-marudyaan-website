@@ -60,7 +60,7 @@ export default function Home() {
   const { t, tr, lang } = useLang();
   usePageMeta(
     `${site.name} — ${site.tagline}`,
-    "NGO Marudyaan is a volunteer-run organisation in Kolkata working on education for children who cannot afford it, festivals for everyone and winter relief.",
+    "NGO Marudyaan is a group of volunteers in Kolkata. We help children stay in school, bring new clothes to kids at festival time and hand out blankets in winter.",
   );
 
   /* Gallery preview: each project's cover (newest first), then their
