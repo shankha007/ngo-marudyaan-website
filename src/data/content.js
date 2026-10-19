@@ -20,8 +20,8 @@ export const programs = [
     project: "2021-micro-library",
     title: { en: "Education & Learning", bn: "শিক্ষা ও পাঠ" },
     summary: {
-      en: "Free coaching, study materials and school kits so that no child drops out for want of a pen, a book or a little guidance.",
-      bn: "বিনামূল্যে পড়াশোনা, বই-খাতা ও স্কুল কিট — একটা কলম বা বইয়ের অভাবে যেন কোনও শিশুর পড়া বন্ধ না হয়।",
+      en: "Free coaching, books and school kits, so that no child has to leave school for want of a pen, a book or someone to help with homework.",
+      bn: "বিনামূল্যে পড়ানো, বই-খাতা আর স্কুল কিট, যাতে একটা কলম, একটা বই বা পড়া দেখিয়ে দেওয়ার লোকের অভাবে কোনও শিশুর পড়া বন্ধ না হয়।",
     },
     details: {
       en: [
@@ -43,8 +43,8 @@ export const programs = [
     project: "2022-sharodiya-sahosathi",
     title: { en: "Festivals for Everyone", bn: "সবার জন্য উৎসব" },
     summary: {
-      en: "New clothes and a proper celebration at Durga Puja, Eid and Poila Boishakh for children who would otherwise watch from outside.",
-      bn: "দুর্গাপুজো, ইদ ও পয়লা বৈশাখে নতুন জামা ও আনন্দের আয়োজন — সেই শিশুদের জন্য, যারা নইলে বাইরে থেকেই দেখত।",
+      en: "New clothes and a proper celebration at Durga Puja, Eid and Poila Boishakh, for children who would otherwise only watch from outside.",
+      bn: "দুর্গাপুজো, ইদ ও পয়লা বৈশাখে নতুন জামা আর আনন্দের আয়োজন, সেই শিশুদের জন্য যারা নইলে শুধু বাইরে থেকেই দেখত।",
     },
     details: {
       en: [
@@ -66,8 +66,8 @@ export const programs = [
     project: "2019-netaji-jayanti-winter-drive",
     title: { en: "Winter & Relief", bn: "শীতবস্ত্র ও ত্রাণ" },
     summary: {
-      en: "Blankets, warm clothes and emergency relief whenever the weather or a disaster leaves families exposed.",
-      bn: "কম্বল, শীতবস্ত্র ও জরুরি ত্রাণ — আবহাওয়া বা দুর্যোগে বিপন্ন পরিবারের পাশে।",
+      en: "Blankets and warm clothes in winter, and food and supplies for families when a cyclone or flood hits.",
+      bn: "শীতে কম্বল ও গরম জামাকাপড়, আর ঘূর্ণিঝড় বা বন্যা হলে পরিবারগুলির কাছে খাবার ও প্রয়োজনীয় জিনিস।",
     },
     details: {
       en: [
@@ -90,32 +90,32 @@ export const values = [
     id: "dignity",
     title: { en: "Dignity first", bn: "প্রথমে সম্মান" },
     text: {
-      en: "We serve people, not photographs. Nobody has to say thank you to receive help from us.",
-      bn: "আমরা মানুষের পাশে দাঁড়াই, ছবির জন্য নয়। সাহায্য পেতে কাউকে ধন্যবাদ বলতে হয় না।",
+      en: "We do this for the people, not for the photos. Nobody has to say thank you to get help from us.",
+      bn: "আমরা মানুষের জন্য কাজ করি, ছবির জন্য নয়। সাহায্য পেতে কাউকে ধন্যবাদ বলতে হয় না।",
     },
   },
   {
     id: "transparency",
     title: { en: "Every rupee accounted for", bn: "প্রতিটি টাকার হিসেব" },
     text: {
-      en: "Donations go into a dedicated account and each drive is published with photos and a cost breakdown.",
-      bn: "অনুদান আলাদা অ্যাকাউন্টে জমা হয় এবং প্রতিটি কর্মসূচির ছবি ও খরচের হিসেব প্রকাশ করা হয়।",
+      en: "Donations go into a separate account. After each drive we post the photos and what every item cost.",
+      bn: "অনুদান আলাদা অ্যাকাউন্টে জমা হয়। প্রতিটি কর্মসূচির পরে আমরা ছবি আর প্রতিটি জিনিসের খরচ প্রকাশ করি।",
     },
   },
   {
     id: "local",
     title: { en: "Rooted in the neighbourhood", bn: "পাড়ার ভিতর থেকেই" },
     text: {
-      en: "Our volunteers live in the areas we work in, so help reaches the right door quickly.",
-      bn: "আমাদের স্বেচ্ছাসেবকরা সেই এলাকাতেই থাকেন যেখানে কাজ হয়, তাই সাহায্য দ্রুত সঠিক দরজায় পৌঁছয়।",
+      en: "Our volunteers live in the areas we work in. They know the families, so help gets to the right door quickly.",
+      bn: "আমাদের স্বেচ্ছাসেবকরা সেই এলাকাতেই থাকেন যেখানে কাজ হয়। পরিবারগুলিকে তাঁরা চেনেন, তাই সাহায্য তাড়াতাড়ি ঠিক দরজায় পৌঁছয়।",
     },
   },
   {
     id: "consistency",
     title: { en: "Present, not occasional", bn: "নিয়মিত, শুধু উৎসবে নয়" },
     text: {
-      en: "We show up every week — not only during festivals or disasters.",
-      bn: "আমরা প্রতি সপ্তাহেই থাকি — শুধু উৎসব বা দুর্যোগে নয়।",
+      en: "We're around every week, not only at festival time or after a disaster.",
+      bn: "আমরা প্রতি সপ্তাহেই আছি, শুধু উৎসবের সময় বা দুর্যোগের পরে নয়।",
     },
   },
 ];
@@ -150,8 +150,8 @@ export const testimonials = [
   {
     id: "v2",
     quote: {
-      en: "I joined for one Sunday drive out of curiosity. Two years later I am still here — it changes you more than it changes them.",
-      bn: "কৌতূহল থেকে একটা রবিবার এসেছিলাম। দু’বছর পরেও আছি — এটা ওদের চেয়ে আমাকেই বেশি বদলে দেয়।",
+      en: "I came along to one Sunday drive out of curiosity. Two years later I'm still here. Honestly, it has changed me more than it has changed them.",
+      bn: "কৌতূহল থেকে একটা রবিবার এসেছিলাম। দু’বছর পরেও আছি। সত্যি বলতে, ওদের চেয়ে আমাকেই বেশি বদলে দিয়েছে।",
     },
     author: { en: "Volunteer", bn: "একজন স্বেচ্ছাসেবক" },
   },
@@ -170,7 +170,7 @@ export const volunteerRoles = [
   {
     id: "field",
     title: { en: "Field volunteer", bn: "মাঠপর্যায়ের স্বেচ্ছাসেবক" },
-    text: { en: "Join weekend drives — packing, distributing and talking to families.", bn: "সপ্তাহান্তের কর্মসূচিতে যোগ দিন — প্যাকিং, বিতরণ ও পরিবারের সঙ্গে কথা বলা।" },
+    text: { en: "Come to our weekend drives to pack, hand things out and talk to families.", bn: "সপ্তাহান্তের কর্মসূচিতে আসুন। প্যাকিং, বিতরণ আর পরিবারগুলির সঙ্গে কথা বলায় হাত লাগান।" },
   },
   {
     id: "teach",
@@ -180,17 +180,17 @@ export const volunteerRoles = [
   {
     id: "skills",
     title: { en: "Lend a skill", bn: "দক্ষতা দিয়ে সাহায্য" },
-    text: { en: "Photography, design, accounts, social media, translation — all of it helps.", bn: "ফোটোগ্রাফি, ডিজাইন, হিসাবরক্ষণ, সোশ্যাল মিডিয়া, অনুবাদ — সবই কাজে লাগে।" },
+    text: { en: "Good at photography, design, accounts, social media or translation? We can use it.", bn: "ফোটোগ্রাফি, ডিজাইন, হিসাবরক্ষণ, সোশ্যাল মিডিয়া বা অনুবাদ জানেন? আমাদের কাজে লাগবে।" },
   },
   {
     id: "goods",
     title: { en: "Donate goods", bn: "সামগ্রী দিন" },
-    text: { en: "Clothes, books, blankets, grain — in good, usable condition.", bn: "জামাকাপড়, বই, কম্বল, খাদ্যশস্য — ব্যবহারযোগ্য অবস্থায়।" },
+    text: { en: "Clothes, books, blankets or grain, as long as they are clean and still usable.", bn: "জামাকাপড়, বই, কম্বল বা খাদ্যশস্য, পরিষ্কার আর ব্যবহারযোগ্য হলেই চলবে।" },
   },
   {
     id: "csr",
     title: { en: "Partner with us", bn: "আমাদের সঙ্গী হন" },
-    text: { en: "Companies, colleges and puja committees can adopt a full drive.", bn: "সংস্থা, কলেজ ও পুজো কমিটি একটি সম্পূর্ণ কর্মসূচির দায়িত্ব নিতে পারে।" },
+    text: { en: "Companies, colleges and puja committees can take on a whole drive with us.", bn: "সংস্থা, কলেজ বা পুজো কমিটি আমাদের সঙ্গে একটি গোটা কর্মসূচির দায়িত্ব নিতে পারে।" },
   },
   {
     id: "spread",
@@ -209,8 +209,8 @@ export const helpPrograms = [
     icon: "book",
     title: { en: "Education support", bn: "পড়াশোনায় সাহায্য" },
     text: {
-      en: "School kits, coaching and fee help so no child drops out.",
-      bn: "স্কুলের সরঞ্জাম, পড়ানো আর ফি-র সাহায্য — যাতে কোনও শিশুর পড়া বন্ধ না হয়।",
+      en: "School kits, coaching and help with fees, so your child can stay in school.",
+      bn: "স্কুলের সরঞ্জাম, পড়ানো আর ফি-র সাহায্য, যাতে আপনার সন্তানের পড়া বন্ধ না হয়।",
     },
     needs: [
       { id: "edu-kit", label: { en: "School bag, books & stationery", bn: "স্কুলব্যাগ, বই ও খাতা-কলম" } },
@@ -224,8 +224,8 @@ export const helpPrograms = [
     icon: "gift",
     title: { en: "Durga Puja drive", bn: "দুর্গাপুজোর কর্মসূচি" },
     text: {
-      en: "New clothes and a festive meal so no child sits out the Pujas.",
-      bn: "নতুন জামা আর উৎসবের খাবার — যাতে কোনও শিশু পুজোয় বাদ না পড়ে।",
+      en: "New clothes and a festive meal, so nobody in the family sits out the Pujas.",
+      bn: "নতুন জামা আর উৎসবের খাবার, যাতে পরিবারের কেউ পুজোয় বাদ না পড়ে।",
     },
     needs: [
       { id: "puja-kids", label: { en: "New clothes for children", bn: "শিশুদের নতুন জামাকাপড়" } },
@@ -254,8 +254,8 @@ export const helpPrograms = [
     icon: "hands",
     title: { en: "Something else", bn: "অন্য কোনও সাহায্য" },
     text: {
-      en: "Food, medical or relief needs — tell us below.",
-      bn: "খাবার, চিকিৎসা বা ত্রাণ — নিচে লিখে জানান।",
+      en: "Food, medicine, relief or anything else. Tell us about it below.",
+      bn: "খাবার, ওষুধ, ত্রাণ বা অন্য কিছু। নিচে লিখে জানান।",
     },
     needs: [],
   },
@@ -275,7 +275,7 @@ export const faqs = [
     id: "f1",
     q: { en: "Is my donation tax-exempt?", bn: "আমার অনুদান কি করমুক্ত?" },
     a: {
-      en: "Not yet. Our 80G registration is still being processed, so donations are not tax-exempt for now. We will update this page once it is approved. Email us any time and we will send you a receipt for your donation.",
+      en: "Not yet. Our 80G registration is still being processed, so donations aren't tax-exempt for now. We'll update this page once it's approved. If you need a receipt for your donation, email us and we'll send one.",
       bn: "এখনও নয়। আমাদের ৮০জি নথিভুক্তি এখনও প্রক্রিয়াধীন, তাই আপাতত অনুদান করমুক্ত নয়। অনুমোদন পেলে এই পাতায় জানিয়ে দেব। যেকোনো সময় ইমেল করলে আপনার অনুদানের রসিদ পাঠিয়ে দেওয়া হবে।",
     },
   },
@@ -283,7 +283,7 @@ export const faqs = [
     id: "f2",
     q: { en: "How do I know where my money went?", bn: "আমার টাকা কোথায় গেল, কীভাবে জানব?" },
     a: {
-      en: "After every drive we publish photos and a cost breakdown on our Facebook page, and we send the same to donors on request.",
+      en: "After every drive we post the photos and a list of what we spent on our Facebook page. If you'd like a copy sent to you directly, just ask.",
       bn: "প্রতিটি কর্মসূচির পরে আমরা ছবি ও খরচের হিসেব ফেসবুক পেজে প্রকাশ করি এবং চাইলে দাতাদের কাছেও পাঠাই।",
     },
   },
@@ -291,24 +291,24 @@ export const faqs = [
     id: "f3",
     q: { en: "Can I donate things instead of money?", bn: "টাকার বদলে জিনিস দেওয়া যায়?" },
     a: {
-      en: "Yes. Clothes, blankets, books, stationery and dry grain are always needed — message us on WhatsApp and we will arrange collection.",
-      bn: "অবশ্যই। জামাকাপড়, কম্বল, বই, খাতা-কলম ও শুকনো খাদ্যশস্য সবসময়ই প্রয়োজন — হোয়াটসঅ্যাপে জানালে আমরা সংগ্রহের ব্যবস্থা করব।",
+      en: "Yes. We always need clothes, blankets, books, stationery and dry grain. Message us on WhatsApp and we'll arrange to collect them.",
+      bn: "অবশ্যই। জামাকাপড়, কম্বল, বই, খাতা-কলম ও শুকনো খাদ্যশস্য সবসময়ই দরকার। হোয়াটসঅ্যাপে জানালে আমরা নিয়ে আসার ব্যবস্থা করব।",
     },
   },
   {
     id: "f4",
     q: { en: "I am a student. Can I still volunteer?", bn: "আমি ছাত্র। আমি কি স্বেচ্ছাসেবক হতে পারি?" },
     a: {
-      en: "Most of our volunteers are students. Weekend drives are designed so that two or three hours a week is enough.",
-      bn: "আমাদের বেশিরভাগ স্বেচ্ছাসেবকই ছাত্রছাত্রী। সপ্তাহান্তের কর্মসূচি এমনভাবেই সাজানো, যাতে সপ্তাহে দু’-তিন ঘণ্টাই যথেষ্ট।",
+      en: "Yes. Most of our volunteers are students. Weekend drives take two or three hours, so you can fit them around your classes.",
+      bn: "হ্যাঁ। আমাদের বেশিরভাগ স্বেচ্ছাসেবকই ছাত্রছাত্রী। সপ্তাহান্তের কর্মসূচিতে দু’-তিন ঘণ্টা লাগে, তাই পড়াশোনার ফাঁকেই আসা যায়।",
     },
   },
   {
     id: "f5",
     q: { en: "Do you work outside Kolkata?", bn: "কলকাতার বাইরে কি কাজ হয়?" },
     a: {
-      en: "Our regular programmes run in and around Kolkata, and relief drives reach other districts of West Bengal when needed.",
-      bn: "নিয়মিত কর্মসূচি কলকাতা ও তার আশেপাশে চলে; প্রয়োজনে ত্রাণ কর্মসূচি পশ্চিমবঙ্গের অন্য জেলাতেও পৌঁছয়।",
+      en: "Our regular programmes run in and around Kolkata. When there's a cyclone or flood, our relief drives go to other districts of West Bengal too.",
+      bn: "নিয়মিত কর্মসূচি কলকাতা ও তার আশেপাশে চলে। ঘূর্ণিঝড় বা বন্যা হলে আমাদের ত্রাণ পশ্চিমবঙ্গের অন্য জেলাতেও যায়।",
     },
   },
 ];

@@ -27,12 +27,12 @@ export const bannerSlides = [
     align: "left",                          // "left" | "center"
     kicker: { en: "Our current drive", bn: "আমাদের চলতি উদ্যোগ" },
     title: {
-      en: "This Puja, let a smile bloom on someone's face",
+      en: "This Puja, help a child get something new to wear",
       bn: "এই পুজো, কারও মুখে ফুটুক একটুখানি হাসি",
     },
     subtitle: {
-      en: "New clothes, festive meals and a day of joy for children and families who are usually left out of the celebration.",
-      bn: "নতুন জামা, উৎসবের খাবার আর একটা আনন্দের দিন — সেই সব শিশু ও পরিবারের জন্য, যারা সাধারণত উৎসবের বাইরেই থেকে যায়।",
+      en: "New clothes, a festive meal and a good day out for children and families who usually miss out on the celebrations.",
+      bn: "নতুন জামা, উৎসবের খাবার আর একটা ভালো দিন, সেই সব শিশু ও পরিবারের জন্য যারা সাধারণত উৎসবের বাইরেই থেকে যায়।",
     },
     primaryCta: { label: { en: "Support this drive", bn: "এই উদ্যোগে পাশে থাকুন" }, to: "/donate" },
     secondaryCta: { label: { en: "See our work", bn: "আমাদের কাজ দেখুন" }, to: "/about#our-work" },
@@ -44,12 +44,12 @@ export const bannerSlides = [
     align: "left",
     kicker: { en: "Coming up next", bn: "পরবর্তী উদ্যোগ" },
     title: {
-      en: "Warmth for every winter night",
-      bn: "প্রতিটি শীতের রাতে একটু উষ্ণতা",
+      en: "A warm blanket for a cold night",
+      bn: "শীতের রাতে একটা গরম কম্বল",
     },
     subtitle: {
-      en: "Blankets and warm clothing distributed to people living on the streets of Kolkata through the coldest weeks of the year.",
-      bn: "বছরের সবচেয়ে শীতল সপ্তাহগুলিতে কলকাতার ফুটপাতবাসী মানুষের হাতে কম্বল ও শীতবস্ত্র পৌঁছে দেওয়া।",
+      en: "In the coldest weeks of the year, we hand out blankets and warm clothes to people sleeping on Kolkata's footpaths.",
+      bn: "বছরের সবচেয়ে ঠান্ডা সপ্তাহগুলিতে আমরা কলকাতার ফুটপাতে রাত কাটানো মানুষদের হাতে কম্বল ও গরম জামাকাপড় তুলে দিই।",
     },
     primaryCta: { label: { en: "Become a volunteer", bn: "স্বেচ্ছাসেবক হন" }, to: "/get-involved" },
     secondaryCta: { label: { en: "Contact us", bn: "যোগাযোগ করুন" }, to: "/contact" },
@@ -68,8 +68,8 @@ export const announcement = {
   active: false,        // <-- the switch: true shows the strip, false hides it
   badge: { en: "New", bn: "নতুন" },
   text: {
-    en: "Puja donation drive is open — every contribution reaches a family directly.",
-    bn: "পুজোর অনুদান সংগ্রহ চলছে — প্রতিটি সহায়তা সরাসরি পরিবারের কাছে পৌঁছয়।",
+    en: "Our Puja drive is open. Whatever you give goes straight to a family.",
+    bn: "পুজোর অনুদান সংগ্রহ চলছে। আপনি যা দেবেন, তা সরাসরি একটি পরিবারের কাছে পৌঁছবে।",
   },
   linkLabel: { en: "Donate", bn: "দান করুন" },
   to: "/donate",
