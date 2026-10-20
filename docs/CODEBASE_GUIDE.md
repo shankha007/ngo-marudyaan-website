@@ -408,7 +408,7 @@ All styling is Tailwind classes in the JSX. Global setup is in [src/index.css](.
 
 - **Semantic colours** that switch with dark mode: `canvas`, `surface`, `surface-2`, `ink`, `ink-2`, `ink-3`, `line`, `line-strong`, `brand`, `on-brand`, `brand-soft`, `brand-ink`, `focus`, `danger`. Their values are the `--c-*` variables in `:root` (light) and `[data-theme="dark"]`.
 - **Fixed colours** that look the same in both modes: `night`, `oasis-*`, `lime-*`, `saffron-*` (Donate), `coral-400`.
-- **Fonts:** Bricolage Grotesque (headings), Inter (body), Noto Sans Bengali (fallback).
+- **Fonts:** Baloo Da 2 (headings) and Hind Siliguri (body), both covering English and Bengali.
 - **Utilities:** `container-page` (page width), `shadow-soft`, `shadow-lift`, `marker`, `bg-dots`.
 - **Animations** (`rise`, `float-slow`, `marquee`, `spin-slow`) all switch off for `prefers-reduced-motion`.
 

@@ -183,9 +183,9 @@ from a project folder (as above).
 - **The home banner** is the one picture that loads first: it starts downloading before the
   page's JavaScript.
 - **The lightbox** fetches the next and previous photos while you look at one.
-- **Fonts** (Bricolage Grotesque, Inter, Noto Sans Bengali) are served from this site rather
-  than Google Fonts, so the first paint doesn't wait for another server. They are variable
-  fonts: one small file per alphabet covers every weight.
+- **Fonts** (Baloo Da 2 for headings, Hind Siliguri for body text) are served from this site
+  rather than Google Fonts, so the first paint doesn't wait for another server. Both are Indian
+  designs covering English and Bengali, and a page only downloads the alphabets it uses.
 - **Pages load on demand:** the home page downloads only its own code; the other pages are
   fetched quietly in the background once it is idle, so clicking around still feels instant.
 - **Caching:** on Netlify (`public/_headers`) and Vercel (`vercel.json`), the photo copies and

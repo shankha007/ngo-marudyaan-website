@@ -5,13 +5,16 @@ import App from "./App.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import { LanguageProvider } from "./i18n/LanguageContext.jsx";
 /* Fonts are served from this site (not Google Fonts), so the first paint
-   does not wait for another server. They are "variable" fonts: one file
-   holds every weight, so a page downloads one small file per script
-   (Latin, Bengali, …) instead of one per weight, and only when it uses
-   those letters. */
-import "@fontsource-variable/bricolage-grotesque/wght.css";
-import "@fontsource-variable/inter/wght.css";
-import "@fontsource-variable/noto-sans-bengali/wght.css";
+   does not wait for another server. Both are Indian designs that cover
+   Latin and Bengali, so English and বাংলা match. A page downloads one
+   small file per script (Latin, Bengali, …) only when it uses those letters.
+   - Baloo Da 2 (headings): a "variable" font, one file holds every weight.
+   - Hind Siliguri (body): one file per weight, so import only those used. */
+import "@fontsource-variable/baloo-da-2/wght.css";
+import "@fontsource/hind-siliguri/400.css";
+import "@fontsource/hind-siliguri/500.css";
+import "@fontsource/hind-siliguri/600.css";
+import "@fontsource/hind-siliguri/700.css";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
