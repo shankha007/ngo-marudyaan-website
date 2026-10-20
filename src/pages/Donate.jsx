@@ -6,12 +6,13 @@ import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import { btn, size } from "../components/ui";
 
-/* colour of each donation amount card, in turn */
+/* colour of each donation amount card, in turn: light green to dark green
+   as the amount grows (fixed colours, so the same in light and dark mode) */
 const tierLooks = [
-  { card: "bg-lime-400 text-oasis-900", sub: "text-oasis-900/80", upi: "border-oasis-900/25 hover:bg-oasis-900/10" },
-  { card: "border border-line bg-surface text-ink", sub: "text-ink-2", upi: "border-line-strong hover:border-ink" },
-  { card: "bg-saffron-400 text-oasis-900", sub: "text-oasis-900/80", upi: "border-oasis-900/25 hover:bg-oasis-900/10" },
-  { card: "bg-night text-white", sub: "text-white/75", upi: "border-white/25 hover:bg-white/10" },
+  { card: "bg-oasis-100 text-oasis-900", sub: "text-oasis-900/80", upi: "border-oasis-900/25 hover:bg-oasis-900/10" },
+  { card: "bg-oasis-300 text-oasis-900", sub: "text-oasis-900/85", upi: "border-oasis-900/25 hover:bg-oasis-900/10" },
+  { card: "bg-oasis-600 text-white", sub: "text-white/85", upi: "border-white/25 hover:bg-white/10" },
+  { card: "bg-oasis-800 text-white", sub: "text-white/85", upi: "border-white/25 hover:bg-white/10" },
 ];
 import { donationTiers, team } from "../data/content";
 import { site } from "../data/site";
