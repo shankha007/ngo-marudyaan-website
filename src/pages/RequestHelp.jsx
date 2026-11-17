@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FieldError, Honeypot, SendResult, SubmitButton } from "../components/FormSend";
+import { FieldError, Honeypot, PrivacyNote, SendResult, SubmitButton } from "../components/FormSend";
 import Icon from "../components/Icon";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
@@ -513,6 +513,7 @@ export default function RequestHelp() {
                 label="help.form.submit"
                 labelDirect="help.form.submit.direct"
               />
+              <PrivacyNote />
               <SendResult status={sender.status} message={sender.message} sentKey="help.sent.direct" />
             </form>
           </Reveal>

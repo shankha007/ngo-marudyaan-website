@@ -1,6 +1,7 @@
 /* Shared pieces for the three forms (Contact, Get Involved, Request Help):
    the submit button, the hidden spam trap, and the message shown after sending.
    Used with hooks/useFormSender.js. */
+import { Link } from "react-router-dom";
 import Icon from "./Icon";
 import { useLang } from "../i18n/LanguageContext";
 import { mailtoHref, whatsappHref } from "../utils/sendForm";
@@ -22,6 +23,20 @@ export function SubmitButton({ status, direct, label, labelDirect }) {
       )}
       {sending ? t("form.sending") : t(direct ? labelDirect : label)}
     </button>
+  );
+}
+
+/* One line under each form's Send button, linking to the privacy policy. */
+export function PrivacyNote() {
+  const { t } = useLang();
+  return (
+    <p className="mt-3 text-xs leading-relaxed text-ink-3">
+      {t("form.privacy")}{" "}
+      <Link to="/privacy" className="font-medium text-brand-ink underline underline-offset-2">
+        {t("form.privacy.link")}
+      </Link>
+      {t("form.privacy.end")}
+    </p>
   );
 }
 

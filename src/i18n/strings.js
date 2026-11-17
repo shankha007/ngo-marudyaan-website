@@ -274,6 +274,14 @@ export const strings = {
     "footer.follow": "Follow us",
     "footer.rights": "All rights reserved.",
     "footer.made": "Made for the people we work with.",
+    "footer.privacy": "Privacy policy",
+    "form.privacy": "We use these details only to respond to you. See our",
+    "form.privacy.link": "privacy policy",
+    "form.privacy.end": ".",
+    "privacy.title": "Privacy policy",
+    "privacy.kicker": "Your information",
+    "privacy.updated": "Last updated:",
+    "privacy.reg": "Registration no.",
 
     /* 404 */
     "nf.title": "Page not found",
@@ -550,6 +558,14 @@ export const strings = {
     "footer.follow": "ফলো করুন",
     "footer.rights": "সর্বস্বত্ব সংরক্ষিত।",
     "footer.made": "যাঁদের জন্য কাজ, তাঁদের কথা ভেবেই তৈরি।",
+    "footer.privacy": "গোপনীয়তা নীতি",
+    "form.privacy": "এই তথ্য আমরা শুধু আপনার সঙ্গে যোগাযোগের জন্যই ব্যবহার করি। বিস্তারিত দেখুন আমাদের",
+    "form.privacy.link": "গোপনীয়তা নীতিতে",
+    "form.privacy.end": "।",
+    "privacy.title": "গোপনীয়তা নীতি",
+    "privacy.kicker": "আপনার তথ্য",
+    "privacy.updated": "শেষ হালনাগাদ:",
+    "privacy.reg": "নিবন্ধন নং",
 
     /* 404 */
     "nf.title": "পাতাটি পাওয়া যায়নি",
