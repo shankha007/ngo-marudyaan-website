@@ -112,6 +112,11 @@ export default function Donate() {
                     </span>
                   )}
                 </p>
+                {donation.upiInterim && (
+                  <p className="mt-3 rounded-2xl border border-line px-4 py-3 text-left text-ink-2">
+                    {t("donate.upi.interim")}
+                  </p>
+                )}
               </div>
             </div>
           </Reveal>

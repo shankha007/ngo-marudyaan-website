@@ -137,33 +137,15 @@ export const team = [
 ];
 
 /* --- VOICES ------------------------------------------------------- */
-/* TODO: replace with real quotes (take written consent before publishing) */
-export const testimonials = [
-  {
-    id: "v1",
-    quote: {
-      en: "My son studies in the evening circle. Last year he could not write his name; this year he stood second in class.",
-      bn: "আমার ছেলে সান্ধ্য পাঠচক্রে পড়ে। গত বছর নিজের নামটাও লিখতে পারত না, এ বছর ক্লাসে দ্বিতীয় হয়েছে।",
-    },
-    author: { en: "Parent, Kolkata", bn: "একজন অভিভাবক, কলকাতা" },
-  },
-  {
-    id: "v2",
-    quote: {
-      en: "I came along to one Sunday drive out of curiosity. Two years later I'm still here. Honestly, it has changed me more than it has changed them.",
-      bn: "কৌতূহল থেকে একটা রবিবার এসেছিলাম। দু’বছর পরেও আছি। সত্যি বলতে, ওদের চেয়ে আমাকেই বেশি বদলে দিয়েছে।",
-    },
-    author: { en: "Volunteer", bn: "একজন স্বেচ্ছাসেবক" },
-  },
-  {
-    id: "v3",
-    quote: {
-      en: "They sent photos and the full expense list of the drive I funded. That is why I keep giving.",
-      bn: "আমি যে কর্মসূচিতে সাহায্য করেছিলাম, তার ছবি ও পুরো খরচের হিসেব পাঠিয়েছিল। সেই জন্যই আমি বারবার দিই।",
-    },
-    author: { en: "Monthly donor", bn: "একজন মাসিক দাতা" },
-  },
-];
+/* The "Voices" section on the home page stays hidden while this list is
+   empty. Add only real quotes, with the person's written consent, e.g.:
+   {
+     id: "v1",
+     quote: { en: "…what they said…", bn: "…বাংলায়…" },
+     author: { en: "Parent, Kolkata", bn: "একজন অভিভাবক, কলকাতা" },
+   },
+*/
+export const testimonials = [];
 
 /* --- VOLUNTEER ROLES ---------------------------------------------- */
 export const volunteerRoles = [

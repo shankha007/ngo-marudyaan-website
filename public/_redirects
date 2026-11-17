@@ -23,6 +23,7 @@ https://ngo-marudyaan.netlify.app/*   https://marudyaan.com/:splat   301!
 /request-help   /index.html   200
 /donate         /index.html   200
 /contact        /index.html   200
+/privacy        /index.html   200
 
 # Our Work is now part of About Us (a #section in the link is kept)
 /our-work       /about        301

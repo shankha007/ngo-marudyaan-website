@@ -58,6 +58,11 @@ export const site = {
        with the UPI ID (and amount) already filled in.
        Only switch on when upiId above is a real UPI ID. */
     upiButtons: true,
+    /* The UPI above is a Governing Body member's account, used until the
+       bank issues a UPI QR code for the society's current account. While
+       true, the Donate page explains this to donors. Set to false once
+       qrImage, upiId and upiName are the society's own account. */
+    upiInterim: true,
     bank: {
       accountName: "MARUDYAAN",
       accountNumber: "753202010003418",
