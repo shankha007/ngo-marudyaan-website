@@ -1,6 +1,6 @@
 # NGO Marudyaan — মরুদ্যান
 
-**Live site: https://ngo-marudyaan.netlify.app**
+**Live site: https://marudyaan.com**
 
 Every change merged into `main` rebuilds and republishes the live site automatically
 (Netlify runs `npm run build` and publishes `dist/`). You do not need to

@@ -12,8 +12,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { ROOT, createReporter, launchBrowser } from "./lib.mjs";
 
-// Switch to "https://marudyaan.com" (site.url) once the domain points at Netlify.
-const LIVE_URL = process.env.LIVE_URL || "https://ngo-marudyaan.netlify.app";
+const LIVE_URL = process.env.LIVE_URL || "https://marudyaan.com";
 const SUITES = ["smoke", "navigation", "features", "performance", "a11y", "netlify-badge"];
 
 const args = process.argv.slice(2);
