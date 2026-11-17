@@ -75,6 +75,12 @@ const isNetlifyOwn = (url) => {
   }
 };
 
+/* That script draws the badge inside an <iframe srcdoc>, which inherits our
+   Content-Security-Policy, so the badge's inline <style> and <script> are
+   blocked and it stays hidden. Those CSP errors come from Netlify's frame,
+   not from our pages; our own code never uses srcdoc frames. */
+const isFromNetlifyBadge = (m) => m.location().url === "about:srcdoc";
+
 /* A page with the site's language pre-selected (once, so reloads keep the
    visitor's own choice) and error collectors attached. */
 export async function openPage(browser, base, { lang = "en", viewport = "desktop", contextOptions = {} } = {}) {
@@ -98,7 +104,7 @@ export async function openPage(browser, base, { lang = "en", viewport = "desktop
   const page = await context.newPage();
   page.errors = { page: [], console: [], http: [] };
   page.on("pageerror", (e) => page.errors.page.push(String(e.message || e)));
-  page.on("console", (m) => m.type() === "error" && page.errors.console.push(m.text()));
+  page.on("console", (m) => m.type() === "error" && !isFromNetlifyBadge(m) && page.errors.console.push(m.text()));
   page.on("response", (r) => r.status() >= 400 && !isNetlifyOwn(r.url()) && page.errors.http.push({ status: r.status(), url: r.url() }));
   page.on("requestfailed", (r) => {
     if (!r.url().startsWith("data:") && !isNetlifyOwn(r.url())) page.errors.http.push({ status: "failed", url: r.url() });
