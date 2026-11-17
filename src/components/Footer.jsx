@@ -135,7 +135,12 @@ export default function Footer() {
             <p>
               © {new Date().getFullYear()} {site.name} ({site.nameBn}). {t("footer.rights")}
             </p>
-            <p>{t("footer.made")}</p>
+            <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <Link to="/privacy" className={`-my-3 inline-block py-3 underline-offset-2 hover:underline ${footLink}`}>
+                {t("footer.privacy")}
+              </Link>
+              <span>{t("footer.made")}</span>
+            </p>
           </div>
         </div>
       </div>

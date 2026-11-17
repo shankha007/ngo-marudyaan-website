@@ -18,6 +18,7 @@ const pages = {
   RequestHelp: () => import("./pages/RequestHelp"),
   Donate: () => import("./pages/Donate"),
   Contact: () => import("./pages/Contact"),
+  Privacy: () => import("./pages/Privacy"),
   NotFound: () => import("./pages/NotFound"),
 };
 const About = lazy(pages.About);
@@ -27,6 +28,7 @@ const GetInvolved = lazy(pages.GetInvolved);
 const RequestHelp = lazy(pages.RequestHelp);
 const Donate = lazy(pages.Donate);
 const Contact = lazy(pages.Contact);
+const Privacy = lazy(pages.Privacy);
 const NotFound = lazy(pages.NotFound);
 
 function usePrefetchPages() {
@@ -62,6 +64,7 @@ export default function App() {
             <Route path="/request-help" element={<RequestHelp />} />
             <Route path="/donate" element={<Donate />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

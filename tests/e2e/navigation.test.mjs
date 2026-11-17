@@ -85,7 +85,15 @@ export default async function navigation({ browser, base, live, report }) {
     const page = await openPage(browser, base);
     await page.goto(base + "/", { waitUntil: "networkidle" });
     const wrong = [];
-    for (const path of [...inRedirects.filter((p) => p !== "/" && p !== "/donate"), "/"]) {
+    /* Some pages (the privacy policy) are linked only from the footer.
+       Every page must be reachable from the header or the footer. */
+    const linked = await page.evaluate(() => ({
+      header: [...document.querySelectorAll("header nav a")].map((a) => a.getAttribute("href")),
+      footer: [...document.querySelectorAll("footer a")].map((a) => a.getAttribute("href")),
+    }));
+    const unlinked = inRedirects.filter((p) => p !== "/" && !linked.header.includes(p) && !linked.footer.includes(p));
+    report.check(unlinked.length === 0, "every page is linked from the header or the footer", unlinked.join(", "));
+    for (const path of [...inRedirects.filter((p) => p !== "/" && p !== "/donate" && linked.header.includes(p)), "/"]) {
       await page.evaluate(() => window.scrollTo(0, 600));
       await page.locator(`header nav a[href="${path}"]`).first().click();
       await page.waitForTimeout(350);
