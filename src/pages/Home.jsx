@@ -313,7 +313,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- voices ---------------------------------------------------- */}
+      {/* --- voices (hidden while content.js has no testimonials) --------- */}
+      {testimonials.length > 0 && (
       <section className="pb-20 sm:pb-28">
         <div className="container-page">
           <SectionHeading kicker={t("home.voices.kicker")} title={t("home.voices.title")} />
@@ -351,6 +352,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
     </>
   );
 }
