@@ -97,8 +97,8 @@ export const site = {
 /* Impact numbers shown on the home page and the About page.
    Update the `value` fields as your work grows. */
 export const stats = [
-  { id: "meals",      value: 12000, suffix: "+" },
-  { id: "children",   value: 450,   suffix: "+" },
-  { id: "camps",      value: 60,    suffix: "+" },
-  { id: "volunteers", value: 120,   suffix: "+" },
+  { id: "meals",      value: 4000, suffix: "+" },
+  { id: "children",   value: 500,  suffix: "+" },
+  { id: "camps",      value: 10,   suffix: "+" },
+  { id: "volunteers", value: 50,   suffix: "+" },
 ];
