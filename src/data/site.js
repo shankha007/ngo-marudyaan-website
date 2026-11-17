@@ -33,9 +33,11 @@ export const site = {
     addressLines: ["Kolkata, West Bengal", "India — 700056"],
     serviceArea: "Kolkata & across West Bengal",
     hours: "Open to messages all week",
-    // TODO: replace with your exact Google Maps embed URL (Maps → Share → Embed a map)
+    // The Contact page map, centred on a pin at the NGO's location
+    // (22°39'54.3"N 88°22'59.6"E, Belgharia). To move it, change the
+    // latitude,longitude after q=; z= is the zoom level.
     mapEmbed:
-      "https://www.google.com/maps?q=Kolkata,West%20Bengal%20700056&output=embed",
+      "https://www.google.com/maps?q=22.665083,88.383222&z=17&hl=en&output=embed",
   },
 
   social: {
