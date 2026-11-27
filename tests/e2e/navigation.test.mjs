@@ -201,7 +201,7 @@ export default async function navigation({ browser, base, live, report }) {
   }
   const expect = Object.fromEntries(inRedirects.map((p) => [p, 200]));
   Object.assign(expect, {
-    "/about/": 200,
+    "/about/": 301, // Netlify sends a trailing slash to the page's one address, /about
     "/gallery?utm_source=facebook": 200,
     "/favicon.png": 200,
     "/robots.txt": 200,
