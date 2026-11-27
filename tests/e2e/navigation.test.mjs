@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { programs } from "../../src/data/content.js";
+import { pageTitle, pages } from "../../src/data/pages.js";
 import { site } from "../../src/data/site.js";
 import { strings } from "../../src/i18n/strings.js";
 import { ROOT, appRoutes, openPage, realRoutes, sitemapRoutes } from "./lib.mjs";
@@ -41,6 +42,30 @@ export default async function navigation({ browser, base, live, report }) {
       foreign.length === 0 && robotsOk,
       `sitemap.xml and robots.txt use ${site.url}`,
       `${foreign.length ? `sitemap.xml has: ${foreign.slice(0, 3).join(", ")}. ` : ""}${robotsOk ? "" : `robots.txt needs "Sitemap: ${site.url}/sitemap.xml"`}`,
+    );
+  }
+
+  /* ---- each page's raw HTML (before any JavaScript) has its own title, description and
+          canonical link: what search engines read first, and all WhatsApp / Facebook see ---- */
+  {
+    const noMeta = inApp.filter((p) => !pages[p]);
+    const wrong = [];
+    const attr = (html, re) => html.match(re)?.[1]?.replace(/&amp;/g, "&").replace(/&quot;/g, '"');
+    for (const path of inRedirects) {
+      if (!pages[path]) continue;
+      const html = await (await fetch(base + path)).text();
+      const want = { title: pageTitle(path, (k) => strings.en[k]), description: pages[path].description, canonical: site.url + path };
+      const got = {
+        title: attr(html, /<title>([^<]*)<\/title>/),
+        description: attr(html, /<meta name="description" content="([^"]*)"/),
+        canonical: attr(html, /<link rel="canonical" href="([^"]*)"/),
+      };
+      for (const k of Object.keys(want)) if (got[k] !== want[k]) wrong.push(`${path} ${k}: "${got[k]}"`);
+    }
+    report.check(
+      noMeta.length === 0 && wrong.length === 0,
+      `each page's HTML has its own title, description and canonical link before JavaScript runs`,
+      `${noMeta.length ? `add to src/data/pages.js: ${noMeta.join(", ")}. ` : ""}${wrong.slice(0, 4).join("; ")}`,
     );
   }
 
@@ -192,6 +217,14 @@ export default async function navigation({ browser, base, live, report }) {
     if (res.status !== want) wrong.push(`${path} → ${res.status} (want ${want})`);
   }
   report.check(wrong.length === 0, `HTTP status correct for ${Object.keys(expect).length} URLs (real pages 200, unknown 404)`, wrong.join(", "));
+  {
+    const html = await (await fetch(base + "/no-such-page")).text();
+    report.check(
+      /<meta name="robots" content="noindex/.test(html) && !/rel="canonical"/.test(html),
+      "unknown URL's HTML is noindex with no canonical link, before JavaScript runs",
+      "the 404 response should be dist/404.html (see public/_redirects)",
+    );
+  }
   const page = await openPage(browser, base);
   const res = await page.goto(base + "/no-such-page", { waitUntil: "networkidle" });
   const h1 = await page.locator("h1").innerText();

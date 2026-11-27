@@ -5,34 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <title>NGO Marudyaan — __SITE_TAGLINE__ | Kolkata</title>
-    <meta
-      name="description"
-      content="NGO Marudyaan (মরুদ্যান) is a volunteer-run organisation in Kolkata working on education for children who cannot afford it, festivals for everyone and winter relief."
-    />
+    <title>__PAGE_TITLE__</title>
+    <meta name="description" content="__PAGE_DESCRIPTION__" />
     <meta name="theme-color" content="#f7f6ef" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#06120d" media="(prefers-color-scheme: dark)" />
     <meta name="color-scheme" content="light dark" />
 
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
-    <!-- __SITE_URL__ (below) is replaced with site.url from src/data/site.js
-         (scripts/seo.mjs, which also adds the organisation's JSON-LD).
-         Each page then updates the canonical link and og:url / og:title /
-         og:description for its own address: see src/hooks/usePageMeta.js -->
-    <link rel="canonical" href="__SITE_URL__/" />
+    <!-- The __PAGE_…__ values are filled per page from src/data/pages.js, and
+         __SITE_URL__ / __SITE_TAGLINE__ from src/data/site.js, by
+         scripts/seo.mjs (which also adds the organisation's JSON-LD). The
+         build writes one copy of this file per page. In the browser,
+         src/hooks/usePageMeta.js keeps the tags right as visitors move
+         between pages. -->
+    <link rel="canonical" href="__PAGE_URL__" />
 
     <!-- Social sharing (Facebook / WhatsApp / X preview).
          The image must be a JPG or PNG at a full https:// address.
          Remake it with: npm run og-image -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="NGO Marudyaan" />
-    <meta property="og:url" content="__SITE_URL__/" />
-    <meta property="og:title" content="NGO Marudyaan — __SITE_TAGLINE__" />
-    <meta
-      property="og:description"
-      content="A volunteer-run NGO in Kolkata: education for children, festivals for everyone and winter relief."
-    />
+    <meta property="og:url" content="__PAGE_URL__" />
+    <meta property="og:title" content="__PAGE_TITLE__" />
+    <meta property="og:description" content="__PAGE_DESCRIPTION__" />
     <meta property="og:image" content="__SITE_URL__/images/og-image.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />

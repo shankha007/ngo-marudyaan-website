@@ -6,10 +6,10 @@ import Reveal from "../components/Reveal";
 import WorkCard from "../components/WorkCard";
 import { arrow, btn, size } from "../components/ui";
 import { sortedPastWorks, workYear } from "../data/pastWorks";
-import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useActiveSection from "../hooks/useActiveSection";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 
 /* works grouped by year, newest year first */
 const years = [...new Set(sortedPastWorks.map(workYear))].map((year) => ({
@@ -20,10 +20,7 @@ const years = [...new Set(sortedPastWorks.map(workYear))].map((year) => ({
 export default function PastWorks() {
   const { t, lang } = useLang();
   const activeYear = useActiveSection(years.map(({ year }) => String(year)));
-  usePageMeta(
-    `${t("works.title")} — ${site.name}`,
-    "Every drive NGO Marudyaan has run since its first winter project in December 2017: relief, education, festival and winter drives across Kolkata and West Bengal.",
-  );
+  usePageMeta(...pageMeta("/past-works", t));
   const num = (y) => Number(y).toLocaleString(lang === "bn" ? "bn-BD" : "en-IN", { useGrouping: false });
 
   return (

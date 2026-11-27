@@ -8,6 +8,7 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 import { isValidEmail } from "../utils/validation";
 
 const empty = { name: "", email: "", subject: "", message: "" };
@@ -25,10 +26,7 @@ export default function Contact() {
   const emailRef = useRef(null);
   const messageRef = useRef(null);
 
-  usePageMeta(
-    `${t("contact.title")} — ${site.name}`,
-    `Contact NGO Marudyaan, Kolkata — ${site.contact.phone}, ${site.contact.email}.`,
-  );
+  usePageMeta(...pageMeta("/contact", t));
 
   const set = (key) => (e) => {
     setForm((f) => ({ ...f, [key]: e.target.value }));

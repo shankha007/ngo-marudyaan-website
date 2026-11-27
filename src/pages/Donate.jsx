@@ -18,6 +18,7 @@ import { donationTiers, team } from "../data/content";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 
 export default function Donate() {
   const { t, tr } = useLang();
@@ -27,10 +28,7 @@ export default function Donate() {
   // donors can see the personal name their app shows belongs to the NGO
   const upiHolder = team.find((m) => m.name.en === donation.upiName);
 
-  usePageMeta(
-    `${t("donate.title")} — ${site.name}`,
-    "Donate to NGO Marudyaan by UPI QR code or bank transfer. We confirm every donation, then send photos and a list of what was spent.",
-  );
+  usePageMeta(...pageMeta("/donate", t));
 
   /* upi:// links open the visitor's UPI app (GPay, PhonePe, Paytm…) with the
      payee filled in. Only phones can follow them, so the buttons are shown on

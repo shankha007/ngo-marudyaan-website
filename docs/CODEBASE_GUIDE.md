@@ -208,18 +208,18 @@ Edit `bannerSlides` in [src/data/banner.js](../src/data/banner.js): set `image` 
 
 ### Add a new page
 
-Five places, or the tests fail:
+Six places, or the tests fail:
 
 1. **Create** `src/pages/MyPage.jsx`:
    ```jsx
    import PageHeader from "../components/PageHeader";
-   import { site } from "../data/site";
+   import { pageMeta } from "../data/pages";
    import { useLang } from "../i18n/LanguageContext";
    import usePageMeta from "../hooks/usePageMeta";
 
    export default function MyPage() {
      const { t } = useLang();
-     usePageMeta(`${t("mypage.title")} — ${site.name}`, "English description for search engines.");
+     usePageMeta(...pageMeta("/my-page", t));
      return (
        <>
          <PageHeader title={t("mypage.title")} sub={t("mypage.sub")} />
@@ -229,9 +229,10 @@ Five places, or the tests fail:
    }
    ```
 2. **Route:** in [src/App.jsx](../src/App.jsx), import it and add `<Route path="/my-page" element={<MyPage />} />` above the `*` route.
-3. **Netlify:** add `/my-page   /index.html   200` to [public/_redirects](../public/_redirects), above the `/*` line.
+3. **Netlify:** add `/my-page   /my-page.html   200` to [public/_redirects](../public/_redirects), above the `/*` line.
 4. **Sitemap:** add `<url><loc>https://marudyaan.com/my-page</loc></url>` to [public/sitemap.xml](../public/sitemap.xml).
-5. **Labels:** add `"nav.mypage"`, `"mypage.title"`, `"mypage.sub"` to **both** `en` and `bn` in [src/i18n/strings.js](../src/i18n/strings.js).
+5. **Title and description:** add `"/my-page": { titleKey: "mypage.title", description: "English description for search engines." }` to [src/data/pages.js](../src/data/pages.js). The build writes `dist/my-page.html` with these tags in it.
+6. **Labels:** add `"nav.mypage"`, `"mypage.title"`, `"mypage.sub"` to **both** `en` and `bn` in [src/i18n/strings.js](../src/i18n/strings.js).
 
 Then, to put it in the menus: add `{ to: "/my-page", key: "nav.mypage" }` to `links` in [Navbar.jsx](../src/components/Navbar.jsx) and to `quickLinks` in [Footer.jsx](../src/components/Footer.jsx).
 
@@ -422,7 +423,7 @@ your change → push to uat → PR uat → main → Netlify builds main → live
 
 - **`main` is protected.** Work goes to `uat`, then a PR from `uat` into `main` (`gh pr create --base main --head uat`). A GitHub check ([enforce-uat-to-main.yml](../.github/workflows/enforce-uat-to-main.yml)) blocks PRs from any other branch.
 - **Netlify** runs `npm run build` on `main` and publishes `dist/`.
-- **[public/_redirects](../public/_redirects):** real pages get status 200; anything else gets the app with status 404 (so search engines see real 404s). Old `/our-work` links redirect to `/about`.
+- **[public/_redirects](../public/_redirects):** each real page gets its own built HTML file (with its own title, description and canonical) and status 200; anything else gets `404.html` (noindex) with status 404 (so search engines see real 404s). Old `/our-work` links redirect to `/about`.
 - **[public/_headers](../public/_headers)** and **[vercel.json](../vercel.json):** security headers (CSP etc.) and long caching for hashed files. A build check makes sure the two agree and that the CSP allows the inline script in `index.html`.
 - **[vite.config.js](../vite.config.js):** React and Tailwind plugins, plus the photo plugin and the header check.
 - **`index.html`:** `__SITE_URL__` is replaced with `site.url` at build time ([scripts/seo.mjs](../scripts/seo.mjs)). A small inline script sets the theme before the first paint and preloads the first banner photo.

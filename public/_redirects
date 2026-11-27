@@ -1,11 +1,15 @@
 # Netlify routing for this single-page app.
 #
-# Real pages are served the app with status 200. Anything else is served
-# the same app (which shows the "Page not found" screen) but with status
-# 404, so search engines do not index mistyped URLs as real pages.
+# Each real page is served its own copy of the app (about.html, …) with
+# status 200. The build writes each copy with that page's title,
+# description and canonical link already in it (scripts/seo.mjs), so
+# search engines and link previews see the right page. Anything else is
+# served 404.html (the app's "Page not found" screen, marked noindex) with
+# status 404, so search engines do not index mistyped URLs as real pages.
 #
-# IMPORTANT: when you add a new page to src/App.jsx, add its path here too,
-# or it will load fine but report itself to search engines as "not found".
+# IMPORTANT: when you add a new page to src/App.jsx, add its path here too
+# (and to src/data/pages.js), or it will load fine but report itself to
+# search engines as "not found".
 
 # ---- One address for search engines: https://marudyaan.com -------------
 # www.marudyaan.com moves visitors (and search rankings) to the bare
@@ -16,16 +20,16 @@ http://www.marudyaan.com/*      https://marudyaan.com/:splat    301!
 # The old Netlify address forwards to the domain too.
 https://ngo-marudyaan.netlify.app/*   https://marudyaan.com/:splat   301!
 
-/about          /index.html   200
-/past-works     /index.html   200
-/gallery        /index.html   200
-/get-involved   /index.html   200
-/request-help   /index.html   200
-/donate         /index.html   200
-/contact        /index.html   200
-/privacy        /index.html   200
+/about          /about.html          200
+/past-works     /past-works.html     200
+/gallery        /gallery.html        200
+/get-involved   /get-involved.html   200
+/request-help   /request-help.html   200
+/donate         /donate.html         200
+/contact        /contact.html        200
+/privacy        /privacy.html        200
 
 # Our Work is now part of About Us (a #section in the link is kept)
 /our-work       /about        301
 
-/*              /index.html   404
+/*              /404.html            404

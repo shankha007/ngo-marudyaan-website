@@ -10,6 +10,7 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
 
@@ -70,10 +71,7 @@ export default function GetInvolved() {
   const [form, setForm] = useState(empty);
   const sender = useFormSender("involved");
 
-  usePageMeta(
-    `${t("involved.title")} — ${site.name}`,
-    "Volunteer, donate goods, lend a skill or partner with NGO Marudyaan in Kolkata.",
-  );
+  usePageMeta(...pageMeta("/get-involved", t));
 
   // message KEY (not text) so it re-translates on a language switch
   const [errorKey, setErrorKey] = useState("");
