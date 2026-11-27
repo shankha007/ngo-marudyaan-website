@@ -268,7 +268,7 @@ Plain JavaScript objects and arrays, no logic. Most text fields are `{ en, bn }`
 | `registration` | `regNo`, `regAct`, `regDate`, `pan`, `eightyG` (empty hides it), `founded` |
 | `contact` | `email`, `phone` (display) / `phoneHref` (digits for `tel:`), `whatsapp` / `whatsappHref`, `addressLines[]`, `serviceArea`, `hours`, `mapEmbed` |
 | `social` | `facebook`, `instagram`, `youtube`, `twitter`; empty strings are hidden |
-| `donation` | `qrImage`, `upiId`, `upiName`, `upiButtons` (one-tap UPI on phones; only with a real `upiId`), `bank{…}`, `taxNote` |
+| `donation` | `qrImage`, `upiId`, `upiName`, `upiButtons` (one-tap UPI on phones; only with a real `upiId`), `upiInterim` (Donate page explains the UPI is a member's account), `bank{…}`, `taxNote` |
 | `forms.keys` | Web3Forms keys for `contact`, `involved`, `help`. Public by design: they can only send to the NGO. |
 
 `stats` is a separate export: `[{ id, value, suffix }]`.
@@ -465,5 +465,5 @@ Flags: `--live`, `--quick`, `--only=smoke,features`, `--base=<url>`, `--no-build
 - **One `<h1>` per page:** `PageHeader` on inner pages, `HeroBanner` on Home.
 - **Keep the bottom-right corner clear.** Netlify's badge sits there.
 - **Fail soft.** A missing QR, blocked storage or a crash shows something usable, never a blank screen.
-- **`// TODO` in `src/data/`** marks placeholder info; `npm test` lists what's still outstanding.
+- **Placeholders are flagged by tests.** `npm test` warns about any placeholder content (QR, bank details, team names, art); the README's "Still to do" lists what waits on outside events.
 - **Max 5 photos per album.**
