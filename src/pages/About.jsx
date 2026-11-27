@@ -13,6 +13,7 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useActiveSection from "../hooks/useActiveSection";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 
 function Initials({ name }) {
   const letters = name
@@ -114,10 +115,7 @@ function Programme({ program: p, index: i }) {
 export default function About() {
   const { t, tr } = useLang();
   const activeProgram = useActiveSection(programs.map((p) => p.id));
-  usePageMeta(
-    `${t("about.title")} — ${site.name}`,
-    "Who NGO Marudyaan is and what it does: its mission, values and programmes in education for children, festivals for everyone and winter relief, plus its team and registration details.",
-  );
+  usePageMeta(...pageMeta("/about", t));
 
   const legalRows = [
     { label: t("about.legal.regNo"), value: site.registration.regNo },

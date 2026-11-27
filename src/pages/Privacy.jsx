@@ -3,13 +3,11 @@ import { privacyIntro, privacySections, privacyUpdated } from "../data/privacy";
 import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 
 export default function Privacy() {
   const { t, tr } = useLang();
-  usePageMeta(
-    `${t("privacy.title")} — ${site.name}`,
-    "How NGO Marudyaan collects, uses and protects the personal information you share through this website.",
-  );
+  usePageMeta(...pageMeta("/privacy", t));
 
   const fill = (text) =>
     text.replaceAll("{email}", site.contact.email).replaceAll("{phone}", site.contact.phone);

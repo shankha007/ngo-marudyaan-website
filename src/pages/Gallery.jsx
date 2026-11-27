@@ -6,10 +6,10 @@ import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import { programs } from "../data/content";
 import { galleryProjects, preloadPhoto } from "../data/gallery";
-import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFocusTrap from "../hooks/useFocusTrap";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 
 /* How wide a photo is on screen, so the browser downloads the right size:
    thumbnails sit 2 / 3 / 4 to a row; the lightbox is at most 896px wide. */
@@ -26,10 +26,7 @@ export default function Gallery() {
   const [filter, setFilter] = useState("all");
   const [openIndex, setOpenIndex] = useState(null);
 
-  usePageMeta(
-    `${t("gallery.title")} — ${site.name}`,
-    "Photo albums from NGO Marudyaan's projects, year by year: cyclone relief in the Sundarbans, a micro library for children, Puja gifts and more.",
-  );
+  usePageMeta(...pageMeta("/gallery", t));
 
   const shownProjects = useMemo(
     () => (filter === "all" ? galleryProjects : galleryProjects.filter((p) => p.category === filter)),
