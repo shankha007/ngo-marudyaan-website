@@ -12,6 +12,7 @@ import { findProject, galleryProjects } from "../data/gallery";
 import { site, stats } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 
 /* colour of each impact tile, in the order of `stats` in site.js */
 const statTiles = [
@@ -58,10 +59,7 @@ function Marquee() {
 
 export default function Home() {
   const { t, tr, lang } = useLang();
-  usePageMeta(
-    `${site.name} — ${site.tagline}`,
-    "NGO Marudyaan is a group of volunteers in Kolkata. We help children stay in school, bring new clothes to kids at festival time and hand out blankets in winter.",
-  );
+  usePageMeta(...pageMeta("/", t));
 
   /* Gallery preview: each project's cover (newest first), then their
      other photos in turn, up to 6. */

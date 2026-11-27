@@ -9,6 +9,7 @@ import { site } from "../data/site";
 import { useLang } from "../i18n/LanguageContext";
 import useFormSender from "../hooks/useFormSender";
 import usePageMeta from "../hooks/usePageMeta";
+import { pageMeta } from "../data/pages";
 import { isValidEmail, isValidPhone } from "../utils/validation";
 
 
@@ -53,10 +54,7 @@ export default function RequestHelp() {
   const [invalid, setInvalid] = useState({});
   const sender = useFormSender("help");
 
-  usePageMeta(
-    `${t("help.title")} — ${site.name}`,
-    "Ask NGO Marudyaan for help with schooling, Durga Puja clothes or winter blankets in Kolkata and West Bengal.",
-  );
+  usePageMeta(...pageMeta("/request-help", t));
 
   const program = helpPrograms.find((p) => p.id === form.program);
 

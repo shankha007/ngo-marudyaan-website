@@ -574,7 +574,7 @@
       <details class="recipe" id="r-page" data-cat="code" data-k="new page route menu navigation link url add">
         <summary><span class="emoji">📄</span><span class="t"><b>Add a new page</b><small>Five files must agree, or the tests fail</small></span><span class="chev">▶</span></summary>
         <div class="body">
-          <div class="files"><span class="file">src/pages/MyPage.jsx (new)</span><span class="file">src/App.jsx</span><span class="file">public/_redirects</span><span class="file">public/sitemap.xml</span><span class="file">src/i18n/strings.js</span><span class="file opt">Navbar.jsx + Footer.jsx (for menus)</span></div>
+          <div class="files"><span class="file">src/pages/MyPage.jsx (new)</span><span class="file">src/App.jsx</span><span class="file">public/_redirects</span><span class="file">public/sitemap.xml</span><span class="file">src/data/pages.js</span><span class="file">src/i18n/strings.js</span><span class="file opt">Navbar.jsx + Footer.jsx (for menus)</span></div>
           <div class="flow">
             <div class="node green"><b>1. Page file</b><small>src/pages/</small></div><div class="arrow">+</div>
             <div class="node green"><b>2. Route</b><small>App.jsx</small></div><div class="arrow">+</div>
@@ -585,13 +585,13 @@
           <ol class="steps">
             <li><b>Create the page file</b><code>src/pages/MyPage.jsx</code>:
               <div class="code"><pre>import PageHeader from "../components/PageHeader";
-import { site } from "../data/site";
+import { pageMeta } from "../data/pages";
 import { useLang } from "../i18n/LanguageContext";
 import usePageMeta from "../hooks/usePageMeta";
 
 export default function MyPage() {
   const { t } = useLang();
-  usePageMeta(`${t("mypage.title")} — ${site.name}`, "English description for search engines.");
+  usePageMeta(...pageMeta("/my-page", t));
 
   return (
     &lt;&gt;
@@ -609,7 +609,10 @@ export default function MyPage() {
 &lt;Route path="/my-page" element={&lt;MyPage /&gt;} /&gt;</pre></div>
             </li>
             <li><b>Tell Netlify it's a real page</b>In <code>public/_redirects</code>, add a line with the other pages, <i>above</i> the <code>/*</code> line. Without it, the page works but reports "404" to search engines.
-              <div class="code"><pre>/my-page        /index.html   200</pre></div>
+              <div class="code"><pre>/my-page        /my-page.html        200</pre></div>
+            </li>
+            <li><b>Give it a title and description</b>In <code>src/data/pages.js</code>. The build writes <code>my-page.html</code> with them, so search engines and link previews see them without JavaScript.
+              <div class="code"><pre>"/my-page": { titleKey: "mypage.title", description: "English description for search engines." },</pre></div>
             </li>
             <li><b>Add it to the sitemap</b>In <code>public/sitemap.xml</code>:
               <div class="code"><pre>&lt;url&gt;&lt;loc&gt;https://marudyaan.com/my-page&lt;/loc&gt;&lt;/url&gt;</pre></div>

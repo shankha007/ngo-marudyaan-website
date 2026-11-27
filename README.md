@@ -300,10 +300,16 @@ npm test -- --no-build                # skip the build step (reuse the last dist
 Suites: `smoke` (page sweep), `navigation`, `features`, `performance` (image sizes, lazy
 loading, layout shift, fonts), `a11y` (accessibility), `netlify-badge`. Set `HEADED=1` to watch the browser, or `CHROME_PATH=…` to pick a browser.
 
-**Adding a new page?** Add its path to `public/_redirects` and `public/sitemap.xml` as well
-as `src/App.jsx` — the `navigation` suite fails if the lists don't match, because a page
-missing from `_redirects` would load fine but tell search engines it doesn't exist, and one
-missing from the sitemap is harder for Google to find.
+**Adding a new page?** Add its path to `public/_redirects`, `public/sitemap.xml` and
+`src/data/pages.js` as well as `src/App.jsx` — the `navigation` suite fails if the lists don't
+match, because a page missing from `_redirects` would load fine but tell search engines it
+doesn't exist, one missing from the sitemap is harder for Google to find, and one missing from
+`pages.js` has no title or description of its own.
+
+**Page titles and descriptions** for search results live in `src/data/pages.js`. The build
+writes one HTML file per page (`about.html`, `donate.html`, …) with that page's title,
+description and canonical link already in it, so Google, Bing and WhatsApp / Facebook previews
+see the right page without running any JavaScript.
 
 **Link previews.** When someone shares the site on WhatsApp or Facebook, the preview shows
 `public/images/og-image.jpg`. If you change the NGO's name or tagline, remake it with
