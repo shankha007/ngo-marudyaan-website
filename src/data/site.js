@@ -1,8 +1,7 @@
 /* ===================================================================
    SITE SETTINGS  —  edit this file to update contact & donation info
    -------------------------------------------------------------------
-   Anything marked  // TODO  is a placeholder you should replace with
-   your real details before the site goes live.
+   A field left empty ("") is simply not shown on the site.
 =================================================================== */
 
 export const site = {
@@ -43,8 +42,8 @@ export const site = {
   social: {
     facebook: "https://www.facebook.com/NgoMarudyaanOfficial",
     instagram: "https://www.instagram.com/ngo_marudyaan",
-    youtube: "",    // TODO
-    twitter: "",    // TODO
+    youtube: "",    // no account yet; add the link if one is opened
+    twitter: "",    // no account yet; add the link if one is opened
   },
 
   /* --- DONATION DETAILS -------------------------------------------

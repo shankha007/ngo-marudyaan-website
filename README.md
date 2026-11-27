@@ -79,16 +79,19 @@ This is the one you will change most often, for each new drive or project.
 Phone, WhatsApp, email, address, social links, registration numbers, **UPI ID and bank
 details**, and the impact numbers shown on the home page.
 
-**For the Donate page:** save your QR code as `public/images/donate-qr.png`
-(any square PNG or JPG). Until you do, the page shows a clearly marked empty box —
-nothing breaks.
+**The Donate page QR code** is `public/images/donate-qr.png` (any square PNG or JPG).
+If the file is ever missing, the page shows a clearly marked empty box — nothing breaks.
+The QR code, `upiId` and `upiName` must all be the same UPI account.
 
-**One-tap UPI buttons:** once `upiId` is your real UPI ID, set `upiButtons: true`.
-Phone visitors then get a "Pay with a UPI app" button, plus a button for each
-suggested amount, which open GPay / PhonePe with everything filled in. Keep it
-`false` until the UPI ID is real, or the buttons would pay the placeholder ID.
-Try a small payment from your own phone after switching it on — some UPI apps
-limit link payments to personal (non-merchant) UPI IDs.
+**One-tap UPI buttons** (`upiButtons: true`): phone visitors get a "Pay with a UPI app"
+button, plus a button for each suggested amount, which open GPay / PhonePe with everything
+filled in. Whenever you change the UPI ID, try a small payment from your own phone — some UPI
+apps limit link payments to personal (non-merchant) UPI IDs.
+
+**Interim UPI account** (`upiInterim: true`): for now the UPI details are a Governing Body
+member's personal account, and the Donate page tells donors so. When the bank issues a UPI QR
+code for the society's current account, replace the QR image, `upiId` and `upiName`, then set
+`upiInterim: false`.
 
 ### 3. `src/data/projects.js` — the Gallery's project albums
 
@@ -149,7 +152,7 @@ it then shows the album's cover and links to it. Until then it shows its program
 
 ### 4. `src/data/content.js` — programmes, team, story, FAQs
 
-Every entry has an `en` and a `bn` version. Replace the draft copy with your real text.
+Every entry has an `en` and a `bn` version. When you change one, change the other to match.
 
 ### 5. `src/i18n/strings.js` — menu labels, buttons and section headings
 
@@ -159,10 +162,11 @@ Add a key to **both** `en` and `bn`, then use it as `t("your.key")`.
 
 ## Placeholder images
 
-The `.svg` images in `public/images/` (the `work-*.svg` programme pictures)
-are generated placeholders that say what belongs there. Replace them with your own photos,
-keeping the same file names — or use new names and update the path in `src/data/`. Any gallery
-photo can be reused directly, e.g. `image: "/images/projects/2021-micro-library/09.jpg"`.
+The `.svg` images in `public/images/` (the `work-*.svg` programme pictures) are generated
+placeholders. Every programme currently links to a project album, so it shows that album's
+cover photo instead and these drawings are not used. They only appear for a programme with no
+`project` set. To give such a programme a real picture, point its `image` at a gallery photo,
+e.g. `image: "/images/projects/2021-micro-library/09.jpg"`. JPG, PNG and WebP all work.
 JPG, PNG and WebP all work.
 
 Recommended sizes: banner **1600×900**, programme images **1000×750**. Gallery photos can be
@@ -221,19 +225,22 @@ the policy in both files.
 
 ---
 
-## Things marked TODO
+## Still to do
 
-Search the project for `TODO` to find every placeholder that needs your real information:
+All the site's details are filled in. These are the items that wait on something outside the
+code:
 
-- registration number, PAN, 80G certificate, founding year (`src/data/site.js`)
-- UPI ID and bank account details (`src/data/site.js`)
-- Google Maps embed link for the Contact page (`src/data/site.js`)
-- Instagram / YouTube links (`src/data/site.js`)
-- team members' names, roles and photos (`src/data/content.js`)
-- testimonial quotes — take written consent before publishing (`src/data/content.js`)
+- **80G certificate** — once it is granted, add its number as `registration.eightyG` and set
+  `donation.taxNote: true` in `src/data/site.js`, and update the "tax exemption" FAQ answer in
+  `src/data/content.js`.
+- **The society's own UPI** — swap the interim personal UPI for the current account's
+  (see "Interim UPI account" above).
+- **Testimonials** — the home page "Voices" section stays hidden until you add real quotes,
+  with the person's written consent, to `testimonials` in `src/data/content.js`.
+- **YouTube / Twitter (X)** — add the links in `social` in `src/data/site.js` if the NGO opens
+  these accounts. Empty links are simply not shown.
 
-All the written copy on the site is a **draft** based on your Facebook page. Read it through
-and correct anything that is not accurate about your work.
+Keep the written copy accurate as your work changes: read it through now and then.
 
 ---
 
@@ -276,8 +283,9 @@ npm run test:live    # runs against the live site on Netlify
 
 - **✗ failed** — something is broken. Screenshots of the failing pages are saved in
   `tests/e2e/output/`.
-- **⚠ warnings** — placeholder content still on the site (QR code, bank details, team names,
-  placeholder photos). They never fail the run; they disappear as you add your real content.
+- **⚠ warnings** — placeholder content on the site (a missing QR code, dummy bank details or
+  team names, placeholder photos, a form without a key). They never fail the run. There
+  should be none now; a warning means something was reset to a placeholder.
 
 The tests read their expected values from `src/data/` and `src/i18n/`, so changing your text,
 photos or bank details does **not** break them.

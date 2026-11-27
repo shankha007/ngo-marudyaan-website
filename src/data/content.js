@@ -2,9 +2,8 @@
    PAGE CONTENT  —  programmes, team, FAQs
    (Gallery photos and projects live in projects.js.)
    -------------------------------------------------------------------
-   Every text field has an English (en) and a Bengali (bn) version.
-   All copy below is a realistic DRAFT written from your Facebook page:
-   please read it through and replace it with your real details.
+   Every text field has an English (en) and a Bengali (bn) version;
+   when you change one, change the other to match.
 =================================================================== */
 
 /* --- WHAT WE DO --------------------------------------------------
